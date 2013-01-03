@@ -1,0 +1,487 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		D8030BF016928583002F57B6 /* examples in Resources */ = {isa = PBXBuildFile; fileRef = D8030BEF16928583002F57B6 /* examples */; };
+		D851A97316928C020014446F /* TempAlbum2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D851A97216928C020014446F /* TempAlbum2@2x.png */; };
+		D8824DDB169384A400D05AA0 /* CustomBarButtonItem@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D8824DDA169384A400D05AA0 /* CustomBarButtonItem@2x.png */; };
+		D8824DDE1693880600D05AA0 /* PLAddInputViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D8824DDD1693880600D05AA0 /* PLAddInputViewController.m */; };
+		D8824DE1169388A400D05AA0 /* PLNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = D8824DE0169388A400D05AA0 /* PLNavigationController.m */; };
+		D8824DE916938CA300D05AA0 /* PLInput.m in Sources */ = {isa = PBXBuildFile; fileRef = D8824DE816938CA300D05AA0 /* PLInput.m */; };
+		D8824DF316938F7B00D05AA0 /* CustomBackButtonItem@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D8824DF216938F7B00D05AA0 /* CustomBackButtonItem@2x.png */; };
+		D8824E2B169392FF00D05AA0 /* PLSource.m in Sources */ = {isa = PBXBuildFile; fileRef = D8824E2A169392FF00D05AA0 /* PLSource.m */; };
+		D8824E2E1693992B00D05AA0 /* PLTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = D8824E2D1693992B00D05AA0 /* PLTextField.m */; };
+		D8824E3016939A3500D05AA0 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D8824E2F16939A3500D05AA0 /* QuartzCore.framework */; };
+		D8824E3416939C5D00D05AA0 /* UIViewController+ModalCheck.m in Sources */ = {isa = PBXBuildFile; fileRef = D8824E3316939C5D00D05AA0 /* UIViewController+ModalCheck.m */; };
+		D8824E371693A52200D05AA0 /* PLInputStore.m in Sources */ = {isa = PBXBuildFile; fileRef = D8824E361693A52200D05AA0 /* PLInputStore.m */; };
+		D8824E3E1693CEA600D05AA0 /* PLPlaylistsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D8824E3D1693CEA500D05AA0 /* PLPlaylistsViewController.m */; };
+		D8824E401693D01700D05AA0 /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D8824E3F1693D01700D05AA0 /* MediaPlayer.framework */; };
+		D8824E431693D45500D05AA0 /* PLSongViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D8824E421693D45500D05AA0 /* PLSongViewController.m */; };
+		D8824E451693ECEC00D05AA0 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D8824E441693ECEC00D05AA0 /* AVFoundation.framework */; };
+		D88D11531692BE740039067F /* PLSong.m in Sources */ = {isa = PBXBuildFile; fileRef = D88D11521692BE740039067F /* PLSong.m */; };
+		D88D116016937AC80039067F /* PLLibraryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D88D115F16937AC80039067F /* PLLibraryViewController.m */; };
+		D88D116316937AE00039067F /* PLInputsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D88D116216937AE00039067F /* PLInputsViewController.m */; };
+		D88EA7EF16917C460011F6FB /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D88EA7EE16917C460011F6FB /* UIKit.framework */; };
+		D88EA7F116917C460011F6FB /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D88EA7F016917C460011F6FB /* Foundation.framework */; };
+		D88EA7F316917C460011F6FB /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D88EA7F216917C460011F6FB /* CoreGraphics.framework */; };
+		D88EA7F916917C460011F6FB /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = D88EA7F716917C460011F6FB /* InfoPlist.strings */; };
+		D88EA7FB16917C460011F6FB /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = D88EA7FA16917C460011F6FB /* main.m */; };
+		D88EA7FF16917C460011F6FB /* PLAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = D88EA7FE16917C460011F6FB /* PLAppDelegate.m */; };
+		D88EA80116917C460011F6FB /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = D88EA80016917C460011F6FB /* Default.png */; };
+		D88EA80316917C460011F6FB /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D88EA80216917C460011F6FB /* Default@2x.png */; };
+		D88EA80516917C460011F6FB /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D88EA80416917C460011F6FB /* Default-568h@2x.png */; };
+		D88EA80816917C460011F6FB /* PLNowPlayingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D88EA80716917C460011F6FB /* PLNowPlayingViewController.m */; };
+		D88EA81A1691902A0011F6FB /* SonosAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = D88EA8191691902A0011F6FB /* SonosAPI.m */; };
+		D88EA82A16923E420011F6FB /* NavBar@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D88EA82816923E420011F6FB /* NavBar@2x.png */; };
+		D88EA82B16923E420011F6FB /* CustomPrimaryBarButtonItem@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D88EA82916923E420011F6FB /* CustomPrimaryBarButtonItem@2x.png */; };
+		D88EA831169241580011F6FB /* ControlBar@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D88EA82C169241580011F6FB /* ControlBar@2x.png */; };
+		D88EA832169241580011F6FB /* ControlNext@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D88EA82D169241580011F6FB /* ControlNext@2x.png */; };
+		D88EA833169241580011F6FB /* ControlPause@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D88EA82E169241580011F6FB /* ControlPause@2x.png */; };
+		D88EA834169241580011F6FB /* ControlPlay@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D88EA82F169241580011F6FB /* ControlPlay@2x.png */; };
+		D88EA835169241580011F6FB /* ControlPrevious@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D88EA830169241580011F6FB /* ControlPrevious@2x.png */; };
+		D88EA839169246F00011F6FB /* SliderMaxValue@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D88EA836169246F00011F6FB /* SliderMaxValue@2x.png */; };
+		D88EA83A169246F00011F6FB /* SliderMinValue@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D88EA837169246F00011F6FB /* SliderMinValue@2x.png */; };
+		D88EA83B169246F00011F6FB /* SliderThumb@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D88EA838169246F00011F6FB /* SliderThumb@2x.png */; };
+		D88EA83D169248FE0011F6FB /* SliderThumbPressed@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D88EA83C169248FE0011F6FB /* SliderThumbPressed@2x.png */; };
+		D88EA840169249890011F6FB /* PLPrimaryBarButtonItem.m in Sources */ = {isa = PBXBuildFile; fileRef = D88EA83F169249890011F6FB /* PLPrimaryBarButtonItem.m */; };
+		D88EA84316924C450011F6FB /* SliderThumbSmall@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D88EA84116924C450011F6FB /* SliderThumbSmall@2x.png */; };
+		D88EA84416924C450011F6FB /* SliderThumbSmallPressed@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D88EA84216924C450011F6FB /* SliderThumbSmallPressed@2x.png */; };
+		D88EA84A169250300011F6FB /* TempAlbum@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D88EA849169250300011F6FB /* TempAlbum@2x.png */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		D8030BEF16928583002F57B6 /* examples */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = examples; sourceTree = "<group>"; };
+		D851A97216928C020014446F /* TempAlbum2@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "TempAlbum2@2x.png"; path = "Images/TempAlbum2@2x.png"; sourceTree = "<group>"; };
+		D8824DDA169384A400D05AA0 /* CustomBarButtonItem@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "CustomBarButtonItem@2x.png"; path = "Images/CustomBarButtonItem@2x.png"; sourceTree = "<group>"; };
+		D8824DDC1693880600D05AA0 /* PLAddInputViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PLAddInputViewController.h; sourceTree = "<group>"; };
+		D8824DDD1693880600D05AA0 /* PLAddInputViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PLAddInputViewController.m; sourceTree = "<group>"; };
+		D8824DDF169388A400D05AA0 /* PLNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PLNavigationController.h; sourceTree = "<group>"; };
+		D8824DE0169388A400D05AA0 /* PLNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PLNavigationController.m; sourceTree = "<group>"; };
+		D8824DE716938CA300D05AA0 /* PLInput.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PLInput.h; sourceTree = "<group>"; };
+		D8824DE816938CA300D05AA0 /* PLInput.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PLInput.m; sourceTree = "<group>"; };
+		D8824DF216938F7B00D05AA0 /* CustomBackButtonItem@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "CustomBackButtonItem@2x.png"; path = "Images/CustomBackButtonItem@2x.png"; sourceTree = "<group>"; };
+		D8824E29169392FF00D05AA0 /* PLSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PLSource.h; sourceTree = "<group>"; };
+		D8824E2A169392FF00D05AA0 /* PLSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PLSource.m; sourceTree = "<group>"; };
+		D8824E2C1693992B00D05AA0 /* PLTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PLTextField.h; sourceTree = "<group>"; };
+		D8824E2D1693992B00D05AA0 /* PLTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PLTextField.m; sourceTree = "<group>"; };
+		D8824E2F16939A3500D05AA0 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		D8824E3216939C5D00D05AA0 /* UIViewController+ModalCheck.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+ModalCheck.h"; sourceTree = "<group>"; };
+		D8824E3316939C5D00D05AA0 /* UIViewController+ModalCheck.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+ModalCheck.m"; sourceTree = "<group>"; };
+		D8824E351693A52100D05AA0 /* PLInputStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PLInputStore.h; sourceTree = "<group>"; };
+		D8824E361693A52200D05AA0 /* PLInputStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PLInputStore.m; sourceTree = "<group>"; };
+		D8824E3C1693CEA500D05AA0 /* PLPlaylistsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PLPlaylistsViewController.h; sourceTree = "<group>"; };
+		D8824E3D1693CEA500D05AA0 /* PLPlaylistsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PLPlaylistsViewController.m; sourceTree = "<group>"; };
+		D8824E3F1693D01700D05AA0 /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
+		D8824E411693D45400D05AA0 /* PLSongViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PLSongViewController.h; sourceTree = "<group>"; };
+		D8824E421693D45500D05AA0 /* PLSongViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PLSongViewController.m; sourceTree = "<group>"; };
+		D8824E441693ECEC00D05AA0 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		D88D11511692BE740039067F /* PLSong.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PLSong.h; sourceTree = "<group>"; };
+		D88D11521692BE740039067F /* PLSong.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PLSong.m; sourceTree = "<group>"; };
+		D88D115E16937AC80039067F /* PLLibraryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PLLibraryViewController.h; sourceTree = "<group>"; };
+		D88D115F16937AC80039067F /* PLLibraryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PLLibraryViewController.m; sourceTree = "<group>"; };
+		D88D116116937ADF0039067F /* PLInputsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PLInputsViewController.h; sourceTree = "<group>"; };
+		D88D116216937AE00039067F /* PLInputsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PLInputsViewController.m; sourceTree = "<group>"; };
+		D88EA7EA16917C460011F6FB /* Play.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Play.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		D88EA7EE16917C460011F6FB /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		D88EA7F016917C460011F6FB /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		D88EA7F216917C460011F6FB /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		D88EA7F616917C460011F6FB /* Play-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Play-Info.plist"; sourceTree = "<group>"; };
+		D88EA7F816917C460011F6FB /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		D88EA7FA16917C460011F6FB /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		D88EA7FC16917C460011F6FB /* Play-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Play-Prefix.pch"; sourceTree = "<group>"; };
+		D88EA7FD16917C460011F6FB /* PLAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PLAppDelegate.h; sourceTree = "<group>"; };
+		D88EA7FE16917C460011F6FB /* PLAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PLAppDelegate.m; sourceTree = "<group>"; };
+		D88EA80016917C460011F6FB /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
+		D88EA80216917C460011F6FB /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
+		D88EA80416917C460011F6FB /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
+		D88EA80616917C460011F6FB /* PLNowPlayingViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PLNowPlayingViewController.h; sourceTree = "<group>"; };
+		D88EA80716917C460011F6FB /* PLNowPlayingViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PLNowPlayingViewController.m; sourceTree = "<group>"; };
+		D88EA8181691902A0011F6FB /* SonosAPI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SonosAPI.h; sourceTree = "<group>"; };
+		D88EA8191691902A0011F6FB /* SonosAPI.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SonosAPI.m; sourceTree = "<group>"; };
+		D88EA82816923E420011F6FB /* NavBar@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "NavBar@2x.png"; path = "Images/NavBar@2x.png"; sourceTree = "<group>"; };
+		D88EA82916923E420011F6FB /* CustomPrimaryBarButtonItem@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "CustomPrimaryBarButtonItem@2x.png"; path = "Images/CustomPrimaryBarButtonItem@2x.png"; sourceTree = "<group>"; };
+		D88EA82C169241580011F6FB /* ControlBar@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "ControlBar@2x.png"; path = "Images/ControlBar@2x.png"; sourceTree = "<group>"; };
+		D88EA82D169241580011F6FB /* ControlNext@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "ControlNext@2x.png"; path = "Images/ControlNext@2x.png"; sourceTree = "<group>"; };
+		D88EA82E169241580011F6FB /* ControlPause@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "ControlPause@2x.png"; path = "Images/ControlPause@2x.png"; sourceTree = "<group>"; };
+		D88EA82F169241580011F6FB /* ControlPlay@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "ControlPlay@2x.png"; path = "Images/ControlPlay@2x.png"; sourceTree = "<group>"; };
+		D88EA830169241580011F6FB /* ControlPrevious@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "ControlPrevious@2x.png"; path = "Images/ControlPrevious@2x.png"; sourceTree = "<group>"; };
+		D88EA836169246F00011F6FB /* SliderMaxValue@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "SliderMaxValue@2x.png"; path = "Images/SliderMaxValue@2x.png"; sourceTree = "<group>"; };
+		D88EA837169246F00011F6FB /* SliderMinValue@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "SliderMinValue@2x.png"; path = "Images/SliderMinValue@2x.png"; sourceTree = "<group>"; };
+		D88EA838169246F00011F6FB /* SliderThumb@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "SliderThumb@2x.png"; path = "Images/SliderThumb@2x.png"; sourceTree = "<group>"; };
+		D88EA83C169248FE0011F6FB /* SliderThumbPressed@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "SliderThumbPressed@2x.png"; path = "Images/SliderThumbPressed@2x.png"; sourceTree = "<group>"; };
+		D88EA83E169249890011F6FB /* PLPrimaryBarButtonItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PLPrimaryBarButtonItem.h; sourceTree = "<group>"; };
+		D88EA83F169249890011F6FB /* PLPrimaryBarButtonItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PLPrimaryBarButtonItem.m; sourceTree = "<group>"; };
+		D88EA84116924C450011F6FB /* SliderThumbSmall@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "SliderThumbSmall@2x.png"; path = "Images/SliderThumbSmall@2x.png"; sourceTree = "<group>"; };
+		D88EA84216924C450011F6FB /* SliderThumbSmallPressed@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "SliderThumbSmallPressed@2x.png"; path = "Images/SliderThumbSmallPressed@2x.png"; sourceTree = "<group>"; };
+		D88EA849169250300011F6FB /* TempAlbum@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "TempAlbum@2x.png"; path = "Images/TempAlbum@2x.png"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		D88EA7E716917C460011F6FB /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D8824E451693ECEC00D05AA0 /* AVFoundation.framework in Frameworks */,
+				D8824E401693D01700D05AA0 /* MediaPlayer.framework in Frameworks */,
+				D8824E3016939A3500D05AA0 /* QuartzCore.framework in Frameworks */,
+				D88EA7EF16917C460011F6FB /* UIKit.framework in Frameworks */,
+				D88EA7F116917C460011F6FB /* Foundation.framework in Frameworks */,
+				D88EA7F316917C460011F6FB /* CoreGraphics.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		D8824DE616938C8900D05AA0 /* Data */ = {
+			isa = PBXGroup;
+			children = (
+				D88D11511692BE740039067F /* PLSong.h */,
+				D88D11521692BE740039067F /* PLSong.m */,
+				D8824E29169392FF00D05AA0 /* PLSource.h */,
+				D8824E2A169392FF00D05AA0 /* PLSource.m */,
+				D8824E351693A52100D05AA0 /* PLInputStore.h */,
+				D8824E361693A52200D05AA0 /* PLInputStore.m */,
+				D8824DE716938CA300D05AA0 /* PLInput.h */,
+				D8824DE816938CA300D05AA0 /* PLInput.m */,
+			);
+			name = Data;
+			sourceTree = "<group>";
+		};
+		D8824E281693921400D05AA0 /* UI Components */ = {
+			isa = PBXGroup;
+			children = (
+				D8824DDF169388A400D05AA0 /* PLNavigationController.h */,
+				D8824DE0169388A400D05AA0 /* PLNavigationController.m */,
+				D88EA83E169249890011F6FB /* PLPrimaryBarButtonItem.h */,
+				D88EA83F169249890011F6FB /* PLPrimaryBarButtonItem.m */,
+				D8824E2C1693992B00D05AA0 /* PLTextField.h */,
+				D8824E2D1693992B00D05AA0 /* PLTextField.m */,
+			);
+			name = "UI Components";
+			sourceTree = "<group>";
+		};
+		D8824E3116939C3900D05AA0 /* Categories */ = {
+			isa = PBXGroup;
+			children = (
+				D8824E3216939C5D00D05AA0 /* UIViewController+ModalCheck.h */,
+				D8824E3316939C5D00D05AA0 /* UIViewController+ModalCheck.m */,
+			);
+			name = Categories;
+			sourceTree = "<group>";
+		};
+		D88EA7DF16917C460011F6FB = {
+			isa = PBXGroup;
+			children = (
+				D88EA7F416917C460011F6FB /* Play */,
+				D88EA7ED16917C460011F6FB /* Frameworks */,
+				D88EA7EB16917C460011F6FB /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		D88EA7EB16917C460011F6FB /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				D88EA7EA16917C460011F6FB /* Play.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		D88EA7ED16917C460011F6FB /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				D8824E441693ECEC00D05AA0 /* AVFoundation.framework */,
+				D8824E3F1693D01700D05AA0 /* MediaPlayer.framework */,
+				D8824E2F16939A3500D05AA0 /* QuartzCore.framework */,
+				D88EA7EE16917C460011F6FB /* UIKit.framework */,
+				D88EA7F016917C460011F6FB /* Foundation.framework */,
+				D88EA7F216917C460011F6FB /* CoreGraphics.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		D88EA7F416917C460011F6FB /* Play */ = {
+			isa = PBXGroup;
+			children = (
+				D88EA7FD16917C460011F6FB /* PLAppDelegate.h */,
+				D88EA7FE16917C460011F6FB /* PLAppDelegate.m */,
+				D88EA8181691902A0011F6FB /* SonosAPI.h */,
+				D88EA8191691902A0011F6FB /* SonosAPI.m */,
+				D88D115E16937AC80039067F /* PLLibraryViewController.h */,
+				D88D115F16937AC80039067F /* PLLibraryViewController.m */,
+				D88D116116937ADF0039067F /* PLInputsViewController.h */,
+				D88D116216937AE00039067F /* PLInputsViewController.m */,
+				D88EA80616917C460011F6FB /* PLNowPlayingViewController.h */,
+				D88EA80716917C460011F6FB /* PLNowPlayingViewController.m */,
+				D8824DDC1693880600D05AA0 /* PLAddInputViewController.h */,
+				D8824DDD1693880600D05AA0 /* PLAddInputViewController.m */,
+				D8824DE616938C8900D05AA0 /* Data */,
+				D8824E281693921400D05AA0 /* UI Components */,
+				D8824E3116939C3900D05AA0 /* Categories */,
+				D88EA82716923E310011F6FB /* Images */,
+				D88EA7F516917C460011F6FB /* Supporting Files */,
+				D8824E3C1693CEA500D05AA0 /* PLPlaylistsViewController.h */,
+				D8824E3D1693CEA500D05AA0 /* PLPlaylistsViewController.m */,
+				D8824E411693D45400D05AA0 /* PLSongViewController.h */,
+				D8824E421693D45500D05AA0 /* PLSongViewController.m */,
+			);
+			path = Play;
+			sourceTree = "<group>";
+		};
+		D88EA7F516917C460011F6FB /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				D88EA7F616917C460011F6FB /* Play-Info.plist */,
+				D88EA7F716917C460011F6FB /* InfoPlist.strings */,
+				D88EA7FA16917C460011F6FB /* main.m */,
+				D88EA7FC16917C460011F6FB /* Play-Prefix.pch */,
+				D88EA80016917C460011F6FB /* Default.png */,
+				D88EA80216917C460011F6FB /* Default@2x.png */,
+				D88EA80416917C460011F6FB /* Default-568h@2x.png */,
+				D8030BEF16928583002F57B6 /* examples */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		D88EA82716923E310011F6FB /* Images */ = {
+			isa = PBXGroup;
+			children = (
+				D8824DF216938F7B00D05AA0 /* CustomBackButtonItem@2x.png */,
+				D8824DDA169384A400D05AA0 /* CustomBarButtonItem@2x.png */,
+				D851A97216928C020014446F /* TempAlbum2@2x.png */,
+				D88EA849169250300011F6FB /* TempAlbum@2x.png */,
+				D88EA84116924C450011F6FB /* SliderThumbSmall@2x.png */,
+				D88EA84216924C450011F6FB /* SliderThumbSmallPressed@2x.png */,
+				D88EA83C169248FE0011F6FB /* SliderThumbPressed@2x.png */,
+				D88EA836169246F00011F6FB /* SliderMaxValue@2x.png */,
+				D88EA837169246F00011F6FB /* SliderMinValue@2x.png */,
+				D88EA838169246F00011F6FB /* SliderThumb@2x.png */,
+				D88EA82C169241580011F6FB /* ControlBar@2x.png */,
+				D88EA82D169241580011F6FB /* ControlNext@2x.png */,
+				D88EA82E169241580011F6FB /* ControlPause@2x.png */,
+				D88EA82F169241580011F6FB /* ControlPlay@2x.png */,
+				D88EA830169241580011F6FB /* ControlPrevious@2x.png */,
+				D88EA82816923E420011F6FB /* NavBar@2x.png */,
+				D88EA82916923E420011F6FB /* CustomPrimaryBarButtonItem@2x.png */,
+			);
+			name = Images;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		D88EA7E916917C460011F6FB /* Play */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D88EA80E16917C460011F6FB /* Build configuration list for PBXNativeTarget "Play" */;
+			buildPhases = (
+				D88EA7E616917C460011F6FB /* Sources */,
+				D88EA7E716917C460011F6FB /* Frameworks */,
+				D88EA7E816917C460011F6FB /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Play;
+			productName = Play;
+			productReference = D88EA7EA16917C460011F6FB /* Play.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		D88EA7E116917C460011F6FB /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0450;
+				ORGANIZATIONNAME = "Nathan Borror";
+			};
+			buildConfigurationList = D88EA7E416917C460011F6FB /* Build configuration list for PBXProject "Play" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = D88EA7DF16917C460011F6FB;
+			productRefGroup = D88EA7EB16917C460011F6FB /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				D88EA7E916917C460011F6FB /* Play */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		D88EA7E816917C460011F6FB /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D88EA7F916917C460011F6FB /* InfoPlist.strings in Resources */,
+				D88EA80116917C460011F6FB /* Default.png in Resources */,
+				D88EA80316917C460011F6FB /* Default@2x.png in Resources */,
+				D88EA80516917C460011F6FB /* Default-568h@2x.png in Resources */,
+				D88EA82A16923E420011F6FB /* NavBar@2x.png in Resources */,
+				D88EA82B16923E420011F6FB /* CustomPrimaryBarButtonItem@2x.png in Resources */,
+				D88EA831169241580011F6FB /* ControlBar@2x.png in Resources */,
+				D88EA832169241580011F6FB /* ControlNext@2x.png in Resources */,
+				D88EA833169241580011F6FB /* ControlPause@2x.png in Resources */,
+				D88EA834169241580011F6FB /* ControlPlay@2x.png in Resources */,
+				D88EA835169241580011F6FB /* ControlPrevious@2x.png in Resources */,
+				D88EA839169246F00011F6FB /* SliderMaxValue@2x.png in Resources */,
+				D88EA83A169246F00011F6FB /* SliderMinValue@2x.png in Resources */,
+				D88EA83B169246F00011F6FB /* SliderThumb@2x.png in Resources */,
+				D88EA83D169248FE0011F6FB /* SliderThumbPressed@2x.png in Resources */,
+				D88EA84316924C450011F6FB /* SliderThumbSmall@2x.png in Resources */,
+				D88EA84416924C450011F6FB /* SliderThumbSmallPressed@2x.png in Resources */,
+				D88EA84A169250300011F6FB /* TempAlbum@2x.png in Resources */,
+				D8030BF016928583002F57B6 /* examples in Resources */,
+				D851A97316928C020014446F /* TempAlbum2@2x.png in Resources */,
+				D8824DDB169384A400D05AA0 /* CustomBarButtonItem@2x.png in Resources */,
+				D8824DF316938F7B00D05AA0 /* CustomBackButtonItem@2x.png in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		D88EA7E616917C460011F6FB /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D88EA7FB16917C460011F6FB /* main.m in Sources */,
+				D88EA7FF16917C460011F6FB /* PLAppDelegate.m in Sources */,
+				D88EA80816917C460011F6FB /* PLNowPlayingViewController.m in Sources */,
+				D88EA81A1691902A0011F6FB /* SonosAPI.m in Sources */,
+				D88EA840169249890011F6FB /* PLPrimaryBarButtonItem.m in Sources */,
+				D88D11531692BE740039067F /* PLSong.m in Sources */,
+				D88D116016937AC80039067F /* PLLibraryViewController.m in Sources */,
+				D88D116316937AE00039067F /* PLInputsViewController.m in Sources */,
+				D8824DDE1693880600D05AA0 /* PLAddInputViewController.m in Sources */,
+				D8824DE1169388A400D05AA0 /* PLNavigationController.m in Sources */,
+				D8824DE916938CA300D05AA0 /* PLInput.m in Sources */,
+				D8824E2B169392FF00D05AA0 /* PLSource.m in Sources */,
+				D8824E2E1693992B00D05AA0 /* PLTextField.m in Sources */,
+				D8824E3416939C5D00D05AA0 /* UIViewController+ModalCheck.m in Sources */,
+				D8824E371693A52200D05AA0 /* PLInputStore.m in Sources */,
+				D8824E3E1693CEA600D05AA0 /* PLPlaylistsViewController.m in Sources */,
+				D8824E431693D45500D05AA0 /* PLSongViewController.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		D88EA7F716917C460011F6FB /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				D88EA7F816917C460011F6FB /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		D88EA80C16917C460011F6FB /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		D88EA80D16917C460011F6FB /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		D88EA80F16917C460011F6FB /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Play/Play-Prefix.pch";
+				INFOPLIST_FILE = "Play/Play-Info.plist";
+				PRODUCT_NAME = Play;
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		D88EA81016917C460011F6FB /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Play/Play-Prefix.pch";
+				INFOPLIST_FILE = "Play/Play-Info.plist";
+				PRODUCT_NAME = Play;
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		D88EA7E416917C460011F6FB /* Build configuration list for PBXProject "Play" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D88EA80C16917C460011F6FB /* Debug */,
+				D88EA80D16917C460011F6FB /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		D88EA80E16917C460011F6FB /* Build configuration list for PBXNativeTarget "Play" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D88EA80F16917C460011F6FB /* Debug */,
+				D88EA81016917C460011F6FB /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = D88EA7E116917C460011F6FB /* Project object */;
+}

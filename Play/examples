@@ -1,0 +1,57 @@
+<s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/" s:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/">
+	<s:Body>
+		<u:GetPositionInfoResponse xmlns:u="urn:schemas-upnp-org:service:AVTransport:1">
+			<Track>22</Track>
+			<TrackDuration>0:05:11</TrackDuration>
+			<TrackMetaData>
+				<DIDL-Lite xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:upnp="urn:schemas-upnp-org:metadata-1-0/upnp/" xmlns:r="urn:schemas-rinconnetworks-com:metadata-1-0/" xmlns="urn:schemas-upnp-org:metadata-1-0/DIDL-Lite/">
+					<item id="-1" parentID="-1" restricted="true">
+						<res protocolInfo="sonos.com-http:*:audio/mpeg:*" duration="0:05:11">x-sonos-http:_t%3a%3a2909368%3a%3aa%3a%3a239271.mp3?sid=11&flags=32</res>
+						<r:streamContent></r:streamContent>
+						<upnp:albumArtURI>/getaa?s=1&u=x-sonos-http%3a_t%253a%253a2909368%253a%253aa%253a%253a239271.mp3%3fsid%3d11%26flags%3d32</upnp:albumArtURI>
+						<dc:title>Some Devil (Live At Radio City)</dc:title>
+						<upnp:class>object.item.audioItem.musicTrack</upnp:class>
+						<dc:creator>Dave Matthews & Tim Reynolds</dc:creator>
+						<upnp:album>Live At Radio City</upnp:album>
+					</item>
+				</DIDL-Lite>
+			</TrackMetaData>
+			<TrackURI>x-sonos-http:_t%3a%3a2909368%3a%3aa%3a%3a239271.mp3?sid=11&flags=32</TrackURI>
+			<RelTime>0:01:03</RelTime>
+			<AbsTime>NOT_IMPLEMENTED</AbsTime>
+			<RelCount>2147483647</RelCount>
+			<AbsCount>2147483647</AbsCount>
+		</u:GetPositionInfoResponse>
+	</s:Body>
+</s:Envelope>
+
+--------------------------------------------------------------------------------
+
+POST /MediaRenderer/AVTransport/Control HTTP/1.1
+CONNECTION: close
+ACCEPT-ENCODING: gzip
+HOST: 10.0.1.9:1400
+USER-AGENT: Linux UPnP/1.0 Sonos/19.4-59140 (MDCR_MacBookPro10,1)
+CONTENT-LENGTH: 1200
+CONTENT-TYPE: text/xml; charset="utf-8"
+SOAPACTION: "urn:schemas-upnp-org:service:AVTransport:1#AddURIToQueue"
+
+<s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/" s:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/">
+	<s:Body>
+		<u:AddURIToQueue xmlns:u="urn:schemas-upnp-org:service:AVTransport:1">
+			<InstanceID>0</InstanceID>
+			<EnqueuedURI>x-sonos-http:_t%3a%3a1155080%3a%3ap%3a%3a8699.mp3?sid=11&amp;flags=32</EnqueuedURI>
+			<EnqueuedURIMetaData>
+				<DIDL-Lite xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:upnp="urn:schemas-upnp-org:metadata-1-0/upnp/" xmlns:r="urn:schemas-rinconnetworks-com:metadata-1-0/" xmlns="urn:schemas-upnp-org:metadata-1-0/DIDL-Lite/">
+					<item id="00030020_t%3a%3a1155080%3a%3ap%3a%3a8699" parentID="0006004c_p%3a%3a8699" restricted="true">
+						<dc:title>Your Heart Is an Empty Room</dc:title>
+						<upnp:class>object.item.audioItem.musicTrack</upnp:class>
+						<desc id="cdudn" nameSpace="urn:schemas-rinconnetworks-com:metadata-1-0/">SA_RINCON2823_nathan</desc>
+					</item>
+				</DIDL-Lite>
+			</EnqueuedURIMetaData>
+			<DesiredFirstTrackNumberEnqueued>0</DesiredFirstTrackNumberEnqueued>
+			<EnqueueAsNext>1</EnqueueAsNext>
+		</u:AddURIToQueue>
+	</s:Body>
+</s:Envelope>
