@@ -20,6 +20,7 @@ static float kFieldPadding = 20.f;
   PLInput *input;
   UITextField *ipTextField;
   UITextField *nameTextField;
+  UITextField *uidTextField;
 }
 @end
 
@@ -72,8 +73,15 @@ static float kFieldPadding = 20.f;
   [nameTextField setDelegate:self];
   [nameTextField setPlaceholder:@"Name"];
   [nameTextField setText:input.name];
-  [nameTextField setReturnKeyType:UIReturnKeyDone];
+  [nameTextField setReturnKeyType:UIReturnKeyNext];
   [self.view addSubview:nameTextField];
+
+  uidTextField = [[PLTextField alloc] initWithFrame:CGRectMake(kFieldPadding, CGRectGetMaxY(nameTextField.frame)+kFieldPadding, CGRectGetWidth(self.view.frame)-(kFieldPadding*2), 50)];
+  [uidTextField setDelegate:self];
+  [uidTextField setPlaceholder:@"UID"];
+  [uidTextField setText:input.uid];
+  [uidTextField setReturnKeyType:UIReturnKeyDone];
+  [self.view addSubview:uidTextField];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -86,6 +94,8 @@ static float kFieldPadding = 20.f;
 {
   if (textField == ipTextField) {
     [nameTextField becomeFirstResponder];
+  } else if (textField == nameTextField) {
+    [uidTextField becomeFirstResponder];
   } else {
     [nameTextField resignFirstResponder];
   }
@@ -94,7 +104,7 @@ static float kFieldPadding = 20.f;
 
 - (void)done
 {
-  [[PLInputStore sharedStore] addInputWithIP:[ipTextField text] name:[nameTextField text]];
+  [[PLInputStore sharedStore] addInputWithIP:[ipTextField text] name:[nameTextField text] uid:[uidTextField text]];
   [self.navigationController dismissViewControllerAnimated:YES completion:nil];
 }
 

@@ -7,17 +7,20 @@
 //
 
 #import "PLInput.h"
+#import "SonosController.h"
 
 @implementation PLInput
-@synthesize ip, name;
+@synthesize ip, name, uid, playingSong;
 
 - (id)initWithIP:(NSString *)aIP
             name:(NSString *)aName
+             uid:(NSString *)aUid
 {
   self = [super init];
   if (self) {
     self.ip = aIP;
     self.name = aName;
+    self.uid = aUid;
   }
   return self;
 }
@@ -28,6 +31,7 @@
   if (self) {
     [self setIp:[aDecoder decodeObjectForKey:@"ip"]];
     [self setName:[aDecoder decodeObjectForKey:@"name"]];
+    [self setUid:[aDecoder decodeObjectForKey:@"uid"]];
   }
   return self;
 }
@@ -36,6 +40,7 @@
 {
   [aCoder encodeObject:ip forKey:@"ip"];
   [aCoder encodeObject:name forKey:@"name"];
+  [aCoder encodeObject:uid forKey:@"uid"];
 }
 
 @end

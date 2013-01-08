@@ -1,5 +1,5 @@
 //
-//  SonosAPI.h
+//  SonosController.h
 //  Play
 //
 //  Created by Nathan Borror on 12/31/12.
@@ -8,11 +8,13 @@
 
 #import <Foundation/Foundation.h>
 
-@interface SonosAPI : NSObject
+@interface SonosController : NSObject
 
 @property (nonatomic, readonly) BOOL isPlaying;
 
 - (id)initWithIP:(NSString *)ip;
+
++ (SonosController *)sharedController;
 
 - (void)play:(NSString *)uri;
 - (void)pause;
@@ -23,5 +25,7 @@
 - (void)volume;
 - (void)volume:(int)volume;
 - (void)trackInfo;
+- (void)lineIn:(NSString *)uid;
+- (void)search;
 
 @end

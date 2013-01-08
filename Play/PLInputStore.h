@@ -15,7 +15,7 @@
 + (PLInputStore *)sharedStore;
 
 - (NSArray *)allInputs;
-- (void)addInputWithIP:(NSString *)aIP name:(NSString *)aName;
+- (void)addInputWithIP:(NSString *)aIP name:(NSString *)aName uid:(NSString *)aUid;
 - (void)removeInput:(PLInput *)input;
 - (BOOL)saveChanges;
 

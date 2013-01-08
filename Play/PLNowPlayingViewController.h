@@ -13,5 +13,6 @@
 @interface PLNowPlayingViewController : UIViewController <UITableViewDelegate, UITableViewDataSource>
 
 - (id)initWithSong:(PLSong *)song;
+- (id)initWithLineIn:(NSString *)uid;
 
 @end

@@ -12,6 +12,7 @@
 #import "PLNavigationController.h"
 #import "PLSource.h"
 #import "PLPlaylistsViewController.h"
+#import "PLNowPlayingViewController.h"
 
 @interface PLLibraryViewController ()
 {
@@ -39,11 +40,15 @@
     [self.view addSubview:libraryTableView];
 
     // Library Items
-    // TODO: Make this dynamic
     sourceList = @[
-      [[PLSource alloc] initWithName:@"Playlists"],
-      [[PLSource alloc] initWithName:@"Rdio"],
-      [[PLSource alloc] initWithName:@"Radio Stations"]
+      [[PLSource alloc] initWithName:@"Playlists" selection:nil],
+      [[PLSource alloc] initWithName:@"Rdio" selection:nil],
+      [[PLSource alloc] initWithName:@"Radio Stations" selection:nil],
+      [[PLSource alloc] initWithName:@"Line In" selection:^() {
+        PLNowPlayingViewController *viewController = [[PLNowPlayingViewController alloc] initWithLineIn:[[NSUserDefaults standardUserDefaults] objectForKey:@"current_input_uid"]];
+        PLNavigationController *navController = [[PLNavigationController alloc] initWithRootViewController:viewController];
+        [self.navigationController presentViewController:navController animated:YES completion:nil];
+      }]
     ];
   }
   return self;
@@ -81,8 +86,13 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-  PLPlaylistsViewController *viewController = [[PLPlaylistsViewController alloc] init];
-  [self.navigationController pushViewController:viewController animated:YES];
+  PLSource *source = [sourceList objectAtIndex:indexPath.row];
+  if (source.selectionBlock == nil) {
+    PLPlaylistsViewController *viewController = [[PLPlaylistsViewController alloc] init];
+    [self.navigationController pushViewController:viewController animated:YES];
+  } else {
+    [source selectionBlock](nil);
+  }
 }
 
 @end

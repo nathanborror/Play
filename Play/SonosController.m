@@ -1,21 +1,20 @@
 //
-//  SonosAPI.m
+//  SonosController.m
 //  Play
 //
 //  Created by Nathan Borror on 12/31/12.
 //  Copyright (c) 2012 Nathan Borror. All rights reserved.
 //
 
-#import "SonosAPI.h"
+#import "SonosController.h"
 
 static NSString *kSonosEndpointTransport = @"/MediaRenderer/AVTransport/Control";
 static NSString *kSonosEndpointRendering = @"/MediaRenderer/RenderingControl/Control";
 static NSString *kSonosEndpointDevice = @"/DeviceProperties/Control";
+static NSString *kSonosEndpointContentDirectory = @"/MediaServer/ContentDirectory/Control";
 
-static NSString *kSonosTemplateEnvelope = @""
-  "<s:Envelope "
-        "xmlns:s='http://schemas.xmlsoap.org/soap/envelope/' "
-        "s:encodingStyle='http://schemas.xmlsoap.org/soap/encoding/'>"
+static NSString *kSonosRequest = @""
+  "<s:Envelope xmlns:s='http://schemas.xmlsoap.org/soap/envelope/' s:encodingStyle='http://schemas.xmlsoap.org/soap/encoding/'>"
     "<s:Body>%@</s:Body>"
   "</s:Envelope>";
 
@@ -27,8 +26,9 @@ static NSString *kSonosTemplateTransportBody = @""
   "</u:%@>";
 
 static NSString *kSonosTemplateRenderingHeader = @"urn:schemas-upnp-org:service:RenderingControl:1#%@";
+static NSString *kSonosTemplateContentDirectorytHeader = @"urn:schemas-upnp-org:service:ContentDirectory:1#%@";
 
-@interface SonosAPI ()
+@interface SonosController ()
 {
   NSString *sonosURL;
   NSInputStream *inputStream;
@@ -36,7 +36,7 @@ static NSString *kSonosTemplateRenderingHeader = @"urn:schemas-upnp-org:service:
 }
 @end
 
-@implementation SonosAPI
+@implementation SonosController
 
 - (id)initWithIP:(NSString *)ip
 {
@@ -47,6 +47,15 @@ static NSString *kSonosTemplateRenderingHeader = @"urn:schemas-upnp-org:service:
     volumeLevel = 0;
   }
   return self;
+}
+
++ (SonosController *)sharedController
+{
+  static SonosController *sharedController = nil;
+  if (!sharedController) {
+    sharedController = [[SonosController alloc] initWithIP:[[NSUserDefaults standardUserDefaults] objectForKey:@"current_input_ip"]];
+  }
+  return sharedController;
 }
 
 - (void)sendTransportCommand:(NSString *)command
@@ -63,7 +72,7 @@ static NSString *kSonosTemplateRenderingHeader = @"urn:schemas-upnp-org:service:
                          body:(NSString *)body
                      complete:(void (^)(NSURLResponse *response, NSData *data, NSError *error))block
 {
-  NSString *envelope = [NSString stringWithFormat:kSonosTemplateEnvelope, body];
+  NSString *envelope = [NSString stringWithFormat:kSonosRequest, body];
   
   NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", sonosURL, endpoint]];
   NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
@@ -91,11 +100,11 @@ static NSString *kSonosTemplateRenderingHeader = @"urn:schemas-upnp-org:service:
   if (uri) {
     NSString *header = [NSString stringWithFormat:kSonosTemplateTransportHeader, @"SetAVTransportURI"];
     NSString *body = [NSString stringWithFormat:@""
-                      "<u:SetAVTransportURI xmlns:u='urn:schemas-upnp-org:service:AVTransport:1'>"
-                        "<InstanceID>0</InstanceID>"
-                        "<CurrentURI>%@</CurrentURI>"
-                        "<CurrentURIMetaData></CurrentURIMetaData>"
-                      "</u:SetAVTransportURI>", uri];
+      "<u:SetAVTransportURI xmlns:u='urn:schemas-upnp-org:service:AVTransport:1'>"
+        "<InstanceID>0</InstanceID>"
+        "<CurrentURI>%@</CurrentURI>"
+        "<CurrentURIMetaData></CurrentURIMetaData>"
+      "</u:SetAVTransportURI>", uri];
     [self sendCommandToEndpoint:kSonosEndpointTransport action:header body:body complete:^(NSURLResponse *response, NSData *data, NSError *error) {
       [self play:nil];
     }];
@@ -136,7 +145,21 @@ static NSString *kSonosTemplateRenderingHeader = @"urn:schemas-upnp-org:service:
 
 - (void)speakers
 {
-  
+  // TODO: Discover speakers using UPnP's discovery stuff.
+}
+
+- (void)lineIn:(NSString *)uid
+{
+  NSString *header = [NSString stringWithFormat:kSonosTemplateTransportHeader, @"SetAVTransportURI"];
+  NSString *body = [NSString stringWithFormat:@""
+    "<u:SetAVTransportURI xmlns:u='urn:schemas-upnp-org:service:AVTransport:1'>"
+      "<InstanceID>0</InstanceID>"
+      "<CurrentURI>x-rincon-stream:%@</CurrentURI>"
+      "<CurrentURIMetaData></CurrentURIMetaData>"
+    "</u:SetAVTransportURI>", uid];
+  [self sendCommandToEndpoint:kSonosEndpointTransport action:header body:body complete:^(NSURLResponse *response, NSData *data, NSError *error) {
+    [self play:nil];
+  }];
 }
 
 - (void)join
@@ -188,7 +211,24 @@ static NSString *kSonosTemplateRenderingHeader = @"urn:schemas-upnp-org:service:
       "<InstanceID>0</InstanceID>"
     "</u:GetPositionInfo>";
   [self sendCommandToEndpoint:kSonosEndpointTransport action:header body:body complete:^(NSURLResponse *response, NSData *data, NSError *error) {
-    
+    // TODO: Parse response.
+  }];
+}
+
+- (void)search
+{
+  NSString *header = [NSString stringWithFormat:kSonosTemplateContentDirectorytHeader, @"ContentDirectory"];
+  NSString *body = @""
+    "<u:Browse xmlns:u='urn:schemas-upnp-org:service:ContentDirectory:1'>"
+      "<ObjectID>A:ARTIST</ObjectID>"
+      "<BrowseFlag>BrowseDirectChildren</BrowseFlag>"
+      "<Filter>*</Filter>"
+      "<StartingIndex>0</StartingIndex>"
+      "<RequestedCount>10</RequestedCount>"
+      "<SortCriteria>*</SortCriteria>"
+    "</u:Browse>";
+  [self sendCommandToEndpoint:kSonosEndpointContentDirectory action:header body:body complete:^(NSURLResponse *response, NSData *data, NSError *error) {
+    // TODO: Parse response.
   }];
 }
 

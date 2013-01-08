@@ -44,9 +44,9 @@
   return inputList;
 }
 
-- (void)addInputWithIP:(NSString *)aIP name:(NSString *)aName
+- (void)addInputWithIP:(NSString *)aIP name:(NSString *)aName uid:(NSString *)aUid
 {
-  PLInput *input = [[PLInput alloc] initWithIP:aIP name:aName];
+  PLInput *input = [[PLInput alloc] initWithIP:aIP name:aName uid:aUid];
   [inputList addObject:input];
 }
 

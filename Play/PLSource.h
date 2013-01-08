@@ -11,7 +11,8 @@
 @interface PLSource : NSObject
 
 @property (nonatomic, readwrite) NSString *name;
+@property (nonatomic, copy) void (^selectionBlock)();
 
-- (id)initWithName:(NSString *)aName;
+- (id)initWithName:(NSString *)aName selection:(void (^)())aSelectionBlock;
 
 @end

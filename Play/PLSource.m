@@ -11,11 +11,12 @@
 @implementation PLSource
 @synthesize name;
 
-- (id)initWithName:(NSString *)aName
+- (id)initWithName:(NSString *)aName selection:(void (^)())aSelectionBlock
 {
   self = [super init];
   if (self) {
     self.name = aName;
+    self.selectionBlock = aSelectionBlock;
   }
   return self;
 }

@@ -7,7 +7,7 @@
 //
 
 #import "PLNowPlayingViewController.h"
-#import "SonosAPI.h"
+#import "SonosController.h"
 #import "PLPrimaryBarButtonItem.h"
 #import "PLSong.h"
 
@@ -20,7 +20,7 @@ static float kControlBarButtonPadding = 20.0;
 
 @interface PLNowPlayingViewController ()
 {
-  SonosAPI *sonos;
+  SonosController *sonos;
   UIImageView *controlBar;
   UISlider *volumeSlider;
   UIButton *playPauseButton;
@@ -43,11 +43,6 @@ static float kControlBarButtonPadding = 20.0;
 
 - (id)init
 {
-  return [self initWithSong:nil];
-}
-
-- (id)initWithSong:(PLSong *)song
-{
   self = [super init];
   if (self) {
     [self.view setBackgroundColor:[UIColor colorWithRed:.2 green:.2 blue:.2 alpha:1]];
@@ -58,7 +53,7 @@ static float kControlBarButtonPadding = 20.0;
     UIBarButtonItem *doneButton = [[PLPrimaryBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(done)];
     [self.navigationItem setRightBarButtonItem:doneButton];
 
-    sonos = [[SonosAPI alloc] initWithIP:[[NSUserDefaults standardUserDefaults] objectForKey:@"current_input_ip"]];
+    sonos = [SonosController sharedController];
 
     songListData = @[
     [[PLSong alloc] initWithArtist:@"David Guetta"
@@ -92,7 +87,7 @@ static float kControlBarButtonPadding = 20.0;
 
     // Header: Album Art
     album = [[UIImageView alloc] initWithFrame:CGRectMake(0, 70, 320, 320)];
-//    [album setImage:[UIImage imageNamed:@"TempAlbum2.png"]];
+    [album setImage:[UIImage imageNamed:@"TempAlbum2.png"]];
     [tableHeader addSubview:album];
 
     // Header: Track Title
@@ -101,7 +96,7 @@ static float kControlBarButtonPadding = 20.0;
     [track setBackgroundColor:[UIColor clearColor]];
     [track setTextAlignment:NSTextAlignmentCenter];
     [track setFont:[UIFont systemFontOfSize:14]];
-//    [track setText:@"Titanium — Nothing But The Beat"];
+    [track setText:@"Titanium — Nothing But The Beat"];
     [tableHeader addSubview:track];
 
     // Header: Progress Bar
@@ -176,12 +171,32 @@ static float kControlBarButtonPadding = 20.0;
     [volumeSlider setThumbImage:[UIImage imageNamed:@"SliderThumbPressed.png"] forState:UIControlStateHighlighted];
     [volumeSlider addTarget:self action:@selector(volume:) forControlEvents:UIControlEventValueChanged];
     [controlBar addSubview:volumeSlider];
-    
+
     [speakersButton addTarget:sonos action:@selector(speakerIPs) forControlEvents:UIControlEventTouchUpInside];
 
-    if (song) {
-      [self setCurrentSong:song];
-    }
+//    [sonos trackInfo];
+  }
+  return self;
+}
+
+- (id)initWithSong:(PLSong *)song
+{
+  self = [self init];
+  if (self) {
+    [self setCurrentSong:song];
+  }
+  return self;
+}
+
+- (id)initWithLineIn:(NSString *)uid
+{
+  self = [self init];
+  if (self) {
+    [sonos lineIn:uid];
+    [album setImage:[UIImage imageNamed:@"LineIn.png"]];
+    [track setText:[NSString stringWithFormat:@"%@ - Line In", [[NSUserDefaults standardUserDefaults] objectForKey:@"current_input_name"]]];
+    [timeElapsed setText:@"00:00"];
+    [timeTotal setText:@"00:00"];
   }
   return self;
 }
@@ -209,8 +224,10 @@ static float kControlBarButtonPadding = 20.0;
 
 - (void)setCurrentSong:(PLSong *)song
 {
-  [track setText:song.title];
+
+  [track setText:[NSString stringWithFormat:@"%@ - %@", song.title, song.album]];
   [album setImage:song.albumArt];
+  [timeTotal setText:song.duration];
   [sonos play:song.uri];
 }
 

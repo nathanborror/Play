@@ -44,10 +44,10 @@
     [inputsTableView setDataSource:self];
     [self.view addSubview:inputsTableView];
 
-    // TODO: Remove this for production
+    // TODO: Remove this and load these using UPnP's discovery stuff
     PLInputStore *inputStore = [PLInputStore sharedStore];
-    [inputStore addInputWithIP:@"10.0.1.9" name:@"Living Room"];
-    [inputStore addInputWithIP:@"10.0.1.10" name:@"Bedroom"];
+    [inputStore addInputWithIP:@"10.0.1.9" name:@"Living Room" uid:@"RINCON_000E58D0540801400"];
+    [inputStore addInputWithIP:@"10.0.1.10" name:@"Bedroom" uid:@"RINCON_000E587641F201400"];
   }
   return self;
 }
@@ -94,8 +94,12 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
   PLInput *input = [[[PLInputStore sharedStore] allInputs] objectAtIndex:indexPath.row];
+
+  // TODO: This is going to become pretty unwieldy, I should probably find an
+  // alternative that just saves the whole input object.
   [[NSUserDefaults standardUserDefaults] setObject:input.ip forKey:@"current_input_ip"];
   [[NSUserDefaults standardUserDefaults] setObject:input.name forKey:@"current_input_name"];
+  [[NSUserDefaults standardUserDefaults] setObject:input.uid forKey:@"current_input_uid"];
 
   PLLibraryViewController *viewController = [[PLLibraryViewController alloc] init];
   [self.navigationController pushViewController:viewController animated:YES];
