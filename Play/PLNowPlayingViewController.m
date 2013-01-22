@@ -10,6 +10,7 @@
 #import "SonosController.h"
 #import "PLPrimaryBarButtonItem.h"
 #import "PLSong.h"
+#import "SonosResponse.h"
 
 static float kProgressPadding = 50.0;
 static float kControlBarPadding = 5.0;
@@ -174,7 +175,13 @@ static float kControlBarButtonPadding = 20.0;
 
     [speakersButton addTarget:sonos action:@selector(speakerIPs) forControlEvents:UIControlEventTouchUpInside];
 
-//    [sonos trackInfo];
+//    [sonos trackInfoWithCompletion:^(SonosResponse *response, NSError *error) {
+//      // TODO: Update labels and song position
+//    }];
+
+    [sonos browseWithCompletion:^(SonosResponse *response, NSError *error) {
+      //
+    }];
   }
   return self;
 }

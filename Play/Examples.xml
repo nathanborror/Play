@@ -1,0 +1,172 @@
+
+<!-- Example Template -->
+
+<?xml version="1.0" encoding="utf-8"?>
+<s:Envelope s:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" xmlns:s="http://schemas.xmlsoap.org/soap/envelope/">
+  <s:Body>
+    <u:Action xmlns:u="serviceType"></u:Action>
+  </s:Body>
+</s:Envelope>
+
+
+<!-- Browse Query -->
+
+METHOD: POST http://YOUR_SPEAKER_IP:1400/MediaServer/ContentDirectory/Control
+HEADER: SOAPACTION: "urn:schemas-upnp-org:service:ContentDirectory:1#Browse"
+BODY:
+<?xml version="1.0" encoding="utf-8"?>
+<s:Envelope s:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" xmlns:s="http://schemas.xmlsoap.org/soap/envelope/">
+  <s:Body>
+    <u:Browse xmlns:u="urn:schemas-upnp-org:service:ContentDirectory:1">
+      <ObjectID>A:ARTIST</ObjectID>
+      <BrowseFlag>BrowseDirectChildren</BrowseFlag>
+      <Filter>*</Filter>
+      <StartingIndex>0</StartingIndex>
+      <RequestCount>10</RequestCount>
+      <SortCriteria>*</SortCriteria>
+    </u:Browse>
+  </s:Body>
+</s:Envelope>
+
+RESPONSE:
+
+<s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/" s:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/">
+  <s:Body>
+    <u:BrowseResponse xmlns:u="urn:schemas-upnp-org:service:ContentDirectory:1">
+      <Result>
+        <DIDL-Lite xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:upnp="urn:schemas-upnp-org:metadata-1-0/upnp/" xmlns:r="urn:schemas-rinconnetworks-com:metadata-1-0/" xmlns="urn:schemas-upnp-org:metadata-1-0/DIDL-Lite/">
+          <container id="A:ARTIST/Album%20Leaf" parentID="A:ARTIST" restricted="true">
+            <dc:title>Album Leaf</dc:title>
+            <upnp:class>object.container.person.musicArtist</upnp:class>
+            <res protocolInfo="x-rincon-playlist:*:*:*">x-rincon-playlist:RINCON_000E58D0540801400#A:ARTIST/Album%20Leaf</res>
+          </container>
+          <container id="A:ARTIST/Angels%20%26%20Airwaves" parentID="A:ARTIST" restricted="true">
+            <dc:title>Angels &amp;amp; Airwaves</dc:title>
+            <upnp:class>object.container.person.musicArtist</upnp:class>
+            <res protocolInfo="x-rincon-playlist:*:*:*">x-rincon-playlist:RINCON_000E58D0540801400#A:ARTIST/Angels%20%26%20Airwaves</res>
+          </container>
+          <container id="A:ARTIST/Blackbird%20Blackbird" parentID="A:ARTIST" restricted="true">
+            <dc:title>Blackbird Blackbird</dc:title>
+            <upnp:class>object.container.person.musicArtist</upnp:class>
+            <res protocolInfo="x-rincon-playlist:*:*:*">x-rincon-playlist:RINCON_000E58D0540801400#A:ARTIST/Blackbird%20Blackbird</res>
+          </container>
+          <container id="A:ARTIST/Calmsound" parentID="A:ARTIST" restricted="true">
+            <dc:title>Calmsound</dc:title>
+            <upnp:class>object.container.person.musicArtist</upnp:class>
+            <res protocolInfo="x-rincon-playlist:*:*:*">x-rincon-playlist:RINCON_000E58D0540801400#A:ARTIST/Calmsound</res>
+          </container>
+          <container id="A:ARTIST/Damien%20Rice" parentID="A:ARTIST" restricted="true">
+            <dc:title>Damien Rice</dc:title>
+            <upnp:class>object.container.person.musicArtist</upnp:class>
+            <res protocolInfo="x-rincon-playlist:*:*:*">x-rincon-playlist:RINCON_000E58D0540801400#A:ARTIST/Damien%20Rice</res>
+          </container>
+        </DIDL-Lite>
+      </Result>
+      <NumberReturned>5</NumberReturned>
+      <TotalMatches>28</TotalMatches>
+      <UpdateID>0</UpdateID>
+    </u:BrowseResponse>
+  </s:Body>
+</s:Envelope>
+
+
+<!-- Pause -->
+
+METHOD: POST http://YOUR_SPEAKER_IP:1400/MediaRenderer/AVTransport/Control
+HEADER: SOAPACTION: "urn:schemas-upnp-org:service:AVTransport:1#Pause"
+BODY:
+<?xml version="1.0" encoding="utf-8"?>
+<s:Envelope s:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" xmlns:s="http://schemas.xmlsoap.org/soap/envelope/">
+  <s:Body>
+    <u:Pause xmlns:u="urn:schemas-upnp-org:service:AVTransport:1">
+      <InstanceID>0</InstanceID>
+      <Speed>1</Speed>
+    </u:Pause>
+  </s:Body>
+</s:Envelope>
+
+RESPONSE:
+<s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/" s:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/">
+  <s:Body>
+    <u:PauseResponse xmlns:u="urn:schemas-upnp-org:service:AVTransport:1"></u:PauseResponse>
+  </s:Body>
+</s:Envelope>
+
+
+<!-- Track Info -->
+
+METHOD: POST http://YOUR_SPEAKER_IP:1400/MediaRenderer/AVTransport/Control
+HEADER: SOAPACTION: "urn:schemas-upnp-org:service:AVTransport:1#GetPositionInfo"
+BODY:
+<?xml version="1.0" encoding="utf-8"?>
+<s:Envelope s:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" xmlns:s="http://schemas.xmlsoap.org/soap/envelope/">
+  <s:Body>
+    <u:GetPositionInfo xmlns:u='urn:schemas-upnp-org:service:AVTransport:1'>
+      <InstanceID>0</InstanceID>
+    </u:GetPositionInfo>
+  </s:Body>
+</s:Envelope>
+
+RESPONSE:
+
+<s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/" s:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/">
+  <s:Body>
+    <u:GetPositionInfoResponse xmlns:u="urn:schemas-upnp-org:service:AVTransport:1">
+      <Track>1</Track>
+      <TrackDuration>0:00:00</TrackDuration>
+      <TrackMetaData>
+        <DIDL-Lite xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:upnp="urn:schemas-upnp-org:metadata-1-0/upnp/" xmlns:r="urn:schemas-rinconnetworks-com:metadata-1-0/" xmlns="urn:schemas-upnp-org:metadata-1-0/DIDL-Lite/">
+          <item id="-1" parentID="-1" restricted="true">
+            <res protocolInfo="http-get:*:application/octet-stream:*">http://mobile-iPhone-D8D1CBAC4DA9.x-udn/music/track.adts?id=CCAE56B9C5E54482</res>
+            <r:streamContent></r:streamContent>
+            <dc:title>track.adts?id=CCAE56B9C5E54482</dc:title>
+            <upnp:class>object.item</upnp:class>
+          </item>
+        </DIDL-Lite>
+      </TrackMetaData>
+      <TrackURI>http://mobile-iPhone-D8D1CBAC4DA9.x-udn/music/track.adts?id=CCAE56B9C5E54482</TrackURI>
+      <RelTime>0:00:43</RelTime>
+      <AbsTime>NOT_IMPLEMENTED</AbsTime>
+      <RelCount>2147483647</RelCount>
+      <AbsCount>2147483647</AbsCount>
+    </u:GetPositionInfoResponse>
+  </s:Body>
+</s:Envelope>
+
+
+<!-- Play/Volume/AVTransportURI Response -->
+
+<s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/" s:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/">
+  <s:Body>
+    <u:PlayResponse xmlns:u="urn:schemas-upnp-org:service:AVTransport:1"></u:PlayResponse>
+  </s:Body>
+</s:Envelope>
+
+<s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/" s:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/">
+  <s:Body>
+    <u:SetVolumeResponse xmlns:u="urn:schemas-upnp-org:service:RenderingControl:1"></u:SetVolumeResponse>
+  </s:Body>
+</s:Envelope>
+
+<s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/" s:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/">
+  <s:Body>
+    <u:SetAVTransportURIResponse xmlns:u="urn:schemas-upnp-org:service:AVTransport:1"></u:SetAVTransportURIResponse>
+  </s:Body>
+</s:Envelope>
+
+
+<!-- Error Response -->
+
+<s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/" s:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/">
+  <s:Body>
+    <s:Fault>
+      <faultcode>s:Client</faultcode>
+      <faultstring>UPnPError</faultstring>
+      <detail>
+        <UPnPError xmlns="urn:schemas-upnp-org:control-1-0">
+          <errorCode>701</errorCode>
+        </UPnPError>
+      </detail>
+    </s:Fault>
+  </s:Body>
+</s:Envelope>

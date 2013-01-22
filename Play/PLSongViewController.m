@@ -60,8 +60,6 @@
   UIImage *albumArt = [[item valueForProperty:MPMediaItemPropertyArtwork] imageWithSize:CGSizeMake(CGRectGetHeight(cell.bounds), CGRectGetHeight(cell.bounds))];
   [cell.imageView setImage:albumArt];
 
-  NSLog(@"ID: %@", [item valueForProperty:MPMediaItemPropertyPersistentID]);
-
   return cell;
 }
 

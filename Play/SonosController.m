@@ -7,32 +7,16 @@
 //
 
 #import "SonosController.h"
+#import "SonosResponse.h"
+#import "PLConnection.h"
 
-static NSString *kSonosEndpointTransport = @"/MediaRenderer/AVTransport/Control";
-static NSString *kSonosEndpointRendering = @"/MediaRenderer/RenderingControl/Control";
-static NSString *kSonosEndpointDevice = @"/DeviceProperties/Control";
-static NSString *kSonosEndpointContentDirectory = @"/MediaServer/ContentDirectory/Control";
-
-static NSString *kSonosRequest = @""
-  "<s:Envelope xmlns:s='http://schemas.xmlsoap.org/soap/envelope/' s:encodingStyle='http://schemas.xmlsoap.org/soap/encoding/'>"
-    "<s:Body>%@</s:Body>"
-  "</s:Envelope>";
-
-static NSString *kSonosTemplateTransportHeader = @"urn:schemas-upnp-org:service:AVTransport:1#%@";
-static NSString *kSonosTemplateTransportBody = @""
-  "<u:%@ xmlns:u='urn:schemas-upnp-org:service:AVTransport:1'>"
-    "<InstanceID>0</InstanceID>"
-    "<Speed>1</Speed>"
-  "</u:%@>";
-
-static NSString *kSonosTemplateRenderingHeader = @"urn:schemas-upnp-org:service:RenderingControl:1#%@";
-static NSString *kSonosTemplateContentDirectorytHeader = @"urn:schemas-upnp-org:service:ContentDirectory:1#%@";
 
 @interface SonosController ()
 {
   NSString *sonosURL;
   NSInputStream *inputStream;
   int volumeLevel;
+  SonosResponse *response;
 }
 @end
 
@@ -58,60 +42,57 @@ static NSString *kSonosTemplateContentDirectorytHeader = @"urn:schemas-upnp-org:
   return sharedController;
 }
 
-- (void)sendTransportCommand:(NSString *)command
-                    complete:(void (^)(NSURLResponse *response, NSData *data, NSError *error))block
+- (SonosResponse *)fetchSOAPURL:(NSURL *)url
+                        action:(NSString *)action
+                     body:(NSString *)body
+               withCompletion:(void(^)(SonosResponse *body, NSError *error))block
 {
-  [self sendCommandToEndpoint:kSonosEndpointTransport
-                       action:[NSString stringWithFormat:kSonosTemplateTransportHeader, command]
-                         body:[NSString stringWithFormat:kSonosTemplateTransportBody, command, command]
-               complete:block];
-}
+  NSString *envelope = [NSString stringWithFormat:@""
+    "<s:Envelope xmlns:s='http://schemas.xmlsoap.org/soap/envelope/' s:encodingStyle='http://schemas.xmlsoap.org/soap/encoding/'>"
+      "<s:Body>%@</s:Body>"
+    "</s:Envelope>", body];
 
-- (void)sendCommandToEndpoint:(NSString *)endpoint
-                       action:(NSString *)action
-                         body:(NSString *)body
-                     complete:(void (^)(NSURLResponse *response, NSData *data, NSError *error))block
-{
-  NSString *envelope = [NSString stringWithFormat:kSonosRequest, body];
-  
-  NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", sonosURL, endpoint]];
   NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
-  
   [request setHTTPMethod:@"POST"];
   [request addValue:@"text/xml" forHTTPHeaderField:@"Content-Type"];
   [request addValue:action forHTTPHeaderField:@"SOAPACTION"];
   [request setHTTPBody:[envelope dataUsingEncoding:NSUTF8StringEncoding]];
 
-  NSLog(@"REQUEST:\n %@\n\n", envelope);
+  NSLog(@"\n\nACTION: %@", action);
 
-  NSOperationQueue *queue = [[NSOperationQueue alloc] init];
-  
-  [NSURLConnection sendAsynchronousRequest:request queue:queue completionHandler:
-    ^(NSURLResponse *response, NSData *data, NSError *error) {
-      if (block) {
-        NSLog(@"RESPONSE DATA:\n %@\n\n", [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding]);
-        block(response, data, error);
-      }
-    }];
+  SonosResponse *res = [[SonosResponse alloc] init];
+  PLConnection *connection = [[PLConnection alloc] initWithRequest:request];
+
+  [connection setCompletionBlock:block];
+  [connection setXmlRootObject:res];
+  [connection start];
+
+  return res;
 }
 
 - (void)play:(NSString *)uri
 {
   if (uri) {
-    NSString *header = [NSString stringWithFormat:kSonosTemplateTransportHeader, @"SetAVTransportURI"];
+    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", sonosURL, @"/MediaRenderer/AVTransport/Control"]];
+    NSString *action = @"urn:schemas-upnp-org:service:AVTransport:1#SetAVTransportURI";
     NSString *body = [NSString stringWithFormat:@""
       "<u:SetAVTransportURI xmlns:u='urn:schemas-upnp-org:service:AVTransport:1'>"
         "<InstanceID>0</InstanceID>"
         "<CurrentURI>%@</CurrentURI>"
         "<CurrentURIMetaData></CurrentURIMetaData>"
       "</u:SetAVTransportURI>", uri];
-    [self sendCommandToEndpoint:kSonosEndpointTransport action:header body:body complete:^(NSURLResponse *response, NSData *data, NSError *error) {
+    response = [self fetchSOAPURL:url action:action body:body withCompletion:^(SonosResponse *body, NSError *error) {
       [self play:nil];
     }];
   } else {
-    NSString *header = [NSString stringWithFormat:kSonosTemplateTransportHeader, @"Play"];
-    NSString *body = [NSString stringWithFormat:kSonosTemplateTransportBody, @"Play", @"Play"];
-    [self sendCommandToEndpoint:kSonosEndpointTransport action:header body:body complete:^(NSURLResponse *response, NSData *data, NSError *error) {
+    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", sonosURL, @"/MediaRenderer/AVTransport/Control"]];
+    NSString *action = @"urn:schemas-upnp-org:service:AVTransport:1#Play";
+    NSString *body = @""
+      "<u:Play xmlns:u='urn:schemas-upnp-org:service:AVTransport:1'>"
+        "<InstanceID>0</InstanceID>"
+        "<Speed>1</Speed>"
+      "</u:Play>";
+    response = [self fetchSOAPURL:url action:action body:body withCompletion:^(SonosResponse *body, NSError *error) {
       _isPlaying = YES;
     }];
   }
@@ -119,28 +100,62 @@ static NSString *kSonosTemplateContentDirectorytHeader = @"urn:schemas-upnp-org:
 
 - (void)pause
 {
-  NSString *header = [NSString stringWithFormat:kSonosTemplateTransportHeader, @"Pause"];
-  NSString *body = [NSString stringWithFormat:kSonosTemplateTransportBody, @"Pause", @"Pause"];
-  [self sendCommandToEndpoint:kSonosEndpointTransport action:header body:body complete:^(NSURLResponse *response, NSData *data, NSError *error) {
+  NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", sonosURL, @"/MediaRenderer/AVTransport/Control"]];
+  NSString *action = @"urn:schemas-upnp-org:service:AVTransport:1#Pause";
+  NSString *body = @""
+    "<u:Pause xmlns:u='urn:schemas-upnp-org:service:AVTransport:1'>"
+      "<InstanceID>0</InstanceID>"
+      "<Speed>1</Speed>"
+    "</u:Pause>";
+
+  response = [self fetchSOAPURL:url action:action body:body withCompletion:^(SonosResponse *body, NSError *error) {
     _isPlaying = NO;
   }];
 }
 
 - (void)stop
 {
-  [self sendTransportCommand:@"Stop" complete:^(NSURLResponse *response, NSData *data, NSError *error) {
-    _isPlaying = NO; // TODO: Check to make sure this is actually true.
+  NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", sonosURL, @"/MediaRenderer/AVTransport/Control"]];
+  NSString *action = @"urn:schemas-upnp-org:service:AVTransport:1#Stop";
+  NSString *body = @""
+    "<u:Stop xmlns:u='urn:schemas-upnp-org:service:AVTransport:1'>"
+      "<InstanceID>0</InstanceID>"
+      "<Speed>1</Speed>"
+    "</u:Stop>";
+
+  response = [self fetchSOAPURL:url action:action body:body withCompletion:^(SonosResponse *body, NSError *error) {
+    _isPlaying = NO;
   }];
 }
 
 - (void)next
 {
-  [self sendTransportCommand:@"Next" complete:nil];
+  NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", sonosURL, @"/MediaRenderer/AVTransport/Control"]];
+  NSString *action = @"urn:schemas-upnp-org:service:AVTransport:1#Next";
+  NSString *body = @""
+    "<u:Next xmlns:u='urn:schemas-upnp-org:service:AVTransport:1'>"
+      "<InstanceID>0</InstanceID>"
+      "<Speed>1</Speed>"
+    "</u:Next>";
+
+  response = [self fetchSOAPURL:url action:action body:body withCompletion:^(SonosResponse *body, NSError *error) {
+    _isPlaying = YES;
+  }];
 }
 
 - (void)previous
 {
-  [self sendTransportCommand:@"Previous" complete:nil];
+  NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", sonosURL, @"/MediaRenderer/AVTransport/Control"]];
+  NSString *action = @"urn:schemas-upnp-org:service:AVTransport:1#Previous";
+  NSString *body = @""
+    "<u:Previous xmlns:u='urn:schemas-upnp-org:service:AVTransport:1'>"
+      "<InstanceID>0</InstanceID>"
+      "<Speed>1</Speed>"
+    "</u:Previous>";
+
+  response = [self fetchSOAPURL:url action:action body:body withCompletion:^(SonosResponse *body, NSError *error) {
+    _isPlaying = YES;
+  }];
 }
 
 - (void)speakers
@@ -150,41 +165,33 @@ static NSString *kSonosTemplateContentDirectorytHeader = @"urn:schemas-upnp-org:
 
 - (void)lineIn:(NSString *)uid
 {
-  NSString *header = [NSString stringWithFormat:kSonosTemplateTransportHeader, @"SetAVTransportURI"];
+  NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", sonosURL, @"/MediaRenderer/AVTransport/Control"]];
+  NSString *action = @"urn:schemas-upnp-org:service:AVTransport:1#SetAVTransportURI";
   NSString *body = [NSString stringWithFormat:@""
     "<u:SetAVTransportURI xmlns:u='urn:schemas-upnp-org:service:AVTransport:1'>"
       "<InstanceID>0</InstanceID>"
       "<CurrentURI>x-rincon-stream:%@</CurrentURI>"
       "<CurrentURIMetaData></CurrentURIMetaData>"
     "</u:SetAVTransportURI>", uid];
-  [self sendCommandToEndpoint:kSonosEndpointTransport action:header body:body complete:^(NSURLResponse *response, NSData *data, NSError *error) {
-    [self play:nil];
-  }];
-}
 
-- (void)join
-{
-  NSString *body = @""
-    "<u:SetAVTransportURI xmlns:u='urn:schemas-upnp-org:service:AVTransport:1'>"
-      "<InstanceID>0</InstanceID>"
-      "<CurrentURI>x-rincon:</CurrentURI>"
-      "<CurrentURIMetaData></CurrentURIMetaData>"
-    "</u:SetAVTransportURI>";
-  [self sendCommandToEndpoint:kSonosEndpointTransport
-                       action:[NSString stringWithFormat:kSonosTemplateTransportHeader, @"SetAVTransportURI"]
-                         body:body
-                     complete:nil];
+  response = [self fetchSOAPURL:url action:action body:body withCompletion:^(SonosResponse *body, NSError *error) {
+    _isPlaying = YES;
+  }];
 }
 
 - (void)volume
 {
-  NSString *header = [NSString stringWithFormat:kSonosTemplateRenderingHeader, @"GetVolume"];
+  NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", sonosURL, @"/MediaRenderer/RenderingControl/Control"]];
+  NSString *action = @"urn:schemas-upnp-org:service:RenderingControl:1#GetVolume";
   NSString *body = @""
     "<u:GetVolume xmlns:u='urn:schemas-upnp-org:service:RenderingControl:1'>"
       "<InstanceID>0</InstanceID>"
       "<Channel>Master</Channel>"
     "</u:GetVolume>";
-  [self sendCommandToEndpoint:kSonosEndpointRendering action:header body:body complete:nil];
+
+  response = [self fetchSOAPURL:url action:action body:body withCompletion:^(SonosResponse *body, NSError *error) {
+    // TODO: Do something
+  }];
 }
 
 - (void)volume:(int)volume
@@ -192,44 +199,47 @@ static NSString *kSonosTemplateContentDirectorytHeader = @"urn:schemas-upnp-org:
   if (volumeLevel == volume) {
     return;
   }
-  NSString *header = [NSString stringWithFormat:kSonosTemplateRenderingHeader, @"SetVolume"];
+
+  NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", sonosURL, @"/MediaRenderer/RenderingControl/Control"]];
+  NSString *action = @"urn:schemas-upnp-org:service:RenderingControl:1#SetVolume";
   NSString *body = [NSString stringWithFormat:@""
     "<u:SetVolume xmlns:u='urn:schemas-upnp-org:service:RenderingControl:1'>"
       "<InstanceID>0</InstanceID>"
       "<Channel>Master</Channel>"
       "<DesiredVolume>%d</DesiredVolume>"
     "</u:SetVolume>", volume];
-  [self sendCommandToEndpoint:kSonosEndpointRendering action:header body:body complete:nil];
-  volumeLevel = volume;
+
+  response = [self fetchSOAPURL:url action:action body:body withCompletion:^(SonosResponse *body, NSError *error) {
+    volumeLevel = volume;
+  }];
 }
 
-- (void)trackInfo
+- (void)trackInfoWithCompletion:(void(^)(SonosResponse *response, NSError *error))block
 {
-  NSString *header = [NSString stringWithFormat:kSonosTemplateTransportHeader, @"GetPositionInfo"];
+  NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", sonosURL, @"/MediaRenderer/AVTransport/Control"]];
+  NSString *action = @"urn:schemas-upnp-org:service:AVTransport:1#GetPositionInfo";
   NSString *body = @""
     "<u:GetPositionInfo xmlns:u='urn:schemas-upnp-org:service:AVTransport:1'>"
       "<InstanceID>0</InstanceID>"
     "</u:GetPositionInfo>";
-  [self sendCommandToEndpoint:kSonosEndpointTransport action:header body:body complete:^(NSURLResponse *response, NSData *data, NSError *error) {
-    // TODO: Parse response.
-  }];
+
+  response = [self fetchSOAPURL:url action:action body:body withCompletion:block];
 }
 
-- (void)search
+- (void)browseWithCompletion:(void (^)(SonosResponse *, NSError *))block
 {
-  NSString *header = [NSString stringWithFormat:kSonosTemplateContentDirectorytHeader, @"ContentDirectory"];
+  NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", sonosURL, @"/MediaServer/ContentDirectory/Control"]];
+  NSString *action = @"urn:schemas-upnp-org:service:ContentDirectory:1#Browse";
   NSString *body = @""
     "<u:Browse xmlns:u='urn:schemas-upnp-org:service:ContentDirectory:1'>"
       "<ObjectID>A:ARTIST</ObjectID>"
       "<BrowseFlag>BrowseDirectChildren</BrowseFlag>"
       "<Filter>*</Filter>"
       "<StartingIndex>0</StartingIndex>"
-      "<RequestedCount>10</RequestedCount>"
+      "<RequestedCount>5</RequestedCount>"
       "<SortCriteria>*</SortCriteria>"
     "</u:Browse>";
-  [self sendCommandToEndpoint:kSonosEndpointContentDirectory action:header body:body complete:^(NSURLResponse *response, NSData *data, NSError *error) {
-    // TODO: Parse response.
-  }];
+  response = [self fetchSOAPURL:url action:action body:body withCompletion:block];
 }
 
 @end

@@ -8,6 +8,8 @@
 
 #import <Foundation/Foundation.h>
 
+@class SonosResponse;
+
 @interface SonosController : NSObject
 
 @property (nonatomic, readonly) BOOL isPlaying;
@@ -16,16 +18,20 @@
 
 + (SonosController *)sharedController;
 
+- (SonosResponse *)fetchSOAPURL:(NSURL *)url
+                        action:(NSString *)action
+                             body:(NSString *)body
+                   withCompletion:(void(^)(SonosResponse *body, NSError *error))block;
+
 - (void)play:(NSString *)uri;
 - (void)pause;
 - (void)stop;
 - (void)next;
 - (void)previous;
-- (void)join;
 - (void)volume;
 - (void)volume:(int)volume;
-- (void)trackInfo;
 - (void)lineIn:(NSString *)uid;
-- (void)search;
+- (void)trackInfoWithCompletion:(void(^)(SonosResponse *response, NSError *error))block;
+- (void)browseWithCompletion:(void(^)(SonosResponse *response, NSError *error))block;
 
 @end
