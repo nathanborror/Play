@@ -10,6 +10,8 @@
 
 @interface SonosMockResponses : NSObject
 
-+ (NSData *)trackInfoResponse;
++ (SonosMockResponses *)sharedResponses;
+
+- (NSData *)responseFor:(NSString *)action;
 
 @end

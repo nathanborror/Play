@@ -10,10 +10,11 @@
 #import <QuartzCore/QuartzCore.h>
 
 @class PLSong;
+@class SonosInput;
 
 @interface PLNowPlayingViewController : UIViewController <UITableViewDelegate, UITableViewDataSource>
 
 - (id)initWithSong:(PLSong *)song;
-- (id)initWithLineIn:(NSString *)uid;
+- (id)initWithLineIn:(SonosInput *)input;
 
 @end

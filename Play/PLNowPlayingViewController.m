@@ -10,6 +10,8 @@
 #import "SonosController.h"
 #import "PLSong.h"
 #import "SonosResponse.h"
+#import "SonosInputStore.h"
+#import "SonosInput.h"
 
 static const CGFloat kProgressPadding = 50.0;
 static const CGFloat kControlBarPadding = 5.0;
@@ -187,15 +189,12 @@ static const CGFloat kControlBarButtonPadding = 20.0;
     
     [self.view addSubview:controlBar];
 
-
-//    [sonos trackInfoWithCompletion:^(SonosResponse *response, NSError *error) {
-//      // TODO: Update labels and song position
-//      NSLog(@"RESPONSE: %@", response.action);
-//      NSLog(@"TEST: %@", error.localizedDescription);
-//    }];
-//    [sonos browseWithCompletion:^(SonosResponse *response, NSError *error) {
-//      //
-//    }];
+    [sonos trackInfo:nil completion:^(SonosResponse *response, NSError *error) {
+      NSLog(@"TrackInfo Response: %@", response);
+      if (error) {
+        NSLog(@"TrackInfo Error: %@", error.localizedDescription);
+      }
+    }];
   }
   return self;
 }
@@ -209,13 +208,13 @@ static const CGFloat kControlBarButtonPadding = 20.0;
   return self;
 }
 
-- (id)initWithLineIn:(NSString *)uid
+- (id)initWithLineIn:(SonosInput *)input
 {
   self = [self init];
   if (self) {
-    [sonos lineIn:uid];
+    [sonos lineIn:input completion:nil];
     [album setImage:[UIImage imageNamed:@"LineIn.png"]];
-    [title setText:[NSString stringWithFormat:@"%@ - Line In", [[NSUserDefaults standardUserDefaults] objectForKey:@"current_input_name"]]];
+    [title setText:[NSString stringWithFormat:@"%@ - Line In", [input name]]];
     [timeElapsed setText:@"00:00"];
     [timeTotal setText:@"00:00"];
   }
@@ -232,17 +231,27 @@ static const CGFloat kControlBarButtonPadding = 20.0;
 - (void)playPause
 {
   if (sonos.isPlaying) {
-    [sonos pause];
+    [sonos pause:nil completion:nil];
     [playPauseButton setBackgroundImage:[UIImage imageNamed:@"ControlPlay.png"] forState:UIControlStateNormal];
   } else {
-    [sonos play:nil];
+    [sonos play:nil track:nil completion:nil];
     [playPauseButton setBackgroundImage:[UIImage imageNamed:@"ControlPause.png"] forState:UIControlStateNormal];
   }
 }
 
+- (void)next
+{
+  [sonos next:nil completion:nil];
+}
+
+- (void)previous
+{
+  [sonos previous:nil completion:nil];
+}
+
 - (void)volume:(UISlider *)sender
 {
-  [sonos volume:(int)[sender value]];
+  [sonos volume:nil level:(int)[sender value] completion:nil];
 }
 
 - (void)done
@@ -255,7 +264,7 @@ static const CGFloat kControlBarButtonPadding = 20.0;
   [title setText:[NSString stringWithFormat:@"%@ - %@", song.title, song.album]];
   [album setImage:song.albumArt];
   [timeTotal setText:song.duration];
-  [sonos play:song.uri];
+  [sonos play:nil track:[song uri] completion:nil];
 }
 
 - (void)willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration

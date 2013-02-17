@@ -8,8 +8,9 @@
 
 #import "SonosController.h"
 #import "SonosResponse.h"
-#import "PLConnection.h"
-
+#import "SonosConnection.h"
+#import "SonosInput.h"
+#import "SonosInputStore.h"
 
 @interface SonosController ()
 {
@@ -22,11 +23,11 @@
 
 @implementation SonosController
 
-- (id)initWithIP:(NSString *)ip
+- (id)initWithInput:(SonosInput *)input
 {
   self = [super init];
   if (self) {
-    sonosURL = [NSString stringWithFormat:@"http://%@:1400", ip];
+    sonosURL = [NSString stringWithFormat:@"http://%@:1400", input.ip];
     _isPlaying = YES;
     volumeLevel = 0;
   }
@@ -37,7 +38,7 @@
 {
   static SonosController *sharedController = nil;
   if (!sharedController) {
-    sharedController = [[SonosController alloc] initWithIP:[[NSUserDefaults standardUserDefaults] objectForKey:@"current_input_ip"]];
+    sharedController = [[SonosController alloc] initWithInput:[[SonosInputStore sharedStore] master]];
   }
   return sharedController;
 }
@@ -45,7 +46,7 @@
 - (SonosResponse *)fetchSOAPURL:(NSURL *)url
                         action:(NSString *)action
                      body:(NSString *)body
-               withCompletion:(void(^)(SonosResponse *body, NSError *error))block
+               completion:(void(^)(SonosResponse *body, NSError *error))block
 {
   NSString *envelope = [NSString stringWithFormat:@""
     "<s:Envelope xmlns:s='http://schemas.xmlsoap.org/soap/envelope/' s:encodingStyle='http://schemas.xmlsoap.org/soap/encoding/'>"
@@ -58,10 +59,10 @@
   [request addValue:action forHTTPHeaderField:@"SOAPACTION"];
   [request setHTTPBody:[envelope dataUsingEncoding:NSUTF8StringEncoding]];
 
-  NSLog(@"\n\nACTION: %@", action);
+//  NSLog(@"\n\nACTION: %@", action);
 
   SonosResponse *res = [[SonosResponse alloc] init];
-  PLConnection *connection = [[PLConnection alloc] initWithRequest:request];
+  SonosConnection *connection = [[SonosConnection alloc] initWithRequest:request];
 
   [connection setCompletionBlock:block];
   [connection setXmlRootObject:res];
@@ -70,9 +71,9 @@
   return res;
 }
 
-- (void)play:(NSString *)uri
+- (void)play:(SonosInput *)input track:(NSString *)track completion:(void (^)(SonosResponse *, NSError *))block
 {
-  if (uri) {
+  if (track) {
     NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", sonosURL, @"/MediaRenderer/AVTransport/Control"]];
     NSString *action = @"urn:schemas-upnp-org:service:AVTransport:1#SetAVTransportURI";
     NSString *body = [NSString stringWithFormat:@""
@@ -80,9 +81,9 @@
         "<InstanceID>0</InstanceID>"
         "<CurrentURI>%@</CurrentURI>"
         "<CurrentURIMetaData></CurrentURIMetaData>"
-      "</u:SetAVTransportURI>", uri];
-    response = [self fetchSOAPURL:url action:action body:body withCompletion:^(SonosResponse *body, NSError *error) {
-      [self play:nil];
+      "</u:SetAVTransportURI>", track];
+    response = [self fetchSOAPURL:url action:action body:body completion:^(SonosResponse *body, NSError *error) {
+      [self play:input track:nil completion:block];
     }];
   } else {
     NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", sonosURL, @"/MediaRenderer/AVTransport/Control"]];
@@ -92,13 +93,16 @@
         "<InstanceID>0</InstanceID>"
         "<Speed>1</Speed>"
       "</u:Play>";
-    response = [self fetchSOAPURL:url action:action body:body withCompletion:^(SonosResponse *body, NSError *error) {
+    response = [self fetchSOAPURL:url action:action body:body completion:^(SonosResponse *body, NSError *error) {
       _isPlaying = YES;
+      if (block) {
+        block(body, error);
+      }
     }];
   }
 }
 
-- (void)pause
+- (void)pause:(SonosInput *)input completion:(void (^)(SonosResponse *, NSError *))block
 {
   NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", sonosURL, @"/MediaRenderer/AVTransport/Control"]];
   NSString *action = @"urn:schemas-upnp-org:service:AVTransport:1#Pause";
@@ -108,12 +112,15 @@
       "<Speed>1</Speed>"
     "</u:Pause>";
 
-  response = [self fetchSOAPURL:url action:action body:body withCompletion:^(SonosResponse *body, NSError *error) {
+  response = [self fetchSOAPURL:url action:action body:body completion:^(SonosResponse *body, NSError *error) {
     _isPlaying = NO;
+    if (block) {
+      block(body, error);
+    }
   }];
 }
 
-- (void)stop
+- (void)stop:(SonosInput *)input completion:(void (^)(SonosResponse *, NSError *))block
 {
   NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", sonosURL, @"/MediaRenderer/AVTransport/Control"]];
   NSString *action = @"urn:schemas-upnp-org:service:AVTransport:1#Stop";
@@ -123,12 +130,15 @@
       "<Speed>1</Speed>"
     "</u:Stop>";
 
-  response = [self fetchSOAPURL:url action:action body:body withCompletion:^(SonosResponse *body, NSError *error) {
+  response = [self fetchSOAPURL:url action:action body:body completion:^(SonosResponse *body, NSError *error) {
     _isPlaying = NO;
+    if (block) {
+      block(body, error);
+    }
   }];
 }
 
-- (void)next
+- (void)next:(SonosInput *)input completion:(void (^)(SonosResponse *, NSError *))block
 {
   NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", sonosURL, @"/MediaRenderer/AVTransport/Control"]];
   NSString *action = @"urn:schemas-upnp-org:service:AVTransport:1#Next";
@@ -138,12 +148,15 @@
       "<Speed>1</Speed>"
     "</u:Next>";
 
-  response = [self fetchSOAPURL:url action:action body:body withCompletion:^(SonosResponse *body, NSError *error) {
+  response = [self fetchSOAPURL:url action:action body:body completion:^(SonosResponse *body, NSError *error) {
     _isPlaying = YES;
+    if (block) {
+      block(body, error);
+    }
   }];
 }
 
-- (void)previous
+- (void)previous:(SonosInput *)input completion:(void (^)(SonosResponse *, NSError *))block
 {
   NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", sonosURL, @"/MediaRenderer/AVTransport/Control"]];
   NSString *action = @"urn:schemas-upnp-org:service:AVTransport:1#Previous";
@@ -153,17 +166,15 @@
       "<Speed>1</Speed>"
     "</u:Previous>";
 
-  response = [self fetchSOAPURL:url action:action body:body withCompletion:^(SonosResponse *body, NSError *error) {
+  response = [self fetchSOAPURL:url action:action body:body completion:^(SonosResponse *body, NSError *error) {
     _isPlaying = YES;
+    if (block) {
+      block(body, error);
+    }
   }];
 }
 
-- (void)speakers
-{
-  // TODO: Discover speakers using UPnP's discovery stuff.
-}
-
-- (void)lineIn:(NSString *)uid
+- (void)lineIn:(SonosInput *)input completion:(void (^)(SonosResponse *, NSError *))block
 {
   NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", sonosURL, @"/MediaRenderer/AVTransport/Control"]];
   NSString *action = @"urn:schemas-upnp-org:service:AVTransport:1#SetAVTransportURI";
@@ -172,14 +183,17 @@
       "<InstanceID>0</InstanceID>"
       "<CurrentURI>x-rincon-stream:%@</CurrentURI>"
       "<CurrentURIMetaData></CurrentURIMetaData>"
-    "</u:SetAVTransportURI>", uid];
+    "</u:SetAVTransportURI>", input.uid];
 
-  response = [self fetchSOAPURL:url action:action body:body withCompletion:^(SonosResponse *body, NSError *error) {
+  response = [self fetchSOAPURL:url action:action body:body completion:^(SonosResponse *body, NSError *error) {
     _isPlaying = YES;
+    if (block) {
+      block(body, error);
+    }
   }];
 }
 
-- (void)volume
+- (void)volume:(SonosInput *)input completion:(void (^)(SonosResponse *, NSError *))block
 {
   NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", sonosURL, @"/MediaRenderer/RenderingControl/Control"]];
   NSString *action = @"urn:schemas-upnp-org:service:RenderingControl:1#GetVolume";
@@ -189,14 +203,12 @@
       "<Channel>Master</Channel>"
     "</u:GetVolume>";
 
-  response = [self fetchSOAPURL:url action:action body:body withCompletion:^(SonosResponse *body, NSError *error) {
-    // TODO: Do something
-  }];
+  response = [self fetchSOAPURL:url action:action body:body completion:block];
 }
 
-- (void)volume:(int)volume
+- (void)volume:(SonosInput *)input level:(int)level completion:(void (^)(SonosResponse *, NSError *))block
 {
-  if (volumeLevel == volume) {
+  if (volumeLevel == level) {
     return;
   }
 
@@ -207,14 +219,17 @@
       "<InstanceID>0</InstanceID>"
       "<Channel>Master</Channel>"
       "<DesiredVolume>%d</DesiredVolume>"
-    "</u:SetVolume>", volume];
+    "</u:SetVolume>", level];
 
-  response = [self fetchSOAPURL:url action:action body:body withCompletion:^(SonosResponse *body, NSError *error) {
-    volumeLevel = volume;
+  response = [self fetchSOAPURL:url action:action body:body completion:^(SonosResponse *body, NSError *error) {
+    volumeLevel = level;
+    if (block) {
+      block(body, error);
+    }
   }];
 }
 
-- (void)trackInfoWithCompletion:(void(^)(SonosResponse *response, NSError *error))block
+- (void)trackInfo:(SonosInput *)input completion:(void (^)(SonosResponse *, NSError *))block
 {
   NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", sonosURL, @"/MediaRenderer/AVTransport/Control"]];
   NSString *action = @"urn:schemas-upnp-org:service:AVTransport:1#GetPositionInfo";
@@ -223,10 +238,10 @@
       "<InstanceID>0</InstanceID>"
     "</u:GetPositionInfo>";
 
-  response = [self fetchSOAPURL:url action:action body:body withCompletion:block];
+  response = [self fetchSOAPURL:url action:action body:body completion:block];
 }
 
-- (void)browseWithCompletion:(void (^)(SonosResponse *, NSError *))block
+- (void)browse:(SonosInput *)input completion:(void (^)(SonosResponse *, NSError *))block
 {
   NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", sonosURL, @"/MediaServer/ContentDirectory/Control"]];
   NSString *action = @"urn:schemas-upnp-org:service:ContentDirectory:1#Browse";
@@ -239,7 +254,7 @@
       "<RequestedCount>5</RequestedCount>"
       "<SortCriteria>*</SortCriteria>"
     "</u:Browse>";
-  response = [self fetchSOAPURL:url action:action body:body withCompletion:block];
+  response = [self fetchSOAPURL:url action:action body:body completion:block];
 }
 
 @end

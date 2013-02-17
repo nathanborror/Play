@@ -11,6 +11,7 @@
 #import "PLSource.h"
 #import "PLPlaylistsViewController.h"
 #import "PLNowPlayingViewController.h"
+#import "SonosInputStore.h"
 
 @interface PLLibraryViewController ()
 {
@@ -43,7 +44,7 @@
       [[PLSource alloc] initWithName:@"Rdio" selection:nil],
       [[PLSource alloc] initWithName:@"Radio Stations" selection:nil],
       [[PLSource alloc] initWithName:@"Line In" selection:^() {
-        PLNowPlayingViewController *viewController = [[PLNowPlayingViewController alloc] initWithLineIn:[[NSUserDefaults standardUserDefaults] objectForKey:@"current_input_uid"]];
+        PLNowPlayingViewController *viewController = [[PLNowPlayingViewController alloc] initWithLineIn:[[SonosInputStore sharedStore] master]];
         UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:viewController];
         [self.navigationController presentViewController:navController animated:YES completion:nil];
       }]

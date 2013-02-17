@@ -8,15 +8,15 @@
 
 #import "PLAddInputViewController.h"
 #import "PLTextField.h"
-#import "PLInput.h"
-#import "PLInputStore.h"
+#import "SonosInput.h"
+#import "SonosInputStore.h"
 #import "UIViewController+ModalCheck.h"
 
 static float kFieldPadding = 20.f;
 
 @interface PLAddInputViewController ()
 {
-  PLInput *input;
+  SonosInput *input;
   UITextField *ipTextField;
   UITextField *nameTextField;
   UITextField *uidTextField;
@@ -30,7 +30,7 @@ static float kFieldPadding = 20.f;
   return [self initWithInput:nil];
 }
 
-- (id)initWithInput:(PLInput *)aInput
+- (id)initWithInput:(SonosInput *)aInput
 {
   self = [super init];
   if (self) {
@@ -103,7 +103,7 @@ static float kFieldPadding = 20.f;
 
 - (void)done
 {
-  [[PLInputStore sharedStore] addInputWithIP:[ipTextField text] name:[nameTextField text] uid:[uidTextField text]];
+  [[SonosInputStore sharedStore] addInputWithIP:[ipTextField text] name:[nameTextField text] uid:[uidTextField text]];
   [self.navigationController dismissViewControllerAnimated:YES completion:nil];
 }
 

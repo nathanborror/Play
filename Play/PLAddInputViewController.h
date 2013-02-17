@@ -8,10 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
-@class PLInput;
+@class SonosInput;
 
 @interface PLAddInputViewController : UIViewController <UITextFieldDelegate>
 
-- (id)initWithInput:(PLInput *)aInput;
+- (id)initWithInput:(SonosInput *)aInput;
 
 @end

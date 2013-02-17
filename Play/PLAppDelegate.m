@@ -8,7 +8,7 @@
 
 #import "PLAppDelegate.h"
 #import "PLInputsViewController.h"
-#import "PLInputStore.h"
+#import "SonosInputStore.h"
 
 @implementation PLAppDelegate
 
@@ -34,7 +34,7 @@
 
 - (void)applicationDidEnterBackground:(UIApplication *)application
 {
-  [[PLInputStore sharedStore] saveChanges];
+  [[SonosInputStore sharedStore] saveChanges];
 }
 
 @end

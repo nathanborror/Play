@@ -10,18 +10,18 @@
 		D8021A4D16B5DB39002BEAF7 /* SonosMockResponses.m in Sources */ = {isa = PBXBuildFile; fileRef = D8021A4C16B5DB39002BEAF7 /* SonosMockResponses.m */; };
 		D8030BF016928583002F57B6 /* examples in Resources */ = {isa = PBXBuildFile; fileRef = D8030BEF16928583002F57B6 /* examples */; };
 		D819F64D16ADC2DA00B19B50 /* SonosResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = D819F64C16ADC2DA00B19B50 /* SonosResponse.m */; };
-		D819F65016ADC64300B19B50 /* PLConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = D819F64F16ADC64300B19B50 /* PLConnection.m */; };
+		D819F65016ADC64300B19B50 /* SonosConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = D819F64F16ADC64300B19B50 /* SonosConnection.m */; };
 		D819F65416AE047500B19B50 /* SonosPositionInfoResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = D819F65316AE047500B19B50 /* SonosPositionInfoResponse.m */; };
 		D819F65B16AE165800B19B50 /* SonosErrorResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = D819F65A16AE165800B19B50 /* SonosErrorResponse.m */; };
 		D819F65D16AE1BB900B19B50 /* Examples.xml in Resources */ = {isa = PBXBuildFile; fileRef = D819F65C16AE1BB900B19B50 /* Examples.xml */; };
 		D851A97316928C020014446F /* TempAlbum2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D851A97216928C020014446F /* TempAlbum2@2x.png */; };
 		D8824DDE1693880600D05AA0 /* PLAddInputViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D8824DDD1693880600D05AA0 /* PLAddInputViewController.m */; };
-		D8824DE916938CA300D05AA0 /* PLInput.m in Sources */ = {isa = PBXBuildFile; fileRef = D8824DE816938CA300D05AA0 /* PLInput.m */; };
+		D8824DE916938CA300D05AA0 /* SonosInput.m in Sources */ = {isa = PBXBuildFile; fileRef = D8824DE816938CA300D05AA0 /* SonosInput.m */; };
 		D8824E2B169392FF00D05AA0 /* PLSource.m in Sources */ = {isa = PBXBuildFile; fileRef = D8824E2A169392FF00D05AA0 /* PLSource.m */; };
 		D8824E2E1693992B00D05AA0 /* PLTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = D8824E2D1693992B00D05AA0 /* PLTextField.m */; };
 		D8824E3016939A3500D05AA0 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D8824E2F16939A3500D05AA0 /* QuartzCore.framework */; };
 		D8824E3416939C5D00D05AA0 /* UIViewController+ModalCheck.m in Sources */ = {isa = PBXBuildFile; fileRef = D8824E3316939C5D00D05AA0 /* UIViewController+ModalCheck.m */; };
-		D8824E371693A52200D05AA0 /* PLInputStore.m in Sources */ = {isa = PBXBuildFile; fileRef = D8824E361693A52200D05AA0 /* PLInputStore.m */; };
+		D8824E371693A52200D05AA0 /* SonosInputStore.m in Sources */ = {isa = PBXBuildFile; fileRef = D8824E361693A52200D05AA0 /* SonosInputStore.m */; };
 		D8824E3E1693CEA600D05AA0 /* PLPlaylistsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D8824E3D1693CEA500D05AA0 /* PLPlaylistsViewController.m */; };
 		D8824E401693D01700D05AA0 /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D8824E3F1693D01700D05AA0 /* MediaPlayer.framework */; };
 		D8824E431693D45500D05AA0 /* PLSongViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D8824E421693D45500D05AA0 /* PLSongViewController.m */; };
@@ -59,6 +59,7 @@
 		D898033F16D03DA100D30813 /* BarButtonItem@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D898033E16D03DA100D30813 /* BarButtonItem@2x.png */; };
 		D898034116D03E7800D30813 /* BarButtonItemDone@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D898034016D03E7800D30813 /* BarButtonItemDone@2x.png */; };
 		D898034316D06EC100D30813 /* BarButtonItemBack@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D898034216D06EC100D30813 /* BarButtonItemBack@2x.png */; };
+		D898034516D07A9000D30813 /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D898034416D07A9000D30813 /* Icon@2x.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -67,8 +68,8 @@
 		D8030BEF16928583002F57B6 /* examples */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = examples; sourceTree = "<group>"; };
 		D819F64B16ADC2DA00B19B50 /* SonosResponse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SonosResponse.h; sourceTree = "<group>"; };
 		D819F64C16ADC2DA00B19B50 /* SonosResponse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SonosResponse.m; sourceTree = "<group>"; };
-		D819F64E16ADC64300B19B50 /* PLConnection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PLConnection.h; sourceTree = "<group>"; };
-		D819F64F16ADC64300B19B50 /* PLConnection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PLConnection.m; sourceTree = "<group>"; };
+		D819F64E16ADC64300B19B50 /* SonosConnection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SonosConnection.h; sourceTree = "<group>"; };
+		D819F64F16ADC64300B19B50 /* SonosConnection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SonosConnection.m; sourceTree = "<group>"; };
 		D819F65216AE047500B19B50 /* SonosPositionInfoResponse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SonosPositionInfoResponse.h; sourceTree = "<group>"; };
 		D819F65316AE047500B19B50 /* SonosPositionInfoResponse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SonosPositionInfoResponse.m; sourceTree = "<group>"; };
 		D819F65916AE165800B19B50 /* SonosErrorResponse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SonosErrorResponse.h; sourceTree = "<group>"; };
@@ -77,8 +78,8 @@
 		D851A97216928C020014446F /* TempAlbum2@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "TempAlbum2@2x.png"; path = "Images/TempAlbum2@2x.png"; sourceTree = "<group>"; };
 		D8824DDC1693880600D05AA0 /* PLAddInputViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PLAddInputViewController.h; sourceTree = "<group>"; };
 		D8824DDD1693880600D05AA0 /* PLAddInputViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PLAddInputViewController.m; sourceTree = "<group>"; };
-		D8824DE716938CA300D05AA0 /* PLInput.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PLInput.h; sourceTree = "<group>"; };
-		D8824DE816938CA300D05AA0 /* PLInput.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PLInput.m; sourceTree = "<group>"; };
+		D8824DE716938CA300D05AA0 /* SonosInput.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SonosInput.h; sourceTree = "<group>"; };
+		D8824DE816938CA300D05AA0 /* SonosInput.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SonosInput.m; sourceTree = "<group>"; };
 		D8824E29169392FF00D05AA0 /* PLSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PLSource.h; sourceTree = "<group>"; };
 		D8824E2A169392FF00D05AA0 /* PLSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PLSource.m; sourceTree = "<group>"; };
 		D8824E2C1693992B00D05AA0 /* PLTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PLTextField.h; sourceTree = "<group>"; };
@@ -86,8 +87,8 @@
 		D8824E2F16939A3500D05AA0 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		D8824E3216939C5D00D05AA0 /* UIViewController+ModalCheck.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+ModalCheck.h"; sourceTree = "<group>"; };
 		D8824E3316939C5D00D05AA0 /* UIViewController+ModalCheck.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+ModalCheck.m"; sourceTree = "<group>"; };
-		D8824E351693A52100D05AA0 /* PLInputStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PLInputStore.h; sourceTree = "<group>"; };
-		D8824E361693A52200D05AA0 /* PLInputStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PLInputStore.m; sourceTree = "<group>"; };
+		D8824E351693A52100D05AA0 /* SonosInputStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SonosInputStore.h; sourceTree = "<group>"; };
+		D8824E361693A52200D05AA0 /* SonosInputStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SonosInputStore.m; sourceTree = "<group>"; };
 		D8824E3C1693CEA500D05AA0 /* PLPlaylistsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PLPlaylistsViewController.h; sourceTree = "<group>"; };
 		D8824E3D1693CEA500D05AA0 /* PLPlaylistsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PLPlaylistsViewController.m; sourceTree = "<group>"; };
 		D8824E3F1693D01700D05AA0 /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
@@ -136,6 +137,7 @@
 		D898033E16D03DA100D30813 /* BarButtonItem@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "BarButtonItem@2x.png"; path = "Images/BarButtonItem@2x.png"; sourceTree = "<group>"; };
 		D898034016D03E7800D30813 /* BarButtonItemDone@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "BarButtonItemDone@2x.png"; path = "Images/BarButtonItemDone@2x.png"; sourceTree = "<group>"; };
 		D898034216D06EC100D30813 /* BarButtonItemBack@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "BarButtonItemBack@2x.png"; path = "Images/BarButtonItemBack@2x.png"; sourceTree = "<group>"; };
+		D898034416D07A9000D30813 /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon@2x.png"; path = "Images/Icon@2x.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -162,15 +164,21 @@
 			children = (
 				D88EA8181691902A0011F6FB /* SonosController.h */,
 				D88EA8191691902A0011F6FB /* SonosController.m */,
+				D819F64E16ADC64300B19B50 /* SonosConnection.h */,
+				D819F64F16ADC64300B19B50 /* SonosConnection.m */,
 				D819F64B16ADC2DA00B19B50 /* SonosResponse.h */,
 				D819F64C16ADC2DA00B19B50 /* SonosResponse.m */,
 				D819F65216AE047500B19B50 /* SonosPositionInfoResponse.h */,
 				D819F65316AE047500B19B50 /* SonosPositionInfoResponse.m */,
 				D819F65916AE165800B19B50 /* SonosErrorResponse.h */,
 				D819F65A16AE165800B19B50 /* SonosErrorResponse.m */,
-				D819F65C16AE1BB900B19B50 /* Examples.xml */,
 				D8021A4B16B5DB39002BEAF7 /* SonosMockResponses.h */,
 				D8021A4C16B5DB39002BEAF7 /* SonosMockResponses.m */,
+				D8824E351693A52100D05AA0 /* SonosInputStore.h */,
+				D8824E361693A52200D05AA0 /* SonosInputStore.m */,
+				D8824DE716938CA300D05AA0 /* SonosInput.h */,
+				D8824DE816938CA300D05AA0 /* SonosInput.m */,
+				D819F65C16AE1BB900B19B50 /* Examples.xml */,
 			);
 			name = Sonos;
 			sourceTree = "<group>";
@@ -182,10 +190,6 @@
 				D88D11521692BE740039067F /* PLSong.m */,
 				D8824E29169392FF00D05AA0 /* PLSource.h */,
 				D8824E2A169392FF00D05AA0 /* PLSource.m */,
-				D8824E351693A52100D05AA0 /* PLInputStore.h */,
-				D8824E361693A52200D05AA0 /* PLInputStore.m */,
-				D8824DE716938CA300D05AA0 /* PLInput.h */,
-				D8824DE816938CA300D05AA0 /* PLInput.m */,
 			);
 			name = Data;
 			sourceTree = "<group>";
@@ -257,8 +261,6 @@
 				D8824E3D1693CEA500D05AA0 /* PLPlaylistsViewController.m */,
 				D8824E411693D45400D05AA0 /* PLSongViewController.h */,
 				D8824E421693D45500D05AA0 /* PLSongViewController.m */,
-				D819F64E16ADC64300B19B50 /* PLConnection.h */,
-				D819F64F16ADC64300B19B50 /* PLConnection.m */,
 				D819F65116AE044F00B19B50 /* Sonos */,
 				D8824DE616938C8900D05AA0 /* Data */,
 				D8824E281693921400D05AA0 /* UI Components */,
@@ -287,6 +289,7 @@
 		D88EA82716923E310011F6FB /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				D898034416D07A9000D30813 /* Icon@2x.png */,
 				D898034216D06EC100D30813 /* BarButtonItemBack@2x.png */,
 				D898034016D03E7800D30813 /* BarButtonItemDone@2x.png */,
 				D898033E16D03DA100D30813 /* BarButtonItem@2x.png */,
@@ -384,6 +387,7 @@
 				D898033F16D03DA100D30813 /* BarButtonItem@2x.png in Resources */,
 				D898034116D03E7800D30813 /* BarButtonItemDone@2x.png in Resources */,
 				D898034316D06EC100D30813 /* BarButtonItemBack@2x.png in Resources */,
+				D898034516D07A9000D30813 /* Icon@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -402,15 +406,15 @@
 				D88D116016937AC80039067F /* PLLibraryViewController.m in Sources */,
 				D88D116316937AE00039067F /* PLInputsViewController.m in Sources */,
 				D8824DDE1693880600D05AA0 /* PLAddInputViewController.m in Sources */,
-				D8824DE916938CA300D05AA0 /* PLInput.m in Sources */,
+				D8824DE916938CA300D05AA0 /* SonosInput.m in Sources */,
 				D8824E2B169392FF00D05AA0 /* PLSource.m in Sources */,
 				D8824E2E1693992B00D05AA0 /* PLTextField.m in Sources */,
 				D8824E3416939C5D00D05AA0 /* UIViewController+ModalCheck.m in Sources */,
-				D8824E371693A52200D05AA0 /* PLInputStore.m in Sources */,
+				D8824E371693A52200D05AA0 /* SonosInputStore.m in Sources */,
 				D8824E3E1693CEA600D05AA0 /* PLPlaylistsViewController.m in Sources */,
 				D8824E431693D45500D05AA0 /* PLSongViewController.m in Sources */,
 				D819F64D16ADC2DA00B19B50 /* SonosResponse.m in Sources */,
-				D819F65016ADC64300B19B50 /* PLConnection.m in Sources */,
+				D819F65016ADC64300B19B50 /* SonosConnection.m in Sources */,
 				D819F65416AE047500B19B50 /* SonosPositionInfoResponse.m in Sources */,
 				D819F65B16AE165800B19B50 /* SonosErrorResponse.m in Sources */,
 				D8021A4D16B5DB39002BEAF7 /* SonosMockResponses.m in Sources */,
