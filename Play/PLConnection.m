@@ -7,8 +7,15 @@
 //
 
 #import "PLConnection.h"
+#import "SonosMockResponses.h"
 
 static NSMutableArray *sharedConnectionList = nil;
+
+#if TARGET_IPHONE_SIMULATOR
+static const BOOL kTargetSimulator = YES;
+# else
+static const BOOL kTargetSimulator = NO;
+#endif
 
 @implementation PLConnection
 @synthesize request, completionBlock, xmlRootObject;
@@ -45,8 +52,9 @@ static NSMutableArray *sharedConnectionList = nil;
 {
   id rootObject = nil;
   if ([self xmlRootObject]) {
-    NSLog(@"CONTAINER: %@", [[NSString alloc] initWithData:container encoding:NSUTF8StringEncoding]);
-    NSXMLParser *parser = [[NSXMLParser alloc] initWithData:container];
+    // If running in simulator return a mock response.
+    NSXMLParser *parser = kTargetSimulator ? [self respondWithMockResponse] : [[NSXMLParser alloc] initWithData:container];
+
     [parser setDelegate:[self xmlRootObject]];
     [parser parse];
     rootObject = [self xmlRootObject];
@@ -55,17 +63,24 @@ static NSMutableArray *sharedConnectionList = nil;
   if ([self completionBlock]) {
     [self completionBlock](rootObject, nil);
   }
-
   [sharedConnectionList removeObject:self];
 }
 
 - (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error
 {
+  UIAlertView *av = [[UIAlertView alloc] initWithTitle:@"Connection Error" message:error.localizedDescription delegate:nil cancelButtonTitle:@"Okay" otherButtonTitles:nil, nil];
+  [av show];
+
   if ([self completionBlock]) {
     [self completionBlock](nil, error);
   }
-
   [sharedConnectionList removeObject:self];
+}
+
+- (NSXMLParser *)respondWithMockResponse
+{
+  NSLog(@"Mock Response returned");
+  return [[NSXMLParser alloc] initWithData:[SonosMockResponses trackInfoResponse]];
 }
 
 @end
