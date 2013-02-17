@@ -7,9 +7,7 @@
 //
 
 #import "PLLibraryViewController.h"
-#import "PLPrimaryBarButtonItem.h"
 #import "PLNowPlayingViewController.h"
-#import "PLNavigationController.h"
 #import "PLSource.h"
 #import "PLPlaylistsViewController.h"
 #import "PLNowPlayingViewController.h"
@@ -30,7 +28,7 @@
     [self.navigationItem setTitle:@"Library"];
 
     // Now Playing Button
-    UIBarButtonItem *nowPlayingButton = [[PLPrimaryBarButtonItem alloc] initWithTitle:@"Playing" style:UIBarButtonItemStyleDone target:self action:@selector(nowPlaying)];
+    UIBarButtonItem *nowPlayingButton = [[UIBarButtonItem alloc] initWithTitle:@"Playing" style:UIBarButtonItemStyleDone target:self action:@selector(nowPlaying)];
     [self.navigationItem setRightBarButtonItem:nowPlayingButton];
 
     // Table
@@ -46,7 +44,7 @@
       [[PLSource alloc] initWithName:@"Radio Stations" selection:nil],
       [[PLSource alloc] initWithName:@"Line In" selection:^() {
         PLNowPlayingViewController *viewController = [[PLNowPlayingViewController alloc] initWithLineIn:[[NSUserDefaults standardUserDefaults] objectForKey:@"current_input_uid"]];
-        PLNavigationController *navController = [[PLNavigationController alloc] initWithRootViewController:viewController];
+        UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:viewController];
         [self.navigationController presentViewController:navController animated:YES completion:nil];
       }]
     ];
@@ -62,7 +60,7 @@
 - (void)nowPlaying
 {
   PLNowPlayingViewController *viewController = [[PLNowPlayingViewController alloc] init];
-  UINavigationController *navController = [[PLNavigationController alloc] initWithRootViewController:viewController];
+  UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:viewController];
   [self.navigationController presentViewController:navController animated:YES completion:nil];
 }
 

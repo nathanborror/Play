@@ -8,7 +8,6 @@
 
 #import "PLNowPlayingViewController.h"
 #import "SonosController.h"
-#import "PLPrimaryBarButtonItem.h"
 #import "PLSong.h"
 #import "SonosResponse.h"
 
@@ -22,6 +21,7 @@ static float kControlBarButtonPadding = 20.0;
 @interface PLNowPlayingViewController ()
 {
   SonosController *sonos;
+
   UIImageView *controlBar;
   UISlider *volumeSlider;
   UIButton *playPauseButton;
@@ -51,7 +51,7 @@ static float kControlBarButtonPadding = 20.0;
     [self.navigationItem setTitle:@"Now Playing"];
 
     // Done Button
-    UIBarButtonItem *doneButton = [[PLPrimaryBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(done)];
+    UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(done)];
     [self.navigationItem setRightBarButtonItem:doneButton];
 
     sonos = [SonosController sharedController];

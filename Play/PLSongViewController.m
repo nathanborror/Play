@@ -9,7 +9,6 @@
 #import "PLSongViewController.h"
 #import "PLSong.h"
 #import "PLNowPlayingViewController.h"
-#import "PLNavigationController.h"
 
 @interface PLSongViewController ()
 {
@@ -75,7 +74,7 @@
                                        duration:@"0:00:00"];
 
   PLNowPlayingViewController *viewController = [[PLNowPlayingViewController alloc] initWithSong:song];
-  UINavigationController *navController = [[PLNavigationController alloc] initWithRootViewController:viewController];
+  UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:viewController];
   [self.navigationController presentViewController:navController animated:YES completion:nil];
 }
 

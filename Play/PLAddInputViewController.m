@@ -7,7 +7,6 @@
 //
 
 #import "PLAddInputViewController.h"
-#import "PLPrimaryBarButtonItem.h"
 #import "PLTextField.h"
 #import "PLInput.h"
 #import "PLInputStore.h"
@@ -49,7 +48,7 @@ static float kFieldPadding = 20.f;
     }
 
     // Done Button
-    UIBarButtonItem *doneButton = [[PLPrimaryBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(done)];
+    UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(done)];
     [self.navigationItem setRightBarButtonItem:doneButton];
 
     [self.view setBackgroundColor:[UIColor colorWithRed:.82 green:.85 blue:.91 alpha:1]];

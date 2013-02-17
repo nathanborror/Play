@@ -14,11 +14,8 @@
 		D819F65B16AE165800B19B50 /* SonosErrorResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = D819F65A16AE165800B19B50 /* SonosErrorResponse.m */; };
 		D819F65D16AE1BB900B19B50 /* Examples.xml in Resources */ = {isa = PBXBuildFile; fileRef = D819F65C16AE1BB900B19B50 /* Examples.xml */; };
 		D851A97316928C020014446F /* TempAlbum2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D851A97216928C020014446F /* TempAlbum2@2x.png */; };
-		D8824DDB169384A400D05AA0 /* CustomBarButtonItem@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D8824DDA169384A400D05AA0 /* CustomBarButtonItem@2x.png */; };
 		D8824DDE1693880600D05AA0 /* PLAddInputViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D8824DDD1693880600D05AA0 /* PLAddInputViewController.m */; };
-		D8824DE1169388A400D05AA0 /* PLNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = D8824DE0169388A400D05AA0 /* PLNavigationController.m */; };
 		D8824DE916938CA300D05AA0 /* PLInput.m in Sources */ = {isa = PBXBuildFile; fileRef = D8824DE816938CA300D05AA0 /* PLInput.m */; };
-		D8824DF316938F7B00D05AA0 /* CustomBackButtonItem@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D8824DF216938F7B00D05AA0 /* CustomBackButtonItem@2x.png */; };
 		D8824E2B169392FF00D05AA0 /* PLSource.m in Sources */ = {isa = PBXBuildFile; fileRef = D8824E2A169392FF00D05AA0 /* PLSource.m */; };
 		D8824E2E1693992B00D05AA0 /* PLTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = D8824E2D1693992B00D05AA0 /* PLTextField.m */; };
 		D8824E3016939A3500D05AA0 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D8824E2F16939A3500D05AA0 /* QuartzCore.framework */; };
@@ -44,7 +41,6 @@
 		D88EA80816917C460011F6FB /* PLNowPlayingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D88EA80716917C460011F6FB /* PLNowPlayingViewController.m */; };
 		D88EA81A1691902A0011F6FB /* SonosController.m in Sources */ = {isa = PBXBuildFile; fileRef = D88EA8191691902A0011F6FB /* SonosController.m */; };
 		D88EA82A16923E420011F6FB /* NavBar@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D88EA82816923E420011F6FB /* NavBar@2x.png */; };
-		D88EA82B16923E420011F6FB /* CustomPrimaryBarButtonItem@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D88EA82916923E420011F6FB /* CustomPrimaryBarButtonItem@2x.png */; };
 		D88EA831169241580011F6FB /* ControlBar@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D88EA82C169241580011F6FB /* ControlBar@2x.png */; };
 		D88EA832169241580011F6FB /* ControlNext@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D88EA82D169241580011F6FB /* ControlNext@2x.png */; };
 		D88EA833169241580011F6FB /* ControlPause@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D88EA82E169241580011F6FB /* ControlPause@2x.png */; };
@@ -54,10 +50,12 @@
 		D88EA83A169246F00011F6FB /* SliderMinValue@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D88EA837169246F00011F6FB /* SliderMinValue@2x.png */; };
 		D88EA83B169246F00011F6FB /* SliderThumb@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D88EA838169246F00011F6FB /* SliderThumb@2x.png */; };
 		D88EA83D169248FE0011F6FB /* SliderThumbPressed@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D88EA83C169248FE0011F6FB /* SliderThumbPressed@2x.png */; };
-		D88EA840169249890011F6FB /* PLPrimaryBarButtonItem.m in Sources */ = {isa = PBXBuildFile; fileRef = D88EA83F169249890011F6FB /* PLPrimaryBarButtonItem.m */; };
 		D88EA84316924C450011F6FB /* SliderThumbSmall@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D88EA84116924C450011F6FB /* SliderThumbSmall@2x.png */; };
 		D88EA84416924C450011F6FB /* SliderThumbSmallPressed@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D88EA84216924C450011F6FB /* SliderThumbSmallPressed@2x.png */; };
 		D88EA84A169250300011F6FB /* TempAlbum@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D88EA849169250300011F6FB /* TempAlbum@2x.png */; };
+		D898033F16D03DA100D30813 /* BarButtonItem@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D898033E16D03DA100D30813 /* BarButtonItem@2x.png */; };
+		D898034116D03E7800D30813 /* BarButtonItemDone@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D898034016D03E7800D30813 /* BarButtonItemDone@2x.png */; };
+		D898034316D06EC100D30813 /* BarButtonItemBack@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D898034216D06EC100D30813 /* BarButtonItemBack@2x.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -72,14 +70,10 @@
 		D819F65A16AE165800B19B50 /* SonosErrorResponse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SonosErrorResponse.m; sourceTree = "<group>"; };
 		D819F65C16AE1BB900B19B50 /* Examples.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = Examples.xml; sourceTree = "<group>"; };
 		D851A97216928C020014446F /* TempAlbum2@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "TempAlbum2@2x.png"; path = "Images/TempAlbum2@2x.png"; sourceTree = "<group>"; };
-		D8824DDA169384A400D05AA0 /* CustomBarButtonItem@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "CustomBarButtonItem@2x.png"; path = "Images/CustomBarButtonItem@2x.png"; sourceTree = "<group>"; };
 		D8824DDC1693880600D05AA0 /* PLAddInputViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PLAddInputViewController.h; sourceTree = "<group>"; };
 		D8824DDD1693880600D05AA0 /* PLAddInputViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PLAddInputViewController.m; sourceTree = "<group>"; };
-		D8824DDF169388A400D05AA0 /* PLNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PLNavigationController.h; sourceTree = "<group>"; };
-		D8824DE0169388A400D05AA0 /* PLNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PLNavigationController.m; sourceTree = "<group>"; };
 		D8824DE716938CA300D05AA0 /* PLInput.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PLInput.h; sourceTree = "<group>"; };
 		D8824DE816938CA300D05AA0 /* PLInput.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PLInput.m; sourceTree = "<group>"; };
-		D8824DF216938F7B00D05AA0 /* CustomBackButtonItem@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "CustomBackButtonItem@2x.png"; path = "Images/CustomBackButtonItem@2x.png"; sourceTree = "<group>"; };
 		D8824E29169392FF00D05AA0 /* PLSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PLSource.h; sourceTree = "<group>"; };
 		D8824E2A169392FF00D05AA0 /* PLSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PLSource.m; sourceTree = "<group>"; };
 		D8824E2C1693992B00D05AA0 /* PLTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PLTextField.h; sourceTree = "<group>"; };
@@ -120,7 +114,6 @@
 		D88EA8181691902A0011F6FB /* SonosController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SonosController.h; sourceTree = "<group>"; };
 		D88EA8191691902A0011F6FB /* SonosController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SonosController.m; sourceTree = "<group>"; };
 		D88EA82816923E420011F6FB /* NavBar@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "NavBar@2x.png"; path = "Images/NavBar@2x.png"; sourceTree = "<group>"; };
-		D88EA82916923E420011F6FB /* CustomPrimaryBarButtonItem@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "CustomPrimaryBarButtonItem@2x.png"; path = "Images/CustomPrimaryBarButtonItem@2x.png"; sourceTree = "<group>"; };
 		D88EA82C169241580011F6FB /* ControlBar@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "ControlBar@2x.png"; path = "Images/ControlBar@2x.png"; sourceTree = "<group>"; };
 		D88EA82D169241580011F6FB /* ControlNext@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "ControlNext@2x.png"; path = "Images/ControlNext@2x.png"; sourceTree = "<group>"; };
 		D88EA82E169241580011F6FB /* ControlPause@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "ControlPause@2x.png"; path = "Images/ControlPause@2x.png"; sourceTree = "<group>"; };
@@ -130,11 +123,12 @@
 		D88EA837169246F00011F6FB /* SliderMinValue@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "SliderMinValue@2x.png"; path = "Images/SliderMinValue@2x.png"; sourceTree = "<group>"; };
 		D88EA838169246F00011F6FB /* SliderThumb@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "SliderThumb@2x.png"; path = "Images/SliderThumb@2x.png"; sourceTree = "<group>"; };
 		D88EA83C169248FE0011F6FB /* SliderThumbPressed@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "SliderThumbPressed@2x.png"; path = "Images/SliderThumbPressed@2x.png"; sourceTree = "<group>"; };
-		D88EA83E169249890011F6FB /* PLPrimaryBarButtonItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PLPrimaryBarButtonItem.h; sourceTree = "<group>"; };
-		D88EA83F169249890011F6FB /* PLPrimaryBarButtonItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PLPrimaryBarButtonItem.m; sourceTree = "<group>"; };
 		D88EA84116924C450011F6FB /* SliderThumbSmall@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "SliderThumbSmall@2x.png"; path = "Images/SliderThumbSmall@2x.png"; sourceTree = "<group>"; };
 		D88EA84216924C450011F6FB /* SliderThumbSmallPressed@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "SliderThumbSmallPressed@2x.png"; path = "Images/SliderThumbSmallPressed@2x.png"; sourceTree = "<group>"; };
 		D88EA849169250300011F6FB /* TempAlbum@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "TempAlbum@2x.png"; path = "Images/TempAlbum@2x.png"; sourceTree = "<group>"; };
+		D898033E16D03DA100D30813 /* BarButtonItem@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "BarButtonItem@2x.png"; path = "Images/BarButtonItem@2x.png"; sourceTree = "<group>"; };
+		D898034016D03E7800D30813 /* BarButtonItemDone@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "BarButtonItemDone@2x.png"; path = "Images/BarButtonItemDone@2x.png"; sourceTree = "<group>"; };
+		D898034216D06EC100D30813 /* BarButtonItemBack@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "BarButtonItemBack@2x.png"; path = "Images/BarButtonItemBack@2x.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -188,10 +182,6 @@
 		D8824E281693921400D05AA0 /* UI Components */ = {
 			isa = PBXGroup;
 			children = (
-				D8824DDF169388A400D05AA0 /* PLNavigationController.h */,
-				D8824DE0169388A400D05AA0 /* PLNavigationController.m */,
-				D88EA83E169249890011F6FB /* PLPrimaryBarButtonItem.h */,
-				D88EA83F169249890011F6FB /* PLPrimaryBarButtonItem.m */,
 				D8824E2C1693992B00D05AA0 /* PLTextField.h */,
 				D8824E2D1693992B00D05AA0 /* PLTextField.m */,
 			);
@@ -284,9 +274,10 @@
 		D88EA82716923E310011F6FB /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				D898034216D06EC100D30813 /* BarButtonItemBack@2x.png */,
+				D898034016D03E7800D30813 /* BarButtonItemDone@2x.png */,
+				D898033E16D03DA100D30813 /* BarButtonItem@2x.png */,
 				D88889A816958281006D010D /* LineIn@2x.png */,
-				D8824DF216938F7B00D05AA0 /* CustomBackButtonItem@2x.png */,
-				D8824DDA169384A400D05AA0 /* CustomBarButtonItem@2x.png */,
 				D851A97216928C020014446F /* TempAlbum2@2x.png */,
 				D88EA849169250300011F6FB /* TempAlbum@2x.png */,
 				D88EA84116924C450011F6FB /* SliderThumbSmall@2x.png */,
@@ -301,7 +292,6 @@
 				D88EA82F169241580011F6FB /* ControlPlay@2x.png */,
 				D88EA830169241580011F6FB /* ControlPrevious@2x.png */,
 				D88EA82816923E420011F6FB /* NavBar@2x.png */,
-				D88EA82916923E420011F6FB /* CustomPrimaryBarButtonItem@2x.png */,
 			);
 			name = Images;
 			sourceTree = "<group>";
@@ -362,7 +352,6 @@
 				D88EA80316917C460011F6FB /* Default@2x.png in Resources */,
 				D88EA80516917C460011F6FB /* Default-568h@2x.png in Resources */,
 				D88EA82A16923E420011F6FB /* NavBar@2x.png in Resources */,
-				D88EA82B16923E420011F6FB /* CustomPrimaryBarButtonItem@2x.png in Resources */,
 				D88EA831169241580011F6FB /* ControlBar@2x.png in Resources */,
 				D88EA832169241580011F6FB /* ControlNext@2x.png in Resources */,
 				D88EA833169241580011F6FB /* ControlPause@2x.png in Resources */,
@@ -377,10 +366,11 @@
 				D88EA84A169250300011F6FB /* TempAlbum@2x.png in Resources */,
 				D8030BF016928583002F57B6 /* examples in Resources */,
 				D851A97316928C020014446F /* TempAlbum2@2x.png in Resources */,
-				D8824DDB169384A400D05AA0 /* CustomBarButtonItem@2x.png in Resources */,
-				D8824DF316938F7B00D05AA0 /* CustomBackButtonItem@2x.png in Resources */,
 				D88889A916958281006D010D /* LineIn@2x.png in Resources */,
 				D819F65D16AE1BB900B19B50 /* Examples.xml in Resources */,
+				D898033F16D03DA100D30813 /* BarButtonItem@2x.png in Resources */,
+				D898034116D03E7800D30813 /* BarButtonItemDone@2x.png in Resources */,
+				D898034316D06EC100D30813 /* BarButtonItemBack@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -395,12 +385,10 @@
 				D88EA7FF16917C460011F6FB /* PLAppDelegate.m in Sources */,
 				D88EA80816917C460011F6FB /* PLNowPlayingViewController.m in Sources */,
 				D88EA81A1691902A0011F6FB /* SonosController.m in Sources */,
-				D88EA840169249890011F6FB /* PLPrimaryBarButtonItem.m in Sources */,
 				D88D11531692BE740039067F /* PLSong.m in Sources */,
 				D88D116016937AC80039067F /* PLLibraryViewController.m in Sources */,
 				D88D116316937AE00039067F /* PLInputsViewController.m in Sources */,
 				D8824DDE1693880600D05AA0 /* PLAddInputViewController.m in Sources */,
-				D8824DE1169388A400D05AA0 /* PLNavigationController.m in Sources */,
 				D8824DE916938CA300D05AA0 /* PLInput.m in Sources */,
 				D8824E2B169392FF00D05AA0 /* PLSource.m in Sources */,
 				D8824E2E1693992B00D05AA0 /* PLTextField.m in Sources */,

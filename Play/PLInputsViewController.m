@@ -9,9 +9,7 @@
 #import "PLInputsViewController.h"
 #import "PLLibraryViewController.h"
 #import "PLAddInputViewController.h"
-#import "PLNavigationController.h"
 #import "PLNowPlayingViewController.h"
-#import "PLPrimaryBarButtonItem.h"
 #import "PLInput.h"
 #import "PLInputStore.h"
 
@@ -35,7 +33,7 @@
     [self.navigationItem setLeftBarButtonItem:addButton];
 
     // Now Playing Button
-    UIBarButtonItem *nowPlayingButton = [[PLPrimaryBarButtonItem alloc] initWithTitle:@"Playing" style:UIBarButtonItemStyleDone target:self action:@selector(nowPlaying)];
+    UIBarButtonItem *nowPlayingButton = [[UIBarButtonItem alloc] initWithTitle:@"Playing" style:UIBarButtonItemStyleDone target:self action:@selector(nowPlaying)];
     [self.navigationItem setRightBarButtonItem:nowPlayingButton];
 
     // Table
@@ -61,14 +59,14 @@
 - (void)nowPlaying
 {
   PLNowPlayingViewController *viewController = [[PLNowPlayingViewController alloc] init];
-  UINavigationController *navController = [[PLNavigationController alloc] initWithRootViewController:viewController];
+  UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:viewController];
   [self.navigationController presentViewController:navController animated:YES completion:nil];
 }
 
 - (void)addInput
 {
   PLAddInputViewController *viewController = [[PLAddInputViewController alloc] init];
-  UINavigationController *navigationController = [[PLNavigationController alloc] initWithRootViewController:viewController];
+  UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:viewController];
   [self.navigationController presentViewController:navigationController animated:YES completion:nil];
 }
 

@@ -8,7 +8,6 @@
 
 #import "PLAppDelegate.h"
 #import "PLInputsViewController.h"
-#import "PLNavigationController.h"
 #import "PLInputStore.h"
 
 @implementation PLAppDelegate
@@ -18,9 +17,17 @@
   self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
 
   PLInputsViewController *viewController = [[PLInputsViewController alloc] init];
-  UINavigationController *navController = [[PLNavigationController alloc] initWithRootViewController:viewController];
+  UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:viewController];
   [self.window setRootViewController:navController];
-  
+
+  [[UINavigationBar appearance] setBackgroundImage:[[UIImage imageNamed:@"NavBar"] resizableImageWithCapInsets:UIEdgeInsetsMake(4,4,4,4) resizingMode:UIImageResizingModeStretch] forBarMetrics:UIBarMetricsDefault];
+
+  [[UIBarButtonItem appearance] setBackgroundImage:[[UIImage imageNamed:@"BarButtonItem"] resizableImageWithCapInsets:UIEdgeInsetsMake(4,4,4,4) resizingMode:UIImageResizingModeStretch] forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
+
+  [[UIBarButtonItem appearance] setBackgroundImage:[[UIImage imageNamed:@"BarButtonItemDone"] resizableImageWithCapInsets:UIEdgeInsetsMake(4,4,4,4) resizingMode:UIImageResizingModeStretch] forState:UIControlStateNormal style:UIBarButtonItemStyleDone barMetrics:UIBarMetricsDefault];
+
+  [[UIBarButtonItem appearance] setBackButtonBackgroundImage:[[UIImage imageNamed:@"BarButtonItemBack"] resizableImageWithCapInsets:UIEdgeInsetsMake(15, 15, 4, 4) resizingMode:UIImageResizingModeStretch] forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
+
   [self.window makeKeyAndVisible];
   return YES;
 }
