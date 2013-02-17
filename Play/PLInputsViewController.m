@@ -37,7 +37,8 @@
     [self.navigationItem setRightBarButtonItem:nowPlayingButton];
 
     // Table
-    inputsTableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStylePlain];
+    inputsTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetHeight(self.view.bounds), CGRectGetHeight(self.view.bounds)) style:UITableViewStylePlain];
+    [inputsTableView setAutoresizingMask:UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth];
     [inputsTableView setDelegate:self];
     [inputsTableView setDataSource:self];
     [self.view addSubview:inputsTableView];
