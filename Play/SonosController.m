@@ -195,7 +195,7 @@
 
 - (void)volume:(SonosInput *)input completion:(void (^)(SonosResponse *, NSError *))block
 {
-  NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", sonosURL, @"/MediaRenderer/RenderingControl/Control"]];
+  NSString *url = [NSString stringWithFormat:@"http://%@:1400%@", input.ip, @"/MediaRenderer/RenderingControl/Control"];
   NSString *action = @"urn:schemas-upnp-org:service:RenderingControl:1#GetVolume";
   NSString *body = @""
     "<u:GetVolume xmlns:u='urn:schemas-upnp-org:service:RenderingControl:1'>"
@@ -203,7 +203,7 @@
       "<Channel>Master</Channel>"
     "</u:GetVolume>";
 
-  response = [self fetchSOAPURL:url action:action body:body completion:block];
+  response = [self fetchSOAPURL:[NSURL URLWithString:url] action:action body:body completion:block];
 }
 
 - (void)volume:(SonosInput *)input level:(int)level completion:(void (^)(SonosResponse *, NSError *))block
@@ -212,7 +212,7 @@
     return;
   }
 
-  NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", sonosURL, @"/MediaRenderer/RenderingControl/Control"]];
+  NSString *url = [NSString stringWithFormat:@"http://%@:1400%@", input.ip, @"/MediaRenderer/RenderingControl/Control"];
   NSString *action = @"urn:schemas-upnp-org:service:RenderingControl:1#SetVolume";
   NSString *body = [NSString stringWithFormat:@""
     "<u:SetVolume xmlns:u='urn:schemas-upnp-org:service:RenderingControl:1'>"
@@ -221,7 +221,7 @@
       "<DesiredVolume>%d</DesiredVolume>"
     "</u:SetVolume>", level];
 
-  response = [self fetchSOAPURL:url action:action body:body completion:^(SonosResponse *body, NSError *error) {
+  response = [self fetchSOAPURL:[NSURL URLWithString:url] action:action body:body completion:^(SonosResponse *body, NSError *error) {
     volumeLevel = level;
     if (block) {
       block(body, error);

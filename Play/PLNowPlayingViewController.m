@@ -12,15 +12,18 @@
 #import "SonosResponse.h"
 #import "SonosInputStore.h"
 #import "SonosInput.h"
+#import "PLVolumeSlider.h"
 
 static const CGFloat kProgressPadding = 50.0;
+
+static const CGFloat kControlBarHeight = 418.0;
 static const CGFloat kControlBarPadding = 5.0;
 static const CGFloat kControlBarPreviousNextPadding = 40.0;
-static const CGFloat kControlBarHeight = 118.0;
 static const CGFloat kControlBarLandscapeHeight = 83.0;
 static const CGFloat kControlBarButtonWidth = 75.0;
 static const CGFloat kControlBarButtonHeight = 75.0;
 static const CGFloat kControlBarButtonPadding = 20.0;
+static const CGFloat kControlBarRestingY = 585.0;
 
 @interface PLNowPlayingViewController ()
 {
@@ -44,6 +47,10 @@ static const CGFloat kControlBarButtonPadding = 20.0;
   UITableView *songList;
   UIView *tableHeader;
   NSArray *songListData;
+
+  CGPoint panCoordBegan;
+
+  CABasicAnimation *bounce;
 }
 @end
 
@@ -56,6 +63,15 @@ static const CGFloat kControlBarButtonPadding = 20.0;
     [self.view setBackgroundColor:[UIColor colorWithRed:.2 green:.2 blue:.2 alpha:1]];
 
     [self.navigationItem setTitle:@"Now Playing"];
+
+    // Bounce Animation
+    bounce = [CABasicAnimation animationWithKeyPath:@"position.y"];
+    bounce.duration = .15;
+    bounce.repeatCount = 1;
+    bounce.autoreverses = YES;
+    bounce.fillMode = kCAFillModeForwards;
+    bounce.removedOnCompletion = NO;
+    bounce.additive = YES;
 
     // Done Button
     UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(done)];
@@ -110,8 +126,6 @@ static const CGFloat kControlBarButtonPadding = 20.0;
     // Track Info: Progress Bar
     progress = [[UISlider alloc] initWithFrame:CGRectMake(kProgressPadding, 35, 320 - (kProgressPadding * 2), 20)];
     [progress setAutoresizingMask:UIViewAutoresizingFlexibleWidth];
-    [progress setMaximumTrackImage:[[UIImage imageNamed:@"SliderMaxValue.png"] resizableImageWithCapInsets:UIEdgeInsetsMake(3, 3, 3, 3) resizingMode:UIImageResizingModeStretch] forState:UIControlStateNormal];
-    [progress setMinimumTrackImage:[[UIImage imageNamed:@"SliderMinValue.png"] resizableImageWithCapInsets:UIEdgeInsetsMake(3, 3, 3, 3) resizingMode:UIImageResizingModeStretch] forState:UIControlStateNormal];
     [progress setThumbImage:[UIImage imageNamed:@"SliderThumbSmall.png"] forState:UIControlStateNormal];
     [progress setThumbImage:[UIImage imageNamed:@"SliderThumbSmallPressed.png"] forState:UIControlStateHighlighted];
     [trackInfo addSubview:progress];
@@ -176,16 +190,19 @@ static const CGFloat kControlBarButtonPadding = 20.0;
     [previousButton setShowsTouchWhenHighlighted:YES];
     [controlBar addSubview:previousButton];
 
-    volumeSlider = [[UISlider alloc] initWithFrame:CGRectMake(kControlBarButtonPadding, 80, CGRectGetWidth(controlBar.bounds)-(kControlBarButtonPadding*2), 20)];
+    volumeSlider = [[UISlider alloc] initWithFrame:CGRectMake(kControlBarButtonPadding, 85, CGRectGetWidth(controlBar.bounds)-(kControlBarButtonPadding*2), 20)];
     [volumeSlider setMaximumValue:100];
     [volumeSlider setMinimumValue:0];
     [volumeSlider setValue:20];
-    [volumeSlider setMaximumTrackImage:[[UIImage imageNamed:@"SliderMaxValue.png"] resizableImageWithCapInsets:UIEdgeInsetsMake(3, 3, 3, 3) resizingMode:UIImageResizingModeStretch] forState:UIControlStateNormal];
-    [volumeSlider setMinimumTrackImage:[[UIImage imageNamed:@"SliderMinValue.png"] resizableImageWithCapInsets:UIEdgeInsetsMake(3, 3, 3, 3) resizingMode:UIImageResizingModeStretch] forState:UIControlStateNormal];
-    [volumeSlider setThumbImage:[UIImage imageNamed:@"SliderThumb.png"] forState:UIControlStateNormal];
-    [volumeSlider setThumbImage:[UIImage imageNamed:@"SliderThumbPressed.png"] forState:UIControlStateHighlighted];
     [volumeSlider addTarget:self action:@selector(volume:) forControlEvents:UIControlEventValueChanged];
     [controlBar addSubview:volumeSlider];
+
+    NSArray *speakers = [[SonosInputStore sharedStore] allInputs];
+    for (int i = 0; i < speakers.count; i++) {
+      PLVolumeSlider *speakerVolume = [[PLVolumeSlider alloc] initWithFrame:CGRectMake(kControlBarButtonPadding, 185 + (i * 70), CGRectGetWidth(controlBar.bounds)-(kControlBarButtonPadding * 2), 20)];
+      [speakerVolume setInput:[speakers objectAtIndex:i]];
+      [controlBar addSubview:speakerVolume];
+    }
     
     [self.view addSubview:controlBar];
 
@@ -195,6 +212,9 @@ static const CGFloat kControlBarButtonPadding = 20.0;
         NSLog(@"TrackInfo Error: %@", error.localizedDescription);
       }
     }];
+
+    UIPanGestureRecognizer *controlPan = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(panControlBar:)];
+    [controlBar addGestureRecognizer:controlPan];
   }
   return self;
 }
@@ -225,7 +245,7 @@ static const CGFloat kControlBarButtonPadding = 20.0;
 {
   [super viewWillAppear:animated];
 
-  [controlBar setFrame:CGRectOffset(controlBar.bounds, 0, CGRectGetHeight(self.view.frame)-kControlBarHeight)];
+  [controlBar setFrame:CGRectOffset(controlBar.bounds, 0, CGRectGetHeight(self.view.frame) - (kControlBarHeight - 295))];
 }
 
 - (void)playPause
@@ -291,6 +311,56 @@ static const CGFloat kControlBarButtonPadding = 20.0;
     [album setFrame:CGRectMake(15, 15, 209, 209)];
 
     [trackInfo setFrame:CGRectOffset(trackInfo.bounds, CGRectGetWidth(album.bounds)+20, 20)];
+  }
+}
+
+- (void)panControlBar:(UIPanGestureRecognizer *)recognizer
+{
+  if (recognizer.state == UIGestureRecognizerStateBegan) {
+    panCoordBegan = [recognizer locationInView:controlBar];
+  }
+
+  if (recognizer.state == UIGestureRecognizerStateChanged) {
+    CGPoint panCoordChange = [recognizer locationInView:controlBar];
+
+    CGFloat deltaY = panCoordChange.y - panCoordBegan.y;
+    CGPoint newPoint = CGPointMake(controlBar.center.x, controlBar.center.y + deltaY);
+
+    if (newPoint.y > 290.0) {
+      controlBar.center = newPoint;
+    }
+  }
+
+  if (recognizer.state == UIGestureRecognizerStateEnded) {
+    CGPoint velocityPoint = [recognizer velocityInView:controlBar];
+
+    if (velocityPoint.y >= 0) {
+      // Moving downward
+
+      if (controlBar.center.y < kControlBarRestingY) {
+        bounce.fromValue = [NSNumber numberWithInt:0];
+        bounce.toValue = [NSNumber numberWithInt:9];
+        [controlBar.layer addAnimation:bounce forKey:@"bounce"];
+      } else {
+        bounce.fromValue = [NSNumber numberWithInt:5];
+        bounce.toValue = [NSNumber numberWithInt:0];
+        [controlBar.layer addAnimation:bounce forKey:@"bounce"];
+      }
+
+      [UIView animateWithDuration:.15 delay:0 options:UIViewAnimationCurveLinear animations:^{
+        controlBar.center = CGPointMake(controlBar.center.x, kControlBarRestingY);
+      } completion:nil];
+    } else {
+      // Moving upward
+
+      bounce.fromValue = [NSNumber numberWithInt:9];
+      bounce.toValue = [NSNumber numberWithInt:0];
+      [controlBar.layer addAnimation:bounce forKey:@"bounce"];
+
+      [UIView animateWithDuration:.15 delay:0 options:UIViewAnimationCurveLinear animations:^{
+        controlBar.center = CGPointMake(controlBar.center.x, 300.0);
+      } completion:nil];
+    }
   }
 }
 

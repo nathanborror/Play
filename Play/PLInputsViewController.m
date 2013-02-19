@@ -47,6 +47,7 @@
     SonosInputStore *inputStore = [SonosInputStore sharedStore];
     [inputStore addInputWithIP:@"10.0.1.9" name:@"Living Room" uid:@"RINCON_000E58D0540801400"];
     [inputStore addInputWithIP:@"10.0.1.10" name:@"Bedroom" uid:@"RINCON_000E587641F201400"];
+    [inputStore addInputWithIP:@"10.0.1.18" name:@"Kitchen" uid:@"RINCON_000E587BBA5201400"];
   }
   return self;
 }
