@@ -9,6 +9,7 @@
 #import "SonosResponse.h"
 #import "SonosPositionInfoResponse.h"
 #import "SonosErrorResponse.h"
+#import "SonosVolumeResponse.h"
 
 @implementation SonosResponse
 @synthesize action, response, parentParserDelegate;
@@ -17,7 +18,7 @@
 {
   self = [super init];
   if (self) {
-    //
+    response = nil;
   }
   return self;
 }
@@ -26,9 +27,8 @@
 
 - (void)parser:(NSXMLParser *)parser didStartElement:(NSString *)elementName namespaceURI:(NSString *)namespaceURI qualifiedName:(NSString *)qName attributes:(NSDictionary *)attributeDict
 {
-  // NSLog(@"\t%@ found a %@ element", self, elementName);
-  // TODO: The following probably won't scale to more complex actions
-
+  // TODO: The following probably won't scale
+  //NSLog(@"\t%@ found a %@ element", self, elementName);
   if ([elementName isEqual:@"u:GetPositionInfoResponse"]) {
     SonosPositionInfoResponse *res = [[SonosPositionInfoResponse alloc] init];
     [res setParentParserDelegate:self];
@@ -40,8 +40,13 @@
 
   } else if ([elementName isEqual:@"u:SetVolumeResponse"]) {
     
+  } else if ([elementName isEqual:@"u:GetVolumeResponse"]) {
+    SonosVolumeResponse *res = [[SonosVolumeResponse alloc] init];
+    [res setParentParserDelegate:self];
+    [parser setDelegate:res];
+    [self setResponse:res];
   } else if ([elementName isEqual:@"u:SetAVTransportURIResponse"]) {
-    
+
   } else if ([elementName isEqual:@"s:Fault"]) {
     SonosErrorResponse *res = [[SonosErrorResponse alloc] init];
     [res setParentParserDelegate:self];

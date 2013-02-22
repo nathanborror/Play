@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 
 @class SonosResponse;
+@class SonosVolumeResponse;
 @class SonosInput;
 
 @interface SonosController : NSObject
@@ -19,10 +20,10 @@
 
 + (SonosController *)sharedController;
 
-- (SonosResponse *)fetchSOAPURL:(NSURL *)url
+- (void)fetchSOAPURL:(NSURL *)url
                         action:(NSString *)action
                              body:(NSString *)body
-                   completion:(void(^)(SonosResponse *body, NSError *error))block;
+                   completion:(void(^)(id obj, NSError *error))block;
 
 - (void)play:(SonosInput *)input track:(NSString *)track completion:(void(^)(SonosResponse *response, NSError *error))block;
 - (void)pause:(SonosInput *)input completion:(void(^)(SonosResponse *response, NSError *error))block;

@@ -14,6 +14,7 @@
 		D819F65416AE047500B19B50 /* SonosPositionInfoResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = D819F65316AE047500B19B50 /* SonosPositionInfoResponse.m */; };
 		D819F65B16AE165800B19B50 /* SonosErrorResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = D819F65A16AE165800B19B50 /* SonosErrorResponse.m */; };
 		D819F65D16AE1BB900B19B50 /* Examples.xml in Resources */ = {isa = PBXBuildFile; fileRef = D819F65C16AE1BB900B19B50 /* Examples.xml */; };
+		D82B793516D7538000B5FF35 /* SonosVolumeResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = D82B793416D7538000B5FF35 /* SonosVolumeResponse.m */; };
 		D851A97316928C020014446F /* TempAlbum2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D851A97216928C020014446F /* TempAlbum2@2x.png */; };
 		D8824DDE1693880600D05AA0 /* PLAddInputViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D8824DDD1693880600D05AA0 /* PLAddInputViewController.m */; };
 		D8824DE916938CA300D05AA0 /* SonosInput.m in Sources */ = {isa = PBXBuildFile; fileRef = D8824DE816938CA300D05AA0 /* SonosInput.m */; };
@@ -76,6 +77,8 @@
 		D819F65916AE165800B19B50 /* SonosErrorResponse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SonosErrorResponse.h; sourceTree = "<group>"; };
 		D819F65A16AE165800B19B50 /* SonosErrorResponse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SonosErrorResponse.m; sourceTree = "<group>"; };
 		D819F65C16AE1BB900B19B50 /* Examples.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = Examples.xml; sourceTree = "<group>"; };
+		D82B793316D7538000B5FF35 /* SonosVolumeResponse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SonosVolumeResponse.h; sourceTree = "<group>"; };
+		D82B793416D7538000B5FF35 /* SonosVolumeResponse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SonosVolumeResponse.m; sourceTree = "<group>"; };
 		D851A97216928C020014446F /* TempAlbum2@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "TempAlbum2@2x.png"; path = "Images/TempAlbum2@2x.png"; sourceTree = "<group>"; };
 		D8824DDC1693880600D05AA0 /* PLAddInputViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PLAddInputViewController.h; sourceTree = "<group>"; };
 		D8824DDD1693880600D05AA0 /* PLAddInputViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PLAddInputViewController.m; sourceTree = "<group>"; };
@@ -171,6 +174,8 @@
 				D819F64F16ADC64300B19B50 /* SonosConnection.m */,
 				D819F64B16ADC2DA00B19B50 /* SonosResponse.h */,
 				D819F64C16ADC2DA00B19B50 /* SonosResponse.m */,
+				D82B793316D7538000B5FF35 /* SonosVolumeResponse.h */,
+				D82B793416D7538000B5FF35 /* SonosVolumeResponse.m */,
 				D819F65216AE047500B19B50 /* SonosPositionInfoResponse.h */,
 				D819F65316AE047500B19B50 /* SonosPositionInfoResponse.m */,
 				D819F65916AE165800B19B50 /* SonosErrorResponse.h */,
@@ -424,6 +429,7 @@
 				D819F65B16AE165800B19B50 /* SonosErrorResponse.m in Sources */,
 				D8021A4D16B5DB39002BEAF7 /* SonosMockResponses.m in Sources */,
 				D8D87D1516D3F0CA0059DBED /* PLVolumeSlider.m in Sources */,
+				D82B793516D7538000B5FF35 /* SonosVolumeResponse.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

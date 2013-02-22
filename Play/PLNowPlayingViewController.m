@@ -10,6 +10,7 @@
 #import "SonosController.h"
 #import "PLSong.h"
 #import "SonosResponse.h"
+#import "SonosPositionInfoResponse.h"
 #import "SonosInputStore.h"
 #import "SonosInput.h"
 #import "PLVolumeSlider.h"
@@ -206,10 +207,16 @@ static const CGFloat kControlBarRestingY = 585.0;
     
     [self.view addSubview:controlBar];
 
+    // TODO: Update track info
     [sonos trackInfo:nil completion:^(SonosResponse *response, NSError *error) {
-      NSLog(@"TrackInfo Response: %@", response);
+      SonosPositionInfoResponse *positionInfo = (SonosPositionInfoResponse *)[response response];
+      NSLog(@"META: %@", positionInfo.metaData);
+//      [title setText:positionInfo.track];
+//      [timeElapsed setText:positionInfo.relTime];
+//      [timeTotal setText:positionInfo.duration];
+
       if (error) {
-        NSLog(@"TrackInfo Error: %@", error.localizedDescription);
+        NSLog(@"Must select an input first!");
       }
     }];
 

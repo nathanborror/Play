@@ -60,7 +60,7 @@ static const BOOL kTargetSimulator = NO;
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection
 {
   id rootObject = nil;
-  if ([self xmlRootObject]) {
+  if (xmlRootObject) {
     NSXMLParser *parser = [[NSXMLParser alloc] initWithData:container];
 
     [parser setDelegate:[self xmlRootObject]];
@@ -68,19 +68,19 @@ static const BOOL kTargetSimulator = NO;
     rootObject = [self xmlRootObject];
   }
 
-  if ([self completionBlock]) {
-    [self completionBlock](rootObject, nil);
+  if (completionBlock) {
+    completionBlock(rootObject, nil);
   }
+
   [sharedConnectionList removeObject:self];
 }
 
 - (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error
 {
-  UIAlertView *av = [[UIAlertView alloc] initWithTitle:@"Connection Error" message:error.localizedDescription delegate:nil cancelButtonTitle:@"Okay" otherButtonTitles:nil, nil];
-  [av show];
+  NSLog(@"Connection Error.");
 
-  if ([self completionBlock]) {
-    [self completionBlock](nil, error);
+  if (completionBlock) {
+    completionBlock(nil, error);
   }
   [sharedConnectionList removeObject:self];
 }
