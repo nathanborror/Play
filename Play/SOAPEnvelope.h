@@ -1,5 +1,5 @@
 //
-//  SonosResponse.h
+//  SOAPEnvelope.h
 //  Play
 //
 //  Created by Nathan Borror on 1/21/13.
@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface SonosResponse : NSObject <NSXMLParserDelegate>
+@interface SOAPEnvelope : NSObject <NSXMLParserDelegate>
 {
   NSMutableString *currentString;
 }

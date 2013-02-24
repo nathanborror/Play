@@ -1,17 +1,17 @@
 //
-//  SonosResponse.m
+//  SOAPEnvelope.m
 //  Play
 //
 //  Created by Nathan Borror on 1/21/13.
 //  Copyright (c) 2013 Nathan Borror. All rights reserved.
 //
 
-#import "SonosResponse.h"
+#import "SOAPEnvelope.h"
 #import "SonosPositionInfoResponse.h"
 #import "SonosErrorResponse.h"
 #import "SonosVolumeResponse.h"
 
-@implementation SonosResponse
+@implementation SOAPEnvelope
 @synthesize action, response, parentParserDelegate;
 
 - (id)init

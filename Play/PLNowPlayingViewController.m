@@ -9,7 +9,7 @@
 #import "PLNowPlayingViewController.h"
 #import "SonosController.h"
 #import "PLSong.h"
-#import "SonosResponse.h"
+#import "SOAPEnvelope.h"
 #import "SonosPositionInfoResponse.h"
 #import "SonosInputStore.h"
 #import "SonosInput.h"
@@ -208,8 +208,8 @@ static const CGFloat kControlBarRestingY = 585.0;
     [self.view addSubview:controlBar];
 
     // TODO: Update track info
-    [sonos trackInfo:nil completion:^(SonosResponse *response, NSError *error) {
-      SonosPositionInfoResponse *positionInfo = (SonosPositionInfoResponse *)[response response];
+    [sonos trackInfo:nil completion:^(SOAPEnvelope *envelope, NSError *error) {
+      SonosPositionInfoResponse *positionInfo = (SonosPositionInfoResponse *)[envelope response];
       NSLog(@"META: %@", positionInfo.metaData);
 //      [title setText:positionInfo.track];
 //      [timeElapsed setText:positionInfo.relTime];

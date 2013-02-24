@@ -16,9 +16,9 @@
 
 @property (nonatomic, copy) NSURLRequest *request;
 @property (nonatomic, copy) void (^completionBlock)(id obj, NSError *error);
-@property (nonatomic, strong) id <NSXMLParserDelegate> xmlRootObject;
+@property (nonatomic, strong) id <NSXMLParserDelegate> envelope;
 
-- (id)initWithRequest:(NSURLRequest *)req;
+- (id)initWithRequest:(NSURLRequest *)req completion:(void(^)(id obj, NSError *error))block;
 - (void)start;
 
 @end

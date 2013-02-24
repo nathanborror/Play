@@ -9,7 +9,7 @@
 #import "PLVolumeSlider.h"
 #import "SonosInput.h"
 #import "SonosController.h"
-#import "SonosResponse.h"
+#import "SOAPEnvelope.h"
 #import "SonosVolumeResponse.h"
 
 @interface PLVolumeSlider ()
@@ -58,8 +58,8 @@
   [name setShadowOffset:CGSizeMake(0, 1)];
   [self addSubview:name];
 
-  [sonos volume:input completion:^(SonosResponse *response, NSError *error) {
-    SonosVolumeResponse *volume = (SonosVolumeResponse *)[response response];
+  [sonos volume:input completion:^(SOAPEnvelope *envelope, NSError *error) {
+    SonosVolumeResponse *volume = (SonosVolumeResponse *)[envelope response];
     [volumeSlider setValue:[volume.currentVolume floatValue]];
   }];
 }

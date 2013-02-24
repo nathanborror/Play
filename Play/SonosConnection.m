@@ -18,13 +18,14 @@ static const BOOL kTargetSimulator = NO;
 #endif
 
 @implementation SonosConnection
-@synthesize request, completionBlock, xmlRootObject;
+@synthesize request, completionBlock, envelope;
 
-- (id)initWithRequest:(NSURLRequest *)req
+- (id)initWithRequest:(NSURLRequest *)req completion:(void (^)(id, NSError *))block
 {
   self = [super init];
   if (self) {
     [self setRequest:req];
+    [self setCompletionBlock:block];
   }
   return self;
 }
@@ -60,12 +61,12 @@ static const BOOL kTargetSimulator = NO;
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection
 {
   id rootObject = nil;
-  if (xmlRootObject) {
+  if (envelope) {
     NSXMLParser *parser = [[NSXMLParser alloc] initWithData:container];
 
-    [parser setDelegate:[self xmlRootObject]];
+    [parser setDelegate:[self envelope]];
     [parser parse];
-    rootObject = [self xmlRootObject];
+    rootObject = [self envelope];
   }
 
   if (completionBlock) {

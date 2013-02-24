@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@class SonosResponse;
+@class SOAPEnvelope;
 @class SonosVolumeResponse;
 @class SonosInput;
 
@@ -25,15 +25,15 @@
                              body:(NSString *)body
                    completion:(void(^)(id obj, NSError *error))block;
 
-- (void)play:(SonosInput *)input track:(NSString *)track completion:(void(^)(SonosResponse *response, NSError *error))block;
-- (void)pause:(SonosInput *)input completion:(void(^)(SonosResponse *response, NSError *error))block;
-- (void)stop:(SonosInput *)input completion:(void(^)(SonosResponse *response, NSError *error))block;
-- (void)next:(SonosInput *)input completion:(void(^)(SonosResponse *response, NSError *error))block;
-- (void)previous:(SonosInput *)input completion:(void(^)(SonosResponse *response, NSError *error))block;
-- (void)volume:(SonosInput *)input completion:(void(^)(SonosResponse *response, NSError *error))block;
-- (void)volume:(SonosInput *)input level:(int)level completion:(void(^)(SonosResponse *response, NSError *error))block;
-- (void)lineIn:(SonosInput *)input completion:(void(^)(SonosResponse *response, NSError *error))block;
-- (void)trackInfo:(SonosInput *)input completion:(void(^)(SonosResponse *response, NSError *error))block;
-- (void)browse:(SonosInput *)input completion:(void(^)(SonosResponse *response, NSError *error))block;
+- (void)play:(SonosInput *)input track:(NSString *)track completion:(void(^)(SOAPEnvelope *envelope, NSError *error))block;
+- (void)pause:(SonosInput *)input completion:(void(^)(SOAPEnvelope *envelope, NSError *error))block;
+- (void)stop:(SonosInput *)input completion:(void(^)(SOAPEnvelope *envelope, NSError *error))block;
+- (void)next:(SonosInput *)input completion:(void(^)(SOAPEnvelope *envelope, NSError *error))block;
+- (void)previous:(SonosInput *)input completion:(void(^)(SOAPEnvelope *envelope, NSError *error))block;
+- (void)volume:(SonosInput *)input completion:(void(^)(SOAPEnvelope *envelope, NSError *error))block;
+- (void)volume:(SonosInput *)input level:(int)level completion:(void(^)(SOAPEnvelope *envelope, NSError *error))block;
+- (void)lineIn:(SonosInput *)input completion:(void(^)(SOAPEnvelope *envelope, NSError *error))block;
+- (void)trackInfo:(SonosInput *)input completion:(void(^)(SOAPEnvelope *envelope, NSError *error))block;
+- (void)browse:(SonosInput *)input completion:(void(^)(SOAPEnvelope *envelope, NSError *error))block;
 
 @end
