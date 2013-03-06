@@ -63,6 +63,7 @@
 		D898034516D07A9000D30813 /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D898034416D07A9000D30813 /* Icon@2x.png */; };
 		D8D87D1516D3F0CA0059DBED /* PLVolumeSlider.m in Sources */ = {isa = PBXBuildFile; fileRef = D8D87D1416D3F0CA0059DBED /* PLVolumeSlider.m */; };
 		D8D87D1816D4A2A20059DBED /* PLDirectionGestureRecognizer.m in Sources */ = {isa = PBXBuildFile; fileRef = D8D87D1716D4A2A20059DBED /* PLDirectionGestureRecognizer.m */; };
+		D8EB559016E06EAE006E85D1 /* ControlBarGrip@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D8EB558F16E06EAE006E85D1 /* ControlBarGrip@2x.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -147,6 +148,7 @@
 		D8D87D1416D3F0CA0059DBED /* PLVolumeSlider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PLVolumeSlider.m; sourceTree = "<group>"; };
 		D8D87D1616D4A2A20059DBED /* PLDirectionGestureRecognizer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PLDirectionGestureRecognizer.h; sourceTree = "<group>"; };
 		D8D87D1716D4A2A20059DBED /* PLDirectionGestureRecognizer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PLDirectionGestureRecognizer.m; sourceTree = "<group>"; };
+		D8EB558F16E06EAE006E85D1 /* ControlBarGrip@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "ControlBarGrip@2x.png"; path = "Images/ControlBarGrip@2x.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -304,6 +306,7 @@
 		D88EA82716923E310011F6FB /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				D8EB558F16E06EAE006E85D1 /* ControlBarGrip@2x.png */,
 				D898034416D07A9000D30813 /* Icon@2x.png */,
 				D898034216D06EC100D30813 /* BarButtonItemBack@2x.png */,
 				D898034016D03E7800D30813 /* BarButtonItemDone@2x.png */,
@@ -403,6 +406,7 @@
 				D898034116D03E7800D30813 /* BarButtonItemDone@2x.png in Resources */,
 				D898034316D06EC100D30813 /* BarButtonItemBack@2x.png in Resources */,
 				D898034516D07A9000D30813 /* Icon@2x.png in Resources */,
+				D8EB559016E06EAE006E85D1 /* ControlBarGrip@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
