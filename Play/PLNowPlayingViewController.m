@@ -14,6 +14,7 @@
 #import "SonosInputStore.h"
 #import "SonosInput.h"
 #import "PLVolumeSlider.h"
+#import "PLDirectionGestureRecognizer.h"
 
 static const CGFloat kProgressPadding = 50.0;
 
@@ -220,7 +221,8 @@ static const CGFloat kControlBarRestingY = 585.0;
       }
     }];
 
-    UIPanGestureRecognizer *controlPan = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(panControlBar:)];
+    PLDirectionGestureRecognizer *controlPan = [[PLDirectionGestureRecognizer alloc] initWithTarget:self action:@selector(panControlBar:)];
+    [controlPan setDirection:DirectionPanGestureRecognizerVertical];
     [controlBar addGestureRecognizer:controlPan];
   }
   return self;

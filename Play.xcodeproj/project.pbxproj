@@ -62,6 +62,7 @@
 		D898034316D06EC100D30813 /* BarButtonItemBack@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D898034216D06EC100D30813 /* BarButtonItemBack@2x.png */; };
 		D898034516D07A9000D30813 /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D898034416D07A9000D30813 /* Icon@2x.png */; };
 		D8D87D1516D3F0CA0059DBED /* PLVolumeSlider.m in Sources */ = {isa = PBXBuildFile; fileRef = D8D87D1416D3F0CA0059DBED /* PLVolumeSlider.m */; };
+		D8D87D1816D4A2A20059DBED /* PLDirectionGestureRecognizer.m in Sources */ = {isa = PBXBuildFile; fileRef = D8D87D1716D4A2A20059DBED /* PLDirectionGestureRecognizer.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -144,6 +145,8 @@
 		D898034416D07A9000D30813 /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon@2x.png"; path = "Images/Icon@2x.png"; sourceTree = "<group>"; };
 		D8D87D1316D3F0CA0059DBED /* PLVolumeSlider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PLVolumeSlider.h; sourceTree = "<group>"; };
 		D8D87D1416D3F0CA0059DBED /* PLVolumeSlider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PLVolumeSlider.m; sourceTree = "<group>"; };
+		D8D87D1616D4A2A20059DBED /* PLDirectionGestureRecognizer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PLDirectionGestureRecognizer.h; sourceTree = "<group>"; };
+		D8D87D1716D4A2A20059DBED /* PLDirectionGestureRecognizer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PLDirectionGestureRecognizer.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -209,6 +212,8 @@
 				D8824E2D1693992B00D05AA0 /* PLTextField.m */,
 				D8D87D1316D3F0CA0059DBED /* PLVolumeSlider.h */,
 				D8D87D1416D3F0CA0059DBED /* PLVolumeSlider.m */,
+				D8D87D1616D4A2A20059DBED /* PLDirectionGestureRecognizer.h */,
+				D8D87D1716D4A2A20059DBED /* PLDirectionGestureRecognizer.m */,
 			);
 			name = "UI Components";
 			sourceTree = "<group>";
@@ -429,6 +434,7 @@
 				D819F65B16AE165800B19B50 /* SonosErrorResponse.m in Sources */,
 				D8021A4D16B5DB39002BEAF7 /* SonosMockResponses.m in Sources */,
 				D8D87D1516D3F0CA0059DBED /* PLVolumeSlider.m in Sources */,
+				D8D87D1816D4A2A20059DBED /* PLDirectionGestureRecognizer.m in Sources */,
 				D82B793516D7538000B5FF35 /* SonosVolumeResponse.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
