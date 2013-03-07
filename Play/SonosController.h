@@ -11,6 +11,7 @@
 @class SonosResponse;
 @class SonosVolumeResponse;
 @class SonosInput;
+@class RdioSong;
 
 @interface SonosController : NSObject
 
@@ -26,6 +27,7 @@
                    completion:(void(^)(id obj, NSError *error))block;
 
 - (void)play:(SonosInput *)input track:(NSString *)track completion:(void(^)(SonosResponse *response, NSError *error))block;
+- (void)play:(SonosInput *)input rdioSong:(RdioSong*)song completion:(void(^)(SonosResponse *response, NSError *error))block;
 - (void)pause:(SonosInput *)input completion:(void(^)(SonosResponse *response, NSError *error))block;
 - (void)stop:(SonosInput *)input completion:(void(^)(SonosResponse *response, NSError *error))block;
 - (void)next:(SonosInput *)input completion:(void(^)(SonosResponse *response, NSError *error))block;
