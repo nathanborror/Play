@@ -12,6 +12,9 @@
 #import "SonosInput.h"
 #import "SonosInputStore.h"
 #import "SonosVolumeResponse.h"
+#import "RdioSong.h"
+#import "RdioAlbum.h"
+#import "RdioConstants.h"
 
 @interface SonosController ()
 {
@@ -97,6 +100,30 @@
       }
     }];
   }
+}
+
+- (void)play:(SonosInput *)input rdioSong:(RdioSong *)song completion:(void(^)(SOAPEnvelope *, NSError *))block
+{
+  // The Metadata shows correctly but may be user specific. Some of the numbers might
+  // be tied to an individual Rdio user key, if that is the case more research needs
+  // to be done here to get meta data shown correctly on the Sonos device for user
+  // accounts outside my own.
+  NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", sonosURL, @"/MediaRenderer/AVTransport/Control"]];
+  NSString *albumKey = [song.album.key substringFromIndex:1];
+  NSString *songKey = [song.key substringFromIndex:1];
+  NSString *trackURI = [NSString stringWithFormat:@"x-sonos-http:_t::%@::a::%@.mp3?sid=11&amp;flags=32", songKey, albumKey];
+  NSString *action = @"urn:schemas-upnp-org:service:AVTransport:1#SetAVTransportURI";
+  NSString *body = [NSString stringWithFormat:@""
+    "<u:SetAVTransportURI xmlns:u='urn:schemas-upnp-org:service:AVTransport:1'>"
+      "<InstanceID>0</InstanceID>"
+      "<CurrentURI>%@</CurrentURI>"
+      "<CurrentURIMetaData>"
+        "&lt;DIDL-Lite xmlns:dc=&quot;http://purl.org/dc/elements/1.1/&quot; xmlns:upnp=&quot;urn:schemas-upnp-org:metadata-1-0/upnp/&quot; xmlns:r=&quot;urn:schemas-rinconnetworks-com:metadata-1-0/&quot; xmlns=&quot;urn:schemas-upnp-org:metadata-1-0/DIDL-Lite/&quot;&gt;&lt;item id=&quot;10030020_t%%3a%%3a%@%%3a%%3aal%%3a%%3a%@%%3a%%3a482279&quot; parentID=&quot;1004006c_al%%3a%%3a%@%%3a%%3a482279&quot; restricted=&quot;true&quot;&gt;&lt;dc:title&gt;%@&lt;/dc:title&gt;&lt;upnp:class&gt;object.item.audioItem.musicTrack&lt;/upnp:class&gt;&lt;desc id=&quot;cdudn&quot; nameSpace=&quot;urn:schemas-rinconnetworks-com:metadata-1-0/&quot;&gt;SA_RINCON2823_%@&lt;/desc&gt;&lt;/item&gt;&lt;/DIDL-Lite&gt;"
+      "</CurrentURIMetaData>"
+    "</u:SetAVTransportURI>", trackURI, songKey, albumKey, albumKey, song.name, RDIO_USER_EMAIL];
+  [self fetchSOAPURL:url action:action body:body completion:^(SOAPEnvelope *envelope, NSError *error) {
+    [self play:input track:nil completion:block];
+  }];
 }
 
 - (void)pause:(SonosInput *)input completion:(void (^)(SOAPEnvelope *, NSError *))block
