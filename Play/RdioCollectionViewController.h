@@ -9,6 +9,8 @@
 #import <UIKit/UIKit.h>
 #import <Rdio/Rdio.h>
 
-@interface RdioTrackBrowserViewController : UITableViewController
-@property NSArray *itemList;
+@interface RdioCollectionViewController : UITableViewController
+
+@property (nonatomic, retain) NSArray *itemList;
+
 @end

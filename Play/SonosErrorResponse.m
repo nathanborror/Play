@@ -25,6 +25,12 @@
     currentString = [[NSMutableString alloc] init];
     [self setDetail:currentString];
   }
+
+  NSLog(@"SonosErrorResponse:"
+        "\n\tCode: %@"
+        "\n\tString: %@"
+        "\n\tDetail: %@", code, string, detail);
+
 }
 
 - (void)parser:(NSXMLParser *)parser foundCharacters:(NSString *)str

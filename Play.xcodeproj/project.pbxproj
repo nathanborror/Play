@@ -11,7 +11,7 @@
 		D158131516E883E40009E11B /* RdioArtist.m in Sources */ = {isa = PBXBuildFile; fileRef = D158131416E883E40009E11B /* RdioArtist.m */; };
 		D158131816E883F20009E11B /* RdioAlbum.m in Sources */ = {isa = PBXBuildFile; fileRef = D158131716E883F20009E11B /* RdioAlbum.m */; };
 		D158131B16E884020009E11B /* RdioSong.m in Sources */ = {isa = PBXBuildFile; fileRef = D158131A16E884020009E11B /* RdioSong.m */; };
-		D158132116E885E50009E11B /* RdioTrackBrowserViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D158132016E885E50009E11B /* RdioTrackBrowserViewController.m */; };
+		D158132116E885E50009E11B /* RdioCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D158132016E885E50009E11B /* RdioCollectionViewController.m */; };
 		D158132616E88E060009E11B /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D158132516E88E060009E11B /* AudioToolbox.framework */; };
 		D158132816E88E0C0009E11B /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D158132716E88E0C0009E11B /* Security.framework */; };
 		D158132A16E88E110009E11B /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D158132916E88E110009E11B /* CFNetwork.framework */; };
@@ -83,9 +83,8 @@
 		D158131716E883F20009E11B /* RdioAlbum.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RdioAlbum.m; sourceTree = "<group>"; };
 		D158131916E884020009E11B /* RdioSong.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RdioSong.h; sourceTree = "<group>"; };
 		D158131A16E884020009E11B /* RdioSong.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RdioSong.m; sourceTree = "<group>"; };
-		D158131F16E885E50009E11B /* RdioTrackBrowserViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RdioTrackBrowserViewController.h; sourceTree = "<group>"; };
-		D158132016E885E50009E11B /* RdioTrackBrowserViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RdioTrackBrowserViewController.m; sourceTree = "<group>"; };
-		D158132216E886CD0009E11B /* RdioConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RdioConstants.h; sourceTree = "<group>"; };
+		D158131F16E885E50009E11B /* RdioCollectionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RdioCollectionViewController.h; sourceTree = "<group>"; };
+		D158132016E885E50009E11B /* RdioCollectionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RdioCollectionViewController.m; sourceTree = "<group>"; };
 		D158132516E88E060009E11B /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		D158132716E88E0C0009E11B /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		D158132916E88E110009E11B /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
@@ -102,6 +101,7 @@
 		D819F65916AE165800B19B50 /* SonosErrorResponse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SonosErrorResponse.h; sourceTree = "<group>"; };
 		D819F65A16AE165800B19B50 /* SonosErrorResponse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SonosErrorResponse.m; sourceTree = "<group>"; };
 		D819F65C16AE1BB900B19B50 /* Examples.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = Examples.xml; sourceTree = "<group>"; };
+		D81DE37A16ED687400F21111 /* Play-Debug.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Play-Debug.xcconfig"; sourceTree = "<group>"; };
 		D82B793316D7538000B5FF35 /* SonosVolumeResponse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SonosVolumeResponse.h; sourceTree = "<group>"; };
 		D82B793416D7538000B5FF35 /* SonosVolumeResponse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SonosVolumeResponse.m; sourceTree = "<group>"; };
 		D851A97216928C020014446F /* TempAlbum2@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "TempAlbum2@2x.png"; path = "Images/TempAlbum2@2x.png"; sourceTree = "<group>"; };
@@ -207,9 +207,8 @@
 				D158131716E883F20009E11B /* RdioAlbum.m */,
 				D158131916E884020009E11B /* RdioSong.h */,
 				D158131A16E884020009E11B /* RdioSong.m */,
-				D158131F16E885E50009E11B /* RdioTrackBrowserViewController.h */,
-				D158132016E885E50009E11B /* RdioTrackBrowserViewController.m */,
-				D158132216E886CD0009E11B /* RdioConstants.h */,
+				D158131F16E885E50009E11B /* RdioCollectionViewController.h */,
+				D158132016E885E50009E11B /* RdioCollectionViewController.m */,
 			);
 			name = Rdio;
 			sourceTree = "<group>";
@@ -313,7 +312,6 @@
 		D88EA7F416917C460011F6FB /* Play */ = {
 			isa = PBXGroup;
 			children = (
-				D158131016E883580009E11B /* Rdio */,
 				D88EA7FD16917C460011F6FB /* PLAppDelegate.h */,
 				D88EA7FE16917C460011F6FB /* PLAppDelegate.m */,
 				D88D115E16937AC80039067F /* PLLibraryViewController.h */,
@@ -330,6 +328,7 @@
 				D8824E421693D45500D05AA0 /* PLSongViewController.m */,
 				D819F65116AE044F00B19B50 /* Sonos */,
 				D8824DE616938C8900D05AA0 /* Data */,
+				D158131016E883580009E11B /* Rdio */,
 				D8824E281693921400D05AA0 /* UI Components */,
 				D8824E3116939C3900D05AA0 /* Categories */,
 				D88EA82716923E310011F6FB /* Images */,
@@ -349,6 +348,7 @@
 				D88EA80216917C460011F6FB /* Default@2x.png */,
 				D88EA80416917C460011F6FB /* Default-568h@2x.png */,
 				D8030BEF16928583002F57B6 /* examples */,
+				D81DE37A16ED687400F21111 /* Play-Debug.xcconfig */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -493,7 +493,7 @@
 				D158131516E883E40009E11B /* RdioArtist.m in Sources */,
 				D158131816E883F20009E11B /* RdioAlbum.m in Sources */,
 				D158131B16E884020009E11B /* RdioSong.m in Sources */,
-				D158132116E885E50009E11B /* RdioTrackBrowserViewController.m in Sources */,
+				D158132116E885E50009E11B /* RdioCollectionViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -513,6 +513,7 @@
 /* Begin XCBuildConfiguration section */
 		D88EA80C16917C460011F6FB /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = D81DE37A16ED687400F21111 /* Play-Debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
@@ -540,6 +541,7 @@
 		};
 		D88EA80D16917C460011F6FB /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = D81DE37A16ED687400F21111 /* Play-Debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
@@ -562,6 +564,7 @@
 		};
 		D88EA80F16917C460011F6FB /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = D81DE37A16ED687400F21111 /* Play-Debug.xcconfig */;
 			buildSettings = {
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -578,6 +581,7 @@
 		};
 		D88EA81016917C460011F6FB /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = D81DE37A16ED687400F21111 /* Play-Debug.xcconfig */;
 			buildSettings = {
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",

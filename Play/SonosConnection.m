@@ -36,8 +36,6 @@ static const BOOL kTargetSimulator = NO;
 
   if (kTargetSimulator) {
     // Bypass NSURLConnection and call connectionDidFinishLoading directly
-    NSLog(@"Mock response returned.");
-
     NSData *mockResponse = [[SonosMockResponses sharedResponses] responseFor:[request valueForHTTPHeaderField:@"SOAPACTION"]];
     [container appendData:mockResponse];
     [self connectionDidFinishLoading:nil];
@@ -78,8 +76,6 @@ static const BOOL kTargetSimulator = NO;
 
 - (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error
 {
-  NSLog(@"Connection Error.");
-
   if (completionBlock) {
     completionBlock(nil, error);
   }

@@ -2,6 +2,12 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>CFRdioConsumerKey</key>
+	<string>${RDIO_CONSUMER_KEY}</string>
+	<key>CFRdioConsumerSecret</key>
+	<string>${RDIO_CONSUMER_SECRET}</string>
+	<key>CFRdioUserEmail</key>
+	<string>${RDIO_USER_EMAIL}</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleDisplayName</key>

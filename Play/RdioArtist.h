@@ -9,7 +9,9 @@
 #import <Foundation/Foundation.h>
 
 @interface RdioArtist : NSObject
-@property (nonatomic, retain) NSString * key;
-@property (nonatomic, retain) NSString * name;
+
+@property (nonatomic, retain) NSString *key;
+@property (nonatomic, retain) NSString *name;
 @property (nonatomic, retain) NSMutableArray *albums;
+
 @end

@@ -21,10 +21,11 @@
 
 + (SonosController *)sharedController;
 
-- (void)fetchSOAPURL:(NSURL *)url
-                        action:(NSString *)action
-                             body:(NSString *)body
-                   completion:(void(^)(id obj, NSError *error))block;
+- (void)fetch:(NSString *)path
+        input:(SonosInput *)input
+       action:(NSString *)action
+         body:(NSString *)body
+   completion:(void(^)(id obj, NSError *error))block;
 
 - (void)play:(SonosInput *)input track:(NSString *)track completion:(void(^)(SOAPEnvelope *envelope, NSError *error))block;
 - (void)play:(SonosInput *)input rdioSong:(RdioSong *)song completion:(void(^)(SOAPEnvelope *envelope, NSError *error))block;

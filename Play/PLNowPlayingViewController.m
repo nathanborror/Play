@@ -215,12 +215,10 @@ static const CGFloat kControlBarRestingY = 585.0;
 
     // TODO: Update track info
     [sonos trackInfo:nil completion:^(SOAPEnvelope *envelope, NSError *error) {
-      SonosPositionInfoResponse *positionInfo = (SonosPositionInfoResponse *)[envelope response];
-      NSLog(@"META: %@", positionInfo.metaData);
+//      SonosPositionInfoResponse *positionInfo = (SonosPositionInfoResponse *)[envelope response];
 //      [title setText:positionInfo.track];
 //      [timeElapsed setText:positionInfo.relTime];
 //      [timeTotal setText:positionInfo.duration];
-
       if (error) {
         NSLog(@"Must select an input first!");
       }

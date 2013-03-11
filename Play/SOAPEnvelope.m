@@ -27,8 +27,6 @@
 
 - (void)parser:(NSXMLParser *)parser didStartElement:(NSString *)elementName namespaceURI:(NSString *)namespaceURI qualifiedName:(NSString *)qName attributes:(NSDictionary *)attributeDict
 {
-  // TODO: The following probably won't scale
-  //NSLog(@"\t%@ found a %@ element", self, elementName);
   if ([elementName isEqual:@"u:GetPositionInfoResponse"]) {
     SonosPositionInfoResponse *res = [[SonosPositionInfoResponse alloc] init];
     [res setParentParserDelegate:self];

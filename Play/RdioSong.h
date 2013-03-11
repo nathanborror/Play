@@ -11,7 +11,9 @@
 @class RdioAlbum;
 
 @interface RdioSong : NSObject
-@property (nonatomic, retain) NSString * key;
-@property (nonatomic, retain) NSString * name;
+
+@property (nonatomic, retain) NSString *key;
+@property (nonatomic, retain) NSString *name;
 @property (nonatomic, retain) RdioAlbum *album;
+
 @end
