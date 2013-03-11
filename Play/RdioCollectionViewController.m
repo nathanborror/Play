@@ -15,7 +15,7 @@
 #import "SonosInputStore.h"
 #import "PLNowPlayingViewController.h"
 
-@interface RdioCollectionViewController () <RDAPIRequestDelegate, RdioDelegate>
+@interface RdioCollectionViewController ()
 {
   Rdio *rdio;
   NSInteger trackCount;
@@ -73,7 +73,6 @@
 
   for (id item in _itemList) {
     NSInteger sectionNumber = [collation sectionForObject:item collationStringSelector:@selector(name)];
-    NSLog(@"Section: %d", sectionNumber);
     [[newSections objectAtIndex:sectionNumber] addObject:item];
   }
 
@@ -82,8 +81,9 @@
     NSArray *sortedItemsForSection = [collation sortedArrayFromArray:itemsForSection collationStringSelector:@selector(name)];
     [newSections replaceObjectAtIndex:i withObject:sortedItemsForSection];
   }
-
+  
   sections = newSections;
+
   [self.tableView reloadData];
 }
 
@@ -206,10 +206,6 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-//  if ([_itemList count] == 0) {
-//    return 1;
-//  }
-//  return [_itemList count];
   return [[sections objectAtIndex:section] count];
 }
 
@@ -249,7 +245,9 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-  id rdioObject = [_itemList objectAtIndex:indexPath.row];
+  NSArray *itemsInSection = [sections objectAtIndex:indexPath.section];
+  id rdioObject = [itemsInSection objectAtIndex:indexPath.row];
+
   if ([rdioObject isKindOfClass:[RdioSong class]]) {
     SonosController *sonos = [SonosController sharedController];
     [sonos play:nil rdioSong:(RdioSong *)rdioObject completion:^(SOAPEnvelope *envelope, NSError *error){

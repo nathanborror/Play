@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import <Rdio/Rdio.h>
 
-@interface RdioCollectionViewController : UITableViewController
+@interface RdioCollectionViewController : UITableViewController <RDAPIRequestDelegate, RdioDelegate>
 
 @property (nonatomic, retain) NSArray *itemList;
 
