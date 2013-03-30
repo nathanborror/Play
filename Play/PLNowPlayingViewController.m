@@ -18,14 +18,13 @@
 
 static const CGFloat kProgressPadding = 50.0;
 
-static const CGFloat kControlBarHeight = 418.0;
 static const CGFloat kControlBarPadding = 5.0;
 static const CGFloat kControlBarPreviousNextPadding = 40.0;
-static const CGFloat kControlBarLandscapeHeight = 83.0;
 static const CGFloat kControlBarButtonWidth = 75.0;
-static const CGFloat kControlBarButtonHeight = 75.0;
+static const CGFloat kControlBarButtonHeight = kControlBarButtonWidth;
 static const CGFloat kControlBarButtonPadding = 20.0;
-static const CGFloat kControlBarRestingY = 585.0;
+static const CGFloat kControlBarRestingYPortrait = 375.0;
+static const CGFloat kControlBarRestingYLandscape = 235.0;
 
 @interface PLNowPlayingViewController ()
 {
@@ -169,9 +168,9 @@ static const CGFloat kControlBarRestingY = 585.0;
     [self.view addSubview:songList];
 
     // Control Bar
-    controlBar = [[UIImageView alloc] initWithImage:[[UIImage imageNamed:@"ControlBar.png"] resizableImageWithCapInsets:UIEdgeInsetsMake(6, 6, 6, 6) resizingMode:UIImageResizingModeStretch]];
-    [controlBar setFrame:CGRectMake(0, CGRectGetHeight(self.view.frame)-kControlBarHeight, CGRectGetWidth(self.view.bounds), kControlBarHeight)];
-    [controlBar setAutoresizingMask:UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleTopMargin];
+    controlBar = [[UIImageView alloc] initWithFrame:CGRectMake(0, kControlBarRestingYPortrait, CGRectGetWidth(self.view.frame), CGRectGetHeight(self.view.frame))];
+    [controlBar setImage:[[UIImage imageNamed:@"ControlBar.png"] resizableImageWithCapInsets:UIEdgeInsetsMake(6, 6, 6, 6) resizingMode:UIImageResizingModeStretch]];
+    [controlBar setAutoresizingMask:UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight];
     [controlBar setUserInteractionEnabled:YES];
 
     UIImageView *grip = [[UIImageView alloc] initWithFrame:CGRectMake((CGRectGetWidth(self.view.frame)/2)-17, 6, 35, 3)];
@@ -256,8 +255,6 @@ static const CGFloat kControlBarRestingY = 585.0;
 - (void)viewWillAppear:(BOOL)animated
 {
   [super viewWillAppear:animated];
-
-  [controlBar setFrame:CGRectOffset(controlBar.bounds, 0, CGRectGetHeight(self.view.frame) - (kControlBarHeight - 295))];
 }
 
 - (void)playPause
@@ -306,22 +303,18 @@ static const CGFloat kControlBarRestingY = 585.0;
     [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationFade];
     [self.navigationController setNavigationBarHidden:NO animated:YES];
 
-    [controlBar setFrame:CGRectMake(0, CGRectGetHeight(self.view.frame)-kControlBarHeight, CGRectGetWidth(self.view.bounds), kControlBarHeight)];
+    [controlBar setFrame:CGRectOffset(controlBar.bounds, 0, kControlBarRestingYPortrait)];
     [volumeSlider setFrame:CGRectMake(kControlBarButtonPadding, 80, CGRectGetWidth(controlBar.bounds)-(kControlBarButtonPadding*2), 20)];
-
     [album setFrame:CGRectMake(30, 90, 260, 260)];
-
     [trackInfo setFrame:CGRectOffset(trackInfo.bounds, 0, 0)];
   } else {
     // Landscape
     [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarAnimationFade];
     [self.navigationController setNavigationBarHidden:YES animated:YES];
 
-    [controlBar setFrame:CGRectMake(0, CGRectGetHeight(self.view.frame)-kControlBarLandscapeHeight, CGRectGetWidth(self.view.bounds), kControlBarLandscapeHeight)];
+    [controlBar setFrame:CGRectOffset(controlBar.bounds, 0, kControlBarRestingYLandscape)];
     [volumeSlider setFrame:CGRectMake(kControlBarButtonPadding+280, 34, 250, 20)];
-
     [album setFrame:CGRectMake(15, 15, 209, 209)];
-
     [trackInfo setFrame:CGRectOffset(trackInfo.bounds, CGRectGetWidth(album.bounds)+20, 20)];
   }
 }
@@ -347,33 +340,46 @@ static const CGFloat kControlBarRestingY = 585.0;
     CGPoint velocityPoint = [recognizer velocityInView:controlBar];
 
     if (velocityPoint.y >= 0) {
-      // Moving downward
-
-      if (controlBar.center.y < kControlBarRestingY) {
-        bounce.fromValue = [NSNumber numberWithInt:0];
-        bounce.toValue = [NSNumber numberWithInt:9];
-        [controlBar.layer addAnimation:bounce forKey:@"bounce"];
-      } else {
-        bounce.fromValue = [NSNumber numberWithInt:5];
-        bounce.toValue = [NSNumber numberWithInt:0];
-        [controlBar.layer addAnimation:bounce forKey:@"bounce"];
-      }
-
-      [UIView animateWithDuration:.15 delay:0 options:UIViewAnimationCurveLinear animations:^{
-        controlBar.center = CGPointMake(controlBar.center.x, kControlBarRestingY);
-      } completion:nil];
+      [self hideSpeakerVolumes];
     } else {
-      // Moving upward
-
-      bounce.fromValue = [NSNumber numberWithInt:9];
-      bounce.toValue = [NSNumber numberWithInt:0];
-      [controlBar.layer addAnimation:bounce forKey:@"bounce"];
-
-      [UIView animateWithDuration:.15 delay:0 options:UIViewAnimationCurveLinear animations:^{
-        controlBar.center = CGPointMake(controlBar.center.x, 300.0);
-      } completion:nil];
+      [self showSpeakerVolumes];
     }
   }
+}
+
+- (void)showSpeakerVolumes
+{
+  bounce.fromValue = [NSNumber numberWithInt:9];
+  bounce.toValue = [NSNumber numberWithInt:0];
+  [controlBar.layer addAnimation:bounce forKey:@"bounce"];
+
+  [UIView animateWithDuration:.15 delay:0 options:UIViewAnimationCurveLinear animations:^{
+    [controlBar setFrame:CGRectOffset(controlBar.bounds, 0, 0)];
+  } completion:nil];
+}
+
+- (void)hideSpeakerVolumes
+{
+  CGFloat restingPosition;
+  if (UIInterfaceOrientationIsLandscape([[UIDevice currentDevice] orientation])) {
+    restingPosition = kControlBarRestingYLandscape;
+  } else {
+    restingPosition = kControlBarRestingYPortrait;
+  }
+
+  if (controlBar.center.y < restingPosition) {
+    bounce.fromValue = [NSNumber numberWithInt:0];
+    bounce.toValue = [NSNumber numberWithInt:9];
+    [controlBar.layer addAnimation:bounce forKey:@"bounce"];
+  } else {
+    bounce.fromValue = [NSNumber numberWithInt:5];
+    bounce.toValue = [NSNumber numberWithInt:0];
+    [controlBar.layer addAnimation:bounce forKey:@"bounce"];
+  }
+
+  [UIView animateWithDuration:.15 delay:0 options:UIViewAnimationCurveLinear animations:^{
+    [controlBar setFrame:CGRectOffset(controlBar.bounds, 0, restingPosition)];
+  } completion:nil];
 }
 
 #pragma mark - UITableViewController
