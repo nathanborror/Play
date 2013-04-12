@@ -14,7 +14,8 @@
 #import "SonosInputStore.h"
 #import "SonosInput.h"
 #import "PLVolumeSlider.h"
-#import "PLDirectionGestureRecognizer.h"
+#import "NBDirectionGestureRecognizer.h"
+#import "NBAnimation.h"
 
 static const CGFloat kProgressPadding = 50.0;
 
@@ -23,7 +24,7 @@ static const CGFloat kControlBarPreviousNextPadding = 40.0;
 static const CGFloat kControlBarButtonWidth = 75.0;
 static const CGFloat kControlBarButtonHeight = kControlBarButtonWidth;
 static const CGFloat kControlBarButtonPadding = 20.0;
-static const CGFloat kControlBarRestingYPortrait = 375.0;
+static const CGFloat kControlBarRestingYPortrait = 155.0;
 static const CGFloat kControlBarRestingYLandscape = 235.0;
 
 @interface PLNowPlayingViewController ()
@@ -51,7 +52,7 @@ static const CGFloat kControlBarRestingYLandscape = 235.0;
 
   CGPoint panCoordBegan;
 
-  CABasicAnimation *bounce;
+  NBAnimation *bounce;
 }
 @end
 
@@ -66,13 +67,10 @@ static const CGFloat kControlBarRestingYLandscape = 235.0;
     [self.navigationItem setTitle:@"Now Playing"];
 
     // Bounce Animation
-    bounce = [CABasicAnimation animationWithKeyPath:@"position.y"];
-    bounce.duration = .15;
-    bounce.repeatCount = 1;
-    bounce.autoreverses = YES;
-    bounce.fillMode = kCAFillModeForwards;
-    bounce.removedOnCompletion = NO;
-    bounce.additive = YES;
+    bounce = [NBAnimation animationWithKeyPath:@"position.y"];
+    [bounce setDuration:0.7f];
+    [bounce setNumberOfBounces:2];
+    [bounce setShouldOvershoot:YES];
 
     // Done Button
     UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(done)];
@@ -153,9 +151,6 @@ static const CGFloat kControlBarRestingYLandscape = 235.0;
     [trackInfo sizeToFit];
     [tableHeader addSubview:trackInfo];
 
-    // TODO: Figure out why self.view.bounds isn't returning the right
-    // height minus the navbar height
-
     // Song List
     songList = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(self.view.bounds), CGRectGetHeight(self.view.bounds))];
     [songList setAutoresizingMask:UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight];
@@ -168,9 +163,9 @@ static const CGFloat kControlBarRestingYLandscape = 235.0;
     [self.view addSubview:songList];
 
     // Control Bar
-    controlBar = [[UIImageView alloc] initWithFrame:CGRectMake(0, kControlBarRestingYPortrait, CGRectGetWidth(self.view.frame), CGRectGetHeight(self.view.frame))];
+    controlBar = [[UIImageView alloc] initWithFrame:CGRectMake(0, CGRectGetHeight(self.view.bounds)-kControlBarRestingYPortrait, CGRectGetWidth(self.view.frame), CGRectGetHeight(self.view.frame))];
     [controlBar setImage:[[UIImage imageNamed:@"ControlBar.png"] resizableImageWithCapInsets:UIEdgeInsetsMake(6, 6, 6, 6) resizingMode:UIImageResizingModeStretch]];
-    [controlBar setAutoresizingMask:UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight];
+    [controlBar setAutoresizingMask:UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleTopMargin];
     [controlBar setUserInteractionEnabled:YES];
 
     UIImageView *grip = [[UIImageView alloc] initWithFrame:CGRectMake((CGRectGetWidth(self.view.frame)/2)-17, 6, 35, 3)];
@@ -223,7 +218,7 @@ static const CGFloat kControlBarRestingYLandscape = 235.0;
       }
     }];
 
-    PLDirectionGestureRecognizer *controlPan = [[PLDirectionGestureRecognizer alloc] initWithTarget:self action:@selector(panControlBar:)];
+    NBDirectionGestureRecognizer *controlPan = [[NBDirectionGestureRecognizer alloc] initWithTarget:self action:@selector(panControlBar:)];
     [controlPan setDirection:DirectionPanGestureRecognizerVertical];
     [controlBar addGestureRecognizer:controlPan];
   }
@@ -250,11 +245,6 @@ static const CGFloat kControlBarRestingYLandscape = 235.0;
     [timeTotal setText:@"00:00"];
   }
   return self;
-}
-
-- (void)viewWillAppear:(BOOL)animated
-{
-  [super viewWillAppear:animated];
 }
 
 - (void)playPause
@@ -349,37 +339,33 @@ static const CGFloat kControlBarRestingYLandscape = 235.0;
 
 - (void)showSpeakerVolumes
 {
-  bounce.fromValue = [NSNumber numberWithInt:9];
-  bounce.toValue = [NSNumber numberWithInt:0];
-  [controlBar.layer addAnimation:bounce forKey:@"bounce"];
+  id fromValue = [NSNumber numberWithFloat:CGRectGetMaxY(controlBar.bounds)];
+  id toValue = [NSNumber numberWithFloat:(CGRectGetHeight(controlBar.bounds)/2)+80];
 
-  [UIView animateWithDuration:.15 delay:0 options:UIViewAnimationCurveLinear animations:^{
-    [controlBar setFrame:CGRectOffset(controlBar.bounds, 0, 0)];
-  } completion:nil];
+  [bounce setFromValue:fromValue];
+  [bounce setToValue:toValue];
+
+	[controlBar.layer addAnimation:bounce forKey:@"bounce"];
+	[controlBar.layer setValue:toValue forKeyPath:@"position.y"];
 }
 
 - (void)hideSpeakerVolumes
 {
-  CGFloat restingPosition;
-  if (UIInterfaceOrientationIsLandscape([[UIDevice currentDevice] orientation])) {
-    restingPosition = kControlBarRestingYLandscape;
-  } else {
-    restingPosition = kControlBarRestingYPortrait;
-  }
+//  CGFloat restingPosition;
+//  if (UIInterfaceOrientationIsLandscape([[UIDevice currentDevice] orientation])) {
+//    restingPosition = kControlBarRestingYLandscape;
+//  } else {
+//    restingPosition = kControlBarRestingYPortrait;
+//  }
 
-  if (controlBar.center.y < restingPosition) {
-    bounce.fromValue = [NSNumber numberWithInt:0];
-    bounce.toValue = [NSNumber numberWithInt:9];
-    [controlBar.layer addAnimation:bounce forKey:@"bounce"];
-  } else {
-    bounce.fromValue = [NSNumber numberWithInt:5];
-    bounce.toValue = [NSNumber numberWithInt:0];
-    [controlBar.layer addAnimation:bounce forKey:@"bounce"];
-  }
+  id fromValue = [NSNumber numberWithFloat:CGRectGetMaxY(controlBar.bounds)];
+  id toValue = [NSNumber numberWithFloat:(CGRectGetHeight(controlBar.bounds)/2)+380];
 
-  [UIView animateWithDuration:.15 delay:0 options:UIViewAnimationCurveLinear animations:^{
-    [controlBar setFrame:CGRectOffset(controlBar.bounds, 0, restingPosition)];
-  } completion:nil];
+  [bounce setFromValue:fromValue];
+  [bounce setToValue:toValue];
+
+	[controlBar.layer addAnimation:bounce forKey:@"bounce"];
+	[controlBar.layer setValue:toValue forKeyPath:@"position.y"];
 }
 
 #pragma mark - UITableViewController

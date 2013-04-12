@@ -1,6 +1,6 @@
 //
-//  PLDirectionGestureRecognizer.h
-//  Play
+//  NBDirectionGestureRecognizer.h
+//  NBKit
 //
 //  Created by Nathan Borror on 2/19/13.
 //  Copyright (c) 2013 Nathan Borror. All rights reserved.
@@ -14,7 +14,7 @@ typedef enum {
   DirectionPanGestureRecognizerHorizontal
 } DirectionPanGestureRecognizerDirection;
 
-@interface PLDirectionGestureRecognizer : UIPanGestureRecognizer
+@interface NBDirectionGestureRecognizer : UIPanGestureRecognizer
 
 @property (nonatomic, assign) DirectionPanGestureRecognizerDirection direction;
 

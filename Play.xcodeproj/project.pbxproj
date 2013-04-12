@@ -70,8 +70,9 @@
 		D898034116D03E7800D30813 /* BarButtonItemDone@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D898034016D03E7800D30813 /* BarButtonItemDone@2x.png */; };
 		D898034316D06EC100D30813 /* BarButtonItemBack@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D898034216D06EC100D30813 /* BarButtonItemBack@2x.png */; };
 		D898034516D07A9000D30813 /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D898034416D07A9000D30813 /* Icon@2x.png */; };
+		D8B613D81717FD3800F12446 /* NBAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = D8B613D71717FD3800F12446 /* NBAnimation.m */; };
+		D8B613DB1718077400F12446 /* NBDirectionGestureRecognizer.m in Sources */ = {isa = PBXBuildFile; fileRef = D8B613DA1718077400F12446 /* NBDirectionGestureRecognizer.m */; };
 		D8D87D1516D3F0CA0059DBED /* PLVolumeSlider.m in Sources */ = {isa = PBXBuildFile; fileRef = D8D87D1416D3F0CA0059DBED /* PLVolumeSlider.m */; };
-		D8D87D1816D4A2A20059DBED /* PLDirectionGestureRecognizer.m in Sources */ = {isa = PBXBuildFile; fileRef = D8D87D1716D4A2A20059DBED /* PLDirectionGestureRecognizer.m */; };
 		D8EB559016E06EAE006E85D1 /* ControlBarGrip@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D8EB558F16E06EAE006E85D1 /* ControlBarGrip@2x.png */; };
 /* End PBXBuildFile section */
 
@@ -167,10 +168,12 @@
 		D898034016D03E7800D30813 /* BarButtonItemDone@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "BarButtonItemDone@2x.png"; path = "Images/BarButtonItemDone@2x.png"; sourceTree = "<group>"; };
 		D898034216D06EC100D30813 /* BarButtonItemBack@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "BarButtonItemBack@2x.png"; path = "Images/BarButtonItemBack@2x.png"; sourceTree = "<group>"; };
 		D898034416D07A9000D30813 /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon@2x.png"; path = "Images/Icon@2x.png"; sourceTree = "<group>"; };
+		D8B613D61717FD3800F12446 /* NBAnimation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NBAnimation.h; path = NBKit/NBAnimation.h; sourceTree = "<group>"; };
+		D8B613D71717FD3800F12446 /* NBAnimation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NBAnimation.m; path = NBKit/NBAnimation.m; sourceTree = "<group>"; };
+		D8B613D91718077400F12446 /* NBDirectionGestureRecognizer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NBDirectionGestureRecognizer.h; path = NBKit/NBDirectionGestureRecognizer.h; sourceTree = "<group>"; };
+		D8B613DA1718077400F12446 /* NBDirectionGestureRecognizer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NBDirectionGestureRecognizer.m; path = NBKit/NBDirectionGestureRecognizer.m; sourceTree = "<group>"; };
 		D8D87D1316D3F0CA0059DBED /* PLVolumeSlider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PLVolumeSlider.h; sourceTree = "<group>"; };
 		D8D87D1416D3F0CA0059DBED /* PLVolumeSlider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PLVolumeSlider.m; sourceTree = "<group>"; };
-		D8D87D1616D4A2A20059DBED /* PLDirectionGestureRecognizer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PLDirectionGestureRecognizer.h; sourceTree = "<group>"; };
-		D8D87D1716D4A2A20059DBED /* PLDirectionGestureRecognizer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PLDirectionGestureRecognizer.m; sourceTree = "<group>"; };
 		D8EB558F16E06EAE006E85D1 /* ControlBarGrip@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "ControlBarGrip@2x.png"; path = "Images/ControlBarGrip@2x.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -257,8 +260,6 @@
 				D8824E2D1693992B00D05AA0 /* PLTextField.m */,
 				D8D87D1316D3F0CA0059DBED /* PLVolumeSlider.h */,
 				D8D87D1416D3F0CA0059DBED /* PLVolumeSlider.m */,
-				D8D87D1616D4A2A20059DBED /* PLDirectionGestureRecognizer.h */,
-				D8D87D1716D4A2A20059DBED /* PLDirectionGestureRecognizer.m */,
 			);
 			name = "UI Components";
 			sourceTree = "<group>";
@@ -312,6 +313,7 @@
 		D88EA7F416917C460011F6FB /* Play */ = {
 			isa = PBXGroup;
 			children = (
+				D8B613D51717FD2200F12446 /* NBKit */,
 				D88EA7FD16917C460011F6FB /* PLAppDelegate.h */,
 				D88EA7FE16917C460011F6FB /* PLAppDelegate.m */,
 				D88D115E16937AC80039067F /* PLLibraryViewController.h */,
@@ -378,6 +380,17 @@
 				D88EA82816923E420011F6FB /* NavBar@2x.png */,
 			);
 			name = Images;
+			sourceTree = "<group>";
+		};
+		D8B613D51717FD2200F12446 /* NBKit */ = {
+			isa = PBXGroup;
+			children = (
+				D8B613D91718077400F12446 /* NBDirectionGestureRecognizer.h */,
+				D8B613DA1718077400F12446 /* NBDirectionGestureRecognizer.m */,
+				D8B613D61717FD3800F12446 /* NBAnimation.h */,
+				D8B613D71717FD3800F12446 /* NBAnimation.m */,
+			);
+			name = NBKit;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -488,12 +501,13 @@
 				D819F65B16AE165800B19B50 /* SonosErrorResponse.m in Sources */,
 				D8021A4D16B5DB39002BEAF7 /* SonosMockResponses.m in Sources */,
 				D8D87D1516D3F0CA0059DBED /* PLVolumeSlider.m in Sources */,
-				D8D87D1816D4A2A20059DBED /* PLDirectionGestureRecognizer.m in Sources */,
 				D82B793516D7538000B5FF35 /* SonosVolumeResponse.m in Sources */,
 				D158131516E883E40009E11B /* RdioArtist.m in Sources */,
 				D158131816E883F20009E11B /* RdioAlbum.m in Sources */,
 				D158131B16E884020009E11B /* RdioSong.m in Sources */,
 				D158132116E885E50009E11B /* RdioCollectionViewController.m in Sources */,
+				D8B613D81717FD3800F12446 /* NBAnimation.m in Sources */,
+				D8B613DB1718077400F12446 /* NBDirectionGestureRecognizer.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
