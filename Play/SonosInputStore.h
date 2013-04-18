@@ -17,7 +17,8 @@
 + (SonosInputStore *)sharedStore;
 
 - (NSArray *)allInputs;
-- (void)addInputWithIP:(NSString *)aIP name:(NSString *)aName uid:(NSString *)aUid;
+- (SonosInput *)inputAtIndex:(NSUInteger)index;
+- (void)addInputWithIP:(NSString *)aIP name:(NSString *)aName uid:(NSString *)aUid icon:(UIImage *)aIcon;
 - (void)removeInput:(SonosInput *)input;
 - (BOOL)saveChanges;
 

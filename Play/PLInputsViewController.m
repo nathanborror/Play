@@ -12,11 +12,15 @@
 #import "PLNowPlayingViewController.h"
 #import "SonosInput.h"
 #import "SonosInputStore.h"
+#import "SonosInputCell.h"
+#import "NBAnimation.h"
 
 @interface PLInputsViewController ()
 {
-  UITableView *inputsTableView;
   NSArray *inputList;
+  NBAnimation *cellBounce;
+  CGPoint cellPanCoordBegan;
+  CGPoint cellOriginalCenter;
 }
 @end
 
@@ -36,26 +40,22 @@
     UIBarButtonItem *nowPlayingButton = [[UIBarButtonItem alloc] initWithTitle:@"Playing" style:UIBarButtonItemStyleDone target:self action:@selector(nowPlaying)];
     [self.navigationItem setRightBarButtonItem:nowPlayingButton];
 
-    // Table
-    inputsTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(self.view.bounds), CGRectGetHeight(self.view.bounds)) style:UITableViewStylePlain];
-    [inputsTableView setAutoresizingMask:UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth];
-    [inputsTableView setDelegate:self];
-    [inputsTableView setDataSource:self];
-    [self.view addSubview:inputsTableView];
-
     // TODO: Remove this and load these using UPnP's discovery stuff
     SonosInputStore *inputStore = [SonosInputStore sharedStore];
-    [inputStore addInputWithIP:@"10.0.1.9" name:@"Living Room" uid:@"RINCON_000E58D0540801400"];
-    [inputStore addInputWithIP:@"10.0.1.10" name:@"Bedroom" uid:@"RINCON_000E587641F201400"];
-    [inputStore addInputWithIP:@"10.0.1.18" name:@"Kitchen" uid:@"RINCON_000E587BBA5201400"];
+    [inputStore addInputWithIP:@"10.0.1.9" name:@"Living Room" uid:@"RINCON_000E58D0540801400" icon:[UIImage imageNamed:@"SonosAmp"]];
+    [inputStore addInputWithIP:@"10.0.1.10" name:@"Bedroom" uid:@"RINCON_000E587641F201400" icon:[UIImage imageNamed:@"SonosSpeakerPlay3Light"]];
+    [inputStore addInputWithIP:@"10.0.1.18" name:@"Kitchen" uid:@"RINCON_000E587BBA5201400" icon:[UIImage imageNamed:@"SonosSpeakerPlay3Dark"]];
+
+    // Cell bounce animation
+    cellBounce = [NBAnimation animationWithKeyPath:@"position"];
+    [cellBounce setDuration:0.7f];
+    [cellBounce setNumberOfBounces:2];
+    [cellBounce setShouldOvershoot:YES];
+
+    [self setBackground];
+    [self setInputs];
   }
   return self;
-}
-
-- (void)viewDidAppear:(BOOL)animated
-{
-  [super viewDidAppear:animated];
-  [inputsTableView reloadData];
 }
 
 - (void)nowPlaying
@@ -72,50 +72,84 @@
   [self.navigationController presentViewController:navigationController animated:YES completion:nil];
 }
 
-#pragma mark - UITableViewController
+- (void)setBackground
+{
+  UIImageView *background = [[UIImageView alloc] initWithFrame:self.view.bounds];
+  [background setBackgroundColor:[UIColor colorWithWhite:.2 alpha:1]];
+  [background setAutoresizingMask:UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight];
+  [self.view addSubview:background];
+}
 
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+#pragma mark - Inputs
+
+- (void)setInputs
+{
+  for (int i = 0; i < [self numberOfInputs]; i++) {
+    SonosInput *input = [[SonosInputStore sharedStore] inputAtIndex:i];
+    SonosInputCell *cell = [self cellForInput:input];
+    [cell setFrame:CGRectOffset(cell.bounds, 100, (CGRectGetHeight(cell.bounds)*i)+(20*(i+1)))];
+    [cell addTarget:self action:@selector(inputWasSelected:) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:cell];
+
+    UIPanGestureRecognizer *cellPan = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(panCell:)];
+    [cell addGestureRecognizer:cellPan];
+  }
+}
+
+- (NSInteger)numberOfInputs
 {
   return [[[SonosInputStore sharedStore] allInputs] count];
 }
 
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+- (SonosInputCell *)cellForInput:(SonosInput *)input
 {
-  SonosInput *input = [[[SonosInputStore sharedStore] allInputs] objectAtIndex:indexPath.row];
-  UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"PLInputsTableViewCell"];
-  if (!cell) {
-    cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"PLInputsTableViewCell"];
-  }
-  [cell.textLabel setText:input.name];
-  [cell setAccessoryType:UITableViewCellAccessoryDetailDisclosureButton];
+  SonosInputCell *cell = [[SonosInputCell alloc] initWithInput:input];
   return cell;
 }
 
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+- (void)inputWasSelected:(SonosInputCell *)inputCell
 {
-  SonosInput *input = [[[SonosInputStore sharedStore] allInputs] objectAtIndex:indexPath.row];
-  [[SonosInputStore sharedStore] setMaster:input];
-
+  [[SonosInputStore sharedStore] setMaster:inputCell.input];
   PLLibraryViewController *viewController = [[PLLibraryViewController alloc] init];
   [self.navigationController pushViewController:viewController animated:YES];
-
-  UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
-  [cell setSelected:NO];
 }
 
-- (void)tableView:(UITableView *)tableView accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath
-{
-  SonosInput *input = [[[SonosInputStore sharedStore] allInputs] objectAtIndex:indexPath.row];
-  PLAddInputViewController *viewController = [[PLAddInputViewController alloc] initWithInput:input];
-  [self.navigationController pushViewController:viewController animated:YES];
-}
+#pragma mark - UIPanGestureRecognizer
 
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
+- (void)panCell:(UIGestureRecognizer *)recognizer
 {
-  if (editingStyle == UITableViewCellEditingStyleDelete) {
-    SonosInput *input = [[[SonosInputStore sharedStore] allInputs] objectAtIndex:indexPath.row];
-    [[SonosInputStore sharedStore] removeInput:input];
-    [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
+  SonosInputCell *cell = (SonosInputCell *)[recognizer view];
+
+  if (recognizer.state == UIGestureRecognizerStateBegan) {
+    cellPanCoordBegan = [recognizer locationInView:cell];
+    cellOriginalCenter = cell.center;
+    [self.view bringSubviewToFront:cell];
+    [cell startDragging];
+  }
+
+  if (recognizer.state == UIGestureRecognizerStateChanged) {
+    CGPoint panCoordChange = [recognizer locationInView:cell];
+
+    CGFloat deltaX = panCoordChange.x - cellPanCoordBegan.x;
+    CGFloat deltaY = panCoordChange.y - cellPanCoordBegan.y;
+
+    CGPoint newPoint = CGPointMake(cell.center.x + deltaX, cell.center.y + deltaY);
+    cell.center = newPoint;
+  }
+
+  if (recognizer.state == UIGestureRecognizerStateEnded) {
+    // TODO: snap to grid
+
+    id fromValue = [NSValue valueWithCGPoint:cell.center];
+    id toValue = [NSValue valueWithCGPoint:cellOriginalCenter];
+
+    [cellBounce setFromValue:fromValue];
+    [cellBounce setToValue:toValue];
+
+    [cell.layer addAnimation:cellBounce forKey:@"cellBounce"];
+    [cell.layer setValue:toValue forKeyPath:@"position"];
+
+    [cell stopDragging];
   }
 }
 

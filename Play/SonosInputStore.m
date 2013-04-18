@@ -45,9 +45,14 @@
   return inputList;
 }
 
-- (void)addInputWithIP:(NSString *)aIP name:(NSString *)aName uid:(NSString *)aUid
+- (SonosInput *)inputAtIndex:(NSUInteger)index
 {
-  SonosInput *input = [[SonosInput alloc] initWithIP:aIP name:aName uid:aUid];
+  return [inputList objectAtIndex:index];
+}
+
+- (void)addInputWithIP:(NSString *)aIP name:(NSString *)aName uid:(NSString *)aUid icon:(UIImage *)aIcon
+{
+  SonosInput *input = [[SonosInput alloc] initWithIP:aIP name:aName uid:aUid icon:aIcon];
   [inputList addObject:input];
 }
 

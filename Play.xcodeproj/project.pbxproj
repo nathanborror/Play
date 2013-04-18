@@ -72,6 +72,11 @@
 		D898034516D07A9000D30813 /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D898034416D07A9000D30813 /* Icon@2x.png */; };
 		D8B613D81717FD3800F12446 /* NBAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = D8B613D71717FD3800F12446 /* NBAnimation.m */; };
 		D8B613DB1718077400F12446 /* NBDirectionGestureRecognizer.m in Sources */ = {isa = PBXBuildFile; fileRef = D8B613DA1718077400F12446 /* NBDirectionGestureRecognizer.m */; };
+		D8B613DF171B54A600F12446 /* SonosAmp@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D8B613DC171B54A600F12446 /* SonosAmp@2x.png */; };
+		D8B613E0171B54A600F12446 /* SonosSpeakerPlay3Dark@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D8B613DD171B54A600F12446 /* SonosSpeakerPlay3Dark@2x.png */; };
+		D8B613E1171B54A600F12446 /* SonosSpeakerPlay3Light@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D8B613DE171B54A600F12446 /* SonosSpeakerPlay3Light@2x.png */; };
+		D8B613E4171B5B7300F12446 /* SonosInputCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D8B613E3171B5B7300F12446 /* SonosInputCell.m */; };
+		D8B613E6171B63CF00F12446 /* InputGroupBackground@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D8B613E5171B63CF00F12446 /* InputGroupBackground@2x.png */; };
 		D8D87D1516D3F0CA0059DBED /* PLVolumeSlider.m in Sources */ = {isa = PBXBuildFile; fileRef = D8D87D1416D3F0CA0059DBED /* PLVolumeSlider.m */; };
 		D8EB559016E06EAE006E85D1 /* ControlBarGrip@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D8EB558F16E06EAE006E85D1 /* ControlBarGrip@2x.png */; };
 /* End PBXBuildFile section */
@@ -172,6 +177,12 @@
 		D8B613D71717FD3800F12446 /* NBAnimation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NBAnimation.m; path = NBKit/NBAnimation.m; sourceTree = "<group>"; };
 		D8B613D91718077400F12446 /* NBDirectionGestureRecognizer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NBDirectionGestureRecognizer.h; path = NBKit/NBDirectionGestureRecognizer.h; sourceTree = "<group>"; };
 		D8B613DA1718077400F12446 /* NBDirectionGestureRecognizer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NBDirectionGestureRecognizer.m; path = NBKit/NBDirectionGestureRecognizer.m; sourceTree = "<group>"; };
+		D8B613DC171B54A600F12446 /* SonosAmp@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "SonosAmp@2x.png"; path = "Images/SonosAmp@2x.png"; sourceTree = "<group>"; };
+		D8B613DD171B54A600F12446 /* SonosSpeakerPlay3Dark@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "SonosSpeakerPlay3Dark@2x.png"; path = "Images/SonosSpeakerPlay3Dark@2x.png"; sourceTree = "<group>"; };
+		D8B613DE171B54A600F12446 /* SonosSpeakerPlay3Light@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "SonosSpeakerPlay3Light@2x.png"; path = "Images/SonosSpeakerPlay3Light@2x.png"; sourceTree = "<group>"; };
+		D8B613E2171B5B7300F12446 /* SonosInputCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SonosInputCell.h; sourceTree = "<group>"; };
+		D8B613E3171B5B7300F12446 /* SonosInputCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SonosInputCell.m; sourceTree = "<group>"; };
+		D8B613E5171B63CF00F12446 /* InputGroupBackground@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "InputGroupBackground@2x.png"; path = "Images/InputGroupBackground@2x.png"; sourceTree = "<group>"; };
 		D8D87D1316D3F0CA0059DBED /* PLVolumeSlider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PLVolumeSlider.h; sourceTree = "<group>"; };
 		D8D87D1416D3F0CA0059DBED /* PLVolumeSlider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PLVolumeSlider.m; sourceTree = "<group>"; };
 		D8EB558F16E06EAE006E85D1 /* ControlBarGrip@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "ControlBarGrip@2x.png"; path = "Images/ControlBarGrip@2x.png"; sourceTree = "<group>"; };
@@ -238,6 +249,8 @@
 				D8824DE716938CA300D05AA0 /* SonosInput.h */,
 				D8824DE816938CA300D05AA0 /* SonosInput.m */,
 				D819F65C16AE1BB900B19B50 /* Examples.xml */,
+				D8B613E2171B5B7300F12446 /* SonosInputCell.h */,
+				D8B613E3171B5B7300F12446 /* SonosInputCell.m */,
 			);
 			name = Sonos;
 			sourceTree = "<group>";
@@ -358,6 +371,10 @@
 		D88EA82716923E310011F6FB /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				D8B613E5171B63CF00F12446 /* InputGroupBackground@2x.png */,
+				D8B613DC171B54A600F12446 /* SonosAmp@2x.png */,
+				D8B613DD171B54A600F12446 /* SonosSpeakerPlay3Dark@2x.png */,
+				D8B613DE171B54A600F12446 /* SonosSpeakerPlay3Light@2x.png */,
 				D8EB558F16E06EAE006E85D1 /* ControlBarGrip@2x.png */,
 				D898034416D07A9000D30813 /* Icon@2x.png */,
 				D898034216D06EC100D30813 /* BarButtonItemBack@2x.png */,
@@ -470,6 +487,10 @@
 				D898034316D06EC100D30813 /* BarButtonItemBack@2x.png in Resources */,
 				D898034516D07A9000D30813 /* Icon@2x.png in Resources */,
 				D8EB559016E06EAE006E85D1 /* ControlBarGrip@2x.png in Resources */,
+				D8B613DF171B54A600F12446 /* SonosAmp@2x.png in Resources */,
+				D8B613E0171B54A600F12446 /* SonosSpeakerPlay3Dark@2x.png in Resources */,
+				D8B613E1171B54A600F12446 /* SonosSpeakerPlay3Light@2x.png in Resources */,
+				D8B613E6171B63CF00F12446 /* InputGroupBackground@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -508,6 +529,7 @@
 				D158132116E885E50009E11B /* RdioCollectionViewController.m in Sources */,
 				D8B613D81717FD3800F12446 /* NBAnimation.m in Sources */,
 				D8B613DB1718077400F12446 /* NBDirectionGestureRecognizer.m in Sources */,
+				D8B613E4171B5B7300F12446 /* SonosInputCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

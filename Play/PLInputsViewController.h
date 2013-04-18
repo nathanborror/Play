@@ -7,7 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <QuartzCore/QuartzCore.h>
 
-@interface PLInputsViewController : UIViewController <UITableViewDelegate, UITableViewDataSource>
+@interface PLInputsViewController : UIViewController
 
 @end

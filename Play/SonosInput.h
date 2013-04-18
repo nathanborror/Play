@@ -10,13 +10,14 @@
 
 @interface SonosInput : NSObject <NSCoding>
 
-@property (nonatomic, readwrite) NSString *ip;
-@property (nonatomic, readwrite) NSString *name;
-@property (nonatomic, readwrite) NSString *uid;
+@property (nonatomic, strong) NSString *ip;
+@property (nonatomic, strong) NSString *name;
+@property (nonatomic, strong) NSString *uid;
+@property (nonatomic, strong) UIImage *icon;
 
 - (id)initWithIP:(NSString *)aIP
             name:(NSString *)aName
-             uid:(NSString *)aUid;
-
+             uid:(NSString *)aUid
+            icon:(UIImage *)aIcon;
 
 @end
