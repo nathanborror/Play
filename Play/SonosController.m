@@ -11,7 +11,6 @@
 #import "SonosInput.h"
 #import "SonosInputStore.h"
 #import "SonosVolumeResponse.h"
-#import "SonosErrorResponse.h"
 #import "SOAPEnvelope.h"
 #import "RdioSong.h"
 #import "RdioAlbum.h"
@@ -44,31 +43,62 @@
   return sharedController;
 }
 
-- (void)fetch:(NSString *)path
-        input:(SonosInput *)input
-       action:(NSString *)action
-         body:(NSString *)body
-   completion:(void(^)(id obj, NSError *error))block
++ (void)request:(SonosRequestType)type
+          input:(SonosInput *)input
+         action:(NSString *)action
+         params:(NSDictionary *)params
+     completion:(void (^)(id, NSError *))block
 {
-  if (!input) {
-    input = [[SonosInputStore sharedStore] master];
+  if (!input) input = [[SonosInputStore sharedStore] master];
+
+  NSURL *url;
+  NSString *xmlns;
+
+  switch (type) {
+    case SonosRequestTypeAVTransport:
+      url = [NSURL URLWithString:[NSString stringWithFormat:@"http://%@:1400/MediaRenderer/AVTransport/Control", input.ip]];
+      xmlns = @"urn:schemas-upnp-org:service:AVTransport:1";
+      break;
+    case SonosRequestTypeConnectionManager:
+      url = [NSURL URLWithString:[NSString stringWithFormat:@"http://%@:1400/MediaRenderer/ConnectionManager/Control", input.ip]];
+      xmlns = @"urn:schemas-upnp-org:service:ConnectionManager:1";
+      break;
+    case SonosRequestTypeRenderingControl:
+      url = [NSURL URLWithString:[NSString stringWithFormat:@"http://%@:1400/MediaRenderer/RenderingControl/Control", input.ip]];
+      xmlns = @"urn:schemas-upnp-org:service:RenderingControl:1";
+      break;
+    case SonosRequestTypeContentDirectory:
+      url = [NSURL URLWithString:[NSString stringWithFormat:@"http://%@:1400/MediaServer/ContentDirectory/Control", input.ip]];
+      xmlns = @"urn:schemas-upnp-org:service:ContentDirectory:1";
+      break;
   }
 
-  NSURL *soapURL = [NSURL URLWithString:[NSString stringWithFormat:@"http://%@:1400%@", input.ip, path]];
-  NSString *soapRequestBody = [NSString stringWithFormat:@""
-    "<s:Envelope xmlns:s='http://schemas.xmlsoap.org/soap/envelope/' s:encodingStyle='http://schemas.xmlsoap.org/soap/encoding/'>"
-      "<s:Body>%@</s:Body>"
-    "</s:Envelope>", body];
+  // Enumerate
+  NSMutableString *requestParams = [[NSMutableString alloc] init];
+  NSEnumerator *enumerator = [params keyEnumerator];
+  NSString *key;
+  while (key = [enumerator nextObject]) {
+    requestParams = [NSString stringWithFormat:@"<%@>%@</%@>%@", key, [params objectForKey:key], key, requestParams];
+  }
 
-  NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:soapURL];
+  NSString *requestBody = [NSString stringWithFormat:@""
+    "<s:Envelope xmlns:s='http://schemas.xmlsoap.org/soap/envelope/' s:encodingStyle='http://schemas.xmlsoap.org/soap/encoding/'>"
+      "<s:Body>"
+        "<u:%@ xmlns:u='%@'>"
+          "%@"
+        "</u:%@>"
+      "</s:Body>"
+    "</s:Envelope>", action, xmlns, requestParams, action];
+
+  NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
   [request setHTTPMethod:@"POST"];
   [request addValue:@"text/xml" forHTTPHeaderField:@"Content-Type"];
-  [request addValue:action forHTTPHeaderField:@"SOAPACTION"];
-  [request setHTTPBody:[soapRequestBody dataUsingEncoding:NSUTF8StringEncoding]];
+  [request addValue:[NSString stringWithFormat:@"%@#%@", xmlns, action] forHTTPHeaderField:@"SOAPACTION"];
+  [request setHTTPBody:[requestBody dataUsingEncoding:NSUTF8StringEncoding]];
 
   SOAPEnvelope *envelope = [[SOAPEnvelope alloc] init];
   SonosConnection *connection = [[SonosConnection alloc] initWithRequest:request completion:block];
-
+  
   [connection setEnvelope:envelope];
   [connection start];
 }
@@ -76,30 +106,17 @@
 - (void)play:(SonosInput *)input track:(NSString *)track completion:(void (^)(SOAPEnvelope *, NSError *))block
 {
   if (track) {
-    NSString *path = @"/MediaRenderer/AVTransport/Control";
-    NSString *action = @"urn:schemas-upnp-org:service:AVTransport:1#SetAVTransportURI";
-    NSString *body = [NSString stringWithFormat:@""
-      "<u:SetAVTransportURI xmlns:u='urn:schemas-upnp-org:service:AVTransport:1'>"
-        "<InstanceID>0</InstanceID>"
-        "<CurrentURI>%@</CurrentURI>"
-        "<CurrentURIMetaData></CurrentURIMetaData>"
-      "</u:SetAVTransportURI>", track];
-    [self fetch:path input:input action:action body:body completion:^(SOAPEnvelope *envelope, NSError *error) {
+    NSDictionary *params = @{@"InstanceID": @0,
+                             @"CurrentURI":track,
+                             @"CurrentURIMetaData": @""};
+    [SonosController request:SonosRequestTypeAVTransport input:input action:@"SetAVTransportURI" params:params completion:^(id obj, NSError *error) {
       [self play:nil track:nil completion:block];
     }];
   } else {
-    NSString *path = @"/MediaRenderer/AVTransport/Control";
-    NSString *action = @"urn:schemas-upnp-org:service:AVTransport:1#Play";
-    NSString *body = @""
-      "<u:Play xmlns:u='urn:schemas-upnp-org:service:AVTransport:1'>"
-        "<InstanceID>0</InstanceID>"
-        "<Speed>1</Speed>"
-      "</u:Play>";
-    [self fetch:path input:input action:action body:body completion:^(SOAPEnvelope *envelope, NSError *error) {
+    NSDictionary *params = @{@"InstanceID": @0, @"Speed":@1};
+    [SonosController request:SonosRequestTypeAVTransport input:input action:@"Play" params:params completion:^(id obj, NSError *error) {
       _isPlaying = YES;
-      if (block) {
-        block(envelope, error);
-      }
+      if (block) block(obj, error);
     }];
   }
 }
@@ -111,177 +128,100 @@
   // to be done here to get meta data shown correctly on the Sonos device for user
   // accounts outside my own.
 
-  NSString *path = @"/MediaRenderer/AVTransport/Control";
   NSString *albumKey = [song.album.key substringFromIndex:1];
   NSString *songKey = [song.key substringFromIndex:1];
   NSString *trackURI = [NSString stringWithFormat:@"x-sonos-http:_t%%3a%%3a%@%%3a%%3aa%%3a%%3a%@.mp3?sid=11&flags=32", songKey, albumKey];
-  NSString *action = @"urn:schemas-upnp-org:service:AVTransport:1#SetAVTransportURI";
 
-  NSString *body = [NSString stringWithFormat:@""
-    "<u:SetAVTransportURI xmlns:u='urn:schemas-upnp-org:service:AVTransport:1'>"
-      "<InstanceID>0</InstanceID>"
-      "<CurrentURI>%@</CurrentURI>"
-      "<CurrentURIMetaData></CurrentURIMetaData>"
-    "</u:SetAVTransportURI>", trackURI];
-
-  [self fetch:path input:input action:action body:body completion:^(SOAPEnvelope *envelope, NSError *error) {
+  NSDictionary *params = @{@"InstanceID": @0,
+                           @"CurrentURI":trackURI,
+                           @"CurrentURIMetaData": @""};
+  [SonosController request:SonosRequestTypeAVTransport input:input action:@"SetAVTransportURI" params:params completion:^(id obj, NSError *error) {
     [self play:nil track:nil completion:block];
   }];
 }
 
 - (void)pause:(SonosInput *)input completion:(void (^)(SOAPEnvelope *, NSError *))block
 {
-  NSString *path = @"/MediaRenderer/AVTransport/Control";
-  NSString *action = @"urn:schemas-upnp-org:service:AVTransport:1#Pause";
-  NSString *body = @""
-    "<u:Pause xmlns:u='urn:schemas-upnp-org:service:AVTransport:1'>"
-      "<InstanceID>0</InstanceID>"
-      "<Speed>1</Speed>"
-    "</u:Pause>";
-
-  [self fetch:path input:input action:action body:body completion:^(SOAPEnvelope *envelope, NSError *error) {
+  NSDictionary *params = @{@"InstanceID": @0, @"Speed": @1};
+  [SonosController request:SonosRequestTypeAVTransport input:input action:@"Pause" params:params completion:^(id obj, NSError *error) {
     _isPlaying = NO;
-    if (block) {
-      block(envelope, error);
-    }
+    if (block) block(obj, error);
   }];
 }
 
 - (void)stop:(SonosInput *)input completion:(void (^)(SOAPEnvelope *, NSError *))block
 {
-  NSString *path = @"/MediaRenderer/AVTransport/Control";
-  NSString *action = @"urn:schemas-upnp-org:service:AVTransport:1#Stop";
-  NSString *body = @""
-    "<u:Stop xmlns:u='urn:schemas-upnp-org:service:AVTransport:1'>"
-      "<InstanceID>0</InstanceID>"
-      "<Speed>1</Speed>"
-    "</u:Stop>";
-
-  [self fetch:path input:input action:action body:body completion:^(SOAPEnvelope *envelope, NSError *error) {
+  NSDictionary *params = @{@"InstanceID": @0, @"Speed": @1};
+  [SonosController request:SonosRequestTypeAVTransport input:input action:@"Stop" params:params completion:^(id obj, NSError *error) {
     _isPlaying = NO;
-    if (block) {
-      block(envelope, error);
-    }
+    if (block) block(obj, error);
   }];
 }
 
 - (void)next:(SonosInput *)input completion:(void (^)(SOAPEnvelope *, NSError *))block
 {
-  NSString *path = @"/MediaRenderer/AVTransport/Control";
-  NSString *action = @"urn:schemas-upnp-org:service:AVTransport:1#Next";
-  NSString *body = @""
-    "<u:Next xmlns:u='urn:schemas-upnp-org:service:AVTransport:1'>"
-      "<InstanceID>0</InstanceID>"
-      "<Speed>1</Speed>"
-    "</u:Next>";
-
-  [self fetch:path input:input action:action body:body completion:^(SOAPEnvelope *envelope, NSError *error) {
+  NSDictionary *params = @{@"InstanceID": @0, @"Speed": @1};
+  [SonosController request:SonosRequestTypeAVTransport input:input action:@"Next" params:params completion:^(id obj, NSError *error) {
     _isPlaying = YES;
-    if (block) {
-      block(envelope, error);
-    }
+    if (block) block(obj, error);
   }];
 }
 
 - (void)previous:(SonosInput *)input completion:(void (^)(SOAPEnvelope *, NSError *))block
 {
-  NSString *path = @"/MediaRenderer/AVTransport/Control";
-  NSString *action = @"urn:schemas-upnp-org:service:AVTransport:1#Previous";
-  NSString *body = @""
-    "<u:Previous xmlns:u='urn:schemas-upnp-org:service:AVTransport:1'>"
-      "<InstanceID>0</InstanceID>"
-      "<Speed>1</Speed>"
-    "</u:Previous>";
-
-  [self fetch:path input:input action:action body:body completion:^(SOAPEnvelope *envelope, NSError *error) {
+  NSDictionary *params = @{@"InstanceID": @0, @"Speed": @1};
+  [SonosController request:SonosRequestTypeAVTransport input:input action:@"Previous" params:params completion:^(id obj, NSError *error) {
     _isPlaying = YES;
-    if (block) {
-      block(envelope, error);
-    }
+    if (block) block(obj, error);
   }];
 }
 
 - (void)lineIn:(SonosInput *)input completion:(void (^)(SOAPEnvelope *, NSError *))block
 {
-  NSString *path = @"/MediaRenderer/AVTransport/Control";
-  NSString *action = @"urn:schemas-upnp-org:service:AVTransport:1#SetAVTransportURI";
-  NSString *body = [NSString stringWithFormat:@""
-    "<u:SetAVTransportURI xmlns:u='urn:schemas-upnp-org:service:AVTransport:1'>"
-      "<InstanceID>0</InstanceID>"
-      "<CurrentURI>x-rincon-stream:%@</CurrentURI>"
-      "<CurrentURIMetaData></CurrentURIMetaData>"
-    "</u:SetAVTransportURI>", input.uid];
-
-  [self fetch:path input:input action:action body:body completion:^(SOAPEnvelope *envelope, NSError *error) {
-    _isPlaying = YES;
-    if (block) {
-      block(envelope, error);
-    }
-  }];
+  [self play:input track:[NSString stringWithFormat:@"x-rincon-stream:%@", input.uid] completion:block];
 }
 
 - (void)volume:(SonosInput *)input completion:(void (^)(SOAPEnvelope *, NSError *))block
 {
-  NSString *path = @"/MediaRenderer/RenderingControl/Control";
-  NSString *action = @"urn:schemas-upnp-org:service:RenderingControl:1#GetVolume";
-  NSString *body = @""
-    "<u:GetVolume xmlns:u='urn:schemas-upnp-org:service:RenderingControl:1'>"
-      "<InstanceID>0</InstanceID>"
-      "<Channel>Master</Channel>"
-    "</u:GetVolume>";
-
-  [self fetch:path input:input action:action body:body completion:block];
+  NSDictionary *params = @{@"InstanceID": @0,
+                           @"Channel":@"Master"};
+  [SonosController request:SonosRequestTypeRenderingControl input:input action:@"GetVolume" params:params completion:block];
 }
 
 - (void)volume:(SonosInput *)input level:(int)level completion:(void (^)(SOAPEnvelope *, NSError *))block
 {
-  if (volumeLevel == level) {
-    return;
-  }
+  if (volumeLevel == level) return;
 
-  NSString *path = @"/MediaRenderer/RenderingControl/Control";
-  NSString *action = @"urn:schemas-upnp-org:service:RenderingControl:1#SetVolume";
-  NSString *body = [NSString stringWithFormat:@""
-    "<u:SetVolume xmlns:u='urn:schemas-upnp-org:service:RenderingControl:1'>"
-      "<InstanceID>0</InstanceID>"
-      "<Channel>Master</Channel>"
-      "<DesiredVolume>%d</DesiredVolume>"
-    "</u:SetVolume>", level];
-
-  [self fetch:path input:input action:action body:body completion:^(SOAPEnvelope *envelope, NSError *error) {
+  NSDictionary *params = @{@"InstanceID": @0,
+                           @"Channel":@"Master",
+                           @"DesiredVolume":[NSNumber numberWithInt:level]};
+  [SonosController request:SonosRequestTypeRenderingControl input:input action:@"SetVolume" params:params completion:^(id obj, NSError *error) {
     volumeLevel = level;
-    if (block) {
-      block(envelope, error);
-    }
+    if (block) block(obj, error);
   }];
 }
 
 - (void)trackInfo:(SonosInput *)input completion:(void (^)(SOAPEnvelope *, NSError *))block
 {
-  NSString *path = @"/MediaRenderer/AVTransport/Control";
-  NSString *action = @"urn:schemas-upnp-org:service:AVTransport:1#GetPositionInfo";
-  NSString *body = @""
-    "<u:GetPositionInfo xmlns:u='urn:schemas-upnp-org:service:AVTransport:1'>"
-      "<InstanceID>0</InstanceID>"
-    "</u:GetPositionInfo>";
+  NSDictionary *params = @{@"InstanceID": @0};
+  [SonosController request:SonosRequestTypeAVTransport input:input action:@"GetPositionInfo" params:params completion:block];
+}
 
-  [self fetch:path input:input action:action body:body completion:block];
+- (void)status:(SonosInput *)input completion:(void (^)(SOAPEnvelope *, NSError *))block
+{
+  NSDictionary *params = @{@"InstanceID": @0};
+  [SonosController request:SonosRequestTypeAVTransport input:input action:@"GetTransportInfo" params:params completion:block];
 }
 
 - (void)browse:(SonosInput *)input completion:(void (^)(SOAPEnvelope *, NSError *))block
 {
-  NSString *path = @"/MediaServer/ContentDirectory/Control";
-  NSString *action = @"urn:schemas-upnp-org:service:ContentDirectory:1#Browse";
-  NSString *body = @""
-    "<u:Browse xmlns:u='urn:schemas-upnp-org:service:ContentDirectory:1'>"
-      "<ObjectID>A:ARTIST</ObjectID>"
-      "<BrowseFlag>BrowseDirectChildren</BrowseFlag>"
-      "<Filter>*</Filter>"
-      "<StartingIndex>0</StartingIndex>"
-      "<RequestedCount>5</RequestedCount>"
-      "<SortCriteria>*</SortCriteria>"
-    "</u:Browse>";
-  [self fetch:path input:input action:action body:body completion:block];
+  NSDictionary *params = @{@"ObjectID": @"A:ARTIST",
+                           @"BrowseFlag": @"BrowseDirectChildren",
+                           @"Filter": @"*",
+                           @"StartingIndex": @0,
+                           @"RequestedCount": @5,
+                           @"SortCriteria": @"*"};
+  [SonosController request:SonosRequestTypeContentDirectory input:input action:@"Browse" params:params completion:block];
 }
 
 @end

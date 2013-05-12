@@ -8,6 +8,13 @@
 
 #import <Foundation/Foundation.h>
 
+typedef NS_ENUM(NSInteger, SonosRequestType) {
+  SonosRequestTypeAVTransport,
+  SonosRequestTypeConnectionManager,
+  SonosRequestTypeRenderingControl,
+  SonosRequestTypeContentDirectory,
+};
+
 @class SOAPEnvelope;
 @class SonosVolumeResponse;
 @class SonosInput;
@@ -21,11 +28,11 @@
 
 + (SonosController *)sharedController;
 
-- (void)fetch:(NSString *)path
-        input:(SonosInput *)input
-       action:(NSString *)action
-         body:(NSString *)body
-   completion:(void(^)(id obj, NSError *error))block;
++ (void)request:(SonosRequestType)type
+          input:(SonosInput *)input
+         action:(NSString *)action
+         params:(NSDictionary *)params
+     completion:(void(^)(id obj, NSError *error))block;
 
 - (void)play:(SonosInput *)input track:(NSString *)track completion:(void(^)(SOAPEnvelope *envelope, NSError *error))block;
 - (void)play:(SonosInput *)input rdioSong:(RdioSong *)song completion:(void(^)(SOAPEnvelope *envelope, NSError *error))block;
@@ -37,6 +44,7 @@
 - (void)volume:(SonosInput *)input level:(int)level completion:(void(^)(SOAPEnvelope *envelope, NSError *error))block;
 - (void)lineIn:(SonosInput *)input completion:(void(^)(SOAPEnvelope *envelope, NSError *error))block;
 - (void)trackInfo:(SonosInput *)input completion:(void(^)(SOAPEnvelope *envelope, NSError *error))block;
+- (void)status:(SonosInput *)input completion:(void(^)(SOAPEnvelope *envelope, NSError *error))block;
 - (void)browse:(SonosInput *)input completion:(void(^)(SOAPEnvelope *envelope, NSError *error))block;
 
 @end
