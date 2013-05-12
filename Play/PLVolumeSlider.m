@@ -11,10 +11,11 @@
 #import "SonosController.h"
 #import "SOAPEnvelope.h"
 #import "SonosVolumeResponse.h"
+#import "NBKit/NBDial.h"
 
 @interface PLVolumeSlider ()
 {
-  UISlider *volumeSlider;
+  NBDial *volumeDial;
   UILabel *name;
   SonosController *sonos;
 }
@@ -29,12 +30,12 @@
   if (self) {
     sonos = [SonosController sharedController];
 
-    volumeSlider = [[UISlider alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(self.bounds), 20)];
-    [volumeSlider setMaximumValue:100];
-    [volumeSlider setMinimumValue:0];
-    [volumeSlider setValue:10];
-    [volumeSlider addTarget:self action:@selector(changeVolume:) forControlEvents:UIControlEventValueChanged];
-    [self addSubview:volumeSlider];
+    volumeDial = [[NBDial alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(self.bounds), 44)];
+    [volumeDial setMaxValue:100.0];
+    [volumeDial setMinValue:0.0];
+    [volumeDial setValue:10.0];
+    [volumeDial addTarget:self action:@selector(changeVolume2:) forControlEvents:UIControlEventValueChanged];
+    [self addSubview:volumeDial];
   }
   return self;
 }
@@ -44,11 +45,16 @@
   [sonos volume:input level:(int)[slider value] completion:nil];
 }
 
+- (void)changeVolume2:(NBDial *)dial
+{
+  [sonos volume:input level:(int)[dial value] completion:nil];
+}
+
 - (void)setInput:(SonosInput *)aInput
 {
   input = aInput;
 
-  name = [[UILabel alloc] initWithFrame:CGRectMake(0, CGRectGetMinY(volumeSlider.frame)-25, CGRectGetWidth(self.bounds), 20)];
+  name = [[UILabel alloc] initWithFrame:CGRectMake(0, CGRectGetMinY(volumeDial.frame)-25, CGRectGetWidth(self.bounds), 20)];
   [name setUserInteractionEnabled:NO];
   [name setText:self.input.name];
   [name setFont:[UIFont boldSystemFontOfSize:14.0]];
@@ -60,7 +66,7 @@
 
   [sonos volume:input completion:^(SOAPEnvelope *envelope, NSError *error) {
     SonosVolumeResponse *volume = (SonosVolumeResponse *)[envelope response];
-    [volumeSlider setValue:[volume.currentVolume floatValue]];
+    [volumeDial setValue:[volume.currentVolume floatValue]];
   }];
 }
 

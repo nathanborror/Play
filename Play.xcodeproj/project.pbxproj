@@ -37,6 +37,8 @@
 		D8824E431693D45500D05AA0 /* PLSongViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D8824E421693D45500D05AA0 /* PLSongViewController.m */; };
 		D8824E451693ECEC00D05AA0 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D8824E441693ECEC00D05AA0 /* AVFoundation.framework */; };
 		D88889A916958281006D010D /* LineIn@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D88889A816958281006D010D /* LineIn@2x.png */; };
+		D88C534317225AA900E0A419 /* NBDial.m in Sources */ = {isa = PBXBuildFile; fileRef = D88C534217225AA900E0A419 /* NBDial.m */; };
+		D88C53451722675900E0A419 /* NBDial@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D88C53441722675900E0A419 /* NBDial@2x.png */; };
 		D88D11531692BE740039067F /* PLSong.m in Sources */ = {isa = PBXBuildFile; fileRef = D88D11521692BE740039067F /* PLSong.m */; };
 		D88D116016937AC80039067F /* PLLibraryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D88D115F16937AC80039067F /* PLLibraryViewController.m */; };
 		D88D116316937AE00039067F /* PLInputsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D88D116216937AE00039067F /* PLInputsViewController.m */; };
@@ -136,6 +138,9 @@
 		D8824E421693D45500D05AA0 /* PLSongViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PLSongViewController.m; sourceTree = "<group>"; };
 		D8824E441693ECEC00D05AA0 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		D88889A816958281006D010D /* LineIn@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "LineIn@2x.png"; path = "Images/LineIn@2x.png"; sourceTree = "<group>"; };
+		D88C534117225AA900E0A419 /* NBDial.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NBDial.h; path = NBKit/NBDial.h; sourceTree = "<group>"; };
+		D88C534217225AA900E0A419 /* NBDial.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NBDial.m; path = NBKit/NBDial.m; sourceTree = "<group>"; };
+		D88C53441722675900E0A419 /* NBDial@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "NBDial@2x.png"; path = "Images/NBDial@2x.png"; sourceTree = "<group>"; };
 		D88D11511692BE740039067F /* PLSong.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PLSong.h; sourceTree = "<group>"; };
 		D88D11521692BE740039067F /* PLSong.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PLSong.m; sourceTree = "<group>"; };
 		D88D115E16937AC80039067F /* PLLibraryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PLLibraryViewController.h; sourceTree = "<group>"; };
@@ -388,6 +393,7 @@
 				D8C34726173C01D600D7B28C /* Icon-Small-50@2x.png */,
 				D8C34727173C01D600D7B28C /* Icon-Small@2x.png */,
 				D8C34721173C00BA00D7B28C /* iTunesArtwork@2x.png */,
+				D88C53441722675900E0A419 /* NBDial@2x.png */,
 				D8B613E5171B63CF00F12446 /* InputGroupBackground@2x.png */,
 				D8B613DC171B54A600F12446 /* SonosAmp@2x.png */,
 				D8B613DD171B54A600F12446 /* SonosSpeakerPlay3Dark@2x.png */,
@@ -423,6 +429,8 @@
 				D8B613DA1718077400F12446 /* NBDirectionGestureRecognizer.m */,
 				D8B613D61717FD3800F12446 /* NBAnimation.h */,
 				D8B613D71717FD3800F12446 /* NBAnimation.m */,
+				D88C534117225AA900E0A419 /* NBDial.h */,
+				D88C534217225AA900E0A419 /* NBDial.m */,
 			);
 			name = NBKit;
 			sourceTree = "<group>";
@@ -508,6 +516,7 @@
 				D8B613E0171B54A600F12446 /* SonosSpeakerPlay3Dark@2x.png in Resources */,
 				D8B613E1171B54A600F12446 /* SonosSpeakerPlay3Light@2x.png in Resources */,
 				D8B613E6171B63CF00F12446 /* InputGroupBackground@2x.png in Resources */,
+				D88C53451722675900E0A419 /* NBDial@2x.png in Resources */,
 				D8C34724173C00BA00D7B28C /* iTunesArtwork@2x.png in Resources */,
 				D8C34728173C01D600D7B28C /* Icon-72@2x.png in Resources */,
 				D8C34729173C01D600D7B28C /* Icon-Small-50@2x.png in Resources */,
@@ -551,6 +560,7 @@
 				D8B613D81717FD3800F12446 /* NBAnimation.m in Sources */,
 				D8B613DB1718077400F12446 /* NBDirectionGestureRecognizer.m in Sources */,
 				D8B613E4171B5B7300F12446 /* SonosInputCell.m in Sources */,
+				D88C534317225AA900E0A419 /* NBDial.m in Sources */,
 				D8C3471E173B7B9100D7B28C /* SonosTransportInfoResponse.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -14,8 +14,9 @@
 #import "SonosInputStore.h"
 #import "SonosInput.h"
 #import "PLVolumeSlider.h"
-#import "NBAnimation.h"
 #import "NBKit/NBDirectionGestureRecognizer.h"
+#import "NBKit/NBAnimation.h"
+#import "NBKit/NBDial.h"
 
 static const CGFloat kProgressPadding = 50.0;
 
@@ -191,16 +192,16 @@ static const CGFloat kControlBarRestingYLandscape = 235.0;
     [previousButton setShowsTouchWhenHighlighted:YES];
     [controlBar addSubview:previousButton];
 
-    volumeSlider = [[UISlider alloc] initWithFrame:CGRectMake(kControlBarButtonPadding, 85, CGRectGetWidth(controlBar.bounds)-(kControlBarButtonPadding*2), 20)];
-    [volumeSlider setMaximumValue:100];
-    [volumeSlider setMinimumValue:0];
-    [volumeSlider setValue:20];
-    [volumeSlider addTarget:self action:@selector(volume:) forControlEvents:UIControlEventValueChanged];
-    [controlBar addSubview:volumeSlider];
+    // NBDial
+    NBDial *dial = [[NBDial alloc] initWithFrame:CGRectMake(kControlBarButtonPadding, 85, CGRectGetWidth(controlBar.bounds)-(kControlBarButtonPadding*2), 44)];
+    [dial setMaxValue:100];
+    [dial setMinValue:0];
+    [dial setValue:20];
+    [controlBar addSubview:dial];
 
     NSArray *speakers = [[SonosInputStore sharedStore] allInputs];
     for (int i = 0; i < speakers.count; i++) {
-      PLVolumeSlider *speakerVolume = [[PLVolumeSlider alloc] initWithFrame:CGRectMake(kControlBarButtonPadding, 185 + (i * 70), CGRectGetWidth(controlBar.bounds)-(kControlBarButtonPadding * 2), 20)];
+      PLVolumeSlider *speakerVolume = [[PLVolumeSlider alloc] initWithFrame:CGRectMake(kControlBarButtonPadding, 185 + (i * 70), CGRectGetWidth(controlBar.bounds)-(kControlBarButtonPadding * 2), 44)];
       [speakerVolume setInput:[speakers objectAtIndex:i]];
       [controlBar addSubview:speakerVolume];
     }
