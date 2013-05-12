@@ -14,8 +14,8 @@
 #import "SonosInputStore.h"
 #import "SonosInput.h"
 #import "PLVolumeSlider.h"
-#import "NBDirectionGestureRecognizer.h"
 #import "NBAnimation.h"
+#import "NBKit/NBDirectionGestureRecognizer.h"
 
 static const CGFloat kProgressPadding = 50.0;
 
@@ -207,17 +207,6 @@ static const CGFloat kControlBarRestingYLandscape = 235.0;
     
     [self.view addSubview:controlBar];
 
-    // TODO: Update track info
-    [sonos trackInfo:nil completion:^(SOAPEnvelope *envelope, NSError *error) {
-//      SonosPositionInfoResponse *positionInfo = (SonosPositionInfoResponse *)[envelope response];
-//      [title setText:positionInfo.track];
-//      [timeElapsed setText:positionInfo.relTime];
-//      [timeTotal setText:positionInfo.duration];
-      if (error) {
-        NSLog(@"Must select an input first!");
-      }
-    }];
-
     NBDirectionGestureRecognizer *controlPan = [[NBDirectionGestureRecognizer alloc] initWithTarget:self action:@selector(panControlBar:)];
     [controlPan setDirection:DirectionPanGestureRecognizerVertical];
     [controlBar addGestureRecognizer:controlPan];
@@ -309,34 +298,6 @@ static const CGFloat kControlBarRestingYLandscape = 235.0;
   }
 }
 
-- (void)panControlBar:(UIPanGestureRecognizer *)recognizer
-{
-  if (recognizer.state == UIGestureRecognizerStateBegan) {
-    panCoordBegan = [recognizer locationInView:controlBar];
-  }
-
-  if (recognizer.state == UIGestureRecognizerStateChanged) {
-    CGPoint panCoordChange = [recognizer locationInView:controlBar];
-
-    CGFloat deltaY = panCoordChange.y - panCoordBegan.y;
-    CGPoint newPoint = CGPointMake(controlBar.center.x, controlBar.center.y + deltaY);
-
-    if (newPoint.y > 290.0) {
-      controlBar.center = newPoint;
-    }
-  }
-
-  if (recognizer.state == UIGestureRecognizerStateEnded) {
-    CGPoint velocityPoint = [recognizer velocityInView:controlBar];
-
-    if (velocityPoint.y >= 0) {
-      [self hideSpeakerVolumes];
-    } else {
-      [self showSpeakerVolumes];
-    }
-  }
-}
-
 - (void)showSpeakerVolumes
 {
   id fromValue = [NSNumber numberWithFloat:CGRectGetMaxY(controlBar.bounds)];
@@ -366,6 +327,36 @@ static const CGFloat kControlBarRestingYLandscape = 235.0;
 
 	[controlBar.layer addAnimation:bounce forKey:@"bounce"];
 	[controlBar.layer setValue:toValue forKeyPath:@"position.y"];
+}
+
+#pragma mark - NBDirectionGestureRecognizer
+
+- (void)panControlBar:(NBDirectionGestureRecognizer *)recognizer
+{
+  if (recognizer.state == UIGestureRecognizerStateBegan) {
+    panCoordBegan = [recognizer locationInView:controlBar];
+  }
+
+  if (recognizer.state == UIGestureRecognizerStateChanged) {
+    CGPoint panCoordChange = [recognizer locationInView:controlBar];
+
+    CGFloat deltaY = panCoordChange.y - panCoordBegan.y;
+    CGPoint newPoint = CGPointMake(controlBar.center.x, controlBar.center.y + deltaY);
+
+    if (newPoint.y > 290.0) {
+      controlBar.center = newPoint;
+    }
+  }
+
+  if (recognizer.state == UIGestureRecognizerStateEnded) {
+    CGPoint velocityPoint = [recognizer velocityInView:controlBar];
+
+    if (velocityPoint.y >= 0) {
+      [self hideSpeakerVolumes];
+    } else {
+      [self showSpeakerVolumes];
+    }
+  }
 }
 
 #pragma mark - UITableViewController
