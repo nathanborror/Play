@@ -182,13 +182,13 @@ static const CGFloat kControlBarRestingYLandscape = 235.0;
 
     nextButton = [[UIButton alloc] initWithFrame:CGRectMake(CGRectGetWidth(controlBar.bounds)-(kControlBarButtonWidth+kControlBarPreviousNextPadding), kControlBarPadding, kControlBarButtonWidth, kControlBarButtonHeight)];
     [nextButton setBackgroundImage:[UIImage imageNamed:@"ControlNext.png"] forState:UIControlStateNormal];
-    [nextButton addTarget:sonos action:@selector(next) forControlEvents:UIControlEventTouchUpInside];
+    [nextButton addTarget:self action:@selector(next) forControlEvents:UIControlEventTouchUpInside];
     [nextButton setShowsTouchWhenHighlighted:YES];
     [controlBar addSubview:nextButton];
 
     previousButton = [[UIButton alloc] initWithFrame:CGRectMake(kControlBarPreviousNextPadding, kControlBarPadding, kControlBarButtonWidth, kControlBarButtonHeight)];
     [previousButton setBackgroundImage:[UIImage imageNamed:@"ControlPrevious.png"] forState:UIControlStateNormal];
-    [previousButton addTarget:sonos action:@selector(previous) forControlEvents:UIControlEventTouchUpInside];
+    [previousButton addTarget:self action:@selector(previous) forControlEvents:UIControlEventTouchUpInside];
     [previousButton setShowsTouchWhenHighlighted:YES];
     [controlBar addSubview:previousButton];
 
