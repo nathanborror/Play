@@ -8,6 +8,7 @@
 
 #import "SOAPEnvelope.h"
 #import "SonosPositionInfoResponse.h"
+#import "SonosTransportInfoResponse.h"
 #import "SonosErrorResponse.h"
 #import "SonosVolumeResponse.h"
 
@@ -29,6 +30,11 @@
 {
   if ([elementName isEqual:@"u:GetPositionInfoResponse"]) {
     SonosPositionInfoResponse *res = [[SonosPositionInfoResponse alloc] init];
+    [res setParentParserDelegate:self];
+    [parser setDelegate:res];
+    [self setResponse:res];
+  } else if ([elementName isEqual:@"u:GetTransportInfoResponse"]) {
+    SonosTransportInfoResponse *res = [[SonosTransportInfoResponse alloc] init];
     [res setParentParserDelegate:self];
     [parser setDelegate:res];
     [self setResponse:res];
