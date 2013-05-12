@@ -78,6 +78,10 @@
 		D8B613E4171B5B7300F12446 /* SonosInputCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D8B613E3171B5B7300F12446 /* SonosInputCell.m */; };
 		D8B613E6171B63CF00F12446 /* InputGroupBackground@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D8B613E5171B63CF00F12446 /* InputGroupBackground@2x.png */; };
 		D8C3471E173B7B9100D7B28C /* SonosTransportInfoResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = D8C3471D173B7B9100D7B28C /* SonosTransportInfoResponse.m */; };
+		D8C34724173C00BA00D7B28C /* iTunesArtwork@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D8C34721173C00BA00D7B28C /* iTunesArtwork@2x.png */; };
+		D8C34728173C01D600D7B28C /* Icon-72@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D8C34725173C01D600D7B28C /* Icon-72@2x.png */; };
+		D8C34729173C01D600D7B28C /* Icon-Small-50@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D8C34726173C01D600D7B28C /* Icon-Small-50@2x.png */; };
+		D8C3472A173C01D600D7B28C /* Icon-Small@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D8C34727173C01D600D7B28C /* Icon-Small@2x.png */; };
 		D8D87D1516D3F0CA0059DBED /* PLVolumeSlider.m in Sources */ = {isa = PBXBuildFile; fileRef = D8D87D1416D3F0CA0059DBED /* PLVolumeSlider.m */; };
 		D8EB559016E06EAE006E85D1 /* ControlBarGrip@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D8EB558F16E06EAE006E85D1 /* ControlBarGrip@2x.png */; };
 /* End PBXBuildFile section */
@@ -186,6 +190,10 @@
 		D8B613E5171B63CF00F12446 /* InputGroupBackground@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "InputGroupBackground@2x.png"; path = "Images/InputGroupBackground@2x.png"; sourceTree = "<group>"; };
 		D8C3471C173B7B9100D7B28C /* SonosTransportInfoResponse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SonosTransportInfoResponse.h; sourceTree = "<group>"; };
 		D8C3471D173B7B9100D7B28C /* SonosTransportInfoResponse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SonosTransportInfoResponse.m; sourceTree = "<group>"; };
+		D8C34721173C00BA00D7B28C /* iTunesArtwork@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "iTunesArtwork@2x.png"; path = "Images/iTunesArtwork@2x.png"; sourceTree = "<group>"; };
+		D8C34725173C01D600D7B28C /* Icon-72@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon-72@2x.png"; path = "Images/Icon-72@2x.png"; sourceTree = "<group>"; };
+		D8C34726173C01D600D7B28C /* Icon-Small-50@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon-Small-50@2x.png"; path = "Images/Icon-Small-50@2x.png"; sourceTree = "<group>"; };
+		D8C34727173C01D600D7B28C /* Icon-Small@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon-Small@2x.png"; path = "Images/Icon-Small@2x.png"; sourceTree = "<group>"; };
 		D8D87D1316D3F0CA0059DBED /* PLVolumeSlider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PLVolumeSlider.h; sourceTree = "<group>"; };
 		D8D87D1416D3F0CA0059DBED /* PLVolumeSlider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PLVolumeSlider.m; sourceTree = "<group>"; };
 		D8EB558F16E06EAE006E85D1 /* ControlBarGrip@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "ControlBarGrip@2x.png"; path = "Images/ControlBarGrip@2x.png"; sourceTree = "<group>"; };
@@ -376,6 +384,10 @@
 		D88EA82716923E310011F6FB /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				D8C34725173C01D600D7B28C /* Icon-72@2x.png */,
+				D8C34726173C01D600D7B28C /* Icon-Small-50@2x.png */,
+				D8C34727173C01D600D7B28C /* Icon-Small@2x.png */,
+				D8C34721173C00BA00D7B28C /* iTunesArtwork@2x.png */,
 				D8B613E5171B63CF00F12446 /* InputGroupBackground@2x.png */,
 				D8B613DC171B54A600F12446 /* SonosAmp@2x.png */,
 				D8B613DD171B54A600F12446 /* SonosSpeakerPlay3Dark@2x.png */,
@@ -496,6 +508,10 @@
 				D8B613E0171B54A600F12446 /* SonosSpeakerPlay3Dark@2x.png in Resources */,
 				D8B613E1171B54A600F12446 /* SonosSpeakerPlay3Light@2x.png in Resources */,
 				D8B613E6171B63CF00F12446 /* InputGroupBackground@2x.png in Resources */,
+				D8C34724173C00BA00D7B28C /* iTunesArtwork@2x.png in Resources */,
+				D8C34728173C01D600D7B28C /* Icon-72@2x.png in Resources */,
+				D8C34729173C01D600D7B28C /* Icon-Small-50@2x.png in Resources */,
+				D8C3472A173C01D600D7B28C /* Icon-Small@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
