@@ -8,6 +8,7 @@
 
 #import "SonosConnection.h"
 #import "SonosMockResponses.h"
+#import "SonosErrorResponse.h"
 
 static NSMutableArray *sharedConnectionList = nil;
 
@@ -68,6 +69,16 @@ static const BOOL kTargetSimulator = NO;
   }
 
   if (completionBlock) {
+    if ([[rootObject response] class] == [SonosErrorResponse class]) {
+      SonosErrorResponse *error = (SonosErrorResponse *)[rootObject response];
+      NSLog(@"\n\nSonosErrorResponse:"
+            "\n\tRequest: %@"
+            "\n\tCode: %@"
+            "\n\tString: %@"
+            "\n\tDetail: %@"
+            "\n\tHTTPBody: %@"
+            "\n\n", request.URL, error.code, error.string, error.detail, [[NSString alloc] initWithData:request.HTTPBody encoding:NSUTF8StringEncoding]);
+    }
     completionBlock(rootObject, nil);
   }
 

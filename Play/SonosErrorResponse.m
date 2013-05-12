@@ -27,9 +27,9 @@
   }
 }
 
-- (void)parser:(NSXMLParser *)parser foundCharacters:(NSString *)str
+- (void)parser:(NSXMLParser *)parser foundCharacters:(NSString *)aString
 {
-  [currentString appendString:str];
+  [currentString appendString:aString];
 }
 
 - (void)parser:(NSXMLParser *)parser didEndElement:(NSString *)elementName namespaceURI:(NSString *)namespaceURI qualifiedName:(NSString *)qName
@@ -38,10 +38,6 @@
 
   if ([elementName isEqual:@"s:Fault"]) {
     [parser setDelegate:parentParserDelegate];
-    NSLog(@"SonosErrorResponse:"
-          "\n\tCode: %@"
-          "\n\tString: %@"
-          "\n\tDetail: %@", code, string, detail);
   }
 }
 
