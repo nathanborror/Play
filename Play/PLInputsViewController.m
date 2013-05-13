@@ -13,14 +13,22 @@
 #import "SonosInput.h"
 #import "SonosInputStore.h"
 #import "SonosInputCell.h"
-#import "NBAnimation.h"
+#import "SonosController.h"
+#import "SonosPositionInfoResponse.h"
+#import "SOAPEnvelope.h"
+#import "NBKit/NBAnimation.h"
+
+static const CGFloat kInputOffRestingX = 23.0;
+static const CGFloat kInputOnRestingX = 185.0;
 
 @interface PLInputsViewController ()
 {
   NSArray *inputList;
   NBAnimation *cellBounce;
   CGPoint cellPanCoordBegan;
-  CGPoint cellOriginalCenter;
+
+  UIView *paired;
+  NSMutableArray *pairedSpeakers;
 }
 @end
 
@@ -31,6 +39,7 @@
   self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
   if (self) {
     [self.navigationItem setTitle:@"Speakers"];
+    pairedSpeakers = [[NSMutableArray alloc] init];
 
     // Add Button
     UIBarButtonItem *addButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addInput)];
@@ -44,11 +53,15 @@
     SonosInputStore *inputStore = [SonosInputStore sharedStore];
     [inputStore addInputWithIP:@"10.0.1.9" name:@"Living Room" uid:@"RINCON_000E58D0540801400" icon:[UIImage imageNamed:@"SonosAmp"]];
     [inputStore addInputWithIP:@"10.0.1.10" name:@"Bedroom" uid:@"RINCON_000E587641F201400" icon:[UIImage imageNamed:@"SonosSpeakerPlay3Light"]];
-    [inputStore addInputWithIP:@"10.0.1.18" name:@"Kitchen" uid:@"RINCON_000E587BBA5201400" icon:[UIImage imageNamed:@"SonosSpeakerPlay3Dark"]];
+    [inputStore addInputWithIP:@"10.0.1.11" name:@"Kitchen" uid:@"RINCON_000E587BBA5201400" icon:[UIImage imageNamed:@"SonosSpeakerPlay3Dark"]];
+    // 10.0.1.3 router
+
+    // Make the first input in the master input for now.
+    [inputStore setMaster:[inputStore inputAtIndex:0]];
 
     // Cell bounce animation
     cellBounce = [NBAnimation animationWithKeyPath:@"position"];
-    [cellBounce setDuration:0.7f];
+    [cellBounce setDuration:0.9f];
     [cellBounce setNumberOfBounces:2];
     [cellBounce setShouldOvershoot:YES];
 
@@ -56,6 +69,12 @@
     [self setInputs];
   }
   return self;
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+  [super viewWillAppear:animated];
+  [self.navigationController setNavigationBarHidden:YES];
 }
 
 - (void)nowPlaying
@@ -74,25 +93,55 @@
 
 - (void)setBackground
 {
-  UIImageView *background = [[UIImageView alloc] initWithFrame:self.view.bounds];
-  [background setBackgroundColor:[UIColor colorWithWhite:.2 alpha:1]];
-  [background setAutoresizingMask:UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight];
-  [self.view addSubview:background];
+  [self.view setBackgroundColor:[UIColor colorWithWhite:.2 alpha:1]];
+
+  // Drag inputs here to turn them on
+  paired = [[UIView alloc] initWithFrame:CGRectMake(CGRectGetWidth(self.view.bounds)/2, 0, CGRectGetWidth(self.view.bounds)/2, CGRectGetHeight(self.view.bounds))];
+  [self.view addSubview:paired];
+
+  // Divider
+  UIImageView *divider = [[UIImageView alloc] initWithImage:[[UIImage imageNamed:@"InputDivider"] resizableImageWithCapInsets:UIEdgeInsetsMake(2, 2, 2, 2) resizingMode:UIImageResizingModeStretch]];
+  [divider setFrame:CGRectMake((CGRectGetWidth(self.view.bounds)/2)-2, 15, 4, CGRectGetHeight(self.view.bounds)-30)];
+  [divider setAutoresizingMask:UIViewAutoresizingFlexibleHeight];
+  [self.view addSubview:divider];
 }
 
-#pragma mark - Inputs
+#pragma mark - InputCells
 
 - (void)setInputs
 {
   for (int i = 0; i < [self numberOfInputs]; i++) {
     SonosInput *input = [[SonosInputStore sharedStore] inputAtIndex:i];
-    SonosInputCell *cell = [self cellForInput:input];
-    [cell setFrame:CGRectOffset(cell.bounds, 100, (CGRectGetHeight(cell.bounds)*i)+(20*(i+1)))];
-    [cell addTarget:self action:@selector(inputWasSelected:) forControlEvents:UIControlEventTouchUpInside];
+    SonosInputCell *cell = [self inputCellForInput:input];
+    [cell addTarget:self action:@selector(inputCellWasSelected:) forControlEvents:UIControlEventTouchUpInside];
+
+    if ([input isEqual:[[SonosInputStore sharedStore] master]]) {
+      [cell setFrame:CGRectOffset(cell.bounds, kInputOnRestingX, (CGRectGetHeight(cell.bounds)*i)+(20*(i+1))+30)];
+      [pairedSpeakers addObject:input];
+    } else {
+      [cell setFrame:CGRectOffset(cell.bounds, kInputOffRestingX, (CGRectGetHeight(cell.bounds)*i)+(20*(i+1))+30)];
+    }
+
+    [cell setOrigin:cell.center];
     [self.view addSubview:cell];
 
     UIPanGestureRecognizer *cellPan = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(panCell:)];
     [cell addGestureRecognizer:cellPan];
+
+    // Check to see if any inputs are playing other speakers.
+    // This would mean they're a slave of another speaker.
+    [[SonosController sharedController] trackInfo:input completion:^(SOAPEnvelope *envelope, NSError *error) {
+      SonosPositionInfoResponse *response = (SonosPositionInfoResponse *)[envelope response];
+      NSMutableString *uri = [NSMutableString stringWithFormat:@"%@", response.uri];
+
+      NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:@"x-rincon:" options:0 error:nil];
+      NSTextCheckingResult *match = [regex firstMatchInString:uri options:0 range:NSMakeRange(0, uri.length)];
+
+      if (match) {
+        [self inputCell:cell isHighlighted:YES];
+        [pairedSpeakers addObject:cell];
+      }
+    }];
   }
 }
 
@@ -101,17 +150,47 @@
   return [[[SonosInputStore sharedStore] allInputs] count];
 }
 
-- (SonosInputCell *)cellForInput:(SonosInput *)input
+- (SonosInputCell *)inputCellForInput:(SonosInput *)input
 {
   SonosInputCell *cell = [[SonosInputCell alloc] initWithInput:input];
   return cell;
 }
 
-- (void)inputWasSelected:(SonosInputCell *)inputCell
+- (void)inputCellWasSelected:(SonosInputCell *)inputCell
 {
-  [[SonosInputStore sharedStore] setMaster:inputCell.input];
   PLLibraryViewController *viewController = [[PLLibraryViewController alloc] init];
-  [self.navigationController pushViewController:viewController animated:YES];
+  UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:viewController];
+  [self.navigationController presentViewController:navController animated:YES completion:nil];
+}
+
+- (void)inputCell:(SonosInputCell *)inputCell isHighlighted:(BOOL)active
+{
+  SonosInputStore *inputStore = [SonosInputStore sharedStore];
+
+  id fromValue = [NSValue valueWithCGPoint:inputCell.center];
+  id toValue;
+
+  if (active) {
+    // If there are no speakers in the grouped colum, set the master to
+    // the speaker being dragged over.
+    if ([pairedSpeakers count] == 0) {
+      [inputStore setMaster:inputCell.input];
+    }
+
+    toValue = [NSValue valueWithCGPoint:CGPointMake(kInputOnRestingX+CGRectGetWidth(inputCell.bounds)/2, inputCell.origin.y)];
+    [pairedSpeakers addObject:inputCell];
+    [inputCell pair:inputStore.master];
+  } else {
+    toValue = [NSValue valueWithCGPoint:CGPointMake(kInputOffRestingX+CGRectGetWidth(inputCell.bounds)/2, inputCell.origin.y)];
+    [pairedSpeakers removeObjectIdenticalTo:inputCell];
+    [inputCell unpair];
+  }
+
+  [cellBounce setFromValue:fromValue];
+  [cellBounce setToValue:toValue];
+
+  [inputCell.layer addAnimation:cellBounce forKey:@"cellBounce"];
+  [inputCell.layer setValue:toValue forKeyPath:@"position"];
 }
 
 #pragma mark - UIPanGestureRecognizer
@@ -120,36 +199,34 @@
 {
   SonosInputCell *cell = (SonosInputCell *)[recognizer view];
 
-  if (recognizer.state == UIGestureRecognizerStateBegan) {
-    cellPanCoordBegan = [recognizer locationInView:cell];
-    cellOriginalCenter = cell.center;
-    [self.view bringSubviewToFront:cell];
-    [cell startDragging];
-  }
+  switch (recognizer.state) {
+    case UIGestureRecognizerStateBegan: {
+      cellPanCoordBegan = [recognizer locationInView:cell];
+      [cell setOrigin:cell.center];
+      [cell startDragging];
+      [self.view bringSubviewToFront:cell];
+    } break;
+    case UIGestureRecognizerStateChanged: {
+      CGPoint panCoordChange = [recognizer locationInView:cell];
 
-  if (recognizer.state == UIGestureRecognizerStateChanged) {
-    CGPoint panCoordChange = [recognizer locationInView:cell];
+      CGFloat deltaX = panCoordChange.x - cellPanCoordBegan.x;
+      CGFloat deltaY = panCoordChange.y - cellPanCoordBegan.y;
 
-    CGFloat deltaX = panCoordChange.x - cellPanCoordBegan.x;
-    CGFloat deltaY = panCoordChange.y - cellPanCoordBegan.y;
-
-    CGPoint newPoint = CGPointMake(cell.center.x + deltaX, cell.center.y + deltaY);
-    cell.center = newPoint;
-  }
-
-  if (recognizer.state == UIGestureRecognizerStateEnded) {
-    // TODO: snap to grid
-
-    id fromValue = [NSValue valueWithCGPoint:cell.center];
-    id toValue = [NSValue valueWithCGPoint:cellOriginalCenter];
-
-    [cellBounce setFromValue:fromValue];
-    [cellBounce setToValue:toValue];
-
-    [cell.layer addAnimation:cellBounce forKey:@"cellBounce"];
-    [cell.layer setValue:toValue forKeyPath:@"position"];
-
-    [cell stopDragging];
+      CGPoint newPoint = CGPointMake(cell.center.x + deltaX, cell.center.y + deltaY);
+      cell.center = newPoint;
+    } break;
+    case UIGestureRecognizerStateEnded:
+    case UIGestureRecognizerStateCancelled: {
+      [cell stopDragging];
+      if (CGRectContainsPoint(paired.frame, cell.center)) {
+        [self inputCell:cell isHighlighted:YES];
+      } else {
+        [self inputCell:cell isHighlighted:NO];
+      }
+    } break;
+    case UIGestureRecognizerStateFailed:
+    case UIGestureRecognizerStatePossible:
+      break;
   }
 }
 

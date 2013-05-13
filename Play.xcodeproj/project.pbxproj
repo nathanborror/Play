@@ -25,6 +25,7 @@
 		D819F65D16AE1BB900B19B50 /* Examples.xml in Resources */ = {isa = PBXBuildFile; fileRef = D819F65C16AE1BB900B19B50 /* Examples.xml */; };
 		D82B793516D7538000B5FF35 /* SonosVolumeResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = D82B793416D7538000B5FF35 /* SonosVolumeResponse.m */; };
 		D851A97316928C020014446F /* TempAlbum2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D851A97216928C020014446F /* TempAlbum2@2x.png */; };
+		D872A7181737984400942AE8 /* InputDivider@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D872A7151737984300942AE8 /* InputDivider@2x.png */; };
 		D8824DDE1693880600D05AA0 /* PLAddInputViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D8824DDD1693880600D05AA0 /* PLAddInputViewController.m */; };
 		D8824DE916938CA300D05AA0 /* SonosInput.m in Sources */ = {isa = PBXBuildFile; fileRef = D8824DE816938CA300D05AA0 /* SonosInput.m */; };
 		D8824E2B169392FF00D05AA0 /* PLSource.m in Sources */ = {isa = PBXBuildFile; fileRef = D8824E2A169392FF00D05AA0 /* PLSource.m */; };
@@ -79,6 +80,7 @@
 		D8B613E1171B54A600F12446 /* SonosSpeakerPlay3Light@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D8B613DE171B54A600F12446 /* SonosSpeakerPlay3Light@2x.png */; };
 		D8B613E4171B5B7300F12446 /* SonosInputCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D8B613E3171B5B7300F12446 /* SonosInputCell.m */; };
 		D8B613E6171B63CF00F12446 /* InputGroupBackground@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D8B613E5171B63CF00F12446 /* InputGroupBackground@2x.png */; };
+		D8C3471B173B720400D7B28C /* SpeakerOn@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D8C3471A173B720400D7B28C /* SpeakerOn@2x.png */; };
 		D8C3471E173B7B9100D7B28C /* SonosTransportInfoResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = D8C3471D173B7B9100D7B28C /* SonosTransportInfoResponse.m */; };
 		D8C34724173C00BA00D7B28C /* iTunesArtwork@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D8C34721173C00BA00D7B28C /* iTunesArtwork@2x.png */; };
 		D8C34728173C01D600D7B28C /* Icon-72@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D8C34725173C01D600D7B28C /* Icon-72@2x.png */; };
@@ -118,6 +120,7 @@
 		D82B793316D7538000B5FF35 /* SonosVolumeResponse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SonosVolumeResponse.h; sourceTree = "<group>"; };
 		D82B793416D7538000B5FF35 /* SonosVolumeResponse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SonosVolumeResponse.m; sourceTree = "<group>"; };
 		D851A97216928C020014446F /* TempAlbum2@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "TempAlbum2@2x.png"; path = "Images/TempAlbum2@2x.png"; sourceTree = "<group>"; };
+		D872A7151737984300942AE8 /* InputDivider@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "InputDivider@2x.png"; path = "Images/InputDivider@2x.png"; sourceTree = "<group>"; };
 		D8824DDC1693880600D05AA0 /* PLAddInputViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PLAddInputViewController.h; sourceTree = "<group>"; };
 		D8824DDD1693880600D05AA0 /* PLAddInputViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PLAddInputViewController.m; sourceTree = "<group>"; };
 		D8824DE716938CA300D05AA0 /* SonosInput.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SonosInput.h; sourceTree = "<group>"; };
@@ -193,6 +196,7 @@
 		D8B613E2171B5B7300F12446 /* SonosInputCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SonosInputCell.h; sourceTree = "<group>"; };
 		D8B613E3171B5B7300F12446 /* SonosInputCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SonosInputCell.m; sourceTree = "<group>"; };
 		D8B613E5171B63CF00F12446 /* InputGroupBackground@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "InputGroupBackground@2x.png"; path = "Images/InputGroupBackground@2x.png"; sourceTree = "<group>"; };
+		D8C3471A173B720400D7B28C /* SpeakerOn@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "SpeakerOn@2x.png"; path = "Images/SpeakerOn@2x.png"; sourceTree = "<group>"; };
 		D8C3471C173B7B9100D7B28C /* SonosTransportInfoResponse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SonosTransportInfoResponse.h; sourceTree = "<group>"; };
 		D8C3471D173B7B9100D7B28C /* SonosTransportInfoResponse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SonosTransportInfoResponse.m; sourceTree = "<group>"; };
 		D8C34721173C00BA00D7B28C /* iTunesArtwork@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "iTunesArtwork@2x.png"; path = "Images/iTunesArtwork@2x.png"; sourceTree = "<group>"; };
@@ -393,6 +397,8 @@
 				D8C34726173C01D600D7B28C /* Icon-Small-50@2x.png */,
 				D8C34727173C01D600D7B28C /* Icon-Small@2x.png */,
 				D8C34721173C00BA00D7B28C /* iTunesArtwork@2x.png */,
+				D8C3471A173B720400D7B28C /* SpeakerOn@2x.png */,
+				D872A7151737984300942AE8 /* InputDivider@2x.png */,
 				D88C53441722675900E0A419 /* NBDial@2x.png */,
 				D8B613E5171B63CF00F12446 /* InputGroupBackground@2x.png */,
 				D8B613DC171B54A600F12446 /* SonosAmp@2x.png */,
@@ -517,6 +523,8 @@
 				D8B613E1171B54A600F12446 /* SonosSpeakerPlay3Light@2x.png in Resources */,
 				D8B613E6171B63CF00F12446 /* InputGroupBackground@2x.png in Resources */,
 				D88C53451722675900E0A419 /* NBDial@2x.png in Resources */,
+				D872A7181737984400942AE8 /* InputDivider@2x.png in Resources */,
+				D8C3471B173B720400D7B28C /* SpeakerOn@2x.png in Resources */,
 				D8C34724173C00BA00D7B28C /* iTunesArtwork@2x.png in Resources */,
 				D8C34728173C01D600D7B28C /* Icon-72@2x.png in Resources */,
 				D8C34729173C01D600D7B28C /* Icon-Small-50@2x.png in Resources */,

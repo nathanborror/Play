@@ -18,6 +18,7 @@
 
   // UINavigationBar appearance
   [[UINavigationBar appearance] setBackgroundImage:[[UIImage imageNamed:@"NavBar"] resizableImageWithCapInsets:UIEdgeInsetsMake(4,4,4,4) resizingMode:UIImageResizingModeStretch] forBarMetrics:UIBarMetricsDefault];
+  [[UINavigationBar appearance] setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIColor whiteColor], UITextAttributeTextColor, [UIColor blackColor], UITextAttributeTextShadowColor, 0, UITextAttributeTextShadowOffset, nil]];
 
   // UIBarButtonItem appearance
   [[UIBarButtonItem appearance] setBackgroundImage:[[UIImage imageNamed:@"BarButtonItem"] resizableImageWithCapInsets:UIEdgeInsetsMake(4,4,4,4) resizingMode:UIImageResizingModeStretch] forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
