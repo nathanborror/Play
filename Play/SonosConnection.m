@@ -13,7 +13,7 @@
 static NSMutableArray *sharedConnectionList = nil;
 
 #if TARGET_IPHONE_SIMULATOR
-static const BOOL kTargetSimulator = YES;
+static const BOOL kTargetSimulator = NO;
 # else
 static const BOOL kTargetSimulator = NO;
 #endif
