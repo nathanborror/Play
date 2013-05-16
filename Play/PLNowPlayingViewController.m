@@ -25,8 +25,10 @@ static const CGFloat kControlBarPreviousNextPadding = 40.0;
 static const CGFloat kControlBarButtonWidth = 75.0;
 static const CGFloat kControlBarButtonHeight = kControlBarButtonWidth;
 static const CGFloat kControlBarButtonPadding = 20.0;
-static const CGFloat kControlBarRestingYPortrait = 155.0;
+static const CGFloat kControlBarRestingYPortrait = 151.0;
 static const CGFloat kControlBarRestingYLandscape = 235.0;
+
+static const CGFloat kNavigationBarHeight = 80.0;
 
 @interface PLNowPlayingViewController ()
 {
@@ -54,6 +56,8 @@ static const CGFloat kControlBarRestingYLandscape = 235.0;
   CGPoint panCoordBegan;
 
   NBAnimation *bounce;
+
+  UIImageView *navBar;
 }
 @end
 
@@ -64,6 +68,7 @@ static const CGFloat kControlBarRestingYLandscape = 235.0;
   self = [super init];
   if (self) {
     [self.view setBackgroundColor:[UIColor colorWithRed:.2 green:.2 blue:.2 alpha:1]];
+    [self.view setClipsToBounds:YES];
 
     [self.navigationItem setTitle:@"Now Playing"];
 
@@ -72,10 +77,6 @@ static const CGFloat kControlBarRestingYLandscape = 235.0;
     [bounce setDuration:0.7f];
     [bounce setNumberOfBounces:2];
     [bounce setShouldOvershoot:YES];
-
-    // Done Button
-    UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(done)];
-    [self.navigationItem setRightBarButtonItem:doneButton];
 
     sonos = [SonosController sharedController];
 
@@ -89,12 +90,12 @@ static const CGFloat kControlBarRestingYLandscape = 235.0;
     [tableHeader setAutoresizingMask:UIViewAutoresizingFlexibleWidth];
 
     // Header: Album Art
-    album = [[UIImageView alloc] initWithFrame:CGRectMake(30, 90, 260, 260)];
+    album = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 320, 320)];
     [album setAutoresizingMask:UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin];
     [album setImage:[UIImage imageNamed:@"TempAlbum.png"]];
-    [album.layer setShadowRadius:10];
+    [album.layer setShadowRadius:5];
     [album.layer setShadowOffset:CGSizeMake(0, 5)];
-    [album.layer setShadowOpacity:.8];
+    [album.layer setShadowOpacity:.5];
     [album.layer setShadowColor:[UIColor blackColor].CGColor];
     [tableHeader addSubview:album];
 
@@ -109,7 +110,36 @@ static const CGFloat kControlBarRestingYLandscape = 235.0;
     CIContext *context = [CIContext contextWithOptions:nil];
     [background setImage:[UIImage imageWithCGImage:[context createCGImage:outputImage fromRect:outputImage.extent]]];
 
-    // Header: Track Title
+    // Song List
+    songList = [[UITableView alloc] initWithFrame:CGRectMake(0, kNavigationBarHeight, CGRectGetWidth(self.view.bounds), CGRectGetHeight(self.view.bounds))];
+    [songList setAutoresizingMask:UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight];
+    [songList setBackgroundColor:[UIColor clearColor]];
+    [songList setTableHeaderView:tableHeader];
+    [songList setContentInset:UIEdgeInsetsMake(0, 0, 700, 0)];
+    [songList setDelegate:self];
+    [songList setDataSource:self];
+    [songList setSeparatorColor:[UIColor colorWithWhite:1 alpha:.3]];
+    [songList setScrollIndicatorInsets:UIEdgeInsetsMake(0, 0, 0, -7)];
+    [self.view addSubview:songList];
+
+    // ---- Custom Navigation Bar ----
+
+    navBar = [[UIImageView alloc] initWithImage:[[UIImage imageNamed:@"NavBar"] resizableImageWithCapInsets:UIEdgeInsetsMake(4, 4, 4, 4) resizingMode:UIImageResizingModeStretch]];
+    [navBar setUserInteractionEnabled:YES];
+    [navBar setFrame:CGRectMake(0, 0, CGRectGetWidth(self.view.bounds), kNavigationBarHeight)];
+    [navBar.layer setShadowOffset:CGSizeMake(0, 2)];
+    [navBar.layer setShadowColor:[UIColor colorWithWhite:.2 alpha:1].CGColor];
+    [navBar.layer setShadowRadius:1.0];
+    [navBar.layer setShadowOpacity:.3];
+    [self.view addSubview:navBar];
+
+    UIButton *done = [[UIButton alloc] initWithFrame:CGRectMake(CGRectGetWidth(navBar.bounds)-55-6, 7, 55, 30)];
+    [done addTarget:self action:@selector(done) forControlEvents:UIControlEventTouchUpInside];
+    [done setBackgroundImage:[[UIImage imageNamed:@"BarButtonItemDone"] resizableImageWithCapInsets:UIEdgeInsetsMake(4,4,4,4) resizingMode:UIImageResizingModeStretch] forState:UIControlStateNormal];
+    [done setTitle:@"Done" forState:UIControlStateNormal];
+    [done.titleLabel setFont:[UIFont boldSystemFontOfSize:12]];
+    [done.titleLabel setShadowOffset:CGSizeMake(0, -1)];
+    [navBar addSubview:done];
 
     // Track Info
     trackInfo = [[UIView alloc] init];
@@ -119,19 +149,19 @@ static const CGFloat kControlBarRestingYLandscape = 235.0;
     [title setTextColor:[UIColor colorWithWhite:1 alpha:.9]];
     [title setBackgroundColor:[UIColor clearColor]];
     [title setTextAlignment:NSTextAlignmentCenter];
-    [title setFont:[UIFont systemFontOfSize:14]];
-    [title setText:@"Titanium — Nothing But The Beat"];
+    [title setFont:[UIFont boldSystemFontOfSize:14]];
+    [title setText:@"Come Together"];
     [trackInfo addSubview:title];
 
     // Track Info: Progress Bar
-    progress = [[UISlider alloc] initWithFrame:CGRectMake(kProgressPadding, 35, 320 - (kProgressPadding * 2), 20)];
+    progress = [[UISlider alloc] initWithFrame:CGRectMake(kProgressPadding, 45, 320 - (kProgressPadding * 2), 20)];
     [progress setAutoresizingMask:UIViewAutoresizingFlexibleWidth];
     [progress setThumbImage:[UIImage imageNamed:@"SliderThumbSmall.png"] forState:UIControlStateNormal];
     [progress setThumbImage:[UIImage imageNamed:@"SliderThumbSmallPressed.png"] forState:UIControlStateHighlighted];
     [trackInfo addSubview:progress];
 
     // Track Info: Elapsed Time
-    timeElapsed = [[UILabel alloc] initWithFrame:CGRectMake(5, 36, 40, 20)];
+    timeElapsed = [[UILabel alloc] initWithFrame:CGRectMake(5, 46, 40, 20)];
     [timeElapsed setTextColor:[UIColor colorWithWhite:1 alpha:.9]];
     [timeElapsed setBackgroundColor:[UIColor clearColor]];
     [timeElapsed setTextAlignment:NSTextAlignmentRight];
@@ -140,7 +170,7 @@ static const CGFloat kControlBarRestingYLandscape = 235.0;
     [trackInfo addSubview:timeElapsed];
 
     // Track Info: Total Time
-    timeTotal = [[UILabel alloc] initWithFrame:CGRectMake(278, 36, 40, 20)];
+    timeTotal = [[UILabel alloc] initWithFrame:CGRectMake(278, 46, 40, 20)];
     [timeTotal setAutoresizingMask:UIViewAutoresizingFlexibleLeftMargin];
     [timeTotal setTextColor:[UIColor colorWithWhite:1 alpha:.9]];
     [timeTotal setBackgroundColor:[UIColor clearColor]];
@@ -150,24 +180,18 @@ static const CGFloat kControlBarRestingYLandscape = 235.0;
     [trackInfo addSubview:timeTotal];
 
     [trackInfo sizeToFit];
-    [tableHeader addSubview:trackInfo];
+    [navBar addSubview:trackInfo];
 
-    // Song List
-    songList = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(self.view.bounds), CGRectGetHeight(self.view.bounds))];
-    [songList setAutoresizingMask:UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight];
-    [songList setBackgroundColor:[UIColor clearColor]];
-    [songList setTableHeaderView:tableHeader];
-    [songList setContentInset:UIEdgeInsetsMake(0, 0, 400, 0)];
-    [songList setDelegate:self];
-    [songList setDataSource:self];
-    [songList setSeparatorColor:[UIColor colorWithWhite:1 alpha:.3]];
-    [self.view addSubview:songList];
+    // ---- Control Bar ----
 
-    // Control Bar
     controlBar = [[UIImageView alloc] initWithFrame:CGRectMake(0, CGRectGetHeight(self.view.bounds)-kControlBarRestingYPortrait, CGRectGetWidth(self.view.frame), CGRectGetHeight(self.view.frame))];
     [controlBar setImage:[[UIImage imageNamed:@"ControlBar.png"] resizableImageWithCapInsets:UIEdgeInsetsMake(6, 6, 6, 6) resizingMode:UIImageResizingModeStretch]];
     [controlBar setAutoresizingMask:UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleTopMargin];
     [controlBar setUserInteractionEnabled:YES];
+    [controlBar.layer setShadowOffset:CGSizeMake(0, -2)];
+    [controlBar.layer setShadowColor:[UIColor colorWithWhite:.2 alpha:1].CGColor];
+    [controlBar.layer setShadowRadius:1.0];
+    [controlBar.layer setShadowOpacity:.3];
 
     UIImageView *grip = [[UIImageView alloc] initWithFrame:CGRectMake((CGRectGetWidth(self.view.frame)/2)-17, 6, 35, 3)];
     [grip setImage:[UIImage imageNamed:@"ControlBarGrip"]];
@@ -205,9 +229,10 @@ static const CGFloat kControlBarRestingYLandscape = 235.0;
       [speakerVolume setInput:[speakers objectAtIndex:i]];
       [controlBar addSubview:speakerVolume];
     }
-    
+
     [self.view addSubview:controlBar];
 
+    // Control Bar pan gesture
     NBDirectionGestureRecognizer *controlPan = [[NBDirectionGestureRecognizer alloc] initWithTarget:self action:@selector(panControlBar:)];
     [controlPan setDirection:DirectionPanGestureRecognizerVertical];
     [controlBar addGestureRecognizer:controlPan];
@@ -235,6 +260,12 @@ static const CGFloat kControlBarRestingYLandscape = 235.0;
     [timeTotal setText:@"00:00"];
   }
   return self;
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+  [super viewWillAppear:animated];
+  [self.navigationController setNavigationBarHidden:YES];
 }
 
 - (void)playPause
@@ -302,7 +333,7 @@ static const CGFloat kControlBarRestingYLandscape = 235.0;
 - (void)showSpeakerVolumes
 {
   id fromValue = [NSNumber numberWithFloat:CGRectGetMaxY(controlBar.bounds)];
-  id toValue = [NSNumber numberWithFloat:(CGRectGetHeight(controlBar.bounds)/2)+80];
+  id toValue = [NSNumber numberWithFloat:(CGRectGetHeight(controlBar.bounds)/2)+78];
 
   [bounce setFromValue:fromValue];
   [bounce setToValue:toValue];
@@ -313,15 +344,8 @@ static const CGFloat kControlBarRestingYLandscape = 235.0;
 
 - (void)hideSpeakerVolumes
 {
-//  CGFloat restingPosition;
-//  if (UIInterfaceOrientationIsLandscape([[UIDevice currentDevice] orientation])) {
-//    restingPosition = kControlBarRestingYLandscape;
-//  } else {
-//    restingPosition = kControlBarRestingYPortrait;
-//  }
-
   id fromValue = [NSNumber numberWithFloat:CGRectGetMaxY(controlBar.bounds)];
-  id toValue = [NSNumber numberWithFloat:(CGRectGetHeight(controlBar.bounds)/2)+380];
+  id toValue = [NSNumber numberWithFloat:(CGRectGetHeight(controlBar.bounds)/2)+397];
 
   [bounce setFromValue:fromValue];
   [bounce setToValue:toValue];

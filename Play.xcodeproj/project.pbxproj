@@ -25,6 +25,7 @@
 		D819F65D16AE1BB900B19B50 /* Examples.xml in Resources */ = {isa = PBXBuildFile; fileRef = D819F65C16AE1BB900B19B50 /* Examples.xml */; };
 		D82B793516D7538000B5FF35 /* SonosVolumeResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = D82B793416D7538000B5FF35 /* SonosVolumeResponse.m */; };
 		D851A97316928C020014446F /* TempAlbum2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D851A97216928C020014446F /* TempAlbum2@2x.png */; };
+		D857841C1740A44600E9A67A /* BarButtonItemBackIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D857841B1740A44600E9A67A /* BarButtonItemBackIcon@2x.png */; };
 		D872A7181737984400942AE8 /* InputDivider@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D872A7151737984300942AE8 /* InputDivider@2x.png */; };
 		D8824DDE1693880600D05AA0 /* PLAddInputViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D8824DDD1693880600D05AA0 /* PLAddInputViewController.m */; };
 		D8824DE916938CA300D05AA0 /* SonosInput.m in Sources */ = {isa = PBXBuildFile; fileRef = D8824DE816938CA300D05AA0 /* SonosInput.m */; };
@@ -120,6 +121,7 @@
 		D82B793316D7538000B5FF35 /* SonosVolumeResponse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SonosVolumeResponse.h; sourceTree = "<group>"; };
 		D82B793416D7538000B5FF35 /* SonosVolumeResponse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SonosVolumeResponse.m; sourceTree = "<group>"; };
 		D851A97216928C020014446F /* TempAlbum2@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "TempAlbum2@2x.png"; path = "Images/TempAlbum2@2x.png"; sourceTree = "<group>"; };
+		D857841B1740A44600E9A67A /* BarButtonItemBackIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "BarButtonItemBackIcon@2x.png"; path = "Images/BarButtonItemBackIcon@2x.png"; sourceTree = "<group>"; };
 		D872A7151737984300942AE8 /* InputDivider@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "InputDivider@2x.png"; path = "Images/InputDivider@2x.png"; sourceTree = "<group>"; };
 		D8824DDC1693880600D05AA0 /* PLAddInputViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PLAddInputViewController.h; sourceTree = "<group>"; };
 		D8824DDD1693880600D05AA0 /* PLAddInputViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PLAddInputViewController.m; sourceTree = "<group>"; };
@@ -393,6 +395,7 @@
 		D88EA82716923E310011F6FB /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				D857841B1740A44600E9A67A /* BarButtonItemBackIcon@2x.png */,
 				D8C34725173C01D600D7B28C /* Icon-72@2x.png */,
 				D8C34726173C01D600D7B28C /* Icon-Small-50@2x.png */,
 				D8C34727173C01D600D7B28C /* Icon-Small@2x.png */,
@@ -529,6 +532,7 @@
 				D8C34728173C01D600D7B28C /* Icon-72@2x.png in Resources */,
 				D8C34729173C01D600D7B28C /* Icon-Small-50@2x.png in Resources */,
 				D8C3472A173C01D600D7B28C /* Icon-Small@2x.png in Resources */,
+				D857841C1740A44600E9A67A /* BarButtonItemBackIcon@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

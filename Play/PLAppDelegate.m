@@ -19,11 +19,15 @@
   // UINavigationBar appearance
   [[UINavigationBar appearance] setBackgroundImage:[[UIImage imageNamed:@"NavBar"] resizableImageWithCapInsets:UIEdgeInsetsMake(4,4,4,4) resizingMode:UIImageResizingModeStretch] forBarMetrics:UIBarMetricsDefault];
   [[UINavigationBar appearance] setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIColor whiteColor], UITextAttributeTextColor, [UIColor blackColor], UITextAttributeTextShadowColor, 0, UITextAttributeTextShadowOffset, nil]];
+  [[UINavigationBar appearance] setShadowImage:[[UIImage alloc] init]];
 
   // UIBarButtonItem appearance
   [[UIBarButtonItem appearance] setBackgroundImage:[[UIImage imageNamed:@"BarButtonItem"] resizableImageWithCapInsets:UIEdgeInsetsMake(4,4,4,4) resizingMode:UIImageResizingModeStretch] forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
   [[UIBarButtonItem appearance] setBackgroundImage:[[UIImage imageNamed:@"BarButtonItemDone"] resizableImageWithCapInsets:UIEdgeInsetsMake(4,4,4,4) resizingMode:UIImageResizingModeStretch] forState:UIControlStateNormal style:UIBarButtonItemStyleDone barMetrics:UIBarMetricsDefault];
-  [[UIBarButtonItem appearance] setBackButtonBackgroundImage:[[UIImage imageNamed:@"BarButtonItemBack"] resizableImageWithCapInsets:UIEdgeInsetsMake(15, 15, 4, 4) resizingMode:UIImageResizingModeStretch] forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
+
+  UIImage *backButtonImage = [[UIImage imageNamed:@"BarButtonItemBackIcon"] resizableImageWithCapInsets:UIEdgeInsetsMake(0, 0, 0, 0)];
+  [[UIBarButtonItem appearance] setBackButtonBackgroundImage:backButtonImage  forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
+  [[UIBarButtonItem appearance] setBackButtonTitlePositionAdjustment:UIOffsetMake(0, backButtonImage.size.height * 2) forBarMetrics:UIBarMetricsDefault];
 
   // UISlider appearance
   [[UISlider appearance] setMaximumTrackImage:[[UIImage imageNamed:@"SliderMaxValue.png"] resizableImageWithCapInsets:UIEdgeInsetsMake(3, 3, 3, 3) resizingMode:UIImageResizingModeStretch] forState:UIControlStateNormal];

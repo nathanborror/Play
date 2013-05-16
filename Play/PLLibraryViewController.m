@@ -29,13 +29,9 @@
   if (self) {
     [self.navigationItem setTitle:@"Library"];
 
-    // Done Button
-    UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(done)];
-    [self.navigationItem setRightBarButtonItem:doneButton];
-
     // Now Playing Button
     UIBarButtonItem *nowPlayingButton = [[UIBarButtonItem alloc] initWithTitle:@"Playing" style:UIBarButtonItemStyleDone target:self action:@selector(nowPlaying)];
-    [self.navigationItem setLeftBarButtonItem:nowPlayingButton];
+    [self.navigationItem setRightBarButtonItem:nowPlayingButton];
 
     // Table
     libraryTableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStylePlain];
@@ -59,11 +55,6 @@
     ];
   }
   return self;
-}
-
-- (void)done
-{
-  [self.navigationController dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (void)nowPlaying

@@ -71,12 +71,6 @@ static const CGFloat kInputOnRestingX = 185.0;
   return self;
 }
 
-- (void)viewWillAppear:(BOOL)animated
-{
-  [super viewWillAppear:animated];
-  [self.navigationController setNavigationBarHidden:YES];
-}
-
 - (void)nowPlaying
 {
   PLNowPlayingViewController *viewController = [[PLNowPlayingViewController alloc] init];
@@ -159,8 +153,7 @@ static const CGFloat kInputOnRestingX = 185.0;
 - (void)inputCellWasSelected:(SonosInputCell *)inputCell
 {
   PLLibraryViewController *viewController = [[PLLibraryViewController alloc] init];
-  UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:viewController];
-  [self.navigationController presentViewController:navController animated:YES completion:nil];
+  [self.navigationController pushViewController:viewController animated:YES];
 }
 
 - (void)inputCell:(SonosInputCell *)inputCell isHighlighted:(BOOL)active
