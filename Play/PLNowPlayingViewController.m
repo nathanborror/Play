@@ -20,7 +20,7 @@
 
 static const CGFloat kProgressPadding = 50.0;
 
-static const CGFloat kControlBarPadding = 5.0;
+static const CGFloat kControlBarPadding = 20.0;
 static const CGFloat kControlBarPreviousNextPadding = 40.0;
 static const CGFloat kControlBarButtonWidth = 75.0;
 static const CGFloat kControlBarButtonHeight = kControlBarButtonWidth;
@@ -217,7 +217,7 @@ static const CGFloat kNavigationBarHeight = 80.0;
     [controlBar addSubview:previousButton];
 
     // NBDial
-    NBDial *dial = [[NBDial alloc] initWithFrame:CGRectMake(kControlBarButtonPadding, 85, CGRectGetWidth(controlBar.bounds)-(kControlBarButtonPadding*2), 44)];
+    NBDial *dial = [[NBDial alloc] initWithFrame:CGRectMake(kControlBarButtonPadding, 110, CGRectGetWidth(controlBar.bounds)-(kControlBarButtonPadding*2), 44)];
     [dial setMaxValue:100];
     [dial setMinValue:0];
     [dial setValue:20];
