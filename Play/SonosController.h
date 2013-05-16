@@ -13,6 +13,13 @@ typedef NS_ENUM(NSInteger, SonosRequestType) {
   SonosRequestTypeConnectionManager,
   SonosRequestTypeRenderingControl,
   SonosRequestTypeContentDirectory,
+  SonosRequestTypeAlarmClock,
+  SonosRequestTypeMusicServices,
+  SonosRequestTypeAudioIn,
+  SonosRequestTypeDeviceProperties,
+  SonosRequestTypeSystemProperties,
+  SonosRequestTypeZoneGroupTopology,
+  SonosRequestTypeGroupManagement,
 };
 
 @class SOAPEnvelope;

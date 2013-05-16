@@ -71,6 +71,17 @@
       url = [NSURL URLWithString:[NSString stringWithFormat:@"http://%@:1400/MediaServer/ContentDirectory/Control", input.ip]];
       xmlns = @"urn:schemas-upnp-org:service:ContentDirectory:1";
       break;
+    case SonosRequestTypeAlarmClock:
+      url = [NSURL URLWithString:[NSString stringWithFormat:@"http://%@:1400/AlarmClock/Control", input.ip]];
+      xmlns = @"urn:schemas-upnp-org:service:AlarmClock:1";
+      break;
+    case SonosRequestTypeMusicServices:
+    case SonosRequestTypeAudioIn:
+    case SonosRequestTypeDeviceProperties:
+    case SonosRequestTypeSystemProperties:
+    case SonosRequestTypeZoneGroupTopology:
+    case SonosRequestTypeGroupManagement:
+      break;
   }
 
   // Enumerate
