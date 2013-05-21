@@ -38,12 +38,13 @@
 		D8824E401693D01700D05AA0 /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D8824E3F1693D01700D05AA0 /* MediaPlayer.framework */; };
 		D8824E431693D45500D05AA0 /* PLSongViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D8824E421693D45500D05AA0 /* PLSongViewController.m */; };
 		D8824E451693ECEC00D05AA0 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D8824E441693ECEC00D05AA0 /* AVFoundation.framework */; };
+		D885E0F217494BF80036480C /* PLControlMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = D885E0F117494BF80036480C /* PLControlMenu.m */; };
 		D88889A916958281006D010D /* LineIn@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D88889A816958281006D010D /* LineIn@2x.png */; };
 		D88C534317225AA900E0A419 /* NBDial.m in Sources */ = {isa = PBXBuildFile; fileRef = D88C534217225AA900E0A419 /* NBDial.m */; };
 		D88C53451722675900E0A419 /* NBDial@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D88C53441722675900E0A419 /* NBDial@2x.png */; };
 		D88D11531692BE740039067F /* PLSong.m in Sources */ = {isa = PBXBuildFile; fileRef = D88D11521692BE740039067F /* PLSong.m */; };
 		D88D116016937AC80039067F /* PLLibraryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D88D115F16937AC80039067F /* PLLibraryViewController.m */; };
-		D88D116316937AE00039067F /* PLInputsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D88D116216937AE00039067F /* PLInputsViewController.m */; };
+		D88D116316937AE00039067F /* PLSpeakersViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D88D116216937AE00039067F /* PLSpeakersViewController.m */; };
 		D88EA7EF16917C460011F6FB /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D88EA7EE16917C460011F6FB /* UIKit.framework */; };
 		D88EA7F116917C460011F6FB /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D88EA7F016917C460011F6FB /* Foundation.framework */; };
 		D88EA7F316917C460011F6FB /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D88EA7F216917C460011F6FB /* CoreGraphics.framework */; };
@@ -142,6 +143,8 @@
 		D8824E411693D45400D05AA0 /* PLSongViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PLSongViewController.h; sourceTree = "<group>"; };
 		D8824E421693D45500D05AA0 /* PLSongViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PLSongViewController.m; sourceTree = "<group>"; };
 		D8824E441693ECEC00D05AA0 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		D885E0F017494BF80036480C /* PLControlMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PLControlMenu.h; sourceTree = "<group>"; };
+		D885E0F117494BF80036480C /* PLControlMenu.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PLControlMenu.m; sourceTree = "<group>"; };
 		D88889A816958281006D010D /* LineIn@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "LineIn@2x.png"; path = "Images/LineIn@2x.png"; sourceTree = "<group>"; };
 		D88C534117225AA900E0A419 /* NBDial.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NBDial.h; path = NBKit/NBDial.h; sourceTree = "<group>"; };
 		D88C534217225AA900E0A419 /* NBDial.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NBDial.m; path = NBKit/NBDial.m; sourceTree = "<group>"; };
@@ -150,8 +153,8 @@
 		D88D11521692BE740039067F /* PLSong.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PLSong.m; sourceTree = "<group>"; };
 		D88D115E16937AC80039067F /* PLLibraryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PLLibraryViewController.h; sourceTree = "<group>"; };
 		D88D115F16937AC80039067F /* PLLibraryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PLLibraryViewController.m; sourceTree = "<group>"; };
-		D88D116116937ADF0039067F /* PLInputsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PLInputsViewController.h; sourceTree = "<group>"; };
-		D88D116216937AE00039067F /* PLInputsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PLInputsViewController.m; sourceTree = "<group>"; };
+		D88D116116937ADF0039067F /* PLSpeakersViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PLSpeakersViewController.h; sourceTree = "<group>"; };
+		D88D116216937AE00039067F /* PLSpeakersViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PLSpeakersViewController.m; sourceTree = "<group>"; };
 		D88EA7EA16917C460011F6FB /* Play.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Play.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D88EA7EE16917C460011F6FB /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		D88EA7F016917C460011F6FB /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -297,6 +300,8 @@
 				D8824E2D1693992B00D05AA0 /* PLTextField.m */,
 				D8D87D1316D3F0CA0059DBED /* PLVolumeSlider.h */,
 				D8D87D1416D3F0CA0059DBED /* PLVolumeSlider.m */,
+				D885E0F017494BF80036480C /* PLControlMenu.h */,
+				D885E0F117494BF80036480C /* PLControlMenu.m */,
 			);
 			name = "UI Components";
 			sourceTree = "<group>";
@@ -355,8 +360,8 @@
 				D88EA7FE16917C460011F6FB /* PLAppDelegate.m */,
 				D88D115E16937AC80039067F /* PLLibraryViewController.h */,
 				D88D115F16937AC80039067F /* PLLibraryViewController.m */,
-				D88D116116937ADF0039067F /* PLInputsViewController.h */,
-				D88D116216937AE00039067F /* PLInputsViewController.m */,
+				D88D116116937ADF0039067F /* PLSpeakersViewController.h */,
+				D88D116216937AE00039067F /* PLSpeakersViewController.m */,
 				D88EA80616917C460011F6FB /* PLNowPlayingViewController.h */,
 				D88EA80716917C460011F6FB /* PLNowPlayingViewController.m */,
 				D8824DDC1693880600D05AA0 /* PLAddInputViewController.h */,
@@ -549,7 +554,7 @@
 				D88EA81A1691902A0011F6FB /* SonosController.m in Sources */,
 				D88D11531692BE740039067F /* PLSong.m in Sources */,
 				D88D116016937AC80039067F /* PLLibraryViewController.m in Sources */,
-				D88D116316937AE00039067F /* PLInputsViewController.m in Sources */,
+				D88D116316937AE00039067F /* PLSpeakersViewController.m in Sources */,
 				D8824DDE1693880600D05AA0 /* PLAddInputViewController.m in Sources */,
 				D8824DE916938CA300D05AA0 /* SonosInput.m in Sources */,
 				D8824E2B169392FF00D05AA0 /* PLSource.m in Sources */,
@@ -574,6 +579,7 @@
 				D8B613E4171B5B7300F12446 /* SonosInputCell.m in Sources */,
 				D88C534317225AA900E0A419 /* NBDial.m in Sources */,
 				D8C3471E173B7B9100D7B28C /* SonosTransportInfoResponse.m in Sources */,
+				D885E0F217494BF80036480C /* PLControlMenu.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -7,7 +7,7 @@
 //
 
 #import "PLAppDelegate.h"
-#import "PLInputsViewController.h"
+#import "PLSpeakersViewController.h"
 #import "SonosInputStore.h"
 
 @implementation PLAppDelegate
@@ -35,7 +35,7 @@
   [[UISlider appearance] setThumbImage:[UIImage imageNamed:@"SliderThumb.png"] forState:UIControlStateNormal];
   [[UISlider appearance] setThumbImage:[UIImage imageNamed:@"SliderThumbPressed.png"] forState:UIControlStateHighlighted];
 
-  PLInputsViewController *viewController = [[PLInputsViewController alloc] init];
+  PLSpeakersViewController *viewController = [[PLSpeakersViewController alloc] init];
   UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:viewController];
   [self.window setRootViewController:navController];
 

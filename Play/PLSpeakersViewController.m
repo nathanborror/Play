@@ -1,12 +1,12 @@
 //
-//  PLInputsViewController.m
+//  PLSpeakersViewController.m
 //  Play
 //
 //  Created by Nathan Borror on 1/1/13.
 //  Copyright (c) 2013 Nathan Borror. All rights reserved.
 //
 
-#import "PLInputsViewController.h"
+#import "PLSpeakersViewController.h"
 #import "PLLibraryViewController.h"
 #import "PLAddInputViewController.h"
 #import "PLNowPlayingViewController.h"
@@ -17,22 +17,23 @@
 #import "SonosPositionInfoResponse.h"
 #import "SOAPEnvelope.h"
 #import "NBKit/NBAnimation.h"
+#import "PLControlMenu.h"
 
 static const CGFloat kInputOffRestingX = 23.0;
 static const CGFloat kInputOnRestingX = 185.0;
 
-@interface PLInputsViewController ()
+@interface PLSpeakersViewController ()
 {
   NSArray *inputList;
   NBAnimation *cellBounce;
   CGPoint cellPanCoordBegan;
-
+  PLControlMenu *controlMenu;
   UIView *paired;
   NSMutableArray *pairedSpeakers;
 }
 @end
 
-@implementation PLInputsViewController
+@implementation PLSpeakersViewController
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -44,10 +45,6 @@ static const CGFloat kInputOnRestingX = 185.0;
     // Add Button
     UIBarButtonItem *addButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addInput)];
     [self.navigationItem setLeftBarButtonItem:addButton];
-
-    // Now Playing Button
-    UIBarButtonItem *nowPlayingButton = [[UIBarButtonItem alloc] initWithTitle:@"Playing" style:UIBarButtonItemStyleDone target:self action:@selector(nowPlaying)];
-    [self.navigationItem setRightBarButtonItem:nowPlayingButton];
 
     // TODO: Remove this and load these using UPnP's discovery stuff
     SonosInputStore *inputStore = [SonosInputStore sharedStore];
@@ -67,6 +64,9 @@ static const CGFloat kInputOnRestingX = 185.0;
 
     [self setBackground];
     [self setInputs];
+
+    controlMenu = [[PLControlMenu alloc] initWithFrame:CGRectMake(0, 15, CGRectGetWidth(self.view.bounds), CGRectGetHeight(self.view.bounds)-15)];
+    [self.view addSubview:controlMenu];
   }
   return self;
 }
@@ -95,7 +95,7 @@ static const CGFloat kInputOnRestingX = 185.0;
 
   // Divider
   UIImageView *divider = [[UIImageView alloc] initWithImage:[[UIImage imageNamed:@"InputDivider"] resizableImageWithCapInsets:UIEdgeInsetsMake(2, 2, 2, 2) resizingMode:UIImageResizingModeStretch]];
-  [divider setFrame:CGRectMake((CGRectGetWidth(self.view.bounds)/2)-2, 15, 4, CGRectGetHeight(self.view.bounds)-30)];
+  [divider setFrame:CGRectMake((CGRectGetWidth(self.view.bounds)/2)-2, 15, 4, CGRectGetHeight(self.view.bounds)-40)];
   [divider setAutoresizingMask:UIViewAutoresizingFlexibleHeight];
   [self.view addSubview:divider];
 }
@@ -216,6 +216,7 @@ static const CGFloat kInputOnRestingX = 185.0;
       } else {
         [self inputCell:cell isHighlighted:NO];
       }
+      [self.view bringSubviewToFront:controlMenu];
     } break;
     case UIGestureRecognizerStateFailed:
     case UIGestureRecognizerStatePossible:

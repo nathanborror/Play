@@ -1,5 +1,5 @@
 //
-//  PLInputsViewController.h
+//  PLSpeakersViewController.h
 //  Play
 //
 //  Created by Nathan Borror on 1/1/13.
@@ -8,7 +8,8 @@
 
 #import <UIKit/UIKit.h>
 #import <QuartzCore/QuartzCore.h>
+#import "PLControlMenu.h"
 
-@interface PLInputsViewController : UIViewController
+@interface PLSpeakersViewController : UIViewController
 
 @end
