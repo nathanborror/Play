@@ -234,7 +234,7 @@ static const CGFloat kNavigationBarHeight = 80.0;
 
     // Control Bar pan gesture
     NBDirectionGestureRecognizer *controlPan = [[NBDirectionGestureRecognizer alloc] initWithTarget:self action:@selector(panControlBar:)];
-    [controlPan setDirection:DirectionPanGestureRecognizerVertical];
+    [controlPan setDirection:NBDirectionPanGestureRecognizerVertical];
     [controlBar addGestureRecognizer:controlPan];
   }
   return self;

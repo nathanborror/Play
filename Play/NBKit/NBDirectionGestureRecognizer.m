@@ -36,13 +36,13 @@ const static int kDirectionPanThreshold = 5;
 
   if (!drag) {
     if (abs(moveX) > kDirectionPanThreshold) {
-      if (direction == DirectionPanGestureRecognizerVertical) {
+      if (direction == NBDirectionPanGestureRecognizerVertical) {
         self.state = UIGestureRecognizerStateFailed;
       } else {
         drag = YES;
       }
     } else if (abs(moveY) > kDirectionPanThreshold) {
-      if (direction == DirectionPanGestureRecognizerHorizontal) {
+      if (direction == NBDirectionPanGestureRecognizerHorizontal) {
         self.state = UIGestureRecognizerStateFailed;
       } else {
         drag = YES;

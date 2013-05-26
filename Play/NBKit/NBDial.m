@@ -42,7 +42,7 @@
     [min addSubview:minNotch];
 
     NBDirectionGestureRecognizer *pan = [[NBDirectionGestureRecognizer alloc] initWithTarget:self action:@selector(panDial:)];
-    [pan setDirection:DirectionPanGestureRecognizerHorizontal];
+    [pan setDirection:NBDirectionPanGestureRecognizerHorizontal];
     [self addGestureRecognizer:pan];
 
     maxOriginX = min.center.x-12;

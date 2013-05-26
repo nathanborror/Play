@@ -95,7 +95,7 @@ static const CGFloat kPreviousNextPadding = 40.0;
 
     // Control Bar pan gesture
     NBDirectionGestureRecognizer *controlPan = [[NBDirectionGestureRecognizer alloc] initWithTarget:self action:@selector(panControlBar:)];
-    [controlPan setDirection:DirectionPanGestureRecognizerVertical];
+    [controlPan setDirection:NBDirectionPanGestureRecognizerVertical];
     [self addGestureRecognizer:controlPan];
 
     [self hide];

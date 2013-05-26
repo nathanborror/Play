@@ -10,12 +10,12 @@
 #import <UIKit/UIGestureRecognizerSubclass.h>
 
 typedef enum {
-  DirectionPanGestureRecognizerVertical,
-  DirectionPanGestureRecognizerHorizontal
-} DirectionPanGestureRecognizerDirection;
+  NBDirectionPanGestureRecognizerVertical,
+  NBDirectionPanGestureRecognizerHorizontal
+} NBDirectionPanGestureRecognizer;
 
 @interface NBDirectionGestureRecognizer : UIPanGestureRecognizer
 
-@property (nonatomic, assign) DirectionPanGestureRecognizerDirection direction;
+@property (nonatomic, assign) NBDirectionPanGestureRecognizer direction;
 
 @end
