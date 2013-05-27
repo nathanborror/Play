@@ -16,7 +16,7 @@
 #import "SonosController.h"
 #import "SonosPositionInfoResponse.h"
 #import "SOAPEnvelope.h"
-#import "NBKit/NBAnimation.h"
+#import "NBKit/NBAnimationHelper.h"
 #import "PLControlMenu.h"
 
 static const CGFloat kInputOffRestingX = 23.0;
@@ -25,7 +25,6 @@ static const CGFloat kInputOnRestingX = 185.0;
 @interface PLSpeakersViewController ()
 {
   NSArray *inputList;
-  NBAnimation *cellBounce;
   CGPoint cellPanCoordBegan;
   PLControlMenu *controlMenu;
   UIView *paired;
@@ -51,16 +50,9 @@ static const CGFloat kInputOnRestingX = 185.0;
     [inputStore addInputWithIP:@"10.0.1.9" name:@"Living Room" uid:@"RINCON_000E58D0540801400" icon:[UIImage imageNamed:@"SonosAmp"]];
     [inputStore addInputWithIP:@"10.0.1.10" name:@"Bedroom" uid:@"RINCON_000E587641F201400" icon:[UIImage imageNamed:@"SonosSpeakerPlay3Light"]];
     [inputStore addInputWithIP:@"10.0.1.11" name:@"Kitchen" uid:@"RINCON_000E587BBA5201400" icon:[UIImage imageNamed:@"SonosSpeakerPlay3Dark"]];
-    // 10.0.1.3 router
 
     // Make the first input in the master input for now.
     [inputStore setMaster:[inputStore inputAtIndex:0]];
-
-    // Cell bounce animation
-    cellBounce = [NBAnimation animationWithKeyPath:@"position"];
-    [cellBounce setDuration:0.9f];
-    [cellBounce setNumberOfBounces:2];
-    [cellBounce setShouldOvershoot:YES];
 
     [self setBackground];
     [self setInputs];
@@ -160,8 +152,8 @@ static const CGFloat kInputOnRestingX = 185.0;
 {
   SonosInputStore *inputStore = [SonosInputStore sharedStore];
 
-  id fromValue = [NSValue valueWithCGPoint:inputCell.center];
-  id toValue;
+  CGPoint fromPoint = inputCell.center;
+  CGPoint toPoint;
 
   if (active) {
     // If there are no speakers in the grouped colum, set the master to
@@ -170,20 +162,16 @@ static const CGFloat kInputOnRestingX = 185.0;
       [inputStore setMaster:inputCell.input];
     }
 
-    toValue = [NSValue valueWithCGPoint:CGPointMake(kInputOnRestingX+CGRectGetWidth(inputCell.bounds)/2, inputCell.origin.y)];
+    toPoint = CGPointMake(kInputOnRestingX+CGRectGetWidth(inputCell.bounds)/2, inputCell.origin.y);
     [pairedSpeakers addObject:inputCell];
     [inputCell pair:inputStore.master];
   } else {
-    toValue = [NSValue valueWithCGPoint:CGPointMake(kInputOffRestingX+CGRectGetWidth(inputCell.bounds)/2, inputCell.origin.y)];
+    toPoint = CGPointMake(kInputOffRestingX+CGRectGetWidth(inputCell.bounds)/2, inputCell.origin.y);
     [pairedSpeakers removeObjectIdenticalTo:inputCell];
     [inputCell unpair];
   }
 
-  [cellBounce setFromValue:fromValue];
-  [cellBounce setToValue:toValue];
-
-  [inputCell.layer addAnimation:cellBounce forKey:@"cellBounce"];
-  [inputCell.layer setValue:toValue forKeyPath:@"position"];
+  [NBAnimationHelper animatePosition:inputCell from:fromPoint to:toPoint forKey:@"cellBounce" delegate:nil];
 }
 
 #pragma mark - UIPanGestureRecognizer

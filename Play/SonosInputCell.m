@@ -11,20 +11,9 @@
 #import "SonosController.h"
 #import "SonosTransportInfoResponse.h"
 #import "SOAPEnvelope.h"
-
-#import "NBKit/NBAnimation.h"
+#import "NBKit/NBAnimationHelper.h"
 
 static const CGFloat kSpeakerStatusMargin = -24.0;
-
-@interface SonosInputCell ()
-{
-  UILabel *label;
-  UIImageView *indicator;
-
-  NBAnimation *labelAnimation;
-  NBAnimation *indicatorAnimation;
-}
-@end
 
 @implementation SonosInputCell
 @synthesize input, origin, status;
@@ -40,34 +29,22 @@ static const CGFloat kSpeakerStatusMargin = -24.0;
     [self setShowsTouchWhenHighlighted:YES];
 
     // Speaker label
-    label = [[UILabel alloc] initWithFrame:CGRectMake(0, 65, CGRectGetWidth(self.bounds), 20)];
-    [label setText:input.name];
-    [label setTextAlignment:NSTextAlignmentCenter];
-    [label setFont:[UIFont boldSystemFontOfSize:11.0]];
-    [label setTextColor:[UIColor whiteColor]];
-    [label setBackgroundColor:[UIColor clearColor]];
-    [self addSubview:label];
-
-    // Label transition animation
-    labelAnimation = [NBAnimation animationWithKeyPath:@"position.y"];
-    [labelAnimation setDuration:0.9f];
-    [labelAnimation setNumberOfBounces:2];
-    [labelAnimation setShouldOvershoot:YES];
+    _label = [[UILabel alloc] initWithFrame:CGRectMake(0, 65, CGRectGetWidth(self.bounds), 20)];
+    [_label setText:input.name];
+    [_label setTextAlignment:NSTextAlignmentCenter];
+    [_label setFont:[UIFont boldSystemFontOfSize:11.0]];
+    [_label setTextColor:[UIColor whiteColor]];
+    [_label setBackgroundColor:[UIColor clearColor]];
+    [self addSubview:_label];
 
     // Speaker icon
-    UIImageView *icon = [[UIImageView alloc] initWithImage:input.icon];
-    [self addSubview:icon];
+    _speakerIcon = [[UIImageView alloc] initWithImage:input.icon];
+    [self addSubview:_speakerIcon];
 
     // Speaker indicator light
-    indicator = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"SpeakerOn"]];
-    [indicator setFrame:CGRectOffset(indicator.bounds, CGRectGetWidth(icon.bounds)+kSpeakerStatusMargin, CGRectGetHeight(icon.bounds)+kSpeakerStatusMargin)];
-    [self addSubview:indicator];
-
-    // Speaker Indicator animation
-    indicatorAnimation = [NBAnimation animationWithKeyPath:@"bounds"];
-    [indicatorAnimation setDuration:0.9f];
-    [indicatorAnimation setNumberOfBounces:2];
-    [indicatorAnimation setShouldOvershoot:YES];
+    _indicator = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"SpeakerOn"]];
+    [_indicator setFrame:CGRectOffset(_indicator.bounds, CGRectGetWidth(_speakerIcon.bounds)+kSpeakerStatusMargin, CGRectGetHeight(_speakerIcon.bounds)+kSpeakerStatusMargin)];
+    [self addSubview:_indicator];
 
     // Check status every five seconds so we keep the indicator up-to-date
     [NSTimer scheduledTimerWithTimeInterval:5.0 target:self selector:@selector(updateStatus) userInfo:nil repeats:YES];
@@ -82,14 +59,18 @@ static const CGFloat kSpeakerStatusMargin = -24.0;
 {
   [[SonosController sharedController] status:self.input completion:^(SOAPEnvelope *envelope, NSError *error) {
     SonosTransportInfoResponse *response = (SonosTransportInfoResponse *)[envelope response];
+    SonosInputCellStatus newStatus;
     if ([response.state isEqual:@"PLAYING"]) {
-      self.status = SonosInputCellStatusPlaying;
+      newStatus = SonosInputCellStatusPlaying;
     } else if ([response.state isEqual:@"PAUSED_PLAYBACK"]) {
-      self.status = SonosInputCellStatusPaused;
-    } else if ([response.state isEqual:@"STOPPED"]) {
-      self.status = SonosInputCellStatusStopped;
+      newStatus = SonosInputCellStatusPaused;
+    } else {
+      newStatus = SonosInputCellStatusStopped;
     }
-    [self refreshIndicator];
+    if (newStatus != self.status) {
+      self.status = newStatus;
+      [self refreshIndicator];
+    }
   }];
 }
 
@@ -109,26 +90,20 @@ static const CGFloat kSpeakerStatusMargin = -24.0;
 
 - (void)startDragging
 {
-  id fromValue = [NSNumber numberWithFloat:65];
-  id toValue = [NSNumber numberWithFloat:25];
-
-  [labelAnimation setFromValue:fromValue];
-  [labelAnimation setToValue:toValue];
-
-  [label.layer addAnimation:labelAnimation forKey:@"labelAnimation"];
-  [label.layer setValue:toValue forKeyPath:@"position.y"];
+  [NBAnimationHelper animatePosition:_label
+                                from:CGPointMake(_label.center.x, 65)
+                                  to:CGPointMake(_label.center.x, 25)
+                              forKey:@"labelAnimation"
+                            delegate:nil];
 }
 
 - (void)stopDragging
 {
-  id fromValue = [NSNumber numberWithFloat:25];
-  id toValue = [NSNumber numberWithFloat:75];
-
-  [labelAnimation setFromValue:fromValue];
-  [labelAnimation setToValue:toValue];
-
-  [label.layer addAnimation:labelAnimation forKey:@"labelAnimation"];
-  [label.layer setValue:toValue forKeyPath:@"position.y"];
+  [NBAnimationHelper animatePosition:_label
+                                from:CGPointMake(_label.center.x, 25)
+                                  to:CGPointMake(_label.center.x, 75)
+                              forKey:@"labelAnimation"
+                            delegate:nil];
 }
 
 - (void)refreshIndicator
@@ -137,20 +112,17 @@ static const CGFloat kSpeakerStatusMargin = -24.0;
     case SonosInputCellStatusStopped:
     case SonosInputCellStatusPaused: {
       [UIView animateWithDuration:.2 animations:^{
-        [indicator setAlpha:0];
+        [_indicator setAlpha:0];
       }];
     } break;
     case SonosInputCellStatusPlaying: {
-      [indicator setAlpha:1];
+      [_indicator setAlpha:1];
 
-      id fromValue = [NSValue valueWithCGRect:CGRectMake(0, 0, 0, 0)];
-      id toValue = [NSValue valueWithCGRect:indicator.bounds];
-
-      [indicatorAnimation setFromValue:fromValue];
-      [indicatorAnimation setToValue:toValue];
-
-      [indicator.layer addAnimation:indicatorAnimation forKey:@"statusAnimation"];
-      [indicator.layer setValue:toValue forKeyPath:@"bounds"];
+      [NBAnimationHelper animateBounds:_indicator
+                                    from:CGRectMake(0, 0, 0, 0)
+                                      to:_indicator.bounds
+                                  forKey:@"statusAnimation"
+                                delegate:nil];
     } break;
   }
 }

@@ -8,7 +8,7 @@
 
 #import "PLControlMenu.h"
 #import "NBKit/NBDirectionGestureRecognizer.h"
-#import "NBKit/NBAnimation.h"
+#import "NBKit/NBAnimationHelper.h"
 #import "PLVolumeSlider.h"
 #import "SonosInputStore.h"
 #import "SonosController.h"
@@ -29,8 +29,6 @@ static const CGFloat kPreviousNextPadding = 40.0;
   CGPoint showCenter;
   CGPoint hideCenter;
   CGPoint panCoordBegan;
-
-  NBAnimation *bounce;
 }
 @end
 
@@ -51,8 +49,8 @@ static const CGFloat kPreviousNextPadding = 40.0;
     [controlBar.layer setShadowRadius:1.0];
     [controlBar.layer setShadowOpacity:.3];
 
-    showCenter = self.center;
-    hideCenter = CGPointMake(self.center.x, showCenter.y + 470);
+    showCenter = CGPointMake(self.center.x, self.center.y + 44);
+    hideCenter = CGPointMake(self.center.x, self.center.y + 515);
 
     UIImageView *grip = [[UIImageView alloc] initWithFrame:CGRectMake((CGRectGetWidth(self.frame)/2)-17, 8, 35, 3)];
     [grip setImage:[UIImage imageNamed:@"ControlBarGrip"]];
@@ -87,18 +85,13 @@ static const CGFloat kPreviousNextPadding = 40.0;
 
     [self addSubview:controlBar];
 
-    // Bounce animation
-    bounce = [NBAnimation animationWithKeyPath:@"position"];
-    [bounce setDuration:0.9f];
-    [bounce setNumberOfBounces:2];
-    [bounce setShouldOvershoot:YES];
-
     // Control Bar pan gesture
     NBDirectionGestureRecognizer *controlPan = [[NBDirectionGestureRecognizer alloc] initWithTarget:self action:@selector(panControlBar:)];
     [controlPan setDirection:NBDirectionPanGestureRecognizerVertical];
     [self addGestureRecognizer:controlPan];
 
-    [self hide];
+    // Hide initially
+    [self.layer setPosition:hideCenter];
   }
   return self;
 }
@@ -124,30 +117,6 @@ static const CGFloat kPreviousNextPadding = 40.0;
   [[SonosController sharedController] next:nil completion:nil];
 }
 
-- (void)hide
-{
-  id fromValue = [NSValue valueWithCGPoint:self.center];
-  id toValue = [NSValue valueWithCGPoint:hideCenter];
-
-  [bounce setFromValue:fromValue];
-  [bounce setToValue:toValue];
-
-	[self.layer addAnimation:bounce forKey:@"bounce"];
-	[self.layer setValue:toValue forKeyPath:@"position"];
-}
-
-- (void)show
-{
-  id fromValue = [NSValue valueWithCGPoint:self.center];
-  id toValue = [NSValue valueWithCGPoint:showCenter];
-
-  [bounce setFromValue:fromValue];
-  [bounce setToValue:toValue];
-
-	[self.layer addAnimation:bounce forKey:@"bounce"];
-	[self.layer setValue:toValue forKeyPath:@"position"];
-}
-
 #pragma mark - NBDirectionGestureRecognizer
 
 - (void)panControlBar:(NBDirectionGestureRecognizer *)recognizer
@@ -169,9 +138,9 @@ static const CGFloat kPreviousNextPadding = 40.0;
     CGPoint velocityPoint = [recognizer velocityInView:self];
 
     if (velocityPoint.y >= 0) {
-      [self hide];
+      [NBAnimationHelper animatePosition:self from:self.center to:hideCenter forKey:@"bounce" delegate:nil];
     } else {
-      [self show];
+      [NBAnimationHelper animatePosition:self from:self.center to:showCenter forKey:@"bounce" delegate:nil];
     }
   }
 }

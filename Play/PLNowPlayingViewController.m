@@ -15,8 +15,8 @@
 #import "SonosInput.h"
 #import "PLVolumeSlider.h"
 #import "NBKit/NBDirectionGestureRecognizer.h"
-#import "NBKit/NBAnimation.h"
 #import "NBKit/NBDial.h"
+#import "NBKit/NBAnimationHelper.h"
 
 static const CGFloat kProgressPadding = 50.0;
 
@@ -55,8 +55,6 @@ static const CGFloat kNavigationBarHeight = 80.0;
 
   CGPoint panCoordBegan;
 
-  NBAnimation *bounce;
-
   UIImageView *navBar;
 }
 @end
@@ -71,12 +69,6 @@ static const CGFloat kNavigationBarHeight = 80.0;
     [self.view setClipsToBounds:YES];
 
     [self.navigationItem setTitle:@"Now Playing"];
-
-    // Bounce Animation
-    bounce = [NBAnimation animationWithKeyPath:@"position.y"];
-    [bounce setDuration:0.7f];
-    [bounce setNumberOfBounces:2];
-    [bounce setShouldOvershoot:YES];
 
     sonos = [SonosController sharedController];
 
@@ -100,7 +92,6 @@ static const CGFloat kNavigationBarHeight = 80.0;
     [tableHeader addSubview:album];
 
     // Blurred Background
-    // TODO: Perform on another thread and cache
     CIImage *inputImage = [[CIImage alloc] initWithImage:album.image];
     CIFilter *blurFilter = [CIFilter filterWithName:@"CIGaussianBlur"];
     [blurFilter setDefaults];
@@ -332,26 +323,20 @@ static const CGFloat kNavigationBarHeight = 80.0;
 
 - (void)showSpeakerVolumes
 {
-  id fromValue = [NSNumber numberWithFloat:CGRectGetMaxY(controlBar.bounds)];
-  id toValue = [NSNumber numberWithFloat:(CGRectGetHeight(controlBar.bounds)/2)+78];
-
-  [bounce setFromValue:fromValue];
-  [bounce setToValue:toValue];
-
-	[controlBar.layer addAnimation:bounce forKey:@"bounce"];
-	[controlBar.layer setValue:toValue forKeyPath:@"position.y"];
+  [NBAnimationHelper animatePosition:controlBar
+                                from:controlBar.center
+                                  to:CGPointMake(controlBar.center.x, (CGRectGetHeight(controlBar.bounds)/2)+78)
+                              forKey:@"bounce"
+                            delegate:nil];
 }
 
 - (void)hideSpeakerVolumes
 {
-  id fromValue = [NSNumber numberWithFloat:CGRectGetMaxY(controlBar.bounds)];
-  id toValue = [NSNumber numberWithFloat:(CGRectGetHeight(controlBar.bounds)/2)+397];
-
-  [bounce setFromValue:fromValue];
-  [bounce setToValue:toValue];
-
-	[controlBar.layer addAnimation:bounce forKey:@"bounce"];
-	[controlBar.layer setValue:toValue forKeyPath:@"position.y"];
+  [NBAnimationHelper animatePosition:controlBar
+                                from:controlBar.center
+                                  to:CGPointMake(controlBar.center.x, (CGRectGetHeight(controlBar.bounds)/2)+397)
+                              forKey:@"bounce"
+                            delegate:nil];
 }
 
 #pragma mark - NBDirectionGestureRecognizer

@@ -8,7 +8,6 @@
 
 #import <UIKit/UIKit.h>
 #import <QuartzCore/QuartzCore.h>
-#import "PLControlMenu.h"
 
 @interface PLSpeakersViewController : UIViewController
 

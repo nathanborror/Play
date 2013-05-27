@@ -24,6 +24,7 @@
 		D819F65B16AE165800B19B50 /* SonosErrorResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = D819F65A16AE165800B19B50 /* SonosErrorResponse.m */; };
 		D819F65D16AE1BB900B19B50 /* Examples.xml in Resources */ = {isa = PBXBuildFile; fileRef = D819F65C16AE1BB900B19B50 /* Examples.xml */; };
 		D82B793516D7538000B5FF35 /* SonosVolumeResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = D82B793416D7538000B5FF35 /* SonosVolumeResponse.m */; };
+		D84B9A761752B7F50029D763 /* NBAnimationHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = D84B9A751752B7F50029D763 /* NBAnimationHelper.m */; };
 		D851A97316928C020014446F /* TempAlbum2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D851A97216928C020014446F /* TempAlbum2@2x.png */; };
 		D857841C1740A44600E9A67A /* BarButtonItemBackIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D857841B1740A44600E9A67A /* BarButtonItemBackIcon@2x.png */; };
 		D872A7181737984400942AE8 /* InputDivider@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D872A7151737984300942AE8 /* InputDivider@2x.png */; };
@@ -121,6 +122,8 @@
 		D81DE37A16ED687400F21111 /* Play-Debug.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Play-Debug.xcconfig"; sourceTree = "<group>"; };
 		D82B793316D7538000B5FF35 /* SonosVolumeResponse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SonosVolumeResponse.h; sourceTree = "<group>"; };
 		D82B793416D7538000B5FF35 /* SonosVolumeResponse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SonosVolumeResponse.m; sourceTree = "<group>"; };
+		D84B9A741752B7F50029D763 /* NBAnimationHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NBAnimationHelper.h; path = NBKit/NBAnimationHelper.h; sourceTree = "<group>"; };
+		D84B9A751752B7F50029D763 /* NBAnimationHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NBAnimationHelper.m; path = NBKit/NBAnimationHelper.m; sourceTree = "<group>"; };
 		D851A97216928C020014446F /* TempAlbum2@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "TempAlbum2@2x.png"; path = "Images/TempAlbum2@2x.png"; sourceTree = "<group>"; };
 		D857841B1740A44600E9A67A /* BarButtonItemBackIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "BarButtonItemBackIcon@2x.png"; path = "Images/BarButtonItemBackIcon@2x.png"; sourceTree = "<group>"; };
 		D872A7151737984300942AE8 /* InputDivider@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "InputDivider@2x.png"; path = "Images/InputDivider@2x.png"; sourceTree = "<group>"; };
@@ -445,6 +448,8 @@
 				D8B613D71717FD3800F12446 /* NBAnimation.m */,
 				D88C534117225AA900E0A419 /* NBDial.h */,
 				D88C534217225AA900E0A419 /* NBDial.m */,
+				D84B9A741752B7F50029D763 /* NBAnimationHelper.h */,
+				D84B9A751752B7F50029D763 /* NBAnimationHelper.m */,
 			);
 			name = NBKit;
 			sourceTree = "<group>";
@@ -580,6 +585,7 @@
 				D88C534317225AA900E0A419 /* NBDial.m in Sources */,
 				D8C3471E173B7B9100D7B28C /* SonosTransportInfoResponse.m in Sources */,
 				D885E0F217494BF80036480C /* PLControlMenu.m in Sources */,
+				D84B9A761752B7F50029D763 /* NBAnimationHelper.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
