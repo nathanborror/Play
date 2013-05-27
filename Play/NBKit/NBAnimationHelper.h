@@ -7,27 +7,35 @@
 //
 
 #import <Foundation/Foundation.h>
-
-@class NBAnimation;
+#import "NBAnimation.h"
 
 @interface NBAnimationHelper : NSObject
 
-+ (NBAnimation *)animatePosition:(UIView *)view
-                   from:(CGPoint)from
-                     to:(CGPoint)to
-                 forKey:(NSString *)key
-               delegate:(id)delegate;
-
-+ (NBAnimation *)animateTransform:(UIView *)view
-                    from:(CATransform3D)from
-                      to:(CATransform3D)to
++ (NBAnimation *)animate:(UIView *)view
+                    from:(id)from
+                      to:(id)to
+                duration:(CGFloat)duration
+               stiffness:(NBAnimationStiffness)stiffness
+              forKeyPath:(NSString *)keyPath
                   forKey:(NSString *)key
                 delegate:(id)delegate;
 
-+ (NBAnimation *)animateBounds:(UIView *)view
-                             from:(CGRect)from
-                               to:(CGRect)to
++ (NBAnimation *)animatePosition:(UIView *)view
+                            from:(CGPoint)from
+                              to:(CGPoint)to
+                          forKey:(NSString *)key
+                        delegate:(id)delegate;
+
++ (NBAnimation *)animateTransform:(UIView *)view
+                             from:(CATransform3D)from
+                               to:(CATransform3D)to
                            forKey:(NSString *)key
                          delegate:(id)delegate;
+
++ (NBAnimation *)animateBounds:(UIView *)view
+                          from:(CGRect)from
+                            to:(CGRect)to
+                        forKey:(NSString *)key
+                      delegate:(id)delegate;
 
 @end

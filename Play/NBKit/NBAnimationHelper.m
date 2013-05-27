@@ -11,86 +11,71 @@
 
 @implementation NBAnimationHelper
 
-+ (NBAnimation *)animatePosition:(UIView *)view
-                   from:(CGPoint)from
-                     to:(CGPoint)to
-                 forKey:(NSString *)key
-               delegate:(id)delegate
-{
-  NBAnimation *animation = [NBAnimation animationWithKeyPath:@"position"];
-  [animation setDuration:0.9f];
-  [animation setNumberOfBounces:2];
-  [animation setShouldOvershoot:YES];
-
-  if (delegate) {
-    [animation setDelegate:delegate];
-  }
-
-  id fromValue = [NSValue valueWithCGPoint:from];
-  id toValue = [NSValue valueWithCGPoint:to];
-
-  [animation setFromValue:fromValue];
-  [animation setToValue:toValue];
-
-  [view.layer addAnimation:animation forKey:key];
-  [view.layer setValue:toValue forKeyPath:@"position"];
-
-  return animation;
-}
-
-+ (NBAnimation *)animateTransform:(UIView *)view
-                    from:(CATransform3D)from
-                      to:(CATransform3D)to
++ (NBAnimation *)animate:(UIView *)view
+                    from:(id)from
+                      to:(id)to
+                duration:(CGFloat)duration
+               stiffness:(NBAnimationStiffness)stiffness
+              forKeyPath:(NSString *)keyPath
                   forKey:(NSString *)key
                 delegate:(id)delegate
 {
-  NBAnimation *animation = [NBAnimation animationWithKeyPath:@"transform"];
-  [animation setDuration:0.9f];
+  NBAnimation *animation = [NBAnimation animationWithKeyPath:keyPath];
+  [animation setDuration:duration];
   [animation setNumberOfBounces:2];
   [animation setShouldOvershoot:YES];
-  [animation setStiffness:NBAnimationStiffnessHeavy];
+
+  if (stiffness) {
+    [animation setStiffness:stiffness];
+  }
 
   if (delegate) {
     [animation setDelegate:delegate];
   }
 
-  id fromValue = [NSValue valueWithCATransform3D:from];
-  id toValue = [NSValue valueWithCATransform3D:to];
-
-  [animation setFromValue:fromValue];
-  [animation setToValue:toValue];
+  [animation setFromValue:from];
+  [animation setToValue:to];
 
   [view.layer addAnimation:animation forKey:key];
-  [view.layer setValue:toValue forKeyPath:@"transform"];
+  [view.layer setValue:to forKeyPath:keyPath];
 
   return animation;
 }
 
-+ (NBAnimation *)animateBounds:(UIView *)view
-                             from:(CGRect)from
-                               to:(CGRect)to
-                           forKey:(NSString *)key
-                         delegate:(id)delegate
++ (NBAnimation *)animatePosition:(UIView *)view from:(CGPoint)from to:(CGPoint)to forKey:(NSString *)key delegate:(id)delegate
 {
-  NBAnimation *animation = [NBAnimation animationWithKeyPath:@"bounds"];
-  [animation setDuration:0.9f];
-  [animation setNumberOfBounces:2];
-  [animation setShouldOvershoot:YES];
+  return [NBAnimationHelper animate:view
+                               from:[NSValue valueWithCGPoint:from]
+                                 to:[NSValue valueWithCGPoint:to]
+                           duration:0.9
+                          stiffness:nil
+                         forKeyPath:@"position"
+                             forKey:key
+                           delegate:delegate];
+}
 
-  if (delegate) {
-    [animation setDelegate:delegate];
-  }
++ (NBAnimation *)animateTransform:(UIView *)view from:(CATransform3D)from to:(CATransform3D)to forKey:(NSString *)key delegate:(id)delegate
+{
+  return [NBAnimationHelper animate:view
+                               from:[NSValue valueWithCATransform3D:from]
+                                 to:[NSValue valueWithCATransform3D:to]
+                           duration:0.9
+                          stiffness:NBAnimationStiffnessHeavy
+                         forKeyPath:@"transform"
+                             forKey:key
+                           delegate:delegate];
+}
 
-  id fromValue = [NSValue valueWithCGRect:from];
-  id toValue = [NSValue valueWithCGRect:to];
-
-  [animation setFromValue:fromValue];
-  [animation setToValue:toValue];
-
-  [view.layer addAnimation:animation forKey:key];
-  [view.layer setValue:toValue forKeyPath:@"bounds"];
-  
-  return animation;
++ (NBAnimation *)animateBounds:(UIView *)view from:(CGRect)from to:(CGRect)to forKey:(NSString *)key delegate:(id)delegate
+{
+  return [NBAnimationHelper animate:view
+                               from:[NSValue valueWithCGRect:from]
+                                 to:[NSValue valueWithCGRect:to]
+                           duration:0.9
+                          stiffness:nil
+                         forKeyPath:@"bounds"
+                             forKey:key
+                           delegate:delegate];
 }
 
 @end
