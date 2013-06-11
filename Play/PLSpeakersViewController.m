@@ -10,6 +10,8 @@
 #import "PLLibraryViewController.h"
 #import "PLAddInputViewController.h"
 #import "PLNowPlayingViewController.h"
+#import "PLControlMenu.h"
+#import "PLVolumeSlider.h"
 #import "SonosInput.h"
 #import "SonosInputStore.h"
 #import "SonosInputCell.h"
@@ -17,10 +19,16 @@
 #import "SonosPositionInfoResponse.h"
 #import "SOAPEnvelope.h"
 #import "NBKit/NBAnimationHelper.h"
-#import "PLControlMenu.h"
+#import "NBKit/NBDialog.h"
+#import "NBKit/NBAnimationHelper.h"
 
 static const CGFloat kInputOffRestingX = 23.0;
 static const CGFloat kInputOnRestingX = 185.0;
+static const CGFloat kControlButtonWidth = 60.0;
+static const CGFloat kControlButtonHeight = 60.0;
+static const CGFloat kControlButtonTopSpacing = 2.0;
+static const CGFloat kControlButtonSpacing = 30.0;
+static const CGFloat kControlVolumeSpacing = 10.0;
 
 @interface PLSpeakersViewController ()
 {
@@ -29,6 +37,7 @@ static const CGFloat kInputOnRestingX = 185.0;
   PLControlMenu *controlMenu;
   UIView *paired;
   NSMutableArray *pairedSpeakers;
+  NBDialog *dialog;
 }
 @end
 
@@ -61,6 +70,12 @@ static const CGFloat kInputOnRestingX = 185.0;
     [self.view addSubview:controlMenu];
   }
   return self;
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+  [super viewWillAppear:animated];
+  [self.navigationController setNavigationBarHidden:YES animated:NO];
 }
 
 - (void)nowPlaying
@@ -144,8 +159,63 @@ static const CGFloat kInputOnRestingX = 185.0;
 
 - (void)inputCellWasSelected:(SonosInputCell *)inputCell
 {
-  PLLibraryViewController *viewController = [[PLLibraryViewController alloc] init];
-  [self.navigationController pushViewController:viewController animated:YES];
+  // Dialog view
+  dialog = [[NBDialog alloc] initWithFrame:self.view.bounds];
+
+  // Blurred background image
+  CIImage *inputImage = [[CIImage alloc] initWithImage:[UIImage imageNamed:@"TempAlbum"]];
+  CIFilter *blurFilter = [CIFilter filterWithName:@"CIGaussianBlur"];
+  [blurFilter setDefaults];
+  [blurFilter setValue:inputImage forKey:@"inputImage"];
+  [blurFilter setValue:[NSNumber numberWithFloat:20.0f] forKey:@"inputRadius"];
+  CIImage *outputImage = [blurFilter valueForKey:@"outputImage"];
+  CIContext *context = [CIContext contextWithOptions:nil];
+  UIImage *backgroundImage = [UIImage imageWithCGImage:[context createCGImage:outputImage fromRect:outputImage.extent] scale:1.6 orientation:UIImageOrientationUp];
+
+  UIImageView *boxBackground = [[UIImageView alloc] initWithFrame:dialog.front.bounds];
+  [boxBackground setUserInteractionEnabled:YES];
+  [boxBackground setImage:backgroundImage];
+  [boxBackground setContentMode:UIViewContentModeCenter];
+  [boxBackground setClipsToBounds:YES];
+  [boxBackground.layer setCornerRadius:4];
+
+  UIImageView *controlBar = [[UIImageView alloc] initWithImage:[[UIImage imageNamed:@"ControlBar"] resizableImageWithCapInsets:UIEdgeInsetsMake(4, 4, 4, 4)]];
+  [controlBar setFrame:CGRectMake(0, CGRectGetHeight(dialog.front.bounds)-105, CGRectGetWidth(dialog.front.bounds), 105)];
+  [controlBar setUserInteractionEnabled:YES];
+  [boxBackground addSubview:controlBar];
+
+  UIButton *playPauseButton = [[UIButton alloc] initWithFrame:CGRectMake(controlBar.center.x-(kControlButtonWidth/2), kControlButtonTopSpacing, kControlButtonWidth, kControlButtonHeight)];
+  [playPauseButton setBackgroundImage:[UIImage imageNamed:@"ControlPause.png"] forState:UIControlStateNormal];
+//  [playPauseButton addTarget:self action:@selector(playPause) forControlEvents:UIControlEventTouchUpInside];
+  [playPauseButton setShowsTouchWhenHighlighted:YES];
+  [controlBar addSubview:playPauseButton];
+
+  UIButton *nextButton = [[UIButton alloc] initWithFrame:CGRectMake(controlBar.center.x+kControlButtonSpacing, kControlButtonTopSpacing, kControlButtonWidth, kControlButtonHeight)];
+  [nextButton setBackgroundImage:[UIImage imageNamed:@"ControlNext.png"] forState:UIControlStateNormal];
+//  [nextButton addTarget:self action:@selector(next) forControlEvents:UIControlEventTouchUpInside];
+  [nextButton setShowsTouchWhenHighlighted:YES];
+  [controlBar addSubview:nextButton];
+
+  UIButton *previousButton = [[UIButton alloc] initWithFrame:CGRectMake(controlBar.center.x-kControlButtonWidth-kControlButtonSpacing, kControlButtonTopSpacing, kControlButtonWidth, kControlButtonHeight)];
+  [previousButton setBackgroundImage:[UIImage imageNamed:@"ControlPrevious.png"] forState:UIControlStateNormal];
+//  [previousButton addTarget:self action:@selector(previous) forControlEvents:UIControlEventTouchUpInside];
+  [previousButton setShowsTouchWhenHighlighted:YES];
+  [controlBar addSubview:previousButton];
+
+  PLVolumeSlider *speakerVolume = [[PLVolumeSlider alloc] initWithFrame:CGRectMake(kControlVolumeSpacing, CGRectGetHeight(controlBar.bounds)-40, CGRectGetWidth(controlBar.bounds)-(kControlVolumeSpacing*2), 44)];
+  [speakerVolume setHideLabel:YES];
+  [speakerVolume setInput:inputCell.input];
+  [controlBar addSubview:speakerVolume];
+
+  UIImageView *icon = [[UIImageView alloc] initWithImage:inputCell.speakerIcon.image];
+  [icon setFrame:CGRectOffset(icon.bounds, (CGRectGetWidth(dialog.front.bounds)/2)-(CGRectGetWidth(icon.bounds)/2), 50)];
+  [boxBackground addSubview:icon];
+
+  [dialog.front addSubview:boxBackground];
+  [self.view addSubview:dialog];
+
+//  PLLibraryViewController *viewController = [[PLLibraryViewController alloc] init];
+//  [self.navigationController pushViewController:viewController animated:YES];
 }
 
 - (void)inputCell:(SonosInputCell *)inputCell isHighlighted:(BOOL)active
@@ -179,6 +249,7 @@ static const CGFloat kInputOnRestingX = 185.0;
 - (void)panCell:(UIGestureRecognizer *)recognizer
 {
   SonosInputCell *cell = (SonosInputCell *)[recognizer view];
+  [cell.layer removeAllAnimations];
 
   switch (recognizer.state) {
     case UIGestureRecognizerStateBegan: {

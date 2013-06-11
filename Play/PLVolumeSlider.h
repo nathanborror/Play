@@ -13,5 +13,6 @@
 @interface PLVolumeSlider : UIView
 
 @property (nonatomic, strong) SonosInput *input;
+@property (nonatomic, assign) BOOL hideLabel;
 
 @end

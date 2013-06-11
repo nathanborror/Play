@@ -121,6 +121,8 @@ static const CGFloat kPreviousNextPadding = 40.0;
 
 - (void)panControlBar:(NBDirectionGestureRecognizer *)recognizer
 {
+  [self.layer removeAllAnimations];
+
   if (recognizer.state == UIGestureRecognizerStateBegan) {
     panCoordBegan = [recognizer locationInView:self];
   }

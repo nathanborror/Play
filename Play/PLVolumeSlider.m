@@ -22,13 +22,15 @@
 @end
 
 @implementation PLVolumeSlider
-@synthesize input;
+@synthesize input, hideLabel;
 
 - (id)initWithFrame:(CGRect)frame
 {
   self = [super initWithFrame:frame];
   if (self) {
     sonos = [SonosController sharedController];
+
+    self.hideLabel = NO;
 
     volumeDial = [[NBDial alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(self.bounds), 44)];
     [volumeDial setMaxValue:100.0];
@@ -54,15 +56,17 @@
 {
   input = aInput;
 
-  name = [[UILabel alloc] initWithFrame:CGRectMake(0, CGRectGetMinY(volumeDial.frame)-25, CGRectGetWidth(self.bounds), 20)];
-  [name setUserInteractionEnabled:NO];
-  [name setText:self.input.name];
-  [name setFont:[UIFont boldSystemFontOfSize:14.0]];
-  [name setTextColor:[UIColor colorWithWhite:.27 alpha:1]];
-  [name setBackgroundColor:[UIColor clearColor]];
-  [name setShadowColor:[UIColor whiteColor]];
-  [name setShadowOffset:CGSizeMake(0, 1)];
-  [self addSubview:name];
+  if (!self.hideLabel) {
+    name = [[UILabel alloc] initWithFrame:CGRectMake(0, CGRectGetMinY(volumeDial.frame)-25, CGRectGetWidth(self.bounds), 20)];
+    [name setUserInteractionEnabled:NO];
+    [name setText:self.input.name];
+    [name setFont:[UIFont boldSystemFontOfSize:14.0]];
+    [name setTextColor:[UIColor colorWithWhite:.27 alpha:1]];
+    [name setBackgroundColor:[UIColor clearColor]];
+    [name setShadowColor:[UIColor whiteColor]];
+    [name setShadowOffset:CGSizeMake(0, 1)];
+    [self addSubview:name];
+  }
 
   [sonos volume:input completion:^(SOAPEnvelope *envelope, NSError *error) {
     SonosVolumeResponse *volume = (SonosVolumeResponse *)[envelope response];

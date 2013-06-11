@@ -30,7 +30,7 @@
     [self setClipsToBounds:YES];
 
     max = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(self.bounds), 25)];
-    [max setImage:[[UIImage imageNamed:@"NBDial"] resizableImageWithCapInsets:UIEdgeInsetsMake(12, 150, 12, 150) resizingMode:UIImageResizingModeStretch]];
+    [max setImage:[[UIImage imageNamed:@"NBDial"] resizableImageWithCapInsets:UIEdgeInsetsMake(12, 115, 12, 115) resizingMode:UIImageResizingModeStretch]];
     [self addSubview:max];
 
     min = [[UIView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(self.bounds), 25)];
