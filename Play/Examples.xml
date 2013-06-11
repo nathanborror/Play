@@ -11,9 +11,11 @@
 
 <!-- Browse Query -->
 
+<!--
 METHOD: POST http://YOUR_SPEAKER_IP:1400/MediaServer/ContentDirectory/Control
 HEADER: SOAPACTION: "urn:schemas-upnp-org:service:ContentDirectory:1#Browse"
 BODY:
+-->
 <?xml version="1.0" encoding="utf-8"?>
 <s:Envelope s:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" xmlns:s="http://schemas.xmlsoap.org/soap/envelope/">
   <s:Body>
@@ -28,7 +30,7 @@ BODY:
   </s:Body>
 </s:Envelope>
 
-RESPONSE:
+<!-- RESPONSE: -->
 
 <s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/" s:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/">
   <s:Body>
@@ -85,3 +87,79 @@ RESPONSE:
     </s:Fault>
   </s:Body>
 </s:Envelope>
+
+
+<!-- Become a Standalone Speaker -->
+
+<!--
+METHOD: POST http://YOUR_SPEAKER_IP:1400/MediaRenderer/AVTransport/Control
+HEADER: SOAPACTION: "urn:schemas-upnp-org:service:AVTransport:1#BecomeCoordinatorOfStandaloneGroup"
+BODY:
+-->
+<s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/" s:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/">
+  <s:Body>
+    <u:BecomeCoordinatorOfStandaloneGroup xmlns:u="urn:schemas-upnp-org:service:AVTransport:1">
+      <InstanceID>0</InstanceID>
+    </u:BecomeCoordinatorOfStandaloneGroup>
+  </s:Body>
+</s:Envelope>
+
+<!--
+METHOD: POST http://YOUR_SPEAKER_IP:1400/MediaRenderer/AVTransport/Control
+HEADER: SOAPACTION: "urn:schemas-upnp-org:service:AVTransport:1#SetAVTransportURI"
+BODY:
+-->
+<s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/" s:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/">
+  <s:Body>
+    <u:SetAVTransportURI xmlns:u="urn:schemas-upnp-org:service:AVTransport:1">
+      <InstanceID>0</InstanceID>
+      <CurrentURI>x-rincon-queue:SPEAKER_ID (Example: RINCON_000E587BBA5201400)#0</CurrentURI>
+      <CurrentURIMetaData/>
+    </u:SetAVTransportURI>
+  </s:Body>
+</s:Envelope>
+
+<!--
+NOTES: It looks like after calling BecomeCoordinatorOfStandaloneGroup you need to
+assign the orphaned speaker back to its queue.
+-->
+
+
+<!-- Group with other Speaker -->
+
+<!--
+METHOD: POST http://YOUR_SPEAKER_IP:1400/MediaRenderer/AVTransport/Control
+HEADER: SOAPACTION: "urn:schemas-upnp-org:service:AVTransport:1#SetAVTransportURI"
+BODY:
+-->
+<s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/" s:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/">
+  <s:Body>
+    <u:SetAVTransportURI xmlns:u="urn:schemas-upnp-org:service:AVTransport:1">
+      <InstanceID>0</InstanceID>
+      <CurrentURI>x-rincon:SPEAKER_ID (Example: RINCON_000E58D0540801400)</CurrentURI>
+      <CurrentURIMetaData></CurrentURIMetaData>
+    </u:SetAVTransportURI>
+  </s:Body>
+</s:Envelope>
+
+
+<!-- Capabilities -->
+
+<!--
+Service: AlarmClock
+Service: MusicServices
+Service: AudioIn
+Service: DeviceProperties
+Service: SystemProperties
+Service: ZoneGroupTopology
+Service: GroupManagement
+  Device: Media Renderer
+    Service: AVTransport
+    Service: ConnectionManager
+    Service: RenderingControl
+  Device: Media Server
+    Service: ConnectionManager
+    Service: ContentDirectory
+
+http://<SPEAKER_IP>:1400/xml/<SERVICE>1.xml
+-->
