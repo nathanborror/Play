@@ -6,8 +6,8 @@
 //  Copyright (c) 2012 Nathan Borror. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
-#import <QuartzCore/QuartzCore.h>
+@import UIKit;
+@import QuartzCore;
 
 @class PLSong;
 @class SonosInput;

@@ -6,8 +6,8 @@
 //  Copyright (c) 2013 Nathan Borror. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
-#import <UIKit/UIGestureRecognizerSubclass.h>
+@import Foundation;
+@import UIKit.UIGestureRecognizerSubclass;
 
 typedef enum {
   NBDirectionPanGestureRecognizerVertical,

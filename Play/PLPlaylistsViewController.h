@@ -6,8 +6,8 @@
 //  Copyright (c) 2013 Nathan Borror. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
-#import <MediaPlayer/MediaPlayer.h>
+@import UIKit;
+@import MediaPlayer;
 
 @interface PLPlaylistsViewController : UIViewController <UITableViewDelegate, UITableViewDataSource>
 

@@ -7,8 +7,8 @@
 //  Forked from: https://github.com/khanlou/SKBounceAnimation
 //
 
-#import <UIKit/UIKit.h>
-#import <QuartzCore/QuartzCore.h>
+@import UIKit;
+@import QuartzCore;
 
 typedef enum {
 	NBAnimationStiffnessLight,

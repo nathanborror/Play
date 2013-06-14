@@ -6,7 +6,7 @@
 //  Copyright (c) 2013 Nathan Borror. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+@import UIKit;
 #import <Rdio/Rdio.h>
 
 @interface RdioCollectionViewController : UITableViewController <RDAPIRequestDelegate, RdioDelegate>

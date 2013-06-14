@@ -6,7 +6,7 @@
 //  Copyright (c) 2013 Nathan Borror. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
+@import Foundation;
 #import "NBAnimation.h"
 
 @interface NBAnimationHelper : NSObject
