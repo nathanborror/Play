@@ -18,9 +18,7 @@
 #import "SonosController.h"
 #import "SonosPositionInfoResponse.h"
 #import "SOAPEnvelope.h"
-#import "NBKit/NBAnimationHelper.h"
 #import "NBKit/NBDialog.h"
-#import "NBKit/NBAnimationHelper.h"
 
 static const CGFloat kInputOffRestingX = 23.0;
 static const CGFloat kInputOnRestingX = 185.0;
@@ -38,6 +36,7 @@ static const CGFloat kControlVolumeSpacing = 10.0;
   UIView *paired;
   NSMutableArray *pairedSpeakers;
   NBDialog *dialog;
+  UIDynamicAnimator *animator;
 }
 @end
 
@@ -222,7 +221,6 @@ static const CGFloat kControlVolumeSpacing = 10.0;
 {
   SonosInputStore *inputStore = [SonosInputStore sharedStore];
 
-  CGPoint fromPoint = inputCell.center;
   CGPoint toPoint;
 
   if (active) {
@@ -241,7 +239,10 @@ static const CGFloat kControlVolumeSpacing = 10.0;
     [inputCell unpair];
   }
 
-  [NBAnimationHelper animatePosition:inputCell from:fromPoint to:toPoint forKey:@"cellBounce" delegate:nil];
+  animator = [[UIDynamicAnimator alloc] initWithReferenceView:self.view];
+  UISnapBehavior *snap = [[UISnapBehavior alloc] initWithItem:inputCell snapToPoint:toPoint];
+  [snap setDamping:.7];
+  [animator addBehavior:snap];
 }
 
 #pragma mark - UIPanGestureRecognizer
@@ -249,7 +250,7 @@ static const CGFloat kControlVolumeSpacing = 10.0;
 - (void)panCell:(UIGestureRecognizer *)recognizer
 {
   SonosInputCell *cell = (SonosInputCell *)[recognizer view];
-  [cell.layer removeAllAnimations];
+  [animator removeAllBehaviors];
 
   switch (recognizer.state) {
     case UIGestureRecognizerStateBegan: {
