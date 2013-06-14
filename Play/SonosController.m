@@ -89,7 +89,7 @@
   NSEnumerator *enumerator = [params keyEnumerator];
   NSString *key;
   while (key = [enumerator nextObject]) {
-    requestParams = [NSString stringWithFormat:@"<%@>%@</%@>%@", key, [params objectForKey:key], key, requestParams];
+    requestParams = [NSMutableString stringWithFormat:@"<%@>%@</%@>%@", key, [params objectForKey:key], key, requestParams];
   }
 
   NSString *requestBody = [NSString stringWithFormat:@""
