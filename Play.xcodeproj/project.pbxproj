@@ -61,6 +61,7 @@
 		D8B613E4171B5B7300F12446 /* SonosInputCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D8B613E3171B5B7300F12446 /* SonosInputCell.m */; };
 		D8C3471E173B7B9100D7B28C /* SonosTransportInfoResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = D8C3471D173B7B9100D7B28C /* SonosTransportInfoResponse.m */; };
 		D8D87D1516D3F0CA0059DBED /* PLVolumeSlider.m in Sources */ = {isa = PBXBuildFile; fileRef = D8D87D1416D3F0CA0059DBED /* PLVolumeSlider.m */; };
+		D8DFB67D176D0F1A00593F92 /* UIImage+BlurImage.m in Sources */ = {isa = PBXBuildFile; fileRef = D8DFB67B176D0C7500593F92 /* UIImage+BlurImage.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -155,6 +156,8 @@
 		D8C3471D173B7B9100D7B28C /* SonosTransportInfoResponse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SonosTransportInfoResponse.m; sourceTree = "<group>"; };
 		D8D87D1316D3F0CA0059DBED /* PLVolumeSlider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PLVolumeSlider.h; sourceTree = "<group>"; };
 		D8D87D1416D3F0CA0059DBED /* PLVolumeSlider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PLVolumeSlider.m; sourceTree = "<group>"; };
+		D8DFB67A176D0C7500593F92 /* UIImage+BlurImage.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIImage+BlurImage.h"; sourceTree = "<group>"; };
+		D8DFB67B176D0C7500593F92 /* UIImage+BlurImage.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIImage+BlurImage.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -257,6 +260,8 @@
 			children = (
 				D8824E3216939C5D00D05AA0 /* UIViewController+ModalCheck.h */,
 				D8824E3316939C5D00D05AA0 /* UIViewController+ModalCheck.m */,
+				D8DFB67A176D0C7500593F92 /* UIImage+BlurImage.h */,
+				D8DFB67B176D0C7500593F92 /* UIImage+BlurImage.m */,
 			);
 			name = Categories;
 			sourceTree = "<group>";
@@ -426,6 +431,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D8DFB67D176D0F1A00593F92 /* UIImage+BlurImage.m in Sources */,
 				D88EA7FB16917C460011F6FB /* main.m in Sources */,
 				D88EA7FF16917C460011F6FB /* PLAppDelegate.m in Sources */,
 				D88EA80816917C460011F6FB /* PLNowPlayingViewController.m in Sources */,

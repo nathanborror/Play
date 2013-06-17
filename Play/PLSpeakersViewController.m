@@ -19,6 +19,7 @@
 #import "SonosController.h"
 #import "SonosPositionInfoResponse.h"
 #import "SOAPEnvelope.h"
+#import "UIImage+BlurImage.h"
 
 static const CGFloat kInputOffRestingX = 23.0;
 static const CGFloat kInputOnRestingX = 185.0;
@@ -93,15 +94,20 @@ static const CGFloat kControlVolumeSpacing = 10.0;
 
 - (void)setBackground
 {
-  [self.view setBackgroundColor:[UIColor colorWithWhite:.2 alpha:1]];
+  [self.view setBackgroundColor:[UIColor colorWithWhite:0 alpha:1]];
+
+  UIImageView *backgroundImage = [[UIImageView alloc] initWithImage:[UIImage blurImageNamed:@"TempAlbum" radius:20 scale:.8]];
+  [backgroundImage setFrame:CGRectOffset(backgroundImage.bounds, -100, -100)];
+  [backgroundImage setAlpha:.4];
+  [self.view addSubview:backgroundImage];
 
   // Drag inputs here to turn them on
   paired = [[UIView alloc] initWithFrame:CGRectMake(CGRectGetWidth(self.view.bounds)/2, 0, CGRectGetWidth(self.view.bounds)/2, CGRectGetHeight(self.view.bounds))];
   [self.view addSubview:paired];
 
   // Divider
-  UIImageView *divider = [[UIImageView alloc] initWithImage:[[UIImage imageNamed:@"InputDivider"] resizableImageWithCapInsets:UIEdgeInsetsMake(2, 2, 2, 2) resizingMode:UIImageResizingModeStretch]];
-  [divider setFrame:CGRectMake((CGRectGetWidth(self.view.bounds)/2)-2, 15, 4, CGRectGetHeight(self.view.bounds)-40)];
+  UIView *divider = [[UIView alloc] initWithFrame:CGRectMake((CGRectGetWidth(self.view.bounds)/2)-2, 15, 1, CGRectGetHeight(self.view.bounds)-40)];
+  [divider setBackgroundColor:[UIColor colorWithWhite:1 alpha:.1]];
   [divider setAutoresizingMask:UIViewAutoresizingFlexibleHeight];
   [self.view addSubview:divider];
 }
@@ -162,18 +168,9 @@ static const CGFloat kControlVolumeSpacing = 10.0;
   dialog = [[PLDialog alloc] initWithFrame:self.view.bounds];
 
   // Blurred background image
-  CIImage *inputImage = [[CIImage alloc] initWithImage:[UIImage imageNamed:@"TempAlbum"]];
-  CIFilter *blurFilter = [CIFilter filterWithName:@"CIGaussianBlur"];
-  [blurFilter setDefaults];
-  [blurFilter setValue:inputImage forKey:@"inputImage"];
-  [blurFilter setValue:[NSNumber numberWithFloat:20.0f] forKey:@"inputRadius"];
-  CIImage *outputImage = [blurFilter valueForKey:@"outputImage"];
-  CIContext *context = [CIContext contextWithOptions:nil];
-  UIImage *backgroundImage = [UIImage imageWithCGImage:[context createCGImage:outputImage fromRect:outputImage.extent] scale:1.6 orientation:UIImageOrientationUp];
-
-  UIImageView *boxBackground = [[UIImageView alloc] initWithFrame:dialog.front.bounds];
+  UIView *boxBackground = [[UIView alloc] initWithFrame:dialog.front.bounds];
+  [boxBackground setBackgroundColor:[UIColor whiteColor]];
   [boxBackground setUserInteractionEnabled:YES];
-  [boxBackground setImage:backgroundImage];
   [boxBackground setContentMode:UIViewContentModeCenter];
   [boxBackground setClipsToBounds:YES];
   [boxBackground.layer setCornerRadius:4];
@@ -205,10 +202,6 @@ static const CGFloat kControlVolumeSpacing = 10.0;
   [speakerVolume setHideLabel:YES];
   [speakerVolume setInput:inputCell.input];
   [controlBar addSubview:speakerVolume];
-
-  UIImageView *icon = [[UIImageView alloc] initWithImage:inputCell.speakerIcon.image];
-  [icon setFrame:CGRectOffset(icon.bounds, (CGRectGetWidth(dialog.front.bounds)/2)-(CGRectGetWidth(icon.bounds)/2), 50)];
-  [boxBackground addSubview:icon];
 
   [dialog.front addSubview:boxBackground];
   [self.view addSubview:dialog];

@@ -14,6 +14,7 @@
 #import "SonosInputStore.h"
 #import "SonosInput.h"
 #import "PLVolumeSlider.h"
+#import "UIImage+BlurImage.h"
 #import "NBKit/NBDirectionGestureRecognizer.h"
 #import "NBKit/NBDial.h"
 #import "NBKit/NBAnimationHelper.h"
@@ -92,14 +93,7 @@ static const CGFloat kNavigationBarHeight = 80.0;
     [tableHeader addSubview:album];
 
     // Blurred Background
-    CIImage *inputImage = [[CIImage alloc] initWithImage:album.image];
-    CIFilter *blurFilter = [CIFilter filterWithName:@"CIGaussianBlur"];
-    [blurFilter setDefaults];
-    [blurFilter setValue:inputImage forKey:@"inputImage"];
-    [blurFilter setValue:[NSNumber numberWithFloat:20.0f] forKey:@"inputRadius"];
-    CIImage *outputImage = [blurFilter valueForKey:@"outputImage"];
-    CIContext *context = [CIContext contextWithOptions:nil];
-    [background setImage:[UIImage imageWithCGImage:[context createCGImage:outputImage fromRect:outputImage.extent]]];
+    [background setImage:[UIImage blurImage:album.image radius:20.0 scale:1.6]];
 
     // Song List
     songList = [[UITableView alloc] initWithFrame:CGRectMake(0, kNavigationBarHeight, CGRectGetWidth(self.view.bounds), CGRectGetHeight(self.view.bounds))];
