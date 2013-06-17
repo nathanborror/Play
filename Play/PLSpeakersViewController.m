@@ -10,7 +10,6 @@
 #import "PLLibraryViewController.h"
 #import "PLAddInputViewController.h"
 #import "PLNowPlayingViewController.h"
-#import "PLControlMenu.h"
 #import "PLVolumeSlider.h"
 #import "PLDialog.h"
 #import "SonosInput.h"
@@ -33,7 +32,6 @@ static const CGFloat kControlVolumeSpacing = 10.0;
 {
   NSArray *inputList;
   CGPoint cellPanCoordBegan;
-  PLControlMenu *controlMenu;
   UIView *paired;
   NSMutableArray *pairedSpeakers;
   PLDialog *dialog;
@@ -65,9 +63,6 @@ static const CGFloat kControlVolumeSpacing = 10.0;
 
     [self setBackground];
     [self setInputs];
-
-    controlMenu = [[PLControlMenu alloc] initWithFrame:CGRectMake(0, 15, CGRectGetWidth(self.view.bounds), CGRectGetHeight(self.view.bounds)-15)];
-    [self.view addSubview:controlMenu];
   }
   return self;
 }
@@ -269,7 +264,6 @@ static const CGFloat kControlVolumeSpacing = 10.0;
       } else {
         [self inputCell:cell isHighlighted:NO];
       }
-      [self.view bringSubviewToFront:controlMenu];
     } break;
     case UIGestureRecognizerStateFailed:
     case UIGestureRecognizerStatePossible:
