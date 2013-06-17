@@ -24,7 +24,7 @@
 		D819F65B16AE165800B19B50 /* SonosErrorResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = D819F65A16AE165800B19B50 /* SonosErrorResponse.m */; };
 		D819F65D16AE1BB900B19B50 /* Examples.xml in Resources */ = {isa = PBXBuildFile; fileRef = D819F65C16AE1BB900B19B50 /* Examples.xml */; };
 		D82B793516D7538000B5FF35 /* SonosVolumeResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = D82B793416D7538000B5FF35 /* SonosVolumeResponse.m */; };
-		D84B9A731751CCAF0029D763 /* NBDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = D84B9A721751CCAF0029D763 /* NBDialog.m */; };
+		D84B9A731751CCAF0029D763 /* PLDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = D84B9A721751CCAF0029D763 /* PLDialog.m */; };
 		D84B9A761752B7F50029D763 /* NBAnimationHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = D84B9A751752B7F50029D763 /* NBAnimationHelper.m */; };
 		D8824DDE1693880600D05AA0 /* PLAddInputViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D8824DDD1693880600D05AA0 /* PLAddInputViewController.m */; };
 		D8824DE916938CA300D05AA0 /* SonosInput.m in Sources */ = {isa = PBXBuildFile; fileRef = D8824DE816938CA300D05AA0 /* SonosInput.m */; };
@@ -92,8 +92,8 @@
 		D81DE37A16ED687400F21111 /* Play-Debug.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Play-Debug.xcconfig"; sourceTree = "<group>"; };
 		D82B793316D7538000B5FF35 /* SonosVolumeResponse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SonosVolumeResponse.h; sourceTree = "<group>"; };
 		D82B793416D7538000B5FF35 /* SonosVolumeResponse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SonosVolumeResponse.m; sourceTree = "<group>"; };
-		D84B9A711751CCAF0029D763 /* NBDialog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NBDialog.h; path = NBKit/NBDialog.h; sourceTree = "<group>"; };
-		D84B9A721751CCAF0029D763 /* NBDialog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NBDialog.m; path = NBKit/NBDialog.m; sourceTree = "<group>"; };
+		D84B9A711751CCAF0029D763 /* PLDialog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PLDialog.h; path = NBKit/PLDialog.h; sourceTree = "<group>"; };
+		D84B9A721751CCAF0029D763 /* PLDialog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PLDialog.m; path = NBKit/PLDialog.m; sourceTree = "<group>"; };
 		D84B9A741752B7F50029D763 /* NBAnimationHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NBAnimationHelper.h; path = NBKit/NBAnimationHelper.h; sourceTree = "<group>"; };
 		D84B9A751752B7F50029D763 /* NBAnimationHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NBAnimationHelper.m; path = NBKit/NBAnimationHelper.m; sourceTree = "<group>"; };
 		D8824DDC1693880600D05AA0 /* PLAddInputViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PLAddInputViewController.h; sourceTree = "<group>"; };
@@ -240,6 +240,8 @@
 		D8824E281693921400D05AA0 /* UI Components */ = {
 			isa = PBXGroup;
 			children = (
+				D84B9A711751CCAF0029D763 /* PLDialog.h */,
+				D84B9A721751CCAF0029D763 /* PLDialog.m */,
 				D8824E2C1693992B00D05AA0 /* PLTextField.h */,
 				D8824E2D1693992B00D05AA0 /* PLTextField.m */,
 				D8D87D1316D3F0CA0059DBED /* PLVolumeSlider.h */,
@@ -350,8 +352,6 @@
 				D8B613D71717FD3800F12446 /* NBAnimation.m */,
 				D88C534117225AA900E0A419 /* NBDial.h */,
 				D88C534217225AA900E0A419 /* NBDial.m */,
-				D84B9A711751CCAF0029D763 /* NBDialog.h */,
-				D84B9A721751CCAF0029D763 /* NBDialog.m */,
 				D84B9A741752B7F50029D763 /* NBAnimationHelper.h */,
 				D84B9A751752B7F50029D763 /* NBAnimationHelper.m */,
 			);
@@ -458,7 +458,7 @@
 				D88C534317225AA900E0A419 /* NBDial.m in Sources */,
 				D8C3471E173B7B9100D7B28C /* SonosTransportInfoResponse.m in Sources */,
 				D885E0F217494BF80036480C /* PLControlMenu.m in Sources */,
-				D84B9A731751CCAF0029D763 /* NBDialog.m in Sources */,
+				D84B9A731751CCAF0029D763 /* PLDialog.m in Sources */,
 				D84B9A761752B7F50029D763 /* NBAnimationHelper.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

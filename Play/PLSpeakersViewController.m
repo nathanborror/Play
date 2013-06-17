@@ -12,13 +12,13 @@
 #import "PLNowPlayingViewController.h"
 #import "PLControlMenu.h"
 #import "PLVolumeSlider.h"
+#import "PLDialog.h"
 #import "SonosInput.h"
 #import "SonosInputStore.h"
 #import "SonosInputCell.h"
 #import "SonosController.h"
 #import "SonosPositionInfoResponse.h"
 #import "SOAPEnvelope.h"
-#import "NBKit/NBDialog.h"
 
 static const CGFloat kInputOffRestingX = 23.0;
 static const CGFloat kInputOnRestingX = 185.0;
@@ -35,7 +35,7 @@ static const CGFloat kControlVolumeSpacing = 10.0;
   PLControlMenu *controlMenu;
   UIView *paired;
   NSMutableArray *pairedSpeakers;
-  NBDialog *dialog;
+  PLDialog *dialog;
   UIDynamicAnimator *animator;
 }
 @end
@@ -159,7 +159,7 @@ static const CGFloat kControlVolumeSpacing = 10.0;
 - (void)inputCellWasSelected:(SonosInputCell *)inputCell
 {
   // Dialog view
-  dialog = [[NBDialog alloc] initWithFrame:self.view.bounds];
+  dialog = [[PLDialog alloc] initWithFrame:self.view.bounds];
 
   // Blurred background image
   CIImage *inputImage = [[CIImage alloc] initWithImage:[UIImage imageNamed:@"TempAlbum"]];

@@ -1,12 +1,12 @@
 //
-//  NBDialog.m
+//  PLDialog.m
 //  Play
 //
 //  Created by Nathan Borror on 5/25/13.
 //  Copyright (c) 2013 Nathan Borror. All rights reserved.
 //
 
-#import "NBDialog.h"
+#import "PLDialog.h"
 #import "NBAnimationHelper.h"
 #import "NBDirectionGestureRecognizer.h"
 #import <math.h>
@@ -16,7 +16,7 @@ static const CGFloat kDialogHeight = 280.0;
 static const CGFloat kDialogTop = 100.0;
 static inline double radians(double degrees) {return degrees * M_PI / 180;}
 
-@interface NBDialog ()
+@interface PLDialog ()
 {
   CGPoint panCoordBegan;
   CGPoint startCenter;
@@ -25,7 +25,7 @@ static inline double radians(double degrees) {return degrees * M_PI / 180;}
 }
 @end
 
-@implementation NBDialog
+@implementation PLDialog
 @synthesize front, back;
 
 - (id)initWithFrame:(CGRect)frame
@@ -55,7 +55,7 @@ static inline double radians(double degrees) {return degrees * M_PI / 180;}
     // Assign center points
     startCenter = CGPointMake(self.center.x, -self.center.y);
     restCenter = CGPointMake(self.center.x, self.center.y);
-    endCenter = CGPointMake(self.center.x, self.center.y+450);
+    endCenter = CGPointMake(self.center.x, self.center.y+500);
 
     [self show];
 

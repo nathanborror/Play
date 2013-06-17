@@ -1,5 +1,5 @@
 //
-//  NBDialog.h
+//  PLDialog.h
 //  Play
 //
 //  Created by Nathan Borror on 5/25/13.
@@ -10,7 +10,7 @@
 @import QuartzCore;
 
 
-@interface NBDialog : UIView
+@interface PLDialog : UIView
 
 @property (nonatomic, strong) UIView *front;
 @property (nonatomic, strong) UIView *back;
