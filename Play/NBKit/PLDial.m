@@ -1,15 +1,15 @@
 //
-//  NBDial.m
+//  PLDial.m
 //  Play
 //
 //  Created by Nathan Borror on 4/19/13.
 //  Copyright (c) 2013 Nathan Borror. All rights reserved.
 //
 
-#import "NBDial.h"
+#import "PLDial.h"
 #import "NBDirectionGestureRecognizer.h"
 
-@interface NBDial ()
+@interface PLDial ()
 {
   CGPoint panCoordBegan;
   UIImageView *max;
@@ -20,26 +20,24 @@
 }
 @end
 
-@implementation NBDial
+@implementation PLDial
 @synthesize maxValue, minValue, value;
 
 - (id)initWithFrame:(CGRect)frame
 {
   self = [super initWithFrame:frame];
   if (self) {
-    [self setClipsToBounds:YES];
 
-    max = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(self.bounds), 25)];
-    [max setImage:[[UIImage imageNamed:@"NBDial"] resizableImageWithCapInsets:UIEdgeInsetsMake(12, 115, 12, 115) resizingMode:UIImageResizingModeStretch]];
+    max = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(self.bounds), 31)];
+    [max setImage:[[UIImage imageNamed:@"PLDial"] resizableImageWithCapInsets:UIEdgeInsetsMake(16, 16, 16, 16) resizingMode:UIImageResizingModeStretch]];
     [self addSubview:max];
 
-    min = [[UIView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(self.bounds), 25)];
-    [min setClipsToBounds:YES];
+    min = [[UIView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(self.bounds), 32)];
     [self addSubview:min];
 
-    UIView *minNotch = [[UIView alloc] initWithFrame:CGRectMake(CGRectGetWidth(min.bounds)-2, 0, 2, CGRectGetHeight(self.bounds))];
-    [minNotch setBackgroundColor:[UIColor colorWithRed:0 green:0 blue:0 alpha:.1]];
-    [min addSubview:minNotch];
+    UIImageView *thumb = [[UIImageView alloc] initWithFrame:CGRectMake(CGRectGetWidth(min.bounds)-21, -6, 43, 43)];
+    [thumb setImage:[UIImage imageNamed:@"PLDialThumb"]];
+    [min addSubview:thumb];
 
     NBDirectionGestureRecognizer *pan = [[NBDirectionGestureRecognizer alloc] initWithTarget:self action:@selector(panDial:)];
     [pan setDirection:NBDirectionPanGestureRecognizerHorizontal];

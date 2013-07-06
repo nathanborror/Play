@@ -39,7 +39,7 @@
 		D8824E451693ECEC00D05AA0 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D8824E441693ECEC00D05AA0 /* AVFoundation.framework */; };
 		D885BF4317686CB100793DAC /* Media.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D885BF42176856C600793DAC /* Media.xcassets */; };
 		D885E0F217494BF80036480C /* PLControlMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = D885E0F117494BF80036480C /* PLControlMenu.m */; };
-		D88C534317225AA900E0A419 /* NBDial.m in Sources */ = {isa = PBXBuildFile; fileRef = D88C534217225AA900E0A419 /* NBDial.m */; };
+		D88C534317225AA900E0A419 /* PLDial.m in Sources */ = {isa = PBXBuildFile; fileRef = D88C534217225AA900E0A419 /* PLDial.m */; };
 		D88D11531692BE740039067F /* PLSong.m in Sources */ = {isa = PBXBuildFile; fileRef = D88D11521692BE740039067F /* PLSong.m */; };
 		D88D116016937AC80039067F /* PLLibraryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D88D115F16937AC80039067F /* PLLibraryViewController.m */; };
 		D88D116316937AE00039067F /* PLSpeakersViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D88D116216937AE00039067F /* PLSpeakersViewController.m */; };
@@ -119,8 +119,8 @@
 		D885BF42176856C600793DAC /* Media.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Media.xcassets; sourceTree = "<group>"; };
 		D885E0F017494BF80036480C /* PLControlMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PLControlMenu.h; sourceTree = "<group>"; };
 		D885E0F117494BF80036480C /* PLControlMenu.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PLControlMenu.m; sourceTree = "<group>"; };
-		D88C534117225AA900E0A419 /* NBDial.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NBDial.h; path = NBKit/NBDial.h; sourceTree = "<group>"; };
-		D88C534217225AA900E0A419 /* NBDial.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NBDial.m; path = NBKit/NBDial.m; sourceTree = "<group>"; };
+		D88C534117225AA900E0A419 /* PLDial.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PLDial.h; path = NBKit/PLDial.h; sourceTree = "<group>"; };
+		D88C534217225AA900E0A419 /* PLDial.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PLDial.m; path = NBKit/PLDial.m; sourceTree = "<group>"; };
 		D88D11511692BE740039067F /* PLSong.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PLSong.h; sourceTree = "<group>"; };
 		D88D11521692BE740039067F /* PLSong.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PLSong.m; sourceTree = "<group>"; };
 		D88D115E16937AC80039067F /* PLLibraryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PLLibraryViewController.h; sourceTree = "<group>"; };
@@ -243,8 +243,8 @@
 		D8824E281693921400D05AA0 /* UI Components */ = {
 			isa = PBXGroup;
 			children = (
-				D84B9A711751CCAF0029D763 /* PLDialog.h */,
-				D84B9A721751CCAF0029D763 /* PLDialog.m */,
+				D88C534117225AA900E0A419 /* PLDial.h */,
+				D88C534217225AA900E0A419 /* PLDial.m */,
 				D8824E2C1693992B00D05AA0 /* PLTextField.h */,
 				D8824E2D1693992B00D05AA0 /* PLTextField.m */,
 				D8D87D1316D3F0CA0059DBED /* PLVolumeSlider.h */,
@@ -355,8 +355,6 @@
 				D8B613DA1718077400F12446 /* NBDirectionGestureRecognizer.m */,
 				D8B613D61717FD3800F12446 /* NBAnimation.h */,
 				D8B613D71717FD3800F12446 /* NBAnimation.m */,
-				D88C534117225AA900E0A419 /* NBDial.h */,
-				D88C534217225AA900E0A419 /* NBDial.m */,
 				D84B9A741752B7F50029D763 /* NBAnimationHelper.h */,
 				D84B9A751752B7F50029D763 /* NBAnimationHelper.m */,
 			);
@@ -461,7 +459,7 @@
 				D8B613D81717FD3800F12446 /* NBAnimation.m in Sources */,
 				D8B613DB1718077400F12446 /* NBDirectionGestureRecognizer.m in Sources */,
 				D8B613E4171B5B7300F12446 /* SonosInputCell.m in Sources */,
-				D88C534317225AA900E0A419 /* NBDial.m in Sources */,
+				D88C534317225AA900E0A419 /* PLDial.m in Sources */,
 				D8C3471E173B7B9100D7B28C /* SonosTransportInfoResponse.m in Sources */,
 				D885E0F217494BF80036480C /* PLControlMenu.m in Sources */,
 				D84B9A731751CCAF0029D763 /* PLDialog.m in Sources */,

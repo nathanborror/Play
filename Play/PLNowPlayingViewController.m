@@ -9,6 +9,7 @@
 #import "PLNowPlayingViewController.h"
 #import "SonosController.h"
 #import "PLSong.h"
+#import "PLDial.h"
 #import "SOAPEnvelope.h"
 #import "SonosPositionInfoResponse.h"
 #import "SonosInputStore.h"
@@ -16,7 +17,6 @@
 #import "PLVolumeSlider.h"
 #import "UIImage+BlurImage.h"
 #import "NBKit/NBDirectionGestureRecognizer.h"
-#import "NBKit/NBDial.h"
 #import "NBKit/NBAnimationHelper.h"
 
 static const CGFloat kProgressPadding = 50.0;
@@ -201,8 +201,8 @@ static const CGFloat kNavigationBarHeight = 80.0;
     [previousButton setShowsTouchWhenHighlighted:YES];
     [controlBar addSubview:previousButton];
 
-    // NBDial
-    NBDial *dial = [[NBDial alloc] initWithFrame:CGRectMake(kControlBarButtonPadding, 110, CGRectGetWidth(controlBar.bounds)-(kControlBarButtonPadding*2), 44)];
+    // PLDial
+    PLDial *dial = [[PLDial alloc] initWithFrame:CGRectMake(kControlBarButtonPadding, 110, CGRectGetWidth(controlBar.bounds)-(kControlBarButtonPadding*2), 44)];
     [dial setMaxValue:100];
     [dial setMinValue:0];
     [dial setValue:20];

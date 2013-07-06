@@ -1,5 +1,5 @@
 //
-//  NBDial.h
+//  PLDial.h
 //  Play
 //
 //  Created by Nathan Borror on 4/19/13.
@@ -8,7 +8,7 @@
 
 @import UIKit;
 
-@interface NBDial : UIControl
+@interface PLDial : UIControl
 
 @property (nonatomic, assign) CGFloat maxValue;
 @property (nonatomic, assign) CGFloat minValue;

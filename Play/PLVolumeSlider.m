@@ -7,15 +7,15 @@
 //
 
 #import "PLVolumeSlider.h"
+#import "PLDial.h"
 #import "SonosInput.h"
 #import "SonosController.h"
 #import "SOAPEnvelope.h"
 #import "SonosVolumeResponse.h"
-#import "NBKit/NBDial.h"
 
 @interface PLVolumeSlider ()
 {
-  NBDial *volumeDial;
+  PLDial *volumeDial;
   UILabel *name;
   SonosController *sonos;
 }
@@ -32,7 +32,7 @@
 
     self.hideLabel = NO;
 
-    volumeDial = [[NBDial alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(self.bounds), 44)];
+    volumeDial = [[PLDial alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(self.bounds), 44)];
     [volumeDial setMaxValue:100.0];
     [volumeDial setMinValue:0.0];
     [volumeDial setValue:10.0];
@@ -47,7 +47,7 @@
   [sonos volume:input level:(int)[slider value] completion:nil];
 }
 
-- (void)changeVolume2:(NBDial *)dial
+- (void)changeVolume2:(PLDial *)dial
 {
   [sonos volume:input level:(int)[dial value] completion:nil];
 }
