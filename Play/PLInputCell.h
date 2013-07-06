@@ -1,5 +1,5 @@
 //
-//  SonosInputCell.h
+//  PLInputCell.h
 //  Play
 //
 //  Created by Nathan Borror on 4/14/13.
@@ -9,19 +9,19 @@
 @import UIKit;
 @import QuartzCore;
 
-typedef NS_ENUM(NSInteger, SonosInputCellStatus) {
-  SonosInputCellStatusPlaying,
-  SonosInputCellStatusStopped,
-  SonosInputCellStatusPaused,
+typedef NS_ENUM(NSInteger, PLInputCellStatus) {
+  PLInputCellStatusPlaying,
+  PLInputCellStatusStopped,
+  PLInputCellStatusPaused,
 };
 
 @class SonosInput;
 
-@interface SonosInputCell : UIButton
+@interface PLInputCell : UIButton
 
 @property (nonatomic, strong) SonosInput *input;
 @property (nonatomic, assign) CGPoint origin;
-@property (nonatomic, assign) SonosInputCellStatus status;
+@property (nonatomic, assign) PLInputCellStatus status;
 @property (nonatomic, strong) UILabel *label;
 @property (nonatomic, strong) UIImageView *indicator;
 @property (nonatomic, strong) UIImageView *speakerIcon;

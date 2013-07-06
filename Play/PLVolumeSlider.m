@@ -60,11 +60,8 @@
     name = [[UILabel alloc] initWithFrame:CGRectMake(0, CGRectGetMinY(volumeDial.frame)-25, CGRectGetWidth(self.bounds), 20)];
     [name setUserInteractionEnabled:NO];
     [name setText:self.input.name];
-    [name setFont:[UIFont boldSystemFontOfSize:14.0]];
-    [name setTextColor:[UIColor colorWithWhite:.27 alpha:1]];
+    [name setFont:[UIFont systemFontOfSize:14.0]];
     [name setBackgroundColor:[UIColor clearColor]];
-    [name setShadowColor:[UIColor whiteColor]];
-    [name setShadowOffset:CGSizeMake(0, 1)];
     [self addSubview:name];
   }
 

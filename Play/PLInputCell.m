@@ -1,21 +1,24 @@
 //
-//  SonosInputCell.m
+//  PLInputCell.m
 //  Play
 //
 //  Created by Nathan Borror on 4/14/13.
 //  Copyright (c) 2013 Nathan Borror. All rights reserved.
 //
 
-#import "SonosInputCell.h"
+#import "PLInputCell.h"
 #import "SonosInput.h"
 #import "SonosController.h"
 #import "SonosTransportInfoResponse.h"
 #import "SOAPEnvelope.h"
-#import "NBKit/NBAnimationHelper.h"
 
-static const CGFloat kSpeakerStatusMargin = -24.0;
+@interface PLInputCell ()
+{
+  UIDynamicAnimator *animator;
+}
+@end
 
-@implementation SonosInputCell
+@implementation PLInputCell
 @synthesize input, origin, status;
 
 - (id)initWithInput:(SonosInput *)aInput
@@ -26,14 +29,13 @@ static const CGFloat kSpeakerStatusMargin = -24.0;
     self.input = aInput;
     self.origin = self.center;
 
-    [self setShowsTouchWhenHighlighted:YES];
+    animator = [[UIDynamicAnimator alloc] initWithReferenceView:self];
 
     // Speaker label
     _label = [[UILabel alloc] initWithFrame:CGRectMake(0, 65, CGRectGetWidth(self.bounds), 20)];
     [_label setText:input.name];
     [_label setTextAlignment:NSTextAlignmentCenter];
-    [_label setFont:[UIFont boldSystemFontOfSize:11.0]];
-    [_label setTextColor:[UIColor whiteColor]];
+    [_label setFont:[UIFont systemFontOfSize:11.0]];
     [_label setBackgroundColor:[UIColor clearColor]];
     [self addSubview:_label];
 
@@ -42,9 +44,9 @@ static const CGFloat kSpeakerStatusMargin = -24.0;
     [self addSubview:_speakerIcon];
 
     // Speaker indicator light
-    _indicator = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"SpeakerOn"]];
-    [_indicator setFrame:CGRectOffset(_indicator.bounds, CGRectGetWidth(_speakerIcon.bounds)+kSpeakerStatusMargin, CGRectGetHeight(_speakerIcon.bounds)+kSpeakerStatusMargin)];
-    [self addSubview:_indicator];
+//    _indicator = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"SpeakerOn"]];
+//    [_indicator setFrame:CGRectOffset(_indicator.bounds, CGRectGetWidth(_label.bounds)-26, -5)];
+//    [_label addSubview:_indicator];
 
     // Check status every five seconds so we keep the indicator up-to-date
     [NSTimer scheduledTimerWithTimeInterval:5.0 target:self selector:@selector(updateStatus) userInfo:nil repeats:YES];
@@ -59,13 +61,13 @@ static const CGFloat kSpeakerStatusMargin = -24.0;
 {
   [[SonosController sharedController] status:self.input completion:^(SOAPEnvelope *envelope, NSError *error) {
     SonosTransportInfoResponse *response = (SonosTransportInfoResponse *)[envelope response];
-    SonosInputCellStatus newStatus;
+    PLInputCellStatus newStatus;
     if ([response.state isEqual:@"PLAYING"]) {
-      newStatus = SonosInputCellStatusPlaying;
+      newStatus = PLInputCellStatusPlaying;
     } else if ([response.state isEqual:@"PAUSED_PLAYBACK"]) {
-      newStatus = SonosInputCellStatusPaused;
+      newStatus = PLInputCellStatusPaused;
     } else {
-      newStatus = SonosInputCellStatusStopped;
+      newStatus = PLInputCellStatusStopped;
     }
     if (newStatus != self.status) {
       self.status = newStatus;
@@ -90,39 +92,33 @@ static const CGFloat kSpeakerStatusMargin = -24.0;
 
 - (void)startDragging
 {
-  [NBAnimationHelper animatePosition:_label
-                                from:CGPointMake(_label.center.x, 65)
-                                  to:CGPointMake(_label.center.x, 25)
-                              forKey:@"labelAnimation"
-                            delegate:nil];
+  [animator removeAllBehaviors];
+  UISnapBehavior *snap = [[UISnapBehavior alloc] initWithItem:_label snapToPoint:CGPointMake(_label.center.x, 35)];
+  [snap setDamping:.7];
+  [animator addBehavior:snap];
 }
 
 - (void)stopDragging
 {
-  [NBAnimationHelper animatePosition:_label
-                                from:CGPointMake(_label.center.x, 25)
-                                  to:CGPointMake(_label.center.x, 75)
-                              forKey:@"labelAnimation"
-                            delegate:nil];
+  [animator removeAllBehaviors];
+  UISnapBehavior *snap = [[UISnapBehavior alloc] initWithItem:_label snapToPoint:CGPointMake(_label.center.x, 75)];
+  [snap setDamping:.7];
+  [animator addBehavior:snap];
 }
 
 - (void)refreshIndicator
 {
   switch (self.status) {
-    case SonosInputCellStatusStopped:
-    case SonosInputCellStatusPaused: {
+    case PLInputCellStatusStopped:
+    case PLInputCellStatusPaused: {
       [UIView animateWithDuration:.2 animations:^{
         [_indicator setAlpha:0];
       }];
     } break;
-    case SonosInputCellStatusPlaying: {
-      [_indicator setAlpha:1];
-
-      [NBAnimationHelper animateBounds:_indicator
-                                    from:CGRectMake(0, 0, 0, 0)
-                                      to:_indicator.bounds
-                                  forKey:@"statusAnimation"
-                                delegate:nil];
+    case PLInputCellStatusPlaying: {
+      [UIView animateWithDuration:.2 animations:^{
+        [_indicator setAlpha:1];
+      }];
     } break;
   }
 }

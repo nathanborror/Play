@@ -11,10 +11,9 @@
 #import "PLAddInputViewController.h"
 #import "PLNowPlayingViewController.h"
 #import "PLVolumeSlider.h"
-#import "PLDialog.h"
+#import "PLInputCell.h"
 #import "SonosInput.h"
 #import "SonosInputStore.h"
-#import "SonosInputCell.h"
 #import "SonosController.h"
 #import "SonosPositionInfoResponse.h"
 #import "SOAPEnvelope.h"
@@ -34,7 +33,6 @@ static const CGFloat kControlVolumeSpacing = 10.0;
   CGPoint cellPanCoordBegan;
   UIView *paired;
   NSMutableArray *pairedSpeakers;
-  PLDialog *dialog;
   UIDynamicAnimator *animator;
 }
 @end
@@ -47,6 +45,8 @@ static const CGFloat kControlVolumeSpacing = 10.0;
   if (self) {
     [self.navigationItem setTitle:@"Speakers"];
     pairedSpeakers = [[NSMutableArray alloc] init];
+
+    animator = [[UIDynamicAnimator alloc] initWithReferenceView:self.view];
 
     // Add Button
     UIBarButtonItem *addButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addInput)];
@@ -61,16 +61,14 @@ static const CGFloat kControlVolumeSpacing = 10.0;
     // Make the first input in the master input for now.
     [inputStore setMaster:[inputStore inputAtIndex:0]];
 
+    // Now playing
+    UIBarButtonItem *playing = [[UIBarButtonItem alloc] initWithTitle:@"Playing" style:UIBarButtonItemStylePlain target:self action:@selector(nowPlaying)];
+    [self.navigationItem setRightBarButtonItem:playing];
+
     [self setBackground];
     [self setInputs];
   }
   return self;
-}
-
-- (void)viewWillAppear:(BOOL)animated
-{
-  [super viewWillAppear:animated];
-  [self.navigationController setNavigationBarHidden:YES animated:NO];
 }
 
 - (void)nowPlaying
@@ -89,21 +87,14 @@ static const CGFloat kControlVolumeSpacing = 10.0;
 
 - (void)setBackground
 {
-  [self.view setBackgroundColor:[UIColor colorWithWhite:0 alpha:1]];
-
-  UIImageView *backgroundImage = [[UIImageView alloc] initWithImage:[UIImage blurImageNamed:@"TempAlbum" radius:20 scale:.8]];
-  [backgroundImage setFrame:CGRectOffset(backgroundImage.bounds, -100, -100)];
-  [backgroundImage setAlpha:.4];
-  [self.view addSubview:backgroundImage];
-
   // Drag inputs here to turn them on
   paired = [[UIView alloc] initWithFrame:CGRectMake(CGRectGetWidth(self.view.bounds)/2, 0, CGRectGetWidth(self.view.bounds)/2, CGRectGetHeight(self.view.bounds))];
   [self.view addSubview:paired];
 
   // Divider
-  UIView *divider = [[UIView alloc] initWithFrame:CGRectMake((CGRectGetWidth(self.view.bounds)/2)-2, 15, 1, CGRectGetHeight(self.view.bounds)-40)];
-  [divider setBackgroundColor:[UIColor colorWithWhite:1 alpha:.1]];
-  [divider setAutoresizingMask:UIViewAutoresizingFlexibleHeight];
+  UIView *divider = [[UIView alloc] initWithFrame:CGRectMake((CGRectGetWidth(self.view.bounds)/2)-2, 75, 1, CGRectGetHeight(self.view.bounds)-85)];
+  [divider setBackgroundColor:[UIColor colorWithWhite:0 alpha:.2]];
+  [divider setAutoresizingMask:UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin];
   [self.view addSubview:divider];
 }
 
@@ -113,15 +104,17 @@ static const CGFloat kControlVolumeSpacing = 10.0;
 {
   for (int i = 0; i < [self numberOfInputs]; i++) {
     SonosInput *input = [[SonosInputStore sharedStore] inputAtIndex:i];
-    SonosInputCell *cell = [self inputCellForInput:input];
+    PLInputCell *cell = [self inputCellForInput:input];
     [cell addTarget:self action:@selector(inputCellWasSelected:) forControlEvents:UIControlEventTouchUpInside];
 
     if ([input isEqual:[[SonosInputStore sharedStore] master]]) {
-      [cell setFrame:CGRectOffset(cell.bounds, kInputOnRestingX, (CGRectGetHeight(cell.bounds)*i)+(20*(i+1))+30)];
+      [cell setFrame:CGRectOffset(cell.bounds, kInputOnRestingX, (CGRectGetHeight(cell.bounds)*i)+(20*(i+1))+70)];
       [pairedSpeakers addObject:input];
     } else {
-      [cell setFrame:CGRectOffset(cell.bounds, kInputOffRestingX, (CGRectGetHeight(cell.bounds)*i)+(20*(i+1))+30)];
+      [cell setFrame:CGRectOffset(cell.bounds, kInputOffRestingX, (CGRectGetHeight(cell.bounds)*i)+(20*(i+1))+70)];
     }
+
+    [cell setAutoresizingMask:UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleLeftMargin];
 
     [cell setOrigin:cell.center];
     [self.view addSubview:cell];
@@ -151,61 +144,19 @@ static const CGFloat kControlVolumeSpacing = 10.0;
   return [[[SonosInputStore sharedStore] allInputs] count];
 }
 
-- (SonosInputCell *)inputCellForInput:(SonosInput *)input
+- (PLInputCell *)inputCellForInput:(SonosInput *)input
 {
-  SonosInputCell *cell = [[SonosInputCell alloc] initWithInput:input];
+  PLInputCell *cell = [[PLInputCell alloc] initWithInput:input];
   return cell;
 }
 
-- (void)inputCellWasSelected:(SonosInputCell *)inputCell
+- (void)inputCellWasSelected:(PLInputCell *)inputCell
 {
-  // Dialog view
-  dialog = [[PLDialog alloc] initWithFrame:self.view.bounds];
-
-  // Blurred background image
-  UIView *boxBackground = [[UIView alloc] initWithFrame:dialog.front.bounds];
-  [boxBackground setBackgroundColor:[UIColor whiteColor]];
-  [boxBackground setUserInteractionEnabled:YES];
-  [boxBackground setContentMode:UIViewContentModeCenter];
-  [boxBackground setClipsToBounds:YES];
-  [boxBackground.layer setCornerRadius:4];
-
-  UIImageView *controlBar = [[UIImageView alloc] initWithImage:[[UIImage imageNamed:@"ControlBar"] resizableImageWithCapInsets:UIEdgeInsetsMake(4, 4, 4, 4)]];
-  [controlBar setFrame:CGRectMake(0, CGRectGetHeight(dialog.front.bounds)-105, CGRectGetWidth(dialog.front.bounds), 105)];
-  [controlBar setUserInteractionEnabled:YES];
-  [boxBackground addSubview:controlBar];
-
-  UIButton *playPauseButton = [[UIButton alloc] initWithFrame:CGRectMake(controlBar.center.x-(kControlButtonWidth/2), kControlButtonTopSpacing, kControlButtonWidth, kControlButtonHeight)];
-  [playPauseButton setBackgroundImage:[UIImage imageNamed:@"ControlPause.png"] forState:UIControlStateNormal];
-//  [playPauseButton addTarget:self action:@selector(playPause) forControlEvents:UIControlEventTouchUpInside];
-  [playPauseButton setShowsTouchWhenHighlighted:YES];
-  [controlBar addSubview:playPauseButton];
-
-  UIButton *nextButton = [[UIButton alloc] initWithFrame:CGRectMake(controlBar.center.x+kControlButtonSpacing, kControlButtonTopSpacing, kControlButtonWidth, kControlButtonHeight)];
-  [nextButton setBackgroundImage:[UIImage imageNamed:@"ControlNext.png"] forState:UIControlStateNormal];
-//  [nextButton addTarget:self action:@selector(next) forControlEvents:UIControlEventTouchUpInside];
-  [nextButton setShowsTouchWhenHighlighted:YES];
-  [controlBar addSubview:nextButton];
-
-  UIButton *previousButton = [[UIButton alloc] initWithFrame:CGRectMake(controlBar.center.x-kControlButtonWidth-kControlButtonSpacing, kControlButtonTopSpacing, kControlButtonWidth, kControlButtonHeight)];
-  [previousButton setBackgroundImage:[UIImage imageNamed:@"ControlPrevious.png"] forState:UIControlStateNormal];
-//  [previousButton addTarget:self action:@selector(previous) forControlEvents:UIControlEventTouchUpInside];
-  [previousButton setShowsTouchWhenHighlighted:YES];
-  [controlBar addSubview:previousButton];
-
-  PLVolumeSlider *speakerVolume = [[PLVolumeSlider alloc] initWithFrame:CGRectMake(kControlVolumeSpacing, CGRectGetHeight(controlBar.bounds)-40, CGRectGetWidth(controlBar.bounds)-(kControlVolumeSpacing*2), 44)];
-  [speakerVolume setHideLabel:YES];
-  [speakerVolume setInput:inputCell.input];
-  [controlBar addSubview:speakerVolume];
-
-  [dialog.front addSubview:boxBackground];
-  [self.view addSubview:dialog];
-
-//  PLLibraryViewController *viewController = [[PLLibraryViewController alloc] init];
-//  [self.navigationController pushViewController:viewController animated:YES];
+  PLLibraryViewController *viewController = [[PLLibraryViewController alloc] init];
+  [self.navigationController pushViewController:viewController animated:YES];
 }
 
-- (void)inputCell:(SonosInputCell *)inputCell isHighlighted:(BOOL)active
+- (void)inputCell:(PLInputCell *)inputCell isHighlighted:(BOOL)active
 {
   SonosInputStore *inputStore = [SonosInputStore sharedStore];
 
@@ -227,7 +178,7 @@ static const CGFloat kControlVolumeSpacing = 10.0;
     [inputCell unpair];
   }
 
-  animator = [[UIDynamicAnimator alloc] initWithReferenceView:self.view];
+  
   UISnapBehavior *snap = [[UISnapBehavior alloc] initWithItem:inputCell snapToPoint:toPoint];
   [snap setDamping:.7];
   [animator addBehavior:snap];
@@ -237,7 +188,7 @@ static const CGFloat kControlVolumeSpacing = 10.0;
 
 - (void)panCell:(UIGestureRecognizer *)recognizer
 {
-  SonosInputCell *cell = (SonosInputCell *)[recognizer view];
+  PLInputCell *cell = (PLInputCell *)[recognizer view];
   [animator removeAllBehaviors];
 
   switch (recognizer.state) {
