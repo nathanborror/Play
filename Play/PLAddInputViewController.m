@@ -12,7 +12,7 @@
 #import "SonosInputStore.h"
 #import "UIViewController+ModalCheck.h"
 
-static float kFieldPadding = 20.f;
+static float kFieldPadding = 10.f;
 
 @interface PLAddInputViewController ()
 {
@@ -34,6 +34,7 @@ static float kFieldPadding = 20.f;
 {
   self = [super init];
   if (self) {
+    [self.view setBackgroundColor:[UIColor whiteColor]];
     input = aInput;
 
     if (input) {
@@ -50,8 +51,6 @@ static float kFieldPadding = 20.f;
     // Done Button
     UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(done)];
     [self.navigationItem setRightBarButtonItem:doneButton];
-
-    [self.view setBackgroundColor:[UIColor colorWithRed:.82 green:.85 blue:.91 alpha:1]];
   }
   return self;
 }
@@ -61,25 +60,28 @@ static float kFieldPadding = 20.f;
   [super viewDidLoad];
 
   // IP Input
-  ipTextField = [[PLTextField alloc] initWithFrame:CGRectMake(kFieldPadding, 50, CGRectGetWidth(self.view.frame)-(kFieldPadding*2), 50)];
+  ipTextField = [[UITextField alloc] initWithFrame:CGRectMake(kFieldPadding, 80, CGRectGetWidth(self.view.frame)-(kFieldPadding*2), 50)];
   [ipTextField setDelegate:self];
   [ipTextField setPlaceholder:@"IP Address"];
   [ipTextField setText:input.ip];
   [ipTextField setReturnKeyType:UIReturnKeyNext];
+  [ipTextField setBorderStyle:UITextBorderStyleRoundedRect];
   [self.view addSubview:ipTextField];
 
-  nameTextField = [[PLTextField alloc] initWithFrame:CGRectMake(kFieldPadding, CGRectGetMaxY(ipTextField.frame)+kFieldPadding, CGRectGetWidth(self.view.frame)-(kFieldPadding*2), 50)];
+  nameTextField = [[UITextField alloc] initWithFrame:CGRectMake(kFieldPadding, CGRectGetMaxY(ipTextField.frame)+kFieldPadding, CGRectGetWidth(self.view.frame)-(kFieldPadding*2), 50)];
   [nameTextField setDelegate:self];
   [nameTextField setPlaceholder:@"Name"];
   [nameTextField setText:input.name];
   [nameTextField setReturnKeyType:UIReturnKeyNext];
+  [nameTextField setBorderStyle:UITextBorderStyleRoundedRect];
   [self.view addSubview:nameTextField];
 
-  uidTextField = [[PLTextField alloc] initWithFrame:CGRectMake(kFieldPadding, CGRectGetMaxY(nameTextField.frame)+kFieldPadding, CGRectGetWidth(self.view.frame)-(kFieldPadding*2), 50)];
+  uidTextField = [[UITextField alloc] initWithFrame:CGRectMake(kFieldPadding, CGRectGetMaxY(nameTextField.frame)+kFieldPadding, CGRectGetWidth(self.view.frame)-(kFieldPadding*2), 50)];
   [uidTextField setDelegate:self];
   [uidTextField setPlaceholder:@"UID"];
   [uidTextField setText:input.uid];
   [uidTextField setReturnKeyType:UIReturnKeyDone];
+  [uidTextField setBorderStyle:UITextBorderStyleRoundedRect];
   [self.view addSubview:uidTextField];
 }
 
