@@ -50,7 +50,7 @@ static const CGFloat kPreviousNextPadding = 40.0;
     [controlBar.layer setShadowOpacity:.3];
 
     showCenter = CGPointMake(self.center.x, self.center.y + 44);
-    hideCenter = CGPointMake(self.center.x, self.center.y + 515);
+    hideCenter = CGPointMake(self.center.x, self.center.y + 465);
 
     UIImageView *grip = [[UIImageView alloc] initWithFrame:CGRectMake((CGRectGetWidth(self.frame)/2)-17, 8, 35, 3)];
     [grip setImage:[UIImage imageNamed:@"ControlBarGrip"]];
