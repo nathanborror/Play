@@ -46,7 +46,6 @@
         RdioPlaylistsViewController *viewController = [[RdioPlaylistsViewController alloc] init];
         [self.navigationController pushViewController:viewController animated:YES];
       }],
-      [[PLSource alloc] initWithName:@"Radio Stations" selection:nil],
       [[PLSource alloc] initWithName:@"Line In" selection:^() {
         PLNowPlayingViewController *viewController = [[PLNowPlayingViewController alloc] initWithLineIn:[[SonosInputStore sharedStore] master]];
         UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:viewController];
