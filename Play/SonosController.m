@@ -141,7 +141,7 @@
 
   NSString *albumKey = [song.album.key substringFromIndex:1];
   NSString *songKey = [song.key substringFromIndex:1];
-  NSString *trackURI = [NSString stringWithFormat:@"x-sonos-http:_t%%3a%%3a%@%%3a%%3aa%%3a%%3a%@.mp3?sid=11&flags=32", songKey, albumKey];
+  NSString *trackURI = [NSString stringWithFormat:@"x-sonos-http:_t%%3a%%3a%@%%3a%%3ap%%3a%%3a%@.mp3?sid=11&amp;flags=32", songKey, albumKey];
 
   NSDictionary *params = @{@"InstanceID": @0,
                            @"CurrentURI":trackURI,

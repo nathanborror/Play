@@ -9,6 +9,6 @@
 #import "RdioSong.h"
 
 @implementation RdioSong
-@synthesize key, name, album;
+@synthesize key, name, album, albumArt;
 
 @end

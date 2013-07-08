@@ -51,6 +51,9 @@
 		D88EA80516917C460011F6FB /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D88EA80416917C460011F6FB /* Default-568h@2x.png */; };
 		D88EA80816917C460011F6FB /* PLNowPlayingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D88EA80716917C460011F6FB /* PLNowPlayingViewController.m */; };
 		D88EA81A1691902A0011F6FB /* SonosController.m in Sources */ = {isa = PBXBuildFile; fileRef = D88EA8191691902A0011F6FB /* SonosController.m */; };
+		D89337F71788DC0E00AF8A1B /* RdioPlaylistViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D89337F61788DBE600AF8A1B /* RdioPlaylistViewController.m */; };
+		D89337FA178A1E6900AF8A1B /* RdioPlaylist.m in Sources */ = {isa = PBXBuildFile; fileRef = D89337F91788DC4200AF8A1B /* RdioPlaylist.m */; };
+		D89337FD178A2B9800AF8A1B /* RdioSongsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D89337FC178A2B6B00AF8A1B /* RdioSongsViewController.m */; };
 		D898033B16D0159700D30813 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D898033A16D0159700D30813 /* OpenGLES.framework */; };
 		D898033D16D01A5600D30813 /* CoreImage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D898033C16D01A5600D30813 /* CoreImage.framework */; };
 		D8B613DB1718077400F12446 /* NBDirectionGestureRecognizer.m in Sources */ = {isa = PBXBuildFile; fileRef = D8B613DA1718077400F12446 /* NBDirectionGestureRecognizer.m */; };
@@ -134,6 +137,12 @@
 		D88EA80716917C460011F6FB /* PLNowPlayingViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PLNowPlayingViewController.m; sourceTree = "<group>"; };
 		D88EA8181691902A0011F6FB /* SonosController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SonosController.h; sourceTree = "<group>"; };
 		D88EA8191691902A0011F6FB /* SonosController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SonosController.m; sourceTree = "<group>"; };
+		D89337F51788DBE600AF8A1B /* RdioPlaylistViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RdioPlaylistViewController.h; sourceTree = "<group>"; };
+		D89337F61788DBE600AF8A1B /* RdioPlaylistViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RdioPlaylistViewController.m; sourceTree = "<group>"; };
+		D89337F81788DC4200AF8A1B /* RdioPlaylist.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RdioPlaylist.h; sourceTree = "<group>"; };
+		D89337F91788DC4200AF8A1B /* RdioPlaylist.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RdioPlaylist.m; sourceTree = "<group>"; };
+		D89337FB178A2B6B00AF8A1B /* RdioSongsViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RdioSongsViewController.h; sourceTree = "<group>"; };
+		D89337FC178A2B6B00AF8A1B /* RdioSongsViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RdioSongsViewController.m; sourceTree = "<group>"; };
 		D898033A16D0159700D30813 /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
 		D898033C16D01A5600D30813 /* CoreImage.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreImage.framework; path = System/Library/Frameworks/CoreImage.framework; sourceTree = SDKROOT; };
 		D8B613D91718077400F12446 /* NBDirectionGestureRecognizer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NBDirectionGestureRecognizer.h; path = NBKit/NBDirectionGestureRecognizer.h; sourceTree = "<group>"; };
@@ -181,8 +190,14 @@
 				D158131716E883F20009E11B /* RdioAlbum.m */,
 				D158131916E884020009E11B /* RdioSong.h */,
 				D158131A16E884020009E11B /* RdioSong.m */,
+				D89337F81788DC4200AF8A1B /* RdioPlaylist.h */,
+				D89337F91788DC4200AF8A1B /* RdioPlaylist.m */,
 				D158131F16E885E50009E11B /* RdioCollectionViewController.h */,
 				D158132016E885E50009E11B /* RdioCollectionViewController.m */,
+				D89337F51788DBE600AF8A1B /* RdioPlaylistViewController.h */,
+				D89337F61788DBE600AF8A1B /* RdioPlaylistViewController.m */,
+				D89337FB178A2B6B00AF8A1B /* RdioSongsViewController.h */,
+				D89337FC178A2B6B00AF8A1B /* RdioSongsViewController.m */,
 			);
 			name = Rdio;
 			sourceTree = "<group>";
@@ -411,6 +426,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D89337FD178A2B9800AF8A1B /* RdioSongsViewController.m in Sources */,
+				D89337FA178A1E6900AF8A1B /* RdioPlaylist.m in Sources */,
+				D89337F71788DC0E00AF8A1B /* RdioPlaylistViewController.m in Sources */,
 				D8DFB67D176D0F1A00593F92 /* UIImage+BlurImage.m in Sources */,
 				D88EA7FB16917C460011F6FB /* main.m in Sources */,
 				D88EA7FF16917C460011F6FB /* PLAppDelegate.m in Sources */,
