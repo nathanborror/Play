@@ -187,6 +187,18 @@
   }];
 }
 
+- (void)queue:(SonosInput *)input track:(NSString *)track completion:(void (^)(SOAPEnvelope *, NSError *))block
+{
+  NSDictionary *params = @{@"InstanceID": @0,
+                           @"EnqueuedURI": track,
+                           @"EnqueuedURIMetaData": @"",
+                           @"DesiredFirstTrackNumberEnqueued": @0,
+                           @"EnqueueAsNext": @1};
+  [SonosController request:SonosRequestTypeAVTransport input:input action:@"AddURIToQueue" params:params completion:^(id obj, NSError *error) {
+    [self play:nil track:nil completion:block];
+  }];
+}
+
 - (void)lineIn:(SonosInput *)input completion:(void (^)(SOAPEnvelope *, NSError *))block
 {
   [self play:input track:[NSString stringWithFormat:@"x-rincon-stream:%@", input.uid] completion:block];
