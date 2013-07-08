@@ -11,10 +11,12 @@
 
 @class PLSong;
 @class SonosInput;
+@class RdioSong;
 
 @interface PLNowPlayingViewController : UIViewController <UITableViewDelegate, UITableViewDataSource>
 
 - (id)initWithSong:(PLSong *)song;
 - (id)initWithLineIn:(SonosInput *)input;
+- (id)initWithRdioSong:(RdioSong *)song;
 
 @end

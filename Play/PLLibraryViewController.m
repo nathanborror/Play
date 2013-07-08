@@ -12,7 +12,7 @@
 #import "PLPlaylistsViewController.h"
 #import "PLNowPlayingViewController.h"
 #import "SonosInputStore.h"
-#import "RdioCollectionViewController.h"
+#import "RdioPlaylistsViewController.h"
 
 @interface PLLibraryViewController ()
 {
@@ -43,7 +43,7 @@
     sourceList = @[
       [[PLSource alloc] initWithName:@"Playlists" selection:nil],
       [[PLSource alloc] initWithName:@"Rdio" selection:^(){
-        RdioCollectionViewController *viewController = [[RdioCollectionViewController alloc] init];
+        RdioPlaylistsViewController *viewController = [[RdioPlaylistsViewController alloc] init];
         [self.navigationController pushViewController:viewController animated:YES];
       }],
       [[PLSource alloc] initWithName:@"Radio Stations" selection:nil],

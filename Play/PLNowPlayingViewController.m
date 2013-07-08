@@ -17,6 +17,7 @@
 #import "NBKit/NBDirectionGestureRecognizer.h"
 #import "NBKit/NBDial.h"
 #import "NBKit/NBAnimationHelper.h"
+#import "RdioSong.h"
 
 static const CGFloat kProgressPadding = 50.0;
 
@@ -236,6 +237,20 @@ static const CGFloat kNavigationBarHeight = 80.0;
   self = [self init];
   if (self) {
     [self setCurrentSong:song];
+  }
+  return self;
+}
+
+- (id)initWithRdioSong:(RdioSong *)song
+{
+  self = [self init];
+  if (self) {
+    [sonos play:nil rdioSong:song completion:nil];
+
+    NSURL *url = [NSURL URLWithString:song.albumArt];
+    NSData *data = [NSData dataWithContentsOfURL:url];
+    UIImage *image = [[UIImage alloc] initWithData:data];
+    [album setImage:image];
   }
   return self;
 }
