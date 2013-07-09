@@ -10,9 +10,6 @@
 #import "RdioPlaylist.h"
 #import "PLNowPlayingViewController.h"
 #import "RdioSongsViewController.h"
-#import "RdioSong.h"
-#import "RdioAlbum.h"
-#import "RdioArtist.h"
 #import "PLSongViewController.h"
 
 @interface RdioPlaylistViewController ()
@@ -48,8 +45,6 @@
     NSString *secret = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFRdioConsumerSecret"];
     rdio = [[Rdio alloc] initWithConsumerKey:key andSecret:secret delegate:self];
     [rdio authorizeUsingAccessToken:[[NSUserDefaults standardUserDefaults] objectForKey:@"rdioAccessKey"] fromController:self];
-  } else {
-    //
   }
 }
 
@@ -63,7 +58,7 @@
 - (void)getRdioPlaylists
 {
   [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
-  [rdio callAPIMethod:@"getPlaylists" withParameters:@{@"extras": @"tracks"} delegate:self];
+  [rdio callAPIMethod:@"getPlaylists" withParameters:nil delegate:self];
 }
 
 #pragma mark - RdioDelegate
@@ -92,29 +87,9 @@
 //  NSLog(@"Rdio: request did load: %@", data[@"owned"]);
   for (NSDictionary *playlist in data[@"owned"]) {
     RdioPlaylist *newPlaylist = [[RdioPlaylist alloc] init];
+    [newPlaylist setKey:playlist[@"key"]];
     [newPlaylist setName:playlist[@"name"]];
     [newPlaylist setUrl:playlist[@"url"]];
-
-    NSMutableArray *songs = [[NSMutableArray alloc] init];
-    for (NSDictionary *song in playlist[@"tracks"]) {
-      RdioArtist *artist = [[RdioArtist alloc] init];
-      [artist setKey:song[@"artistKey"]];
-      [artist setName:song[@"artist"]];
-
-      RdioAlbum *album = [[RdioAlbum alloc] init];
-      [album setKey:song[@"albumKey"]];
-      [album setName:song[@"album"]];
-      [album setArtist:artist];
-
-      RdioSong *newSong = [[RdioSong alloc] init];
-      [newSong setKey:song[@"key"]];
-      [newSong setName:song[@"name"]];
-      [newSong setAlbumArt:song[@"icon"]];
-      [newSong setAlbum:album];
-      [songs addObject:newSong];
-    }
-    [newPlaylist setSongs:songs];
-    
     [playlists addObject:newPlaylist];
   }
   [self.tableView reloadData];
@@ -150,7 +125,7 @@
 {
   RdioPlaylist *playlist = (RdioPlaylist *)[playlists objectAtIndex:indexPath.row];
 
-  RdioSongsViewController *viewController = [[RdioSongsViewController alloc] initWithSongs:playlist.songs];
+  RdioSongsViewController *viewController = [[RdioSongsViewController alloc] initWithPlaylist:playlist];
   [self.navigationController pushViewController:viewController animated:YES];
 }
 
