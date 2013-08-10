@@ -60,7 +60,9 @@ static const CGFloat kNavigationBarHeight = 80.0;
   self = [super init];
   if (self) {
     [self.navigationItem setTitle:@"Now Playing"];
-    [self.view setBackgroundColor:[UIColor whiteColor]];
+    [self.navigationController.navigationBar setTintColor:[UIColor blackColor]];
+
+    [self.view setBackgroundColor:[UIColor blackColor]];
 
     sonos = [SonosController sharedController];
 
@@ -106,6 +108,8 @@ static const CGFloat kNavigationBarHeight = 80.0;
 - (void)viewDidLoad
 {
   [super viewDidLoad];
+
+  [self setNeedsStatusBarAppearanceUpdate];
 
   // Header
   tableHeader = [[UIView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(self.view.bounds), 390)];
@@ -176,6 +180,11 @@ static const CGFloat kNavigationBarHeight = 80.0;
   NBDirectionGestureRecognizer *controlPan = [[NBDirectionGestureRecognizer alloc] initWithTarget:self action:@selector(panControlBar:)];
   [controlPan setDirection:NBDirectionPanGestureRecognizerVertical];
   [controlBar addGestureRecognizer:controlPan];
+}
+
+- (UIStatusBarStyle)preferredStatusBarStyle
+{
+  return UIStatusBarStyleLightContent;
 }
 
 - (void)playPause

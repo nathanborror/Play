@@ -78,6 +78,7 @@ static const CGFloat kControlVolumeSpacing = 10.0;
 {
   PLNowPlayingViewController *viewController = [[PLNowPlayingViewController alloc] init];
   UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:viewController];
+  [navController.navigationBar setBarStyle:UIBarStyleBlack];
   [self.navigationController presentViewController:navController animated:YES completion:nil];
 }
 
