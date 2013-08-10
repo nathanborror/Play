@@ -32,7 +32,7 @@
 
     self.hideLabel = NO;
 
-    volumeDial = [[PLDial alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(self.bounds), 44)];
+    volumeDial = [[PLDial alloc] initWithFrame:CGRectMake(0, 18, CGRectGetWidth(self.bounds), 44)];
     [volumeDial setMaxValue:100.0];
     [volumeDial setMinValue:0.0];
     [volumeDial setValue:10.0];
@@ -57,11 +57,13 @@
   input = aInput;
 
   if (!self.hideLabel) {
-    name = [[UILabel alloc] initWithFrame:CGRectMake(0, CGRectGetMinY(volumeDial.frame)-25, CGRectGetWidth(self.bounds), 20)];
+    name = [[UILabel alloc] init];
     [name setUserInteractionEnabled:NO];
     [name setText:self.input.name];
-    [name setFont:[UIFont systemFontOfSize:14.0]];
+    [name setFont:[UIFont systemFontOfSize:15]];
     [name setBackgroundColor:[UIColor clearColor]];
+    [name sizeToFit];
+    [name setCenter:CGPointMake(CGRectGetWidth(self.bounds)/2, 0)];
     [self addSubview:name];
   }
 
