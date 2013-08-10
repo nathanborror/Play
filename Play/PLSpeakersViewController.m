@@ -19,6 +19,9 @@
 #import "SOAPEnvelope.h"
 #import "UIImage+BlurImage.h"
 
+#define ACTIVE_POSITION (CGRectGetWidth(self.view.bounds)/2)+(CGRectGetWidth(self.view.bounds)/4)-(CGRectGetWidth(cell.bounds)/2)
+#define RESTING_POSITION (CGRectGetWidth(self.view.bounds)/4)-(CGRectGetWidth(cell.bounds)/2)
+
 static const CGFloat kInputOffRestingX = 23.0;
 static const CGFloat kInputOnRestingX = 185.0;
 static const CGFloat kControlButtonWidth = 60.0;
@@ -108,10 +111,10 @@ static const CGFloat kControlVolumeSpacing = 10.0;
     [cell addTarget:self action:@selector(inputCellWasSelected:) forControlEvents:UIControlEventTouchUpInside];
 
     if ([input isEqual:[[SonosInputStore sharedStore] master]]) {
-      [cell setFrame:CGRectOffset(cell.bounds, kInputOnRestingX, (CGRectGetHeight(cell.bounds)*i)+(20*(i+1))+70)];
+      [cell setFrame:CGRectOffset(cell.bounds, ACTIVE_POSITION, (CGRectGetHeight(cell.bounds)*i)+(20*(i+1))+70)];
       [pairedSpeakers addObject:input];
     } else {
-      [cell setFrame:CGRectOffset(cell.bounds, kInputOffRestingX, (CGRectGetHeight(cell.bounds)*i)+(20*(i+1))+70)];
+      [cell setFrame:CGRectOffset(cell.bounds, RESTING_POSITION, (CGRectGetHeight(cell.bounds)*i)+(20*(i+1))+70)];
     }
 
     [cell setAutoresizingMask:UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleLeftMargin];
@@ -150,13 +153,13 @@ static const CGFloat kControlVolumeSpacing = 10.0;
   return cell;
 }
 
-- (void)inputCellWasSelected:(PLInputCell *)inputCell
+- (void)inputCellWasSelected:(PLInputCell *)cell
 {
   PLLibraryViewController *viewController = [[PLLibraryViewController alloc] init];
   [self.navigationController pushViewController:viewController animated:YES];
 }
 
-- (void)inputCell:(PLInputCell *)inputCell isHighlighted:(BOOL)active
+- (void)inputCell:(PLInputCell *)cell isHighlighted:(BOOL)active
 {
   SonosInputStore *inputStore = [SonosInputStore sharedStore];
 
@@ -166,20 +169,20 @@ static const CGFloat kControlVolumeSpacing = 10.0;
     // If there are no speakers in the grouped colum, set the master to
     // the speaker being dragged over.
     if ([pairedSpeakers count] == 0) {
-      [inputStore setMaster:inputCell.input];
+      [inputStore setMaster:cell.input];
     }
 
-    toPoint = CGPointMake(kInputOnRestingX+CGRectGetWidth(inputCell.bounds)/2, inputCell.origin.y);
-    [pairedSpeakers addObject:inputCell];
-    [inputCell pair:inputStore.master];
+    toPoint = CGPointMake((CGRectGetWidth(self.view.bounds)/2)+(CGRectGetWidth(self.view.bounds)/4), cell.origin.y);
+    [pairedSpeakers addObject:cell];
+    [cell pair:inputStore.master];
   } else {
-    toPoint = CGPointMake(kInputOffRestingX+CGRectGetWidth(inputCell.bounds)/2, inputCell.origin.y);
-    [pairedSpeakers removeObjectIdenticalTo:inputCell];
-    [inputCell unpair];
+    toPoint = CGPointMake((CGRectGetWidth(self.view.bounds)/4), cell.origin.y);
+    [pairedSpeakers removeObjectIdenticalTo:cell];
+    [cell unpair];
   }
 
   
-  UISnapBehavior *snap = [[UISnapBehavior alloc] initWithItem:inputCell snapToPoint:toPoint];
+  UISnapBehavior *snap = [[UISnapBehavior alloc] initWithItem:cell snapToPoint:toPoint];
   [snap setDamping:.7];
   [animator addBehavior:snap];
 }
