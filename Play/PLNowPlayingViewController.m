@@ -50,10 +50,6 @@ static const CGFloat kNavigationBarHeight = 80.0;
   UIView *tableHeader;
   NSArray *songListData;
   CGPoint panCoordBegan;
-
-  UIDynamicAnimator *animator;
-  UIGravityBehavior *gravity;
-  UICollisionBehavior *collision;
 }
 @end
 
@@ -70,9 +66,6 @@ static const CGFloat kNavigationBarHeight = 80.0;
 
     UIBarButtonItem *done = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(done)];
     [self.navigationItem setRightBarButtonItem:done];
-
-    // Animations
-    animator = [[UIDynamicAnimator alloc] initWithReferenceView:self.view];
   }
   return self;
 }
@@ -239,32 +232,22 @@ static const CGFloat kNavigationBarHeight = 80.0;
 
 - (void)showSpeakerVolumes
 {
-  UISnapBehavior *snap = [[UISnapBehavior alloc] initWithItem:controlBar snapToPoint:CGPointMake(controlBar.center.x, kControlBarRaisedCenter)];
-  [snap setDamping:.4];
-  [animator addBehavior:snap];
-
-  UIDynamicItemBehavior *custom = [[UIDynamicItemBehavior alloc] initWithItems:@[controlBar]];
-  [custom setAllowsRotation:NO];
-  [animator addBehavior:custom];
+  [UIView animateWithDuration:.75 delay:0 usingSpringWithDamping:kDamping initialSpringVelocity:kVelocity options:UIViewAnimationOptionCurveLinear animations:^{
+    [controlBar setFrame:CGRectOffset(controlBar.bounds, 0, 90)];
+  } completion:nil];
 }
 
 - (void)hideSpeakerVolumes
 {
-  UISnapBehavior *snap = [[UISnapBehavior alloc] initWithItem:controlBar snapToPoint:CGPointMake(controlBar.center.x, kControlBarLoweredCenter)];
-  [snap setDamping:.4];
-  [animator addBehavior:snap];
-
-  UIDynamicItemBehavior *custom = [[UIDynamicItemBehavior alloc] initWithItems:@[controlBar]];
-  [custom setAllowsRotation:NO];
-  [animator addBehavior:custom];
+  [UIView animateWithDuration:.75 delay:0 usingSpringWithDamping:kDamping initialSpringVelocity:kVelocity options:UIViewAnimationOptionCurveLinear animations:^{
+    [controlBar setFrame:CGRectOffset(controlBar.bounds, 0, CGRectGetHeight(self.view.bounds)-kControlBarHeight)];
+  } completion:nil];
 }
 
 #pragma mark - NBDirectionGestureRecognizer
 
 - (void)panControlBar:(NBDirectionGestureRecognizer *)recognizer
 {
-  [animator removeAllBehaviors];
-
   if (recognizer.state == UIGestureRecognizerStateBegan) {
     panCoordBegan = [recognizer locationInView:controlBar];
   }
