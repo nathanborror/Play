@@ -15,24 +15,27 @@
 #import "SonosInputStore.h"
 #import "SonosInput.h"
 #import "PLVolumeSlider.h"
+#import "PLProgressBar.h"
 #import "UIImage+BlurImage.h"
 #import "NBKit/NBDirectionGestureRecognizer.h"
 #import "RdioSong.h"
 
 static const CGFloat kProgressPadding = 50.0;
 
-static const CGFloat kControlBarPadding = 20.0;
-static const CGFloat kControlBarPreviousNextPadding = 40.0;
-static const CGFloat kControlBarButtonWidth = 75.0;
+static const CGFloat kControlBarPadding = 15.0;
+static const CGFloat kControlBarPreviousNextPadding = 46.0;
+static const CGFloat kControlBarButtonWidth = 65.0;
 static const CGFloat kControlBarButtonHeight = kControlBarButtonWidth;
 static const CGFloat kControlBarButtonPadding = 20.0;
 
-static const CGFloat kControlBarLowered = 384.0;
-static const CGFloat kControlBarLoweredCenter = 670.0;
-static const CGFloat kControlBarRaised = 64.0;
-static const CGFloat kControlBarRaisedCenter = 346.0;
+static const CGFloat kControlBarHeight = 184.0;
+static const CGFloat kControlBarLoweredCenter = 668.0;
+static const CGFloat kControlBarRaisedCenter = 376.0;
 
 static const CGFloat kNavigationBarHeight = 80.0;
+
+static const CGFloat kVelocity = 0.1;
+static const CGFloat kDamping = 0.6;
 
 @interface PLNowPlayingViewController ()
 {
@@ -124,6 +127,7 @@ static const CGFloat kNavigationBarHeight = 80.0;
   // Song List
   songList = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(self.view.bounds), CGRectGetHeight(self.view.bounds))];
   [songList setAutoresizingMask:UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight];
+  [songList setShowsVerticalScrollIndicator:NO];
   [songList setBackgroundColor:[UIColor clearColor]];
   [songList setTableHeaderView:tableHeader];
   [songList setContentInset:UIEdgeInsetsMake(0, 0, 700, 0)];
@@ -132,36 +136,70 @@ static const CGFloat kNavigationBarHeight = 80.0;
   [self.view addSubview:songList];
 
   // Control Bar
-  controlBar = [[UIView alloc] initWithFrame:CGRectMake(0, kControlBarLowered, CGRectGetWidth(self.view.frame), CGRectGetHeight(self.view.frame))];
+  controlBar = [[UIView alloc] initWithFrame:CGRectMake(0, CGRectGetHeight(self.view.bounds)-kControlBarHeight, CGRectGetWidth(self.view.frame), CGRectGetHeight(self.view.frame))];
   [controlBar setBackgroundColor:[UIColor whiteColor]];
   [controlBar setAutoresizingMask:UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleTopMargin];
   [controlBar setUserInteractionEnabled:YES];
 
-  UIImageView *grip = [[UIImageView alloc] initWithFrame:CGRectMake((CGRectGetWidth(self.view.frame)/2)-17, 6, 35, 3)];
-  [grip setImage:[UIImage imageNamed:@"ControlBarGrip"]];
-  [grip setAutoresizingMask:UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin];
-  [controlBar addSubview:grip];
-
-  playPauseButton = [[UIButton alloc] initWithFrame:CGRectMake((CGRectGetWidth(controlBar.bounds)/2)-kControlBarButtonWidth/2, kControlBarPadding, kControlBarButtonWidth, kControlBarButtonHeight)];
+  playPauseButton = [[UIButton alloc] initWithFrame:CGRectMake((CGRectGetWidth(controlBar.bounds)/2)-kControlBarButtonWidth/2, 68, kControlBarButtonWidth, kControlBarButtonHeight)];
   [playPauseButton setBackgroundImage:[UIImage imageNamed:@"ControlPause.png"] forState:UIControlStateNormal];
   [playPauseButton addTarget:self action:@selector(playPause) forControlEvents:UIControlEventTouchUpInside];
   [playPauseButton setShowsTouchWhenHighlighted:YES];
   [controlBar addSubview:playPauseButton];
 
-  nextButton = [[UIButton alloc] initWithFrame:CGRectMake(CGRectGetWidth(controlBar.bounds)-(kControlBarButtonWidth+kControlBarPreviousNextPadding), kControlBarPadding, kControlBarButtonWidth, kControlBarButtonHeight)];
+  nextButton = [[UIButton alloc] initWithFrame:CGRectMake(CGRectGetWidth(controlBar.bounds)-(kControlBarButtonWidth+kControlBarPreviousNextPadding), 68, kControlBarButtonWidth, kControlBarButtonHeight)];
   [nextButton setBackgroundImage:[UIImage imageNamed:@"ControlNext.png"] forState:UIControlStateNormal];
   [nextButton addTarget:self action:@selector(next) forControlEvents:UIControlEventTouchUpInside];
   [nextButton setShowsTouchWhenHighlighted:YES];
   [controlBar addSubview:nextButton];
 
-  previousButton = [[UIButton alloc] initWithFrame:CGRectMake(kControlBarPreviousNextPadding, kControlBarPadding, kControlBarButtonWidth, kControlBarButtonHeight)];
+  previousButton = [[UIButton alloc] initWithFrame:CGRectMake(kControlBarPreviousNextPadding, 68, kControlBarButtonWidth, kControlBarButtonHeight)];
   [previousButton setBackgroundImage:[UIImage imageNamed:@"ControlPrevious.png"] forState:UIControlStateNormal];
   [previousButton addTarget:self action:@selector(previous) forControlEvents:UIControlEventTouchUpInside];
   [previousButton setShowsTouchWhenHighlighted:YES];
   [controlBar addSubview:previousButton];
 
+  // Song info
+  UILabel *songTitle = [[UILabel alloc] init];
+  [songTitle setText:@"Come Together"];
+  [songTitle setFont:[UIFont boldSystemFontOfSize:15]];
+  [songTitle setBackgroundColor:[UIColor clearColor]];
+  [songTitle sizeToFit];
+  [songTitle setCenter:CGPointMake(CGRectGetWidth(controlBar.bounds)/2, 40)];
+  [controlBar addSubview:songTitle];
+
+  UILabel *artistTitle = [[UILabel alloc] init];
+  [artistTitle setText:@"The Beatles — Abby Road"];
+  [artistTitle setFont:[UIFont systemFontOfSize:11]];
+  [artistTitle setBackgroundColor:[UIColor clearColor]];
+  [artistTitle sizeToFit];
+  [artistTitle setCenter:CGPointMake(CGRectGetWidth(controlBar.bounds)/2, 60)];
+  [controlBar addSubview:artistTitle];
+
+  PLProgressBar *progress = [[PLProgressBar alloc] initWithFrame:CGRectMake(45, 0, CGRectGetWidth(self.view.bounds)-90, 20)];
+  [progress setMinimumValue:0];
+  [progress setMaximumValue:5.0];
+  [progress setValue:1];
+  [controlBar addSubview:progress];
+
+  UILabel *elapsedTime = [[UILabel alloc] init];
+  [elapsedTime setText:@"1:34"];
+  [elapsedTime setFont:[UIFont systemFontOfSize:10]];
+  [elapsedTime setBackgroundColor:[UIColor clearColor]];
+  [elapsedTime sizeToFit];
+  [elapsedTime setFrame:CGRectOffset(elapsedTime.bounds, 20, 11)];
+  [controlBar addSubview:elapsedTime];
+
+  UILabel *totalTime = [[UILabel alloc] init];
+  [totalTime setText:@"5:11"];
+  [totalTime setFont:[UIFont systemFontOfSize:10]];
+  [totalTime setBackgroundColor:[UIColor clearColor]];
+  [totalTime sizeToFit];
+  [totalTime setFrame:CGRectOffset(totalTime.bounds, CGRectGetWidth(controlBar.bounds)-CGRectGetWidth(totalTime.bounds)-20, 11)];
+  [controlBar addSubview:totalTime];
+
   // PLDial
-  PLDial *dial = [[PLDial alloc] initWithFrame:CGRectMake(kControlBarButtonPadding, 110, CGRectGetWidth(controlBar.bounds)-(kControlBarButtonPadding*2), 44)];
+  PLDial *dial = [[PLDial alloc] initWithFrame:CGRectMake(kControlBarPadding, 153-kControlBarPadding, CGRectGetWidth(controlBar.bounds)-(kControlBarPadding*2), 44)];
   [dial setMaxValue:100];
   [dial setMinValue:0];
   [dial setValue:20];
@@ -169,7 +207,7 @@ static const CGFloat kNavigationBarHeight = 80.0;
 
   NSArray *speakers = [[SonosInputStore sharedStore] allInputs];
   for (int i = 0; i < speakers.count; i++) {
-    PLVolumeSlider *speakerVolume = [[PLVolumeSlider alloc] initWithFrame:CGRectMake(kControlBarButtonPadding, 205 + (i * 70), CGRectGetWidth(controlBar.bounds)-(kControlBarButtonPadding * 2), 44)];
+    PLVolumeSlider *speakerVolume = [[PLVolumeSlider alloc] initWithFrame:CGRectMake(kControlBarButtonPadding, 235 + (i * 80), CGRectGetWidth(controlBar.bounds)-(kControlBarButtonPadding * 2), 44)];
     [speakerVolume setInput:[speakers objectAtIndex:i]];
     [controlBar addSubview:speakerVolume];
   }
