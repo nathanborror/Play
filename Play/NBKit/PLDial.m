@@ -9,11 +9,14 @@
 #import "PLDial.h"
 #import "NBDirectionGestureRecognizer.h"
 
+static const CGFloat kDialHeight = 31;
+
 @interface PLDial ()
 {
   CGPoint panCoordBegan;
-  UIImageView *max;
+  UIView *max;
   UIView *min;
+  UIImageView *thumb;
 
   CGFloat maxOriginX;
   CGFloat minOriginX;
@@ -28,23 +31,26 @@
   self = [super initWithFrame:frame];
   if (self) {
 
-    max = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(self.bounds), 31)];
-    [max setImage:[[UIImage imageNamed:@"PLDial"] resizableImageWithCapInsets:UIEdgeInsetsMake(16, 16, 16, 16) resizingMode:UIImageResizingModeStretch]];
+    max = [[UIView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(self.bounds), kDialHeight)];
+    [max setBackgroundColor:[UIColor colorWithRed:.85 green:.86 blue:.88 alpha:1]];
+    [max.layer setCornerRadius:CGRectGetHeight(max.bounds)/2];
     [self addSubview:max];
 
-    min = [[UIView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(self.bounds), 32)];
+    min = [[UIView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(self.bounds), kDialHeight)];
+    [min setBackgroundColor:[UIColor blackColor]];
+    [min.layer setCornerRadius:CGRectGetHeight(min.bounds)/2];
     [self addSubview:min];
 
-    UIImageView *thumb = [[UIImageView alloc] initWithFrame:CGRectMake(CGRectGetWidth(min.bounds)-21, -6, 43, 43)];
+    thumb = [[UIImageView alloc] initWithFrame:CGRectMake(0, -6, 43, 43)];
     [thumb setImage:[UIImage imageNamed:@"PLDialThumb"]];
-    [min addSubview:thumb];
+    [self addSubview:thumb];
 
     NBDirectionGestureRecognizer *pan = [[NBDirectionGestureRecognizer alloc] initWithTarget:self action:@selector(panDial:)];
     [pan setDirection:NBDirectionPanGestureRecognizerHorizontal];
     [self addGestureRecognizer:pan];
 
-    maxOriginX = min.center.x-12;
-    minOriginX = -(maxOriginX);
+    maxOriginX = CGRectGetWidth(self.bounds)-15;
+    minOriginX = 15;
   }
   return self;
 }
@@ -53,18 +59,19 @@
 {
   self->value = aValue;
 
-  CGPoint newPoint = CGPointMake([self findPosition:aValue], min.center.y);
+  CGPoint newPoint = CGPointMake([self findPosition:aValue], thumb.center.y);
 
   if (newPoint.x < maxOriginX && newPoint.x > minOriginX) {
-    min.center = newPoint;
+    thumb.center = newPoint;
   } else {
     if (newPoint.x > maxOriginX) {
-      min.center = CGPointMake(maxOriginX, min.center.y);
+      thumb.center = CGPointMake(maxOriginX, thumb.center.y);
     }
     if (newPoint.x < minOriginX) {
-      min.center = CGPointMake(minOriginX, min.center.y);
+      thumb.center = CGPointMake(minOriginX, thumb.center.y);
     }
   }
+  [min setFrame:CGRectMake(0, 0, CGRectGetMaxX(thumb.frame)-10, kDialHeight)];
 }
 
 #pragma mark - NBDirectionGestureRecognizer
@@ -72,13 +79,13 @@
 - (void)panDial:(NBDirectionGestureRecognizer *)recognizer
 {
   if (recognizer.state == UIGestureRecognizerStateBegan) {
-    panCoordBegan = [recognizer locationInView:min];
+    panCoordBegan = [recognizer locationInView:thumb];
   }
 
   if (recognizer.state == UIGestureRecognizerStateChanged) {
-    CGPoint panCoordChange = [recognizer locationInView:min];
+    CGPoint panCoordChange = [recognizer locationInView:thumb];
     CGFloat deltaX = panCoordChange.x - panCoordBegan.x;
-    CGFloat newX = min.center.x + deltaX;
+    CGFloat newX = thumb.center.x + deltaX;
 
     // Figure out value
     [self setValue:[self findValue:newX]];
