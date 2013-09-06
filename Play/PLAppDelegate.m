@@ -7,8 +7,8 @@
 //
 
 #import "PLAppDelegate.h"
-#import "PLSpeakersViewController.h"
 #import "SonosInputStore.h"
+#import "PLNowPlayingViewController.h"
 
 @implementation PLAppDelegate
 
@@ -17,8 +17,14 @@
   self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
   [self.window setBackgroundColor:[UIColor whiteColor]];
 
-  PLSpeakersViewController *viewController = [[PLSpeakersViewController alloc] init];
+  [[UISlider appearance] setMaximumTrackImage:[UIImage imageNamed:@"PLProgressMax"] forState:UIControlStateNormal];
+  [[UISlider appearance] setMinimumTrackImage:[UIImage imageNamed:@"PLProgressMin"] forState:UIControlStateNormal];
+
+  [self.window setTintColor:[UIColor colorWithRed:.99 green:.29 blue:.44 alpha:1]];
+
+  PLNowPlayingViewController *viewController = [[PLNowPlayingViewController alloc] init];
   UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:viewController];
+  [navController.navigationBar setTranslucent:NO];
   [self.window setRootViewController:navController];
 
   [self.window makeKeyAndVisible];
