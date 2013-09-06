@@ -18,6 +18,9 @@
 		D158132C16E88E3F0009E11B /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D158132B16E88E3F0009E11B /* SystemConfiguration.framework */; };
 		D8021A4D16B5DB39002BEAF7 /* SonosMockResponses.m in Sources */ = {isa = PBXBuildFile; fileRef = D8021A4C16B5DB39002BEAF7 /* SonosMockResponses.m */; };
 		D8030BF016928583002F57B6 /* examples in Resources */ = {isa = PBXBuildFile; fileRef = D8030BEF16928583002F57B6 /* examples */; };
+		D812F76717D82DC600E19402 /* PLNextUpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D812F76617D82DC600E19402 /* PLNextUpViewController.m */; };
+		D812F76A17D832BD00E19402 /* PLQueueCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D812F76917D832BD00E19402 /* PLQueueCell.m */; };
+		D812F77017D8373100E19402 /* PLVolumeCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D812F76F17D8373100E19402 /* PLVolumeCell.m */; };
 		D819F64D16ADC2DA00B19B50 /* SOAPEnvelope.m in Sources */ = {isa = PBXBuildFile; fileRef = D819F64C16ADC2DA00B19B50 /* SOAPEnvelope.m */; };
 		D819F65016ADC64300B19B50 /* SonosConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = D819F64F16ADC64300B19B50 /* SonosConnection.m */; };
 		D819F65416AE047500B19B50 /* SonosPositionInfoResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = D819F65316AE047500B19B50 /* SonosPositionInfoResponse.m */; };
@@ -25,6 +28,7 @@
 		D819F65D16AE1BB900B19B50 /* Examples.xml in Resources */ = {isa = PBXBuildFile; fileRef = D819F65C16AE1BB900B19B50 /* Examples.xml */; };
 		D82B793516D7538000B5FF35 /* SonosVolumeResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = D82B793416D7538000B5FF35 /* SonosVolumeResponse.m */; };
 		D864953817B6F2D0006E7E46 /* PLProgressBar.m in Sources */ = {isa = PBXBuildFile; fileRef = D864953717B6F2D0006E7E46 /* PLProgressBar.m */; };
+		D8678A9B17D5D687001CE707 /* PresentSpeakersAnimator.m in Sources */ = {isa = PBXBuildFile; fileRef = D8678A9A17D5D687001CE707 /* PresentSpeakersAnimator.m */; };
 		D8824DDE1693880600D05AA0 /* PLAddInputViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D8824DDD1693880600D05AA0 /* PLAddInputViewController.m */; };
 		D8824DE916938CA300D05AA0 /* SonosInput.m in Sources */ = {isa = PBXBuildFile; fileRef = D8824DE816938CA300D05AA0 /* SonosInput.m */; };
 		D8824E2B169392FF00D05AA0 /* PLSource.m in Sources */ = {isa = PBXBuildFile; fileRef = D8824E2A169392FF00D05AA0 /* PLSource.m */; };
@@ -60,7 +64,6 @@
 		D8B613DB1718077400F12446 /* NBDirectionGestureRecognizer.m in Sources */ = {isa = PBXBuildFile; fileRef = D8B613DA1718077400F12446 /* NBDirectionGestureRecognizer.m */; };
 		D8B613E4171B5B7300F12446 /* PLInputCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D8B613E3171B5B7300F12446 /* PLInputCell.m */; };
 		D8C3471E173B7B9100D7B28C /* SonosTransportInfoResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = D8C3471D173B7B9100D7B28C /* SonosTransportInfoResponse.m */; };
-		D8D87D1516D3F0CA0059DBED /* PLVolumeSlider.m in Sources */ = {isa = PBXBuildFile; fileRef = D8D87D1416D3F0CA0059DBED /* PLVolumeSlider.m */; };
 		D8DFB67D176D0F1A00593F92 /* UIImage+BlurImage.m in Sources */ = {isa = PBXBuildFile; fileRef = D8DFB67B176D0C7500593F92 /* UIImage+BlurImage.m */; };
 /* End PBXBuildFile section */
 
@@ -81,6 +84,12 @@
 		D8021A4B16B5DB39002BEAF7 /* SonosMockResponses.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SonosMockResponses.h; sourceTree = "<group>"; };
 		D8021A4C16B5DB39002BEAF7 /* SonosMockResponses.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SonosMockResponses.m; sourceTree = "<group>"; };
 		D8030BEF16928583002F57B6 /* examples */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = examples; sourceTree = "<group>"; };
+		D812F76517D82DC600E19402 /* PLNextUpViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PLNextUpViewController.h; sourceTree = "<group>"; };
+		D812F76617D82DC600E19402 /* PLNextUpViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PLNextUpViewController.m; sourceTree = "<group>"; };
+		D812F76817D832BD00E19402 /* PLQueueCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PLQueueCell.h; sourceTree = "<group>"; };
+		D812F76917D832BD00E19402 /* PLQueueCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PLQueueCell.m; sourceTree = "<group>"; };
+		D812F76E17D8373100E19402 /* PLVolumeCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PLVolumeCell.h; sourceTree = "<group>"; };
+		D812F76F17D8373100E19402 /* PLVolumeCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PLVolumeCell.m; sourceTree = "<group>"; };
 		D819F64B16ADC2DA00B19B50 /* SOAPEnvelope.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SOAPEnvelope.h; sourceTree = "<group>"; };
 		D819F64C16ADC2DA00B19B50 /* SOAPEnvelope.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SOAPEnvelope.m; sourceTree = "<group>"; };
 		D819F64E16ADC64300B19B50 /* SonosConnection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SonosConnection.h; sourceTree = "<group>"; };
@@ -95,6 +104,8 @@
 		D82B793416D7538000B5FF35 /* SonosVolumeResponse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SonosVolumeResponse.m; sourceTree = "<group>"; };
 		D864953617B6F2D0006E7E46 /* PLProgressBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PLProgressBar.h; sourceTree = "<group>"; };
 		D864953717B6F2D0006E7E46 /* PLProgressBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PLProgressBar.m; sourceTree = "<group>"; };
+		D8678A9917D5D687001CE707 /* PresentSpeakersAnimator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PresentSpeakersAnimator.h; sourceTree = "<group>"; };
+		D8678A9A17D5D687001CE707 /* PresentSpeakersAnimator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PresentSpeakersAnimator.m; sourceTree = "<group>"; };
 		D8824DDC1693880600D05AA0 /* PLAddInputViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PLAddInputViewController.h; sourceTree = "<group>"; };
 		D8824DDD1693880600D05AA0 /* PLAddInputViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PLAddInputViewController.m; sourceTree = "<group>"; };
 		D8824DE716938CA300D05AA0 /* SonosInput.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SonosInput.h; sourceTree = "<group>"; };
@@ -154,8 +165,6 @@
 		D8B613E3171B5B7300F12446 /* PLInputCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PLInputCell.m; sourceTree = "<group>"; };
 		D8C3471C173B7B9100D7B28C /* SonosTransportInfoResponse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SonosTransportInfoResponse.h; sourceTree = "<group>"; };
 		D8C3471D173B7B9100D7B28C /* SonosTransportInfoResponse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SonosTransportInfoResponse.m; sourceTree = "<group>"; };
-		D8D87D1316D3F0CA0059DBED /* PLVolumeSlider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PLVolumeSlider.h; sourceTree = "<group>"; };
-		D8D87D1416D3F0CA0059DBED /* PLVolumeSlider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PLVolumeSlider.m; sourceTree = "<group>"; };
 		D8DFB67A176D0C7500593F92 /* UIImage+BlurImage.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIImage+BlurImage.h"; sourceTree = "<group>"; };
 		D8DFB67B176D0C7500593F92 /* UIImage+BlurImage.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIImage+BlurImage.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -233,6 +242,15 @@
 			name = Sonos;
 			sourceTree = "<group>";
 		};
+		D8678A9817D5D665001CE707 /* Animators */ = {
+			isa = PBXGroup;
+			children = (
+				D8678A9917D5D687001CE707 /* PresentSpeakersAnimator.h */,
+				D8678A9A17D5D687001CE707 /* PresentSpeakersAnimator.m */,
+			);
+			name = Animators;
+			sourceTree = "<group>";
+		};
 		D8824DE616938C8900D05AA0 /* Data */ = {
 			isa = PBXGroup;
 			children = (
@@ -251,12 +269,14 @@
 				D8B4A33917C07B8E00782ED8 /* PLDial.m */,
 				D8824E2C1693992B00D05AA0 /* PLTextField.h */,
 				D8824E2D1693992B00D05AA0 /* PLTextField.m */,
-				D8D87D1316D3F0CA0059DBED /* PLVolumeSlider.h */,
-				D8D87D1416D3F0CA0059DBED /* PLVolumeSlider.m */,
 				D8B613E2171B5B7300F12446 /* PLInputCell.h */,
 				D8B613E3171B5B7300F12446 /* PLInputCell.m */,
 				D864953617B6F2D0006E7E46 /* PLProgressBar.h */,
 				D864953717B6F2D0006E7E46 /* PLProgressBar.m */,
+				D812F76817D832BD00E19402 /* PLQueueCell.h */,
+				D812F76917D832BD00E19402 /* PLQueueCell.m */,
+				D812F76E17D8373100E19402 /* PLVolumeCell.h */,
+				D812F76F17D8373100E19402 /* PLVolumeCell.m */,
 			);
 			name = "UI Elements";
 			sourceTree = "<group>";
@@ -312,9 +332,12 @@
 		D88EA7F416917C460011F6FB /* Play */ = {
 			isa = PBXGroup;
 			children = (
+				D8678A9817D5D665001CE707 /* Animators */,
 				D8B613D51717FD2200F12446 /* NBKit */,
 				D88EA7FD16917C460011F6FB /* PLAppDelegate.h */,
 				D88EA7FE16917C460011F6FB /* PLAppDelegate.m */,
+				D812F76517D82DC600E19402 /* PLNextUpViewController.h */,
+				D812F76617D82DC600E19402 /* PLNextUpViewController.m */,
 				D88D115E16937AC80039067F /* PLLibraryViewController.h */,
 				D88D115F16937AC80039067F /* PLLibraryViewController.m */,
 				D88D116116937ADF0039067F /* PLSpeakersViewController.h */,
@@ -432,6 +455,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D8B4A33A17C0A9E900782ED8 /* PLDial.m in Sources */,
+				D812F76A17D832BD00E19402 /* PLQueueCell.m in Sources */,
 				D89337FD178A2B9800AF8A1B /* RdioSongsViewController.m in Sources */,
 				D89337FA178A1E6900AF8A1B /* RdioPlaylist.m in Sources */,
 				D89337F71788DC0E00AF8A1B /* RdioPlaylistViewController.m in Sources */,
@@ -448,6 +472,7 @@
 				D864953817B6F2D0006E7E46 /* PLProgressBar.m in Sources */,
 				D8824E2B169392FF00D05AA0 /* PLSource.m in Sources */,
 				D8824E2E1693992B00D05AA0 /* PLTextField.m in Sources */,
+				D812F76717D82DC600E19402 /* PLNextUpViewController.m in Sources */,
 				D8824E3416939C5D00D05AA0 /* UIViewController+ModalCheck.m in Sources */,
 				D8824E371693A52200D05AA0 /* SonosInputStore.m in Sources */,
 				D8824E3E1693CEA600D05AA0 /* PLPlaylistsViewController.m in Sources */,
@@ -457,13 +482,14 @@
 				D819F65416AE047500B19B50 /* SonosPositionInfoResponse.m in Sources */,
 				D819F65B16AE165800B19B50 /* SonosErrorResponse.m in Sources */,
 				D8021A4D16B5DB39002BEAF7 /* SonosMockResponses.m in Sources */,
-				D8D87D1516D3F0CA0059DBED /* PLVolumeSlider.m in Sources */,
 				D82B793516D7538000B5FF35 /* SonosVolumeResponse.m in Sources */,
 				D158131516E883E40009E11B /* RdioArtist.m in Sources */,
 				D158131816E883F20009E11B /* RdioAlbum.m in Sources */,
+				D8678A9B17D5D687001CE707 /* PresentSpeakersAnimator.m in Sources */,
 				D158131B16E884020009E11B /* RdioSong.m in Sources */,
 				D158132116E885E50009E11B /* RdioCollectionViewController.m in Sources */,
 				D8B613DB1718077400F12446 /* NBDirectionGestureRecognizer.m in Sources */,
+				D812F77017D8373100E19402 /* PLVolumeCell.m in Sources */,
 				D8B613E4171B5B7300F12446 /* PLInputCell.m in Sources */,
 				D8C3471E173B7B9100D7B28C /* SonosTransportInfoResponse.m in Sources */,
 			);

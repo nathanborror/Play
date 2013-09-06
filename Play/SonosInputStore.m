@@ -50,10 +50,21 @@
   return [inputList objectAtIndex:index];
 }
 
-- (void)addInputWithIP:(NSString *)aIP name:(NSString *)aName uid:(NSString *)aUid icon:(UIImage *)aIcon
+- (SonosInput *)inputWithUid:(NSString *)uid
+{
+  for (SonosInput *input in inputList) {
+    if ([input.uid isEqual:uid]) {
+      return input;
+    }
+  }
+  return nil;
+}
+
+- (SonosInput *)addInputWithIP:(NSString *)aIP name:(NSString *)aName uid:(NSString *)aUid icon:(UIImage *)aIcon
 {
   SonosInput *input = [[SonosInput alloc] initWithIP:aIP name:aName uid:aUid icon:aIcon];
   [inputList addObject:input];
+  return input;
 }
 
 - (void)removeInput:(SonosInput *)input

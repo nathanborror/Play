@@ -9,6 +9,8 @@
 @import UIKit;
 @import QuartzCore;
 
-@interface PLSpeakersViewController : UIViewController
+#import "SonosInput.h"
+
+@interface PLSpeakersViewController : UIViewController <SonosInputDelegate>
 
 @end

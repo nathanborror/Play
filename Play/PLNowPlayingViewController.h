@@ -13,7 +13,7 @@
 @class SonosInput;
 @class RdioSong;
 
-@interface PLNowPlayingViewController : UIViewController <UITableViewDelegate, UITableViewDataSource>
+@interface PLNowPlayingViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, UIViewControllerTransitioningDelegate>
 
 - (id)initWithSong:(PLSong *)song;
 - (id)initWithRdioSong:(RdioSong *)song;

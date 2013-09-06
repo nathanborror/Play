@@ -9,7 +9,7 @@
 #import "PLDial.h"
 #import "NBDirectionGestureRecognizer.h"
 
-static const CGFloat kDialHeight = 31;
+static const CGFloat kDialHeight = 32;
 
 @interface PLDial ()
 {
