@@ -8,18 +8,13 @@
 
 #import "NBDirectionGestureRecognizer.h"
 
-const static int kDirectionPanThreshold = 5;
+static const CGFloat kDirectionPanThreshold = 5;
 
-@interface NBDirectionGestureRecognizer ()
-{
+@implementation NBDirectionGestureRecognizer {
   BOOL drag;
   int moveX;
   int moveY;
 }
-@end
-
-@implementation NBDirectionGestureRecognizer
-@synthesize direction;
 
 - (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event {
   [super touchesMoved:touches withEvent:event];
@@ -36,13 +31,13 @@ const static int kDirectionPanThreshold = 5;
 
   if (!drag) {
     if (abs(moveX) > kDirectionPanThreshold) {
-      if (direction == NBDirectionPanGestureRecognizerVertical) {
+      if (_direction == NBDirectionPanGestureRecognizerVertical) {
         self.state = UIGestureRecognizerStateFailed;
       } else {
         drag = YES;
       }
     } else if (abs(moveY) > kDirectionPanThreshold) {
-      if (direction == NBDirectionPanGestureRecognizerHorizontal) {
+      if (_direction == NBDirectionPanGestureRecognizerHorizontal) {
         self.state = UIGestureRecognizerStateFailed;
       } else {
         drag = YES;

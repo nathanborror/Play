@@ -9,7 +9,6 @@
 #import "SonosTransportInfoResponse.h"
 
 @implementation SonosTransportInfoResponse
-@synthesize parentParserDelegate, state, status, speed;
 
 #pragma mark - NSXMLParserDelegate
 
@@ -37,7 +36,7 @@
   currentString = nil;
 
   if ([elementName isEqual:@"u:GetTransportInfoResponse"]) {
-    [parser setDelegate:parentParserDelegate];
+    [parser setDelegate:_parentParserDelegate];
   }
 }
 @end

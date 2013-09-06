@@ -7,14 +7,12 @@
 //
 
 #import "PLTextField.h"
-#import <QuartzCore/QuartzCore.h>
 
 @implementation PLTextField
 
 - (id)initWithFrame:(CGRect)frame
 {
-  self = [super initWithFrame:frame];
-  if (self) {
+  if (self = [super initWithFrame:frame]) {
     [self setBackgroundColor:[UIColor whiteColor]];
     [self setFont:[UIFont boldSystemFontOfSize:22]];
     [self setContentVerticalAlignment:UIControlContentVerticalAlignmentCenter];

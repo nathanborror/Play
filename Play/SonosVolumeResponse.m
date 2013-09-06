@@ -9,7 +9,6 @@
 #import "SonosVolumeResponse.h"
 
 @implementation SonosVolumeResponse
-@synthesize parentParserDelegate, currentVolume;
 
 #pragma mark - NSXMLParserDelegate
 
@@ -31,7 +30,7 @@
   currentString = nil;
 
   if ([elementName isEqual:@"u:GetVolumeResponse"]) {
-    [parser setDelegate:parentParserDelegate];
+    [parser setDelegate:_parentParserDelegate];
   }
 }
 

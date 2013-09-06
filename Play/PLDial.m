@@ -11,8 +11,7 @@
 
 static const CGFloat kDialHeight = 32;
 
-@interface PLDial ()
-{
+@implementation PLDial {
   CGPoint panCoordBegan;
   UIView *max;
   UIView *min;
@@ -21,16 +20,10 @@ static const CGFloat kDialHeight = 32;
   CGFloat maxOriginX;
   CGFloat minOriginX;
 }
-@end
-
-@implementation PLDial
-@synthesize maxValue, minValue, value;
 
 - (id)initWithFrame:(CGRect)frame
 {
-  self = [super initWithFrame:frame];
-  if (self) {
-
+  if (self = [super initWithFrame:frame]) {
     max = [[UIView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(self.bounds), kDialHeight)];
     [max setBackgroundColor:[UIColor colorWithRed:.85 green:.86 blue:.88 alpha:1]];
     [max.layer setCornerRadius:CGRectGetHeight(max.bounds)/2];
@@ -57,7 +50,7 @@ static const CGFloat kDialHeight = 32;
 
 - (void)setValue:(CGFloat)aValue
 {
-  self->value = aValue;
+  _value = aValue;
 
   CGPoint newPoint = CGPointMake([self findPosition:aValue], thumb.center.y);
 
@@ -95,12 +88,12 @@ static const CGFloat kDialHeight = 32;
 
 - (CGFloat)findValue:(CGFloat)x
 {
-  return ((((maxValue - minValue) * (x - minOriginX)) / (maxOriginX - minOriginX)) + minValue);
+  return ((((_maxValue - _minValue) * (x - minOriginX)) / (maxOriginX - minOriginX)) + _minValue);
 }
 
 - (CGFloat)findPosition:(CGFloat)x
 {
-  return ((((maxOriginX - minOriginX) * (x - minValue)) / (maxValue - minValue)) + minOriginX);
+  return ((((maxOriginX - minOriginX) * (x - _minValue)) / (_maxValue - _minValue)) + minOriginX);
 }
 
 @end

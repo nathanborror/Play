@@ -15,19 +15,14 @@
 #import "RdioSong.h"
 #import "RdioAlbum.h"
 
-@interface SonosController ()
-{
+@implementation SonosController {
   NSInputStream *inputStream;
   int volumeLevel;
 }
-@end
-
-@implementation SonosController
 
 - (id)initWithInput:(SonosInput *)input
 {
-  self = [super init];
-  if (self) {
+  if (self = [super init]) {
     _isPlaying = YES;
     volumeLevel = 0;
   }

@@ -12,26 +12,23 @@
 #import "RdioSongsViewController.h"
 #import "PLSongViewController.h"
 
-@interface RdioPlaylistViewController ()
-{
+@implementation RdioPlaylistViewController {
   Rdio *rdio;
   UILocalizedIndexedCollation *collation;
   NSMutableArray *playlists;
 }
-@end
-
-@implementation RdioPlaylistViewController
 
 - (id)init
 {
   if (self = [super init]) {
-    [self setTitle:@"Playlists"];
-
-    // Now Playing Button
-    UIBarButtonItem *nowPlayingButton = [[UIBarButtonItem alloc] initWithTitle:@"Playing" style:UIBarButtonItemStyleDone target:self action:@selector(nowPlaying)];
-    [self.navigationItem setRightBarButtonItem:nowPlayingButton];
-
     playlists = [[NSMutableArray alloc] init];
+
+    if (playlists.count == 0) {
+      NSString *key = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFRdioConsumerKey"];
+      NSString *secret = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFRdioConsumerSecret"];
+      rdio = [[Rdio alloc] initWithConsumerKey:key andSecret:secret delegate:self];
+      [rdio authorizeUsingAccessToken:[[NSUserDefaults standardUserDefaults] objectForKey:@"rdioAccessKey"] fromController:self];
+    }
   }
   return self;
 }
@@ -40,12 +37,10 @@
 {
   [super viewDidLoad];
 
-  if (playlists.count == 0) {
-    NSString *key = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFRdioConsumerKey"];
-    NSString *secret = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFRdioConsumerSecret"];
-    rdio = [[Rdio alloc] initWithConsumerKey:key andSecret:secret delegate:self];
-    [rdio authorizeUsingAccessToken:[[NSUserDefaults standardUserDefaults] objectForKey:@"rdioAccessKey"] fromController:self];
-  }
+  [self setTitle:@"Playlists"];
+
+  UIBarButtonItem *nowPlayingButton = [[UIBarButtonItem alloc] initWithTitle:@"Playing" style:UIBarButtonItemStyleDone target:self action:@selector(nowPlaying)];
+  [self.navigationItem setRightBarButtonItem:nowPlayingButton];
 }
 
 - (void)nowPlaying

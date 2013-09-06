@@ -19,12 +19,10 @@ static const BOOL kTargetSimulator = NO;
 #endif
 
 @implementation SonosConnection
-@synthesize request, completionBlock, envelope;
 
 - (id)initWithRequest:(NSURLRequest *)req completion:(void (^)(id, NSError *))block
 {
-  self = [super init];
-  if (self) {
+  if (self = [super init]) {
     [self setRequest:req];
     [self setCompletionBlock:block];
   }
@@ -37,7 +35,7 @@ static const BOOL kTargetSimulator = NO;
 
   if (kTargetSimulator) {
     // Bypass NSURLConnection and call connectionDidFinishLoading directly
-    NSData *mockResponse = [[SonosMockResponses sharedResponses] responseFor:[request valueForHTTPHeaderField:@"SOAPACTION"]];
+    NSData *mockResponse = [[SonosMockResponses sharedResponses] responseFor:[_request valueForHTTPHeaderField:@"SOAPACTION"]];
     [container appendData:mockResponse];
     [self connectionDidFinishLoading:nil];
   } else {
@@ -60,7 +58,7 @@ static const BOOL kTargetSimulator = NO;
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection
 {
   id rootObject = nil;
-  if (envelope) {
+  if (_envelope) {
     NSXMLParser *parser = [[NSXMLParser alloc] initWithData:container];
 
     [parser setDelegate:[self envelope]];
@@ -68,7 +66,7 @@ static const BOOL kTargetSimulator = NO;
     rootObject = [self envelope];
   }
 
-  if (completionBlock) {
+  if (_completionBlock) {
     if ([[rootObject response] class] == [SonosErrorResponse class]) {
       SonosErrorResponse *error = (SonosErrorResponse *)[rootObject response];
       NSLog(@"\n\nSonosErrorResponse:"
@@ -77,9 +75,9 @@ static const BOOL kTargetSimulator = NO;
             "\n\tString: %@"
             "\n\tDetail: %@"
             "\n\tHTTPBody: %@"
-            "\n\n", request.URL, error.code, error.string, error.detail, [[NSString alloc] initWithData:request.HTTPBody encoding:NSUTF8StringEncoding]);
+            "\n\n", _request.URL, error.code, error.string, error.detail, [[NSString alloc] initWithData:_request.HTTPBody encoding:NSUTF8StringEncoding]);
     }
-    completionBlock(rootObject, nil);
+    _completionBlock(rootObject, nil);
   }
 
   [sharedConnectionList removeObject:self];
@@ -87,8 +85,8 @@ static const BOOL kTargetSimulator = NO;
 
 - (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error
 {
-  if (completionBlock) {
-    completionBlock(nil, error);
+  if (_completionBlock) {
+    _completionBlock(nil, error);
   }
   [sharedConnectionList removeObject:self];
 }

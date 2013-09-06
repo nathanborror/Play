@@ -13,7 +13,6 @@
 #import "SOAPEnvelope.h"
 
 @implementation SonosInput
-@synthesize delegate, view;
 
 - (id)initWithIP:(NSString *)aIP name:(NSString *)aName uid:(NSString *)aUid icon:(UIImage *)aIcon
 {

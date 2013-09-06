@@ -9,7 +9,6 @@
 #import "SonosErrorResponse.h"
 
 @implementation SonosErrorResponse
-@synthesize parentParserDelegate, code, string, detail;
 
 #pragma mark - NSXMLParserDelegate
 
@@ -37,7 +36,7 @@
   currentString = nil;
 
   if ([elementName isEqual:@"s:Fault"]) {
-    [parser setDelegate:parentParserDelegate];
+    [parser setDelegate:_parentParserDelegate];
   }
 }
 

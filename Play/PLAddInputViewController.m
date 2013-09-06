@@ -12,18 +12,14 @@
 #import "SonosInputStore.h"
 #import "UIViewController+ModalCheck.h"
 
-static float kFieldPadding = 10.f;
+static const CGFloat kFieldPadding = 10.0;
 
-@interface PLAddInputViewController ()
-{
+@implementation PLAddInputViewController {
   SonosInput *input;
   UITextField *ipTextField;
   UITextField *nameTextField;
   UITextField *uidTextField;
 }
-@end
-
-@implementation PLAddInputViewController
 
 - (id)init
 {
@@ -32,25 +28,8 @@ static float kFieldPadding = 10.f;
 
 - (id)initWithInput:(SonosInput *)aInput
 {
-  self = [super init];
-  if (self) {
-    [self.view setBackgroundColor:[UIColor whiteColor]];
+  if (self = [super init]) {
     input = aInput;
-
-    if (input) {
-      [self.navigationItem setTitle:input.name];
-    } else {
-      [self.navigationItem setTitle:@"Add Speaker"];
-      if (self.isPresentedAsModal) {
-        // Cancel Button
-        UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(cancel)];
-        [self.navigationItem setLeftBarButtonItem:cancelButton];
-      }
-    }
-
-    // Done Button
-    UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(done)];
-    [self.navigationItem setRightBarButtonItem:doneButton];
   }
   return self;
 }
@@ -58,6 +37,22 @@ static float kFieldPadding = 10.f;
 - (void)viewDidLoad
 {
   [super viewDidLoad];
+
+  [self setTitle:@"Add Speaker"];
+  [self.view setBackgroundColor:[UIColor whiteColor]];
+
+  UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(done)];
+  [self.navigationItem setRightBarButtonItem:doneButton];
+
+  if (input) {
+    [self setTitle:input.name];
+  } else {
+    if (self.isPresentedAsModal) {
+      // Cancel Button
+      UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(cancel)];
+      [self.navigationItem setLeftBarButtonItem:cancelButton];
+    }
+  }
 
   // IP Input
   ipTextField = [[UITextField alloc] initWithFrame:CGRectMake(kFieldPadding, 80, CGRectGetWidth(self.view.frame)-(kFieldPadding*2), 50)];

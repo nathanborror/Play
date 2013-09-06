@@ -9,7 +9,6 @@
 #import "SonosPositionInfoResponse.h"
 
 @implementation SonosPositionInfoResponse
-@synthesize parentParserDelegate, track, duration, metaData, uri, relTime, absTime, relCount, absCount;
 
 #pragma mark - NSXMLParserDelegate
 
@@ -52,7 +51,7 @@
   currentString = nil;
 
   if ([elementName isEqual:@"u:GetPositionInfoResponse"]) {
-    [parser setDelegate:parentParserDelegate];
+    [parser setDelegate:_parentParserDelegate];
   }
 }
 

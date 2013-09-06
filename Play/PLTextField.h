@@ -7,6 +7,7 @@
 //
 
 @import UIKit;
+@import QuartzCore;
 
 @interface PLTextField : UITextField
 

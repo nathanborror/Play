@@ -14,32 +14,14 @@
 #import "SonosInputStore.h"
 #import "RdioPlaylistViewController.h"
 
-@interface PLLibraryViewController ()
-{
+@implementation PLLibraryViewController {
   UITableView *libraryTableView;
   NSArray *sourceList;
 }
-@end
 
-@implementation PLLibraryViewController
-
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+- (id)init
 {
-  self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-  if (self) {
-    [self.navigationItem setTitle:@"Library"];
-
-    // Now Playing Button
-    UIBarButtonItem *nowPlayingButton = [[UIBarButtonItem alloc] initWithTitle:@"Playing" style:UIBarButtonItemStyleDone target:self action:@selector(nowPlaying)];
-    [self.navigationItem setRightBarButtonItem:nowPlayingButton];
-
-    // Table
-    libraryTableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStylePlain];
-    [libraryTableView setDelegate:self];
-    [libraryTableView setDataSource:self];
-    [self.view addSubview:libraryTableView];
-
-    // Library Items
+  if (self = [super init]) {
     sourceList = @[
       [[PLSource alloc] initWithName:@"Playlists" selection:nil],
       [[PLSource alloc] initWithName:@"Rdio" selection:^(){
@@ -55,6 +37,29 @@
     ];
   }
   return self;
+}
+
+- (void)viewDidLoad
+{
+  [super viewDidLoad];
+
+  [self setTitle:@"Library"];
+
+  UIBarButtonItem *nowPlayingButton = [[UIBarButtonItem alloc] initWithTitle:@"Playing" style:UIBarButtonItemStyleDone target:self action:@selector(nowPlaying)];
+  [self.navigationItem setRightBarButtonItem:nowPlayingButton];
+
+  libraryTableView = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStylePlain];
+  [libraryTableView setDelegate:self];
+  [libraryTableView setDataSource:self];
+  [libraryTableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"PLLibraryTableViewCell"];
+  [self.view addSubview:libraryTableView];
+}
+
+- (void)viewDidLayoutSubviews
+{
+  [super viewDidLayoutSubviews];
+
+  [libraryTableView setFrame:CGRectMake(0, 0, CGRectGetWidth(self.view.bounds), CGRectGetHeight(self.view.bounds))];
 }
 
 - (void)nowPlaying
@@ -75,9 +80,6 @@
 {
   PLSource *source = [sourceList objectAtIndex:indexPath.row];
   UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"PLLibraryTableViewCell"];
-  if (!cell) {
-    cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"PLLibraryTableViewCell"];
-  }
   [cell.textLabel setText:source.name];
   return cell;
 }

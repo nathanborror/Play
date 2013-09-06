@@ -8,18 +8,13 @@
 
 #import "SonosMockResponses.h"
 
-@interface SonosMockResponses ()
-{
+@implementation SonosMockResponses {
   NSMutableDictionary *responses;
 }
-@end
-
-@implementation SonosMockResponses
 
 - (id)init
 {
-  self = [super init];
-  if (self) {
+  if (self = [super init]) {
     responses = [[NSMutableDictionary alloc] init];
 
     // Track Info

@@ -12,19 +12,13 @@
 #import "SonosTransportInfoResponse.h"
 #import "SOAPEnvelope.h"
 
-@interface PLInputCell ()
-{
+@implementation PLInputCell {
   UIDynamicAnimator *animator;
 }
-@end
-
-@implementation PLInputCell
-@synthesize input, origin, status;
 
 - (id)initWithInput:(SonosInput *)aInput
 {
-  self = [super init];
-  if (self) {
+  if (self = [super init]) {
     [self setFrame:CGRectMake(0, 0, 115, 85)];
     self.input = aInput;
     self.origin = self.center;
@@ -33,14 +27,14 @@
 
     // Speaker label
     _label = [[UILabel alloc] initWithFrame:CGRectMake(0, 65, CGRectGetWidth(self.bounds), 20)];
-    [_label setText:input.name];
+    [_label setText:_input.name];
     [_label setTextAlignment:NSTextAlignmentCenter];
     [_label setFont:[UIFont systemFontOfSize:11.0]];
     [_label setBackgroundColor:[UIColor clearColor]];
     [self addSubview:_label];
 
     // Speaker icon
-    _speakerIcon = [[UIImageView alloc] initWithImage:input.icon];
+    _speakerIcon = [[UIImageView alloc] initWithImage:_input.icon];
     [self addSubview:_speakerIcon];
 
     // Speaker indicator light

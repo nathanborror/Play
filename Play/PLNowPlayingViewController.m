@@ -25,6 +25,7 @@
 
 static const CGFloat kProgressPadding = 50.0;
 
+static const CGFloat kControlBarHeight = 250.0;
 static const CGFloat kControlBarPadding = 16.0;
 static const CGFloat kControlBarPreviousNextPadding = 46.0;
 static const CGFloat kControlBarButtonWidth = 65.0;
@@ -44,7 +45,7 @@ static const CGFloat kAlbumTitleFontSize = 15.0;
 {
   SonosController *sonos;
 
-  UITableView *tableView;
+  UITableView *volumeTable;
   UIView *controlBar;
   UISlider *volumeSlider;
 
@@ -70,12 +71,6 @@ static const CGFloat kAlbumTitleFontSize = 15.0;
   self = [super init];
   if (self) {
     sonos = [SonosController sharedController];
-
-    UIBarButtonItem *speakers = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"PLSpeakers"] style:UIBarButtonItemStylePlain target:self action:@selector(showSpeakers)];
-    [self.navigationItem setLeftBarButtonItem:speakers];
-
-    UIBarButtonItem *queue = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"PLQueue"] style:UIBarButtonItemStylePlain target:self action:@selector(showQueue)];
-    [self.navigationItem setRightBarButtonItem:queue];
 
     // TODO: This needs to be replace with a discover method
     SonosInputStore *inputStore = [SonosInputStore sharedStore];
@@ -117,17 +112,23 @@ static const CGFloat kAlbumTitleFontSize = 15.0;
 {
   [super viewDidLoad];
 
-  tableView = [[UITableView alloc] initWithFrame:self.view.bounds];
-  [tableView registerClass:[PLVolumeCell class] forCellReuseIdentifier:@"PLVolumeCell"];
-  [tableView setDelegate:self];
-  [tableView setDataSource:self];
-  [tableView setAutoresizingMask:UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight];
-  [tableView setRowHeight:80];
-  [tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
-  [self.view addSubview:tableView];
+  UIBarButtonItem *speakerButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"PLSpeakers"] style:UIBarButtonItemStylePlain target:self action:@selector(showSpeakers)];
+  [self.navigationItem setLeftBarButtonItem:speakerButton];
+
+  UIBarButtonItem *queueButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"PLQueue"] style:UIBarButtonItemStylePlain target:self action:@selector(showQueue)];
+  [self.navigationItem setRightBarButtonItem:queueButton];
+
+  volumeTable = [[UITableView alloc] initWithFrame:CGRectZero];
+  [volumeTable registerClass:[PLVolumeCell class] forCellReuseIdentifier:@"PLVolumeCell"];
+  [volumeTable setDelegate:self];
+  [volumeTable setDataSource:self];
+  [volumeTable setAutoresizingMask:UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight];
+  [volumeTable setRowHeight:80];
+  [volumeTable setSeparatorStyle:UITableViewCellSeparatorStyleNone];
+  [self.view addSubview:volumeTable];
 
   // Control Bar
-  controlBar = [[UIView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(self.view.frame), 250)];
+  controlBar = [[UIView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(self.view.bounds), kControlBarHeight)];
   [controlBar setBackgroundColor:[UIColor whiteColor]];
   [controlBar setAutoresizingMask:UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleTopMargin];
   [controlBar setUserInteractionEnabled:YES];
@@ -150,7 +151,7 @@ static const CGFloat kAlbumTitleFontSize = 15.0;
   [previousButton setShowsTouchWhenHighlighted:YES];
   [controlBar addSubview:previousButton];
 
-  // Song info
+  // Song Info
   UILabel *songTitle = [[UILabel alloc] init];
   [songTitle setText:@"Come Together"];
   [songTitle setFont:[UIFont boldSystemFontOfSize:kSongTitleFontSize]];
@@ -173,17 +174,17 @@ static const CGFloat kAlbumTitleFontSize = 15.0;
   [progress setValue:1];
   [self.navigationItem setTitleView:progress];
 
-  // Inputs
   speakers = [[SonosInputStore sharedStore] allInputs];
 
-//  [scrollView addSubview:controlBar];
-  [tableView setTableHeaderView:controlBar];
+  [volumeTable setTableHeaderView:controlBar];
 }
 
 - (void)viewDidLayoutSubviews
 {
   [super viewDidLayoutSubviews];
-  [tableView setFrame:CGRectMake(0, 0, CGRectGetWidth(self.view.bounds), CGRectGetHeight(self.view.bounds))];
+
+  [volumeTable setFrame:CGRectMake(0, 0, CGRectGetWidth(self.view.bounds), CGRectGetHeight(self.view.bounds))];
+  [volumeTable.tableHeaderView setFrame:CGRectMake(0, 0, CGRectGetWidth(volumeTable.bounds), kControlBarHeight)];
 }
 
 - (void)playPause

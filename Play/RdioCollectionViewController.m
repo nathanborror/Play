@@ -15,26 +15,24 @@
 #import "SonosInputStore.h"
 #import "PLNowPlayingViewController.h"
 
-@interface RdioCollectionViewController ()
-{
+@implementation RdioCollectionViewController {
   Rdio *rdio;
   NSInteger trackCount;
   NSMutableArray *sections;
   UILocalizedIndexedCollation *collation;
 }
-@end
-
-@implementation RdioCollectionViewController
 
 - (id)init
 {
-  self = [super init];
-  if (self) {
-    [self setTitle:@"Collection"];
-
-    // Now Playing Button
-    UIBarButtonItem *nowPlayingButton = [[UIBarButtonItem alloc] initWithTitle:@"Playing" style:UIBarButtonItemStyleDone target:self action:@selector(nowPlaying)];
-    [self.navigationItem setRightBarButtonItem:nowPlayingButton];
+  if (self = [super init]) {
+    if ([_itemList count] == 0) {
+      NSString *key = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFRdioConsumerKey"];
+      NSString *secret = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFRdioConsumerSecret"];
+      rdio = [[Rdio alloc] initWithConsumerKey:key andSecret:secret delegate:self];
+      [rdio authorizeUsingAccessToken:[[NSUserDefaults standardUserDefaults] objectForKey:@"rdioAccessKey"] fromController:self];
+    } else {
+      [self configureSections];
+    }
   }
   return self;
 }
@@ -43,14 +41,10 @@
 {
   [super viewDidLoad];
 
-  if ([_itemList count] == 0) {
-    NSString *key = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFRdioConsumerKey"];
-    NSString *secret = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFRdioConsumerSecret"];
-    rdio = [[Rdio alloc] initWithConsumerKey:key andSecret:secret delegate:self];
-    [rdio authorizeUsingAccessToken:[[NSUserDefaults standardUserDefaults] objectForKey:@"rdioAccessKey"] fromController:self];
-  } else {
-    [self configureSections];
-  }
+  [self setTitle:@"Collection"];
+
+  UIBarButtonItem *nowPlayingButton = [[UIBarButtonItem alloc] initWithTitle:@"Playing" style:UIBarButtonItemStyleDone target:self action:@selector(nowPlaying)];
+  [self.navigationItem setRightBarButtonItem:nowPlayingButton];
 }
 
 - (void)nowPlaying

@@ -10,14 +10,10 @@
 #import "PLSong.h"
 #import "PLNowPlayingViewController.h"
 
-@interface PLSongViewController ()
-{
+@implementation PLSongViewController {
   NSArray *songs;
   UITableView *songTableView;
 }
-@end
-
-@implementation PLSongViewController
 
 - (id)init
 {
@@ -26,19 +22,29 @@
 
 - (id)initWithSongs:(NSArray *)aSongs
 {
-  self = [super init];
-  if (self) {
-    if (aSongs) {
-      songs = aSongs;
-
-      songTableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStylePlain];
-      [songTableView setDelegate:self];
-      [songTableView setDataSource:self];
-      [songTableView setAutoresizesSubviews:YES];
-      [self.view addSubview:songTableView];
-    }
+  if (self = [super init]) {
+    songs = aSongs;
   }
   return self;
+}
+
+- (void)viewDidLoad
+{
+  [super viewDidLoad];
+
+  songTableView = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStylePlain];
+  [songTableView setDelegate:self];
+  [songTableView setDataSource:self];
+  [songTableView setAutoresizesSubviews:YES];
+  [songTableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"PLSongTableViewCell"];
+  [self.view addSubview:songTableView];
+}
+
+- (void)viewDidLayoutSubviews
+{
+  [super viewDidLayoutSubviews];
+
+  [songTableView setFrame:CGRectMake(0, 0, CGRectGetWidth(self.view.bounds), CGRectGetHeight(self.view.bounds))];
 }
 
 #pragma mark - UITableViewController
@@ -52,9 +58,7 @@
 {
   MPMediaItem *item = [songs objectAtIndex:indexPath.row];
   UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"PLSongTableViewCell"];
-  if (!cell) {
-    cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"PLSongTableViewCell"];
-  }
+
   [cell.textLabel setText:[item valueForProperty:MPMediaItemPropertyTitle]];
   UIImage *albumArt = [[item valueForProperty:MPMediaItemPropertyArtwork] imageWithSize:CGSizeMake(CGRectGetHeight(cell.bounds), CGRectGetHeight(cell.bounds))];
   [cell.imageView setImage:albumArt];

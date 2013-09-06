@@ -12,8 +12,7 @@
 
 - (id)initWithFrame:(CGRect)frame
 {
-  self = [super initWithFrame:frame];
-  if (self) {
+  if (self = [super initWithFrame:frame]) {
     [self setMaximumTrackTintColor:[UIColor colorWithRed:.85 green:.86 blue:.88 alpha:1]];
     [self setMinimumTrackTintColor:[UIColor blackColor]];
     [self setThumbImage:[UIImage imageNamed:@"PLProgressThumb"] forState:UIControlStateNormal];

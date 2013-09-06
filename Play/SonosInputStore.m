@@ -9,19 +9,13 @@
 #import "SonosInputStore.h"
 #import "SonosInput.h"
 
-@interface SonosInputStore ()
-{
+@implementation SonosInputStore {
   NSMutableArray *inputList;
 }
-@end
-
-@implementation SonosInputStore
-@synthesize master;
 
 - (id)init
 {
-  self = [super init];
-  if (self) {
+  if (self = [super init]) {
     NSString *path = [self inputArchivePath];
     inputList = [NSKeyedUnarchiver unarchiveObjectWithFile:path];
     if (!inputList) {

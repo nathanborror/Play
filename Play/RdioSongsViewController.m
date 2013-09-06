@@ -26,14 +26,15 @@
 - (id)initWithPlaylist:(RdioPlaylist *)aPlaylist
 {
   if (self = [super init]) {
-    [self setTitle:@"Songs"];
-
-    // Now Playing Button
-    UIBarButtonItem *nowPlayingButton = [[UIBarButtonItem alloc] initWithTitle:@"Playing" style:UIBarButtonItemStyleDone target:self action:@selector(nowPlaying)];
-    [self.navigationItem setRightBarButtonItem:nowPlayingButton];
-
     playlist = aPlaylist;
     songs = [[NSMutableArray alloc] init];
+
+    if (songs.count == 0) {
+      NSString *key = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFRdioConsumerKey"];
+      NSString *secret = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFRdioConsumerSecret"];
+      rdio = [[Rdio alloc] initWithConsumerKey:key andSecret:secret delegate:self];
+      [rdio authorizeUsingAccessToken:[[NSUserDefaults standardUserDefaults] objectForKey:@"rdioAccessKey"] fromController:self];
+    }
   }
   return self;
 }
@@ -42,12 +43,10 @@
 {
   [super viewDidLoad];
 
-  if (songs.count == 0) {
-    NSString *key = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFRdioConsumerKey"];
-    NSString *secret = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFRdioConsumerSecret"];
-    rdio = [[Rdio alloc] initWithConsumerKey:key andSecret:secret delegate:self];
-    [rdio authorizeUsingAccessToken:[[NSUserDefaults standardUserDefaults] objectForKey:@"rdioAccessKey"] fromController:self];
-  }
+  [self setTitle:@"Songs"];
+
+  UIBarButtonItem *nowPlayingButton = [[UIBarButtonItem alloc] initWithTitle:@"Playing" style:UIBarButtonItemStyleDone target:self action:@selector(nowPlaying)];
+  [self.navigationItem setRightBarButtonItem:nowPlayingButton];
 }
 
 - (void)nowPlaying

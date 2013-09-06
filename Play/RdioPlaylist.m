@@ -9,6 +9,5 @@
 #import "RdioPlaylist.h"
 
 @implementation RdioPlaylist
-@synthesize name, url, songs;
 
 @end

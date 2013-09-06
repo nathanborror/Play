@@ -9,30 +9,38 @@
 #import "PLPlaylistsViewController.h"
 #import "PLSongViewController.h"
 
-@interface PLPlaylistsViewController ()
-{
+@implementation PLPlaylistsViewController {
   UITableView *playlists;
   NSArray *playlistsCollection;
 }
-@end
 
-@implementation PLPlaylistsViewController
-
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+- (id)init
 {
-  self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-  if (self) {
-    [self.navigationItem setTitle:@"Playlists"];
-    
-    playlists = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStylePlain];
-    [playlists setDelegate:self];
-    [playlists setDataSource:self];
-    [self.view addSubview:playlists];
-
+  if (self = [super init]) {
     MPMediaQuery *query = [MPMediaQuery playlistsQuery];
     playlistsCollection = [query collections];
   }
   return self;
+}
+
+- (void)viewDidLoad
+{
+  [super viewDidLoad];
+
+  [self setTitle:@"Playlists"];
+
+  playlists = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStylePlain];
+  [playlists setDelegate:self];
+  [playlists setDataSource:self];
+  [playlists registerClass:[UITableViewCell class] forCellReuseIdentifier:@"PLPlaylistsTableViewCell"];
+  [self.view addSubview:playlists];
+}
+
+- (void)viewDidLayoutSubviews
+{
+  [super viewDidLayoutSubviews];
+
+  [playlists setFrame:CGRectMake(0, 0, CGRectGetWidth(self.view.bounds), CGRectGetHeight(self.view.bounds))];
 }
 
 #pragma mark - UITableViewController
@@ -46,9 +54,6 @@
 {
   MPMediaPlaylist *playlist = [playlistsCollection objectAtIndex:indexPath.row];
   UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"PLPlaylistsTableViewCell"];
-  if (!cell) {
-    cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"PLPlaylistsTableViewCell"];
-  }
   [cell.textLabel setText:[playlist valueForProperty:MPMediaPlaylistPropertyName]];
   return cell;
 }
