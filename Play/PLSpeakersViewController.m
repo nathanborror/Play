@@ -29,6 +29,7 @@ static const CGFloat kMiniBarHeight = 44;
   NSMutableArray *_pairedSpeakers;
   UIDynamicAnimator *_animator;
   NSMutableArray *_boxes;
+  NSMutableArray *_cells;
   UIView *_miniBar;
 }
 
@@ -37,6 +38,7 @@ static const CGFloat kMiniBarHeight = 44;
   if (self = [super init]) {
     _pairedSpeakers = [[NSMutableArray alloc] init];
     _boxes = [[NSMutableArray alloc] init];
+    _cells = [[NSMutableArray alloc] init];
     _animator = [[UIDynamicAnimator alloc] initWithReferenceView:_scrollView];
   }
   return self;
@@ -50,10 +52,14 @@ static const CGFloat kMiniBarHeight = 44;
   [self.view setBackgroundColor:[UIColor colorWithRed:.85 green:.86 blue:.88 alpha:1]];
 
   UIBarButtonItem *addButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addInput)];
-  [self.navigationItem setLeftBarButtonItem:addButton];
 
-  UIBarButtonItem *done = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(done)];
-  [self.navigationItem setRightBarButtonItem:done];
+  if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
+    UIBarButtonItem *done = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(done)];
+    [self.navigationItem setRightBarButtonItem:done];
+    [self.navigationItem setLeftBarButtonItem:addButton];
+  } else {
+    [self.navigationItem setRightBarButtonItem:addButton];
+  }
 
   _scrollView = [[UIScrollView alloc] initWithFrame:CGRectZero];
   [_scrollView setAutoresizingMask:UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight];
@@ -90,6 +96,7 @@ static const CGFloat kMiniBarHeight = 44;
     PLInputCell *cell = [self inputCellForInput:input];
     [cell addTarget:self action:@selector(inputCellWasSelected:) forControlEvents:UIControlEventTouchUpInside];
     [cell setCenter:box.position];
+    [_cells addObject:cell];
     [_scrollView addSubview:cell];
 
     [input setView:cell];
@@ -99,24 +106,26 @@ static const CGFloat kMiniBarHeight = 44;
     [cell addGestureRecognizer:cellPan];
   }];
 
-  // Mini Bar
-  _miniBar = [[UIView alloc] initWithFrame:CGRectZero];
-  [_miniBar setBackgroundColor:[UIColor colorWithWhite:.95 alpha:1]];
-  [self.view addSubview:_miniBar];
+  // Mini Bar - Omitted on large devices
+  if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
+    _miniBar = [[UIView alloc] initWithFrame:CGRectZero];
+    [_miniBar setBackgroundColor:[UIColor colorWithWhite:.95 alpha:1]];
+    [self.view addSubview:_miniBar];
 
-  UIButton *miniTitle = [[UIButton alloc] init];
-  [miniTitle setAutoresizingMask:UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight];
-  [miniTitle addTarget:self action:@selector(done) forControlEvents:UIControlEventTouchUpInside];
-  [miniTitle setTitle:@"Come Together" forState:UIControlStateNormal];
-  [miniTitle setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-  [miniTitle.titleLabel setFont:[UIFont boldSystemFontOfSize:kSongTitleFontSize]];
-  [miniTitle sizeToFit];
-  [miniTitle setCenter:CGPointMake(CGRectGetWidth(_miniBar.bounds)/2, CGRectGetHeight(_miniBar.bounds)/2)];
-  [_miniBar addSubview:miniTitle];
+    UIButton *miniTitle = [[UIButton alloc] init];
+    [miniTitle setAutoresizingMask:UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight];
+    [miniTitle addTarget:self action:@selector(done) forControlEvents:UIControlEventTouchUpInside];
+    [miniTitle setTitle:@"Come Together" forState:UIControlStateNormal];
+    [miniTitle setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    [miniTitle.titleLabel setFont:[UIFont boldSystemFontOfSize:kSongTitleFontSize]];
+    [miniTitle sizeToFit];
+    [miniTitle setCenter:CGPointMake(CGRectGetWidth(_miniBar.bounds)/2, CGRectGetHeight(_miniBar.bounds)/2)];
+    [_miniBar addSubview:miniTitle];
 
-  UIButton *miniPause = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, kMiniBarHeight, kMiniBarHeight)];
-  [miniPause setBackgroundImage:[UIImage imageNamed:@"PLPause"] forState:UIControlStateNormal];
-  [_miniBar addSubview:miniPause];
+    UIButton *miniPause = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, kMiniBarHeight, kMiniBarHeight)];
+    [miniPause setBackgroundImage:[UIImage imageNamed:@"PLPause"] forState:UIControlStateNormal];
+    [_miniBar addSubview:miniPause];
+  }
 }
 
 - (void)viewWillLayoutSubviews
@@ -125,6 +134,31 @@ static const CGFloat kMiniBarHeight = 44;
 
   [_scrollView setFrame:CGRectMake(0, 0, CGRectGetWidth(self.view.bounds), CGRectGetHeight(self.view.bounds))];
   [_miniBar setFrame:CGRectMake(0, CGRectGetHeight(self.view.bounds)-kMiniBarHeight, CGRectGetWidth(self.view.bounds), kMiniBarHeight)];
+
+  // Reposition box grid
+  const CGFloat kCellWidth = CGRectGetWidth(self.view.frame)/kInputGridTotalColumns;
+  const CGFloat kCellHeight = kCellWidth;
+
+  NSInteger currentColumn = 0, currentRow = 0;
+  for (NSInteger i=0; i<kInputGridTotalCells; i++) {
+    CALayer *box = [_boxes objectAtIndex:i];
+    [box setFrame:CGRectMake(currentColumn * kCellWidth, currentRow * kCellHeight, kCellWidth, kCellHeight)];
+
+    if (currentColumn+1 < kInputGridTotalColumns) {
+      currentColumn++;
+    } else {
+      currentColumn = 0;
+      currentRow++;
+    }
+  }
+  [_scrollView setContentSize:CGSizeMake(CGRectGetWidth(_scrollView.frame), kCellHeight*(kInputGridTotalCells/kInputGridTotalColumns))];
+
+  // Reposition speakers
+  [[[SonosInputStore sharedStore] allInputs] enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+    CALayer *box = (CALayer *)[_boxes objectAtIndex:idx];
+    PLInputCell *cell = [_cells objectAtIndex:idx];
+    [cell setCenter:box.position];
+  }];
 }
 
 - (void)done
@@ -232,6 +266,20 @@ static const CGFloat kMiniBarHeight = 44;
 - (void)input:(SonosInput *)input unpairedWith:(SonosInput *)unpairedWithInput
 {
 
+}
+
+#pragma mark - UISplitViewControllerDelegate
+
+- (BOOL)splitViewController:(UISplitViewController *)svc shouldHideViewController:(UIViewController *)vc inOrientation:(UIInterfaceOrientation)orientation
+{
+  return NO;
+}
+
+#pragma mark - PLNowPlayingViewControllerDelegate
+
+- (void)nowPlayingViewController:(PLNowPlayingViewController *)viewController handleViewController:(UIViewController *)toViewController
+{
+  [self.navigationController pushViewController:toViewController animated:YES];
 }
 
 @end

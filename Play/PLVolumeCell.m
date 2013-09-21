@@ -27,6 +27,7 @@ static const CGFloat kVolumeBarMargin = 16;
     _sonos = [SonosController sharedController];
 
     _volumeDial = [[PLDial alloc] initWithFrame:CGRectMake(kVolumeBarMargin, 22, CGRectGetWidth(self.bounds)-(kVolumeBarMargin*2), 44)];
+    [_volumeDial setAutoresizingMask:UIViewAutoresizingFlexibleWidth];
     [_volumeDial setMaxValue:100.0];
     [_volumeDial setMinValue:0.0];
     [_volumeDial setValue:10.0];
@@ -51,6 +52,7 @@ static const CGFloat kVolumeBarMargin = 16;
   _input = aInput;
 
   _name = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(self.bounds), 18)];
+  [_name setAutoresizingMask:UIViewAutoresizingFlexibleWidth];
   [_name setUserInteractionEnabled:NO];
   [_name setText:_input.name];
   [_name setTextAlignment:NSTextAlignmentCenter];

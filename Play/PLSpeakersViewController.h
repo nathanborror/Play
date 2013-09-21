@@ -10,7 +10,8 @@
 @import QuartzCore;
 
 #import "SonosInput.h"
+#import "PLNowPlayingViewController.h"
 
-@interface PLSpeakersViewController : UIViewController <SonosInputDelegate>
+@interface PLSpeakersViewController : UIViewController <SonosInputDelegate, UISplitViewControllerDelegate, PLNowPlayingViewControllerDelegate>
 
 @end

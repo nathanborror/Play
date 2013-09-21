@@ -35,8 +35,10 @@
   [_queue setDataSource:self];
   [self.view addSubview:_queue];
 
-  UIBarButtonItem *done = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(done)];
-  [self.navigationItem setRightBarButtonItem:done];
+  if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
+    UIBarButtonItem *done = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(done)];
+    [self.navigationItem setRightBarButtonItem:done];
+  }
 }
 
 - (void)viewDidLayoutSubviews

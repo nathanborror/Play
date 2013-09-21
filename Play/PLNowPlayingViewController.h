@@ -12,8 +12,17 @@
 @class PLSong;
 @class SonosInput;
 @class RdioSong;
+@class PLNowPlayingViewController;
 
-@interface PLNowPlayingViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, UIViewControllerTransitioningDelegate>
+@protocol PLNowPlayingViewControllerDelegate
+
+- (void)nowPlayingViewController:(PLNowPlayingViewController *)viewController handleViewController:(UIViewController *)toViewController;
+
+@end
+
+@interface PLNowPlayingViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, UIViewControllerTransitioningDelegate, UISplitViewControllerDelegate>
+
+@property (nonatomic, weak) id<PLNowPlayingViewControllerDelegate> delegate;
 
 - (id)initWithSong:(PLSong *)song;
 - (id)initWithRdioSong:(RdioSong *)song;

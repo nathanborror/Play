@@ -25,11 +25,13 @@ static const CGFloat kDialHeight = 32;
 {
   if (self = [super initWithFrame:frame]) {
     _max = [[UIView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(self.bounds), kDialHeight)];
+    [_max setAutoresizingMask:UIViewAutoresizingFlexibleWidth];
     [_max setBackgroundColor:[UIColor colorWithRed:.85 green:.86 blue:.88 alpha:1]];
     [_max.layer setCornerRadius:CGRectGetHeight(_max.bounds)/2];
     [self addSubview:_max];
 
     _min = [[UIView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(self.bounds), kDialHeight)];
+    [_min setAutoresizingMask:UIViewAutoresizingFlexibleWidth];
     [_min setBackgroundColor:[UIColor blackColor]];
     [_min.layer setCornerRadius:CGRectGetHeight(_min.bounds)/2];
     [self addSubview:_min];

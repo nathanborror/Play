@@ -112,8 +112,10 @@ static const CGFloat kAlbumTitleFontSize = 15.0;
 {
   [super viewDidLoad];
 
-  UIBarButtonItem *speakerButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"PLSpeakers"] style:UIBarButtonItemStylePlain target:self action:@selector(showSpeakers)];
-  [self.navigationItem setLeftBarButtonItem:speakerButton];
+  if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
+    UIBarButtonItem *speakerButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"PLSpeakers"] style:UIBarButtonItemStylePlain target:self action:@selector(showSpeakers)];
+    [self.navigationItem setLeftBarButtonItem:speakerButton];
+  }
 
   UIBarButtonItem *queueButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"PLQueue"] style:UIBarButtonItemStylePlain target:self action:@selector(showQueue)];
   [self.navigationItem setRightBarButtonItem:queueButton];
@@ -134,38 +136,41 @@ static const CGFloat kAlbumTitleFontSize = 15.0;
   [_controlBar setUserInteractionEnabled:YES];
 
   _playPauseButton = [[UIButton alloc] initWithFrame:CGRectMake((CGRectGetWidth(_controlBar.bounds)/2)-kControlBarButtonWidth/2, kControlBarButtonTopMargin, kControlBarButtonWidth, kControlBarButtonHeight)];
+  [_playPauseButton setAutoresizingMask:UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin];
   [_playPauseButton setBackgroundImage:[UIImage imageNamed:@"ControlPause.png"] forState:UIControlStateNormal];
   [_playPauseButton addTarget:self action:@selector(playPause) forControlEvents:UIControlEventTouchUpInside];
   [_playPauseButton setShowsTouchWhenHighlighted:YES];
   [_controlBar addSubview:_playPauseButton];
 
   _nextButton = [[UIButton alloc] initWithFrame:CGRectMake(CGRectGetWidth(_controlBar.bounds)-(kControlBarButtonWidth+kControlBarPreviousNextPadding), kControlBarButtonTopMargin, kControlBarButtonWidth, kControlBarButtonHeight)];
+  [_nextButton setAutoresizingMask:UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin];
   [_nextButton setBackgroundImage:[UIImage imageNamed:@"ControlNext.png"] forState:UIControlStateNormal];
   [_nextButton addTarget:self action:@selector(next) forControlEvents:UIControlEventTouchUpInside];
   [_nextButton setShowsTouchWhenHighlighted:YES];
   [_controlBar addSubview:_nextButton];
 
   _previousButton = [[UIButton alloc] initWithFrame:CGRectMake(kControlBarPreviousNextPadding, kControlBarButtonTopMargin, kControlBarButtonWidth, kControlBarButtonHeight)];
+  [_previousButton setAutoresizingMask:UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin];
   [_previousButton setBackgroundImage:[UIImage imageNamed:@"ControlPrevious.png"] forState:UIControlStateNormal];
   [_previousButton addTarget:self action:@selector(previous) forControlEvents:UIControlEventTouchUpInside];
   [_previousButton setShowsTouchWhenHighlighted:YES];
   [_controlBar addSubview:_previousButton];
 
   // Song Info
-  UILabel *songTitle = [[UILabel alloc] init];
+  UILabel *songTitle = [[UILabel alloc] initWithFrame:CGRectMake(0, 42, CGRectGetWidth(self.view.bounds), kSongTitleFontSize+8)];
+  [songTitle setAutoresizingMask:UIViewAutoresizingFlexibleWidth];
   [songTitle setText:@"Come Together"];
   [songTitle setFont:[UIFont boldSystemFontOfSize:kSongTitleFontSize]];
   [songTitle setBackgroundColor:[UIColor clearColor]];
-  [songTitle sizeToFit];
-  [songTitle setCenter:CGPointMake(CGRectGetWidth(_controlBar.bounds)/2, 42)];
+  [songTitle setTextAlignment:NSTextAlignmentCenter];
   [_controlBar addSubview:songTitle];
 
-  UILabel *artistTitle = [[UILabel alloc] init];
+  UILabel *artistTitle = [[UILabel alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(songTitle.frame), CGRectGetWidth(self.view.bounds), kAlbumTitleFontSize+8)];
+  [artistTitle setAutoresizingMask:UIViewAutoresizingFlexibleWidth];
   [artistTitle setText:@"The Beatles — Abby Road"];
   [artistTitle setFont:[UIFont systemFontOfSize:kAlbumTitleFontSize]];
   [artistTitle setBackgroundColor:[UIColor clearColor]];
-  [artistTitle sizeToFit];
-  [artistTitle setCenter:CGPointMake(CGRectGetWidth(_controlBar.bounds)/2, songTitle.center.y+24)];
+  [artistTitle setTextAlignment:NSTextAlignmentCenter];
   [_controlBar addSubview:artistTitle];
 
   PLProgressBar *progress = [[PLProgressBar alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(self.view.bounds)-90, 20)];
@@ -224,8 +229,15 @@ static const CGFloat kAlbumTitleFontSize = 15.0;
 - (void)showQueue
 {
   PLNextUpViewController *viewController = [[PLNextUpViewController alloc] init];
-  UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:viewController];
-  [self.navigationController presentViewController:navController animated:YES completion:nil];
+
+  if (!self.splitViewController) {
+    UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:viewController];
+    [self.navigationController presentViewController:navController animated:YES completion:nil];
+  } else {
+    if (_delegate) {
+      [_delegate nowPlayingViewController:self handleViewController:viewController];
+    }
+  }
 }
 
 - (void)setCurrentSong:(PLSong *)song
