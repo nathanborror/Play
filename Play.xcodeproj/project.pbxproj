@@ -17,7 +17,6 @@
 		D158132A16E88E110009E11B /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D158132916E88E110009E11B /* CFNetwork.framework */; };
 		D158132C16E88E3F0009E11B /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D158132B16E88E3F0009E11B /* SystemConfiguration.framework */; };
 		D8021A4D16B5DB39002BEAF7 /* SonosMockResponses.m in Sources */ = {isa = PBXBuildFile; fileRef = D8021A4C16B5DB39002BEAF7 /* SonosMockResponses.m */; };
-		D8030BF016928583002F57B6 /* examples in Resources */ = {isa = PBXBuildFile; fileRef = D8030BEF16928583002F57B6 /* examples */; };
 		D812F76717D82DC600E19402 /* PLNextUpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D812F76617D82DC600E19402 /* PLNextUpViewController.m */; };
 		D812F76A17D832BD00E19402 /* PLQueueCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D812F76917D832BD00E19402 /* PLQueueCell.m */; };
 		D812F77017D8373100E19402 /* PLVolumeCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D812F76F17D8373100E19402 /* PLVolumeCell.m */; };
@@ -25,7 +24,6 @@
 		D819F65016ADC64300B19B50 /* SonosConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = D819F64F16ADC64300B19B50 /* SonosConnection.m */; };
 		D819F65416AE047500B19B50 /* SonosPositionInfoResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = D819F65316AE047500B19B50 /* SonosPositionInfoResponse.m */; };
 		D819F65B16AE165800B19B50 /* SonosErrorResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = D819F65A16AE165800B19B50 /* SonosErrorResponse.m */; };
-		D819F65D16AE1BB900B19B50 /* Examples.xml in Resources */ = {isa = PBXBuildFile; fileRef = D819F65C16AE1BB900B19B50 /* Examples.xml */; };
 		D82B793516D7538000B5FF35 /* SonosVolumeResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = D82B793416D7538000B5FF35 /* SonosVolumeResponse.m */; };
 		D864953817B6F2D0006E7E46 /* PLProgressBar.m in Sources */ = {isa = PBXBuildFile; fileRef = D864953717B6F2D0006E7E46 /* PLProgressBar.m */; };
 		D8678A9B17D5D687001CE707 /* PresentSpeakersAnimator.m in Sources */ = {isa = PBXBuildFile; fileRef = D8678A9A17D5D687001CE707 /* PresentSpeakersAnimator.m */; };
@@ -442,8 +440,6 @@
 				D88EA80116917C460011F6FB /* Default.png in Resources */,
 				D88EA80316917C460011F6FB /* Default@2x.png in Resources */,
 				D88EA80516917C460011F6FB /* Default-568h@2x.png in Resources */,
-				D8030BF016928583002F57B6 /* examples in Resources */,
-				D819F65D16AE1BB900B19B50 /* Examples.xml in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

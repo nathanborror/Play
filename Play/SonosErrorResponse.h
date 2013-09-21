@@ -9,9 +9,6 @@
 @import Foundation;
 
 @interface SonosErrorResponse : NSObject <NSXMLParserDelegate>
-{
-  NSMutableString *currentString;
-}
 
 @property (nonatomic, weak) id parentParserDelegate;
 @property (nonatomic, strong) NSString *code;

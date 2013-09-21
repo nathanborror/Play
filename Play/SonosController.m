@@ -16,15 +16,14 @@
 #import "RdioAlbum.h"
 
 @implementation SonosController {
-  NSInputStream *inputStream;
-  int volumeLevel;
+  int _volumeLevel;
 }
 
 - (id)initWithInput:(SonosInput *)input
 {
   if (self = [super init]) {
     _isPlaying = YES;
-    volumeLevel = 0;
+    _volumeLevel = 0;
   }
   return self;
 }
@@ -208,13 +207,13 @@
 
 - (void)volume:(SonosInput *)input level:(int)level completion:(void (^)(SOAPEnvelope *, NSError *))block
 {
-  if (volumeLevel == level) return;
+  if (_volumeLevel == level) return;
 
   NSDictionary *params = @{@"InstanceID": @0,
                            @"Channel":@"Master",
                            @"DesiredVolume":[NSNumber numberWithInt:level]};
   [SonosController request:SonosRequestTypeRenderingControl input:input action:@"SetVolume" params:params completion:^(id obj, NSError *error) {
-    volumeLevel = level;
+    _volumeLevel = level;
     if (block) block(obj, error);
   }];
 }

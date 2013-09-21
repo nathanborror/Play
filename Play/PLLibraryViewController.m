@@ -15,14 +15,14 @@
 #import "RdioPlaylistViewController.h"
 
 @implementation PLLibraryViewController {
-  UITableView *libraryTableView;
-  NSArray *sourceList;
+  UITableView *_libraryTableView;
+  NSArray *_sourceList;
 }
 
 - (id)init
 {
   if (self = [super init]) {
-    sourceList = @[
+    _sourceList = @[
       [[PLSource alloc] initWithName:@"Playlists" selection:nil],
       [[PLSource alloc] initWithName:@"Rdio" selection:^(){
         RdioPlaylistViewController *viewController = [[RdioPlaylistViewController alloc] init];
@@ -48,18 +48,18 @@
   UIBarButtonItem *nowPlayingButton = [[UIBarButtonItem alloc] initWithTitle:@"Playing" style:UIBarButtonItemStyleDone target:self action:@selector(nowPlaying)];
   [self.navigationItem setRightBarButtonItem:nowPlayingButton];
 
-  libraryTableView = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStylePlain];
-  [libraryTableView setDelegate:self];
-  [libraryTableView setDataSource:self];
-  [libraryTableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"PLLibraryTableViewCell"];
-  [self.view addSubview:libraryTableView];
+  _libraryTableView = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStylePlain];
+  [_libraryTableView setDelegate:self];
+  [_libraryTableView setDataSource:self];
+  [_libraryTableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"PLLibraryTableViewCell"];
+  [self.view addSubview:_libraryTableView];
 }
 
 - (void)viewDidLayoutSubviews
 {
   [super viewDidLayoutSubviews];
 
-  [libraryTableView setFrame:CGRectMake(0, 0, CGRectGetWidth(self.view.bounds), CGRectGetHeight(self.view.bounds))];
+  [_libraryTableView setFrame:CGRectMake(0, 0, CGRectGetWidth(self.view.bounds), CGRectGetHeight(self.view.bounds))];
 }
 
 - (void)nowPlaying
@@ -73,12 +73,12 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-  return [sourceList count];
+  return [_sourceList count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-  PLSource *source = [sourceList objectAtIndex:indexPath.row];
+  PLSource *source = [_sourceList objectAtIndex:indexPath.row];
   UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"PLLibraryTableViewCell"];
   [cell.textLabel setText:source.name];
   return cell;
@@ -86,7 +86,7 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-  PLSource *source = [sourceList objectAtIndex:indexPath.row];
+  PLSource *source = [_sourceList objectAtIndex:indexPath.row];
   if (source.selectionBlock == nil) {
     PLPlaylistsViewController *viewController = [[PLPlaylistsViewController alloc] init];
     [self.navigationController pushViewController:viewController animated:YES];

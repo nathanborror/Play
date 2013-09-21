@@ -10,14 +10,14 @@
 #import "PLQueueCell.h"
 
 @implementation PLNextUpViewController {
-  UITableView *queue;
-  NSMutableArray *items;
+  UITableView *_queue;
+  NSMutableArray *_items;
 }
 
 - (id)init
 {
   if (self = [super init]) {
-    items = [[NSMutableArray alloc] init];
+    _items = [[NSMutableArray alloc] init];
   }
   return self;
 }
@@ -29,11 +29,11 @@
   [self setTitle:@"Next Up"];
   [self.view setBackgroundColor:[UIColor whiteColor]];
 
-  queue = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStylePlain];
-  [queue registerClass:[PLQueueCell class] forCellReuseIdentifier:@"PLQueueCell"];
-  [queue setDelegate:self];
-  [queue setDataSource:self];
-  [self.view addSubview:queue];
+  _queue = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStylePlain];
+  [_queue registerClass:[PLQueueCell class] forCellReuseIdentifier:@"PLQueueCell"];
+  [_queue setDelegate:self];
+  [_queue setDataSource:self];
+  [self.view addSubview:_queue];
 
   UIBarButtonItem *done = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(done)];
   [self.navigationItem setRightBarButtonItem:done];
@@ -43,7 +43,7 @@
 {
   [super viewDidLayoutSubviews];
 
-  [queue setFrame:CGRectMake(0, 0, CGRectGetWidth(self.view.bounds), CGRectGetHeight(self.view.bounds))];
+  [_queue setFrame:CGRectMake(0, 0, CGRectGetWidth(self.view.bounds), CGRectGetHeight(self.view.bounds))];
 }
 
 - (void)done
@@ -55,7 +55,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-  return [items count];
+  return [_items count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath

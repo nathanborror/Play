@@ -15,10 +15,10 @@
 static const CGFloat kFieldPadding = 10.0;
 
 @implementation PLAddInputViewController {
-  SonosInput *input;
-  UITextField *ipTextField;
-  UITextField *nameTextField;
-  UITextField *uidTextField;
+  SonosInput *_input;
+  UITextField *_ipTextField;
+  UITextField *_nameTextField;
+  UITextField *_uidTextField;
 }
 
 - (id)init
@@ -29,7 +29,7 @@ static const CGFloat kFieldPadding = 10.0;
 - (id)initWithInput:(SonosInput *)aInput
 {
   if (self = [super init]) {
-    input = aInput;
+    _input = aInput;
   }
   return self;
 }
@@ -44,8 +44,8 @@ static const CGFloat kFieldPadding = 10.0;
   UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(done)];
   [self.navigationItem setRightBarButtonItem:doneButton];
 
-  if (input) {
-    [self setTitle:input.name];
+  if (_input) {
+    [self setTitle:_input.name];
   } else {
     if (self.isPresentedAsModal) {
       // Cancel Button
@@ -55,52 +55,52 @@ static const CGFloat kFieldPadding = 10.0;
   }
 
   // IP Input
-  ipTextField = [[UITextField alloc] initWithFrame:CGRectMake(kFieldPadding, 80, CGRectGetWidth(self.view.frame)-(kFieldPadding*2), 50)];
-  [ipTextField setDelegate:self];
-  [ipTextField setPlaceholder:@"IP Address"];
-  [ipTextField setText:input.ip];
-  [ipTextField setReturnKeyType:UIReturnKeyNext];
-  [ipTextField setBorderStyle:UITextBorderStyleRoundedRect];
-  [self.view addSubview:ipTextField];
+  _ipTextField = [[UITextField alloc] initWithFrame:CGRectMake(kFieldPadding, 80, CGRectGetWidth(self.view.frame)-(kFieldPadding*2), 50)];
+  [_ipTextField setDelegate:self];
+  [_ipTextField setPlaceholder:@"IP Address"];
+  [_ipTextField setText:_input.ip];
+  [_ipTextField setReturnKeyType:UIReturnKeyNext];
+  [_ipTextField setBorderStyle:UITextBorderStyleRoundedRect];
+  [self.view addSubview:_ipTextField];
 
-  nameTextField = [[UITextField alloc] initWithFrame:CGRectMake(kFieldPadding, CGRectGetMaxY(ipTextField.frame)+kFieldPadding, CGRectGetWidth(self.view.frame)-(kFieldPadding*2), 50)];
-  [nameTextField setDelegate:self];
-  [nameTextField setPlaceholder:@"Name"];
-  [nameTextField setText:input.name];
-  [nameTextField setReturnKeyType:UIReturnKeyNext];
-  [nameTextField setBorderStyle:UITextBorderStyleRoundedRect];
-  [self.view addSubview:nameTextField];
+  _nameTextField = [[UITextField alloc] initWithFrame:CGRectMake(kFieldPadding, CGRectGetMaxY(_ipTextField.frame)+kFieldPadding, CGRectGetWidth(self.view.frame)-(kFieldPadding*2), 50)];
+  [_nameTextField setDelegate:self];
+  [_nameTextField setPlaceholder:@"Name"];
+  [_nameTextField setText:_input.name];
+  [_nameTextField setReturnKeyType:UIReturnKeyNext];
+  [_nameTextField setBorderStyle:UITextBorderStyleRoundedRect];
+  [self.view addSubview:_nameTextField];
 
-  uidTextField = [[UITextField alloc] initWithFrame:CGRectMake(kFieldPadding, CGRectGetMaxY(nameTextField.frame)+kFieldPadding, CGRectGetWidth(self.view.frame)-(kFieldPadding*2), 50)];
-  [uidTextField setDelegate:self];
-  [uidTextField setPlaceholder:@"UID"];
-  [uidTextField setText:input.uid];
-  [uidTextField setReturnKeyType:UIReturnKeyDone];
-  [uidTextField setBorderStyle:UITextBorderStyleRoundedRect];
-  [self.view addSubview:uidTextField];
+  _uidTextField = [[UITextField alloc] initWithFrame:CGRectMake(kFieldPadding, CGRectGetMaxY(_nameTextField.frame)+kFieldPadding, CGRectGetWidth(self.view.frame)-(kFieldPadding*2), 50)];
+  [_uidTextField setDelegate:self];
+  [_uidTextField setPlaceholder:@"UID"];
+  [_uidTextField setText:_input.uid];
+  [_uidTextField setReturnKeyType:UIReturnKeyDone];
+  [_uidTextField setBorderStyle:UITextBorderStyleRoundedRect];
+  [self.view addSubview:_uidTextField];
 }
 
 - (void)viewDidAppear:(BOOL)animated
 {
   [super viewDidAppear:animated];
-  [ipTextField becomeFirstResponder];
+  [_ipTextField becomeFirstResponder];
 }
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
-  if (textField == ipTextField) {
-    [nameTextField becomeFirstResponder];
-  } else if (textField == nameTextField) {
-    [uidTextField becomeFirstResponder];
+  if (textField == _ipTextField) {
+    [_nameTextField becomeFirstResponder];
+  } else if (textField == _nameTextField) {
+    [_uidTextField becomeFirstResponder];
   } else {
-    [nameTextField resignFirstResponder];
+    [_nameTextField resignFirstResponder];
   }
   return YES;
 }
 
 - (void)done
 {
-  [[SonosInputStore sharedStore] addInputWithIP:[ipTextField text] name:[nameTextField text] uid:[uidTextField text] icon:nil];
+  [[SonosInputStore sharedStore] addInputWithIP:[_ipTextField text] name:[_nameTextField text] uid:[_uidTextField text] icon:nil];
   [self.navigationController dismissViewControllerAnimated:YES completion:nil];
 }
 

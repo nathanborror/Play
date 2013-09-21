@@ -8,26 +8,28 @@
 
 #import "SonosVolumeResponse.h"
 
-@implementation SonosVolumeResponse
+@implementation SonosVolumeResponse {
+  NSMutableString *_currentString;
+}
 
 #pragma mark - NSXMLParserDelegate
 
 - (void)parser:(NSXMLParser *)parser didStartElement:(NSString *)elementName namespaceURI:(NSString *)namespaceURI qualifiedName:(NSString *)qName attributes:(NSDictionary *)attributeDict
 {
   if ([elementName isEqual:@"CurrentVolume"]) {
-    currentString = [[NSMutableString alloc] init];
-    [self setCurrentVolume:currentString];
+    _currentString = [[NSMutableString alloc] init];
+    [self setCurrentVolume:_currentString];
   }
 }
 
 - (void)parser:(NSXMLParser *)parser foundCharacters:(NSString *)string
 {
-  [currentString appendString:string];
+  [_currentString appendString:string];
 }
 
 - (void)parser:(NSXMLParser *)parser didEndElement:(NSString *)elementName namespaceURI:(NSString *)namespaceURI qualifiedName:(NSString *)qName
 {
-  currentString = nil;
+  _currentString = nil;
 
   if ([elementName isEqual:@"u:GetVolumeResponse"]) {
     [parser setDelegate:_parentParserDelegate];

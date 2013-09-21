@@ -10,15 +10,15 @@
 #import "PLSongViewController.h"
 
 @implementation PLPlaylistsViewController {
-  UITableView *playlists;
-  NSArray *playlistsCollection;
+  UITableView *_playlists;
+  NSArray *_playlistsCollection;
 }
 
 - (id)init
 {
   if (self = [super init]) {
     MPMediaQuery *query = [MPMediaQuery playlistsQuery];
-    playlistsCollection = [query collections];
+    _playlistsCollection = [query collections];
   }
   return self;
 }
@@ -29,30 +29,30 @@
 
   [self setTitle:@"Playlists"];
 
-  playlists = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStylePlain];
-  [playlists setDelegate:self];
-  [playlists setDataSource:self];
-  [playlists registerClass:[UITableViewCell class] forCellReuseIdentifier:@"PLPlaylistsTableViewCell"];
-  [self.view addSubview:playlists];
+  _playlists = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStylePlain];
+  [_playlists setDelegate:self];
+  [_playlists setDataSource:self];
+  [_playlists registerClass:[UITableViewCell class] forCellReuseIdentifier:@"PLPlaylistsTableViewCell"];
+  [self.view addSubview:_playlists];
 }
 
 - (void)viewDidLayoutSubviews
 {
   [super viewDidLayoutSubviews];
 
-  [playlists setFrame:CGRectMake(0, 0, CGRectGetWidth(self.view.bounds), CGRectGetHeight(self.view.bounds))];
+  [_playlists setFrame:CGRectMake(0, 0, CGRectGetWidth(self.view.bounds), CGRectGetHeight(self.view.bounds))];
 }
 
 #pragma mark - UITableViewController
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-  return [playlistsCollection count];
+  return [_playlistsCollection count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-  MPMediaPlaylist *playlist = [playlistsCollection objectAtIndex:indexPath.row];
+  MPMediaPlaylist *playlist = [_playlistsCollection objectAtIndex:indexPath.row];
   UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"PLPlaylistsTableViewCell"];
   [cell.textLabel setText:[playlist valueForProperty:MPMediaPlaylistPropertyName]];
   return cell;
@@ -60,7 +60,7 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-  MPMediaPlaylist *playlist = [playlistsCollection objectAtIndex:indexPath.row];
+  MPMediaPlaylist *playlist = [_playlistsCollection objectAtIndex:indexPath.row];
   PLSongViewController *viewController = [[PLSongViewController alloc] initWithSongs:[playlist items]];
   [self.navigationController pushViewController:viewController animated:YES];
 }

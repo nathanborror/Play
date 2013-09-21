@@ -23,21 +23,21 @@ static const CGFloat kSongTitleFontSize = 17.0;
 static const CGFloat kMiniBarHeight = 44;
 
 @implementation PLSpeakersViewController {
-  UIScrollView *scrollView;
-  CGPoint cellPanCoordBegan;
-  UIView *paired;
-  NSMutableArray *pairedSpeakers;
-  UIDynamicAnimator *animator;
-  NSMutableArray *boxes;
-  UIView *miniBar;
+  UIScrollView *_scrollView;
+  CGPoint _cellPanCoordBegan;
+  UIView *_paired;
+  NSMutableArray *_pairedSpeakers;
+  UIDynamicAnimator *_animator;
+  NSMutableArray *_boxes;
+  UIView *_miniBar;
 }
 
 - (id)init
 {
   if (self = [super init]) {
-    pairedSpeakers = [[NSMutableArray alloc] init];
-    boxes = [[NSMutableArray alloc] init];
-    animator = [[UIDynamicAnimator alloc] initWithReferenceView:scrollView];
+    _pairedSpeakers = [[NSMutableArray alloc] init];
+    _boxes = [[NSMutableArray alloc] init];
+    _animator = [[UIDynamicAnimator alloc] initWithReferenceView:_scrollView];
   }
   return self;
 }
@@ -55,10 +55,10 @@ static const CGFloat kMiniBarHeight = 44;
   UIBarButtonItem *done = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(done)];
   [self.navigationItem setRightBarButtonItem:done];
 
-  scrollView = [[UIScrollView alloc] initWithFrame:CGRectZero];
-  [scrollView setAutoresizingMask:UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight];
-  [scrollView setShowsVerticalScrollIndicator:NO];
-  [self.view addSubview:scrollView];
+  _scrollView = [[UIScrollView alloc] initWithFrame:CGRectZero];
+  [_scrollView setAutoresizingMask:UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight];
+  [_scrollView setShowsVerticalScrollIndicator:NO];
+  [self.view addSubview:_scrollView];
 
   // Build a grid for the speakers to use for placement
   const CGFloat kCellWidth = CGRectGetWidth(self.view.frame)/kInputGridTotalColumns;
@@ -67,8 +67,8 @@ static const CGFloat kMiniBarHeight = 44;
   NSInteger currentColumn = 0, currentRow = 0;
   for (NSInteger i=0; i<kInputGridTotalCells; i++) {
     CALayer *box = [CALayer layer];
-    [scrollView.layer addSublayer:box];
-    [boxes addObject:box];
+    [_scrollView.layer addSublayer:box];
+    [_boxes addObject:box];
     [box setFrame:CGRectMake(currentColumn * kCellWidth, currentRow * kCellHeight, kCellWidth, kCellHeight)];
 
     if (currentColumn+1 < kInputGridTotalColumns) {
@@ -78,19 +78,19 @@ static const CGFloat kMiniBarHeight = 44;
       currentRow++;
     }
   }
-  [scrollView setContentSize:CGSizeMake(CGRectGetWidth(scrollView.frame), kCellHeight*(kInputGridTotalCells/kInputGridTotalColumns))];
+  [_scrollView setContentSize:CGSizeMake(CGRectGetWidth(_scrollView.frame), kCellHeight*(kInputGridTotalCells/kInputGridTotalColumns))];
 
   // Display speakers in the grid layout
   [[[SonosInputStore sharedStore] allInputs] enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
     SonosInput *input = (SonosInput *)obj;
     [input setDelegate:self];
 
-    CALayer *box = (CALayer *)[boxes objectAtIndex:idx];
+    CALayer *box = (CALayer *)[_boxes objectAtIndex:idx];
 
     PLInputCell *cell = [self inputCellForInput:input];
     [cell addTarget:self action:@selector(inputCellWasSelected:) forControlEvents:UIControlEventTouchUpInside];
     [cell setCenter:box.position];
-    [scrollView addSubview:cell];
+    [_scrollView addSubview:cell];
 
     [input setView:cell];
 
@@ -100,9 +100,9 @@ static const CGFloat kMiniBarHeight = 44;
   }];
 
   // Mini Bar
-  miniBar = [[UIView alloc] initWithFrame:CGRectZero];
-  [miniBar setBackgroundColor:[UIColor colorWithWhite:.95 alpha:1]];
-  [self.view addSubview:miniBar];
+  _miniBar = [[UIView alloc] initWithFrame:CGRectZero];
+  [_miniBar setBackgroundColor:[UIColor colorWithWhite:.95 alpha:1]];
+  [self.view addSubview:_miniBar];
 
   UIButton *miniTitle = [[UIButton alloc] init];
   [miniTitle setAutoresizingMask:UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight];
@@ -111,20 +111,20 @@ static const CGFloat kMiniBarHeight = 44;
   [miniTitle setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
   [miniTitle.titleLabel setFont:[UIFont boldSystemFontOfSize:kSongTitleFontSize]];
   [miniTitle sizeToFit];
-  [miniTitle setCenter:CGPointMake(CGRectGetWidth(miniBar.bounds)/2, CGRectGetHeight(miniBar.bounds)/2)];
-  [miniBar addSubview:miniTitle];
+  [miniTitle setCenter:CGPointMake(CGRectGetWidth(_miniBar.bounds)/2, CGRectGetHeight(_miniBar.bounds)/2)];
+  [_miniBar addSubview:miniTitle];
 
   UIButton *miniPause = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, kMiniBarHeight, kMiniBarHeight)];
   [miniPause setBackgroundImage:[UIImage imageNamed:@"PLPause"] forState:UIControlStateNormal];
-  [miniBar addSubview:miniPause];
+  [_miniBar addSubview:miniPause];
 }
 
 - (void)viewWillLayoutSubviews
 {
   [super viewWillLayoutSubviews];
 
-  [scrollView setFrame:CGRectMake(0, 0, CGRectGetWidth(self.view.bounds), CGRectGetHeight(self.view.bounds))];
-  [miniBar setFrame:CGRectMake(0, CGRectGetHeight(self.view.bounds)-kMiniBarHeight, CGRectGetWidth(self.view.bounds), kMiniBarHeight)];
+  [_scrollView setFrame:CGRectMake(0, 0, CGRectGetWidth(self.view.bounds), CGRectGetHeight(self.view.bounds))];
+  [_miniBar setFrame:CGRectMake(0, CGRectGetHeight(self.view.bounds)-kMiniBarHeight, CGRectGetWidth(self.view.bounds), kMiniBarHeight)];
 }
 
 - (void)done
@@ -163,7 +163,7 @@ static const CGFloat kMiniBarHeight = 44;
   // TODO: Figure out how to paire speakers with this new behavior
   UISnapBehavior *snap = [[UISnapBehavior alloc] initWithItem:cell snapToPoint:point];
   [snap setDamping:.7];
-  [animator addBehavior:snap];
+  [_animator addBehavior:snap];
 }
 
 - (void)pairSonosInput:(SonosInput *)master with:(SonosInput *)slave
@@ -176,11 +176,11 @@ static const CGFloat kMiniBarHeight = 44;
 - (void)panCell:(UIGestureRecognizer *)recognizer
 {
   PLInputCell *cell = (PLInputCell *)[recognizer view];
-  [animator removeAllBehaviors];
+  [_animator removeAllBehaviors];
 
   switch (recognizer.state) {
     case UIGestureRecognizerStateBegan: {
-      cellPanCoordBegan = [recognizer locationInView:cell];
+      _cellPanCoordBegan = [recognizer locationInView:cell];
       [cell setOrigin:cell.center];
       [cell startDragging];
       [self.view bringSubviewToFront:cell];
@@ -188,13 +188,13 @@ static const CGFloat kMiniBarHeight = 44;
     case UIGestureRecognizerStateChanged: {
       CGPoint panCoordChange = [recognizer locationInView:cell];
 
-      CGFloat deltaX = panCoordChange.x - cellPanCoordBegan.x;
-      CGFloat deltaY = panCoordChange.y - cellPanCoordBegan.y;
+      CGFloat deltaX = panCoordChange.x - _cellPanCoordBegan.x;
+      CGFloat deltaY = panCoordChange.y - _cellPanCoordBegan.y;
 
       CGPoint newPoint = CGPointMake(cell.center.x + deltaX, cell.center.y + deltaY);
       cell.center = newPoint;
 
-      [boxes enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+      [_boxes enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
         CALayer *box = (CALayer *)obj;
         if (CGRectContainsPoint(box.frame, cell.center)) {
           [box setBackgroundColor:[UIColor colorWithWhite:.97 alpha:1].CGColor];
@@ -206,7 +206,7 @@ static const CGFloat kMiniBarHeight = 44;
     case UIGestureRecognizerStateEnded:
     case UIGestureRecognizerStateCancelled: {
       [cell stopDragging];
-      [boxes enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+      [_boxes enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
         CALayer *box = (CALayer *)obj;
         if (CGRectContainsPoint(box.frame, cell.center)) {
           [box setBackgroundColor:[UIColor clearColor].CGColor];

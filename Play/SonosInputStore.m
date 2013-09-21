@@ -10,16 +10,16 @@
 #import "SonosInput.h"
 
 @implementation SonosInputStore {
-  NSMutableArray *inputList;
+  NSMutableArray *_inputList;
 }
 
 - (id)init
 {
   if (self = [super init]) {
     NSString *path = [self inputArchivePath];
-    inputList = [NSKeyedUnarchiver unarchiveObjectWithFile:path];
-    if (!inputList) {
-      inputList = [[NSMutableArray alloc] init];
+    _inputList = [NSKeyedUnarchiver unarchiveObjectWithFile:path];
+    if (!_inputList) {
+      _inputList = [[NSMutableArray alloc] init];
     }
   }
   return self;
@@ -36,17 +36,17 @@
 
 - (NSArray *)allInputs
 {
-  return inputList;
+  return _inputList;
 }
 
 - (SonosInput *)inputAtIndex:(NSUInteger)index
 {
-  return [inputList objectAtIndex:index];
+  return [_inputList objectAtIndex:index];
 }
 
 - (SonosInput *)inputWithUid:(NSString *)uid
 {
-  for (SonosInput *input in inputList) {
+  for (SonosInput *input in _inputList) {
     if ([input.uid isEqual:uid]) {
       return input;
     }
@@ -57,13 +57,13 @@
 - (SonosInput *)addInputWithIP:(NSString *)aIP name:(NSString *)aName uid:(NSString *)aUid icon:(UIImage *)aIcon
 {
   SonosInput *input = [[SonosInput alloc] initWithIP:aIP name:aName uid:aUid icon:aIcon];
-  [inputList addObject:input];
+  [_inputList addObject:input];
   return input;
 }
 
 - (void)removeInput:(SonosInput *)input
 {
-  [inputList removeObjectIdenticalTo:input];
+  [_inputList removeObjectIdenticalTo:input];
 }
 
 #pragma mark - NSCoding
@@ -78,7 +78,7 @@
 - (BOOL)saveChanges
 {
   NSString *path = [self inputArchivePath];
-  return [NSKeyedArchiver archiveRootObject:inputList toFile:path];
+  return [NSKeyedArchiver archiveRootObject:_inputList toFile:path];
 }
 
 @end

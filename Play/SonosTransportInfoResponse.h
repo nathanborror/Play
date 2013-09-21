@@ -9,9 +9,6 @@
 @import Foundation;
 
 @interface SonosTransportInfoResponse : NSObject <NSXMLParserDelegate>
-{
-  NSMutableString *currentString;
-}
 
 @property (nonatomic, weak) id parentParserDelegate;
 @property (nonatomic, strong) NSString *state;

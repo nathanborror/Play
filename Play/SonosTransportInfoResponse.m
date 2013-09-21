@@ -8,32 +8,34 @@
 
 #import "SonosTransportInfoResponse.h"
 
-@implementation SonosTransportInfoResponse
+@implementation SonosTransportInfoResponse {
+  NSMutableString *_currentString;
+}
 
 #pragma mark - NSXMLParserDelegate
 
 - (void)parser:(NSXMLParser *)parser didStartElement:(NSString *)elementName namespaceURI:(NSString *)namespaceURI qualifiedName:(NSString *)qName attributes:(NSDictionary *)attributeDict
 {
   if ([elementName isEqual:@"CurrentTransportState"]) {
-    currentString = [[NSMutableString alloc] init];
-    [self setState:currentString];
+    _currentString = [[NSMutableString alloc] init];
+    [self setState:_currentString];
   } else if ([elementName isEqual:@"CurrentTransportStatus"]) {
-    currentString = [[NSMutableString alloc] init];
-    [self setStatus:currentString];
+    _currentString = [[NSMutableString alloc] init];
+    [self setStatus:_currentString];
   } else if ([elementName isEqual:@"CurrentSpeed"]) {
-    currentString = [[NSMutableString alloc] init];
-    [self setSpeed:currentString];
+    _currentString = [[NSMutableString alloc] init];
+    [self setSpeed:_currentString];
   }
 }
 
 - (void)parser:(NSXMLParser *)parser foundCharacters:(NSString *)string
 {
-  [currentString appendString:string];
+  [_currentString appendString:string];
 }
 
 - (void)parser:(NSXMLParser *)parser didEndElement:(NSString *)elementName namespaceURI:(NSString *)namespaceURI qualifiedName:(NSString *)qName
 {
-  currentString = nil;
+  _currentString = nil;
 
   if ([elementName isEqual:@"u:GetTransportInfoResponse"]) {
     [parser setDelegate:_parentParserDelegate];

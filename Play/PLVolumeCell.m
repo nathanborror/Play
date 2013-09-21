@@ -16,51 +16,51 @@
 static const CGFloat kVolumeBarMargin = 16;
 
 @implementation PLVolumeCell {
-  PLDial *volumeDial;
-  UILabel *name;
-  SonosController *sonos;
+  PLDial *_volumeDial;
+  UILabel *_name;
+  SonosController *_sonos;
 }
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
   if (self = [super initWithStyle:style reuseIdentifier:reuseIdentifier]) {
-    sonos = [SonosController sharedController];
+    _sonos = [SonosController sharedController];
 
-    volumeDial = [[PLDial alloc] initWithFrame:CGRectMake(kVolumeBarMargin, 22, CGRectGetWidth(self.bounds)-(kVolumeBarMargin*2), 44)];
-    [volumeDial setMaxValue:100.0];
-    [volumeDial setMinValue:0.0];
-    [volumeDial setValue:10.0];
-    [volumeDial addTarget:self action:@selector(changeVolume2:) forControlEvents:UIControlEventValueChanged];
-    [self addSubview:volumeDial];
+    _volumeDial = [[PLDial alloc] initWithFrame:CGRectMake(kVolumeBarMargin, 22, CGRectGetWidth(self.bounds)-(kVolumeBarMargin*2), 44)];
+    [_volumeDial setMaxValue:100.0];
+    [_volumeDial setMinValue:0.0];
+    [_volumeDial setValue:10.0];
+    [_volumeDial addTarget:self action:@selector(changeVolume2:) forControlEvents:UIControlEventValueChanged];
+    [self addSubview:_volumeDial];
   }
   return self;
 }
 
 - (void)changeVolume:(UISlider *)slider
 {
-  [sonos volume:_input level:(int)[slider value] completion:nil];
+  [_sonos volume:_input level:(int)[slider value] completion:nil];
 }
 
 - (void)changeVolume2:(PLDial *)dial
 {
-  [sonos volume:_input level:(int)[dial value] completion:nil];
+  [_sonos volume:_input level:(int)[dial value] completion:nil];
 }
 
 - (void)setInput:(SonosInput *)aInput
 {
   _input = aInput;
 
-  name = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(self.bounds), 18)];
-  [name setUserInteractionEnabled:NO];
-  [name setText:_input.name];
-  [name setTextAlignment:NSTextAlignmentCenter];
-  [name setFont:[UIFont systemFontOfSize:15]];
-  [name setBackgroundColor:[UIColor clearColor]];
-  [self addSubview:name];
+  _name = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(self.bounds), 18)];
+  [_name setUserInteractionEnabled:NO];
+  [_name setText:_input.name];
+  [_name setTextAlignment:NSTextAlignmentCenter];
+  [_name setFont:[UIFont systemFontOfSize:15]];
+  [_name setBackgroundColor:[UIColor clearColor]];
+  [self addSubview:_name];
 
-  [sonos volume:_input completion:^(SOAPEnvelope *envelope, NSError *error) {
+  [_sonos volume:_input completion:^(SOAPEnvelope *envelope, NSError *error) {
     SonosVolumeResponse *volume = (SonosVolumeResponse *)[envelope response];
-    [volumeDial setValue:[volume.currentVolume floatValue]];
+    [_volumeDial setValue:[volume.currentVolume floatValue]];
   }];
 }
 

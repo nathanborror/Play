@@ -15,9 +15,9 @@
 
 @interface RdioSongsViewController ()
 {
-  Rdio *rdio;
-  NSMutableArray *songs;
-  RdioPlaylist *playlist;
+  Rdio *_rdio;
+  NSMutableArray *_songs;
+  RdioPlaylist *_playlist;
 }
 @end
 
@@ -26,14 +26,14 @@
 - (id)initWithPlaylist:(RdioPlaylist *)aPlaylist
 {
   if (self = [super init]) {
-    playlist = aPlaylist;
-    songs = [[NSMutableArray alloc] init];
+    _playlist = aPlaylist;
+    _songs = [[NSMutableArray alloc] init];
 
-    if (songs.count == 0) {
+    if (_songs.count == 0) {
       NSString *key = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFRdioConsumerKey"];
       NSString *secret = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFRdioConsumerSecret"];
-      rdio = [[Rdio alloc] initWithConsumerKey:key andSecret:secret delegate:self];
-      [rdio authorizeUsingAccessToken:[[NSUserDefaults standardUserDefaults] objectForKey:@"rdioAccessKey"] fromController:self];
+      _rdio = [[Rdio alloc] initWithConsumerKey:key andSecret:secret delegate:self];
+      [_rdio authorizeUsingAccessToken:[[NSUserDefaults standardUserDefaults] objectForKey:@"rdioAccessKey"] fromController:self];
     }
   }
   return self;
@@ -59,7 +59,7 @@
 - (void)getRdioSongsForPlaylist
 {
   [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
-  [rdio callAPIMethod:@"get" withParameters:@{@"keys":playlist.key, @"extras": @"tracks"} delegate:self];
+  [_rdio callAPIMethod:@"get" withParameters:@{@"keys":_playlist.key, @"extras": @"tracks"} delegate:self];
 }
 
 #pragma mark - RdioDelegate
@@ -71,7 +71,7 @@
   [[NSUserDefaults standardUserDefaults] setObject:accessToken forKey:@"rdioAccessKey"];
   [[NSUserDefaults standardUserDefaults] synchronize];
 
-  if (songs.count == 0) {
+  if (_songs.count == 0) {
     [self getRdioSongsForPlaylist];
   }
 }
@@ -86,7 +86,7 @@
 - (void)rdioRequest:(RDAPIRequest *)request didLoadData:(id)data
 {
 //  NSLog(@"Rdio: request did load: %@", data[playlist.key][@"tracks"]);
-  for (NSDictionary *track in data[playlist.key][@"tracks"]) {
+  for (NSDictionary *track in data[_playlist.key][@"tracks"]) {
     RdioArtist *artist = [[RdioArtist alloc] init];
     [artist setKey:track[@"artistKey"]];
     [artist setName:track[@"artist"]];
@@ -101,7 +101,7 @@
     [newSong setName:track[@"name"]];
     [newSong setAlbumArt:track[@"icon"]];
     [newSong setAlbum:album];
-    [songs addObject:newSong];
+    [_songs addObject:newSong];
   }
   [self.tableView reloadData];
   [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
@@ -116,7 +116,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-  return songs.count;
+  return _songs.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -125,7 +125,7 @@
   if (!cell) {
     cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"PlaylistCell"];
   }
-  RdioSong *song = (RdioSong *)[songs objectAtIndex:indexPath.row];
+  RdioSong *song = (RdioSong *)[_songs objectAtIndex:indexPath.row];
   [cell.textLabel setText:song.name];
   return cell;
 }
@@ -134,7 +134,7 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-  RdioSong *song = (RdioSong *)[songs objectAtIndex:indexPath.row];
+  RdioSong *song = (RdioSong *)[_songs objectAtIndex:indexPath.row];
 
   PLNowPlayingViewController *viewController = [[PLNowPlayingViewController alloc] initWithRdioSong:song];
   UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:viewController];

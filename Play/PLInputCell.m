@@ -13,7 +13,7 @@
 #import "SOAPEnvelope.h"
 
 @implementation PLInputCell {
-  UIDynamicAnimator *animator;
+  UIDynamicAnimator *_animator;
 }
 
 - (id)initWithInput:(SonosInput *)aInput
@@ -23,7 +23,7 @@
     self.input = aInput;
     self.origin = self.center;
 
-    animator = [[UIDynamicAnimator alloc] initWithReferenceView:self];
+    _animator = [[UIDynamicAnimator alloc] initWithReferenceView:self];
 
     // Speaker label
     _label = [[UILabel alloc] initWithFrame:CGRectMake(0, 65, CGRectGetWidth(self.bounds), 20)];
@@ -86,18 +86,18 @@
 
 - (void)startDragging
 {
-  [animator removeAllBehaviors];
+  [_animator removeAllBehaviors];
   UISnapBehavior *snap = [[UISnapBehavior alloc] initWithItem:_label snapToPoint:CGPointMake(_label.center.x, 35)];
   [snap setDamping:.7];
-  [animator addBehavior:snap];
+  [_animator addBehavior:snap];
 }
 
 - (void)stopDragging
 {
-  [animator removeAllBehaviors];
+  [_animator removeAllBehaviors];
   UISnapBehavior *snap = [[UISnapBehavior alloc] initWithItem:_label snapToPoint:CGPointMake(_label.center.x, 75)];
   [snap setDamping:.7];
-  [animator addBehavior:snap];
+  [_animator addBehavior:snap];
 }
 
 - (void)refreshIndicator

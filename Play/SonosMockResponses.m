@@ -9,17 +9,17 @@
 #import "SonosMockResponses.h"
 
 @implementation SonosMockResponses {
-  NSMutableDictionary *responses;
+  NSMutableDictionary *_responses;
 }
 
 - (id)init
 {
   if (self = [super init]) {
-    responses = [[NSMutableDictionary alloc] init];
+    _responses = [[NSMutableDictionary alloc] init];
 
     // Track Info
     // METHOD: POST http://SPEAKER_IP:1400/MediaRenderer/AVTransport/Control
-    [responses setObject:@""
+    [_responses setObject:@""
     "<s:Envelope xmlns:s='http://schemas.xmlsoap.org/soap/envelope/' s:encodingStyle='http://schemas.xmlsoap.org/soap/encoding/'>"
       "<s:Body>"
         "<u:GetPositionInfoResponse xmlns:u='urn:schemas-upnp-org:service:AVTransport:1'>"
@@ -46,7 +46,7 @@
 
     // Play
     // METHOD: POST http://SPEAKER_IP:1400/MediaRenderer/AVTransport/Control
-    [responses setObject:@""
+    [_responses setObject:@""
     "<s:Envelope xmlns:s='http://schemas.xmlsoap.org/soap/envelope/' s:encodingStyle='http://schemas.xmlsoap.org/soap/encoding/'>"
       "<s:Body>"
         "<u:PlayResponse xmlns:u='urn:schemas-upnp-org:service:AVTransport:1'></u:PlayResponse>"
@@ -55,7 +55,7 @@
 
     // Play Track
     // METHOD: POST http://SPEAKER_IP:1400/MediaRenderer/AVTransport/Control
-    [responses setObject:@""
+    [_responses setObject:@""
     "<s:Envelope xmlns:s='http://schemas.xmlsoap.org/soap/envelope/' s:encodingStyle='http://schemas.xmlsoap.org/soap/encoding/'>"
       "<s:Body>"
         "<u:SetAVTransportURIResponse xmlns:u='urn:schemas-upnp-org:service:AVTransport:1'></u:SetAVTransportURIResponse>"
@@ -64,7 +64,7 @@
 
     // Pause
     // METHOD: POST http://SPEAKER_IP:1400/MediaRenderer/AVTransport/Control
-    [responses setObject:@""
+    [_responses setObject:@""
     "<s:Envelope xmlns:s='http://schemas.xmlsoap.org/soap/envelope/' s:encodingStyle='http://schemas.xmlsoap.org/soap/encoding/'>"
       "<s:Body>"
         "<u:PauseResponse xmlns:u='urn:schemas-upnp-org:service:AVTransport:1'></u:PauseResponse>"
@@ -73,7 +73,7 @@
 
     // Volume
     // METHOD: POST http://SPEAKER_IP:1400/MediaRenderer/AVTransport/Control
-    [responses setObject:@""
+    [_responses setObject:@""
     "<s:Envelope xmlns:s='http://schemas.xmlsoap.org/soap/envelope/' s:encodingStyle='http://schemas.xmlsoap.org/soap/encoding/'>"
       "<s:Body>"
         "<u:SetVolumeResponse xmlns:u='urn:schemas-upnp-org:service:RenderingControl:1'></u:SetVolumeResponse>"
@@ -96,7 +96,7 @@
 
 - (NSData *)responseFor:(NSString *)action
 {
-  return [[responses objectForKey:action] dataUsingEncoding:NSUTF8StringEncoding];
+  return [[_responses objectForKey:action] dataUsingEncoding:NSUTF8StringEncoding];
 }
 
 @end

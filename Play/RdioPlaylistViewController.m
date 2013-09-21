@@ -13,21 +13,21 @@
 #import "PLSongViewController.h"
 
 @implementation RdioPlaylistViewController {
-  Rdio *rdio;
-  UILocalizedIndexedCollation *collation;
-  NSMutableArray *playlists;
+  Rdio *_rdio;
+  UILocalizedIndexedCollation *_collation;
+  NSMutableArray *_playlists;
 }
 
 - (id)init
 {
   if (self = [super init]) {
-    playlists = [[NSMutableArray alloc] init];
+    _playlists = [[NSMutableArray alloc] init];
 
-    if (playlists.count == 0) {
+    if (_playlists.count == 0) {
       NSString *key = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFRdioConsumerKey"];
       NSString *secret = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFRdioConsumerSecret"];
-      rdio = [[Rdio alloc] initWithConsumerKey:key andSecret:secret delegate:self];
-      [rdio authorizeUsingAccessToken:[[NSUserDefaults standardUserDefaults] objectForKey:@"rdioAccessKey"] fromController:self];
+      _rdio = [[Rdio alloc] initWithConsumerKey:key andSecret:secret delegate:self];
+      [_rdio authorizeUsingAccessToken:[[NSUserDefaults standardUserDefaults] objectForKey:@"rdioAccessKey"] fromController:self];
     }
   }
   return self;
@@ -53,7 +53,7 @@
 - (void)getRdioPlaylists
 {
   [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
-  [rdio callAPIMethod:@"getPlaylists" withParameters:nil delegate:self];
+  [_rdio callAPIMethod:@"getPlaylists" withParameters:nil delegate:self];
 }
 
 #pragma mark - RdioDelegate
@@ -65,7 +65,7 @@
   [[NSUserDefaults standardUserDefaults] setObject:accessToken forKey:@"rdioAccessKey"];
   [[NSUserDefaults standardUserDefaults] synchronize];
 
-  if (playlists.count == 0) {
+  if (_playlists.count == 0) {
     [self getRdioPlaylists];
   }
 }
@@ -85,7 +85,7 @@
     [newPlaylist setKey:playlist[@"key"]];
     [newPlaylist setName:playlist[@"name"]];
     [newPlaylist setUrl:playlist[@"url"]];
-    [playlists addObject:newPlaylist];
+    [_playlists addObject:newPlaylist];
   }
   [self.tableView reloadData];
   [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
@@ -100,7 +100,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-  return playlists.count;
+  return _playlists.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -109,7 +109,7 @@
   if (!cell) {
     cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"PlaylistCell"];
   }
-  RdioPlaylist *playlist = (RdioPlaylist *)[playlists objectAtIndex:indexPath.row];
+  RdioPlaylist *playlist = (RdioPlaylist *)[_playlists objectAtIndex:indexPath.row];
   [cell.textLabel setText:playlist.name];
   return cell;
 }
@@ -118,7 +118,7 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-  RdioPlaylist *playlist = (RdioPlaylist *)[playlists objectAtIndex:indexPath.row];
+  RdioPlaylist *playlist = (RdioPlaylist *)[_playlists objectAtIndex:indexPath.row];
 
   RdioSongsViewController *viewController = [[RdioSongsViewController alloc] initWithPlaylist:playlist];
   [self.navigationController pushViewController:viewController animated:YES];
