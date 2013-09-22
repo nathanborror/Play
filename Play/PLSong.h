@@ -6,7 +6,7 @@
 //  Copyright (c) 2012 Nathan Borror. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
+@import Foundation;
 
 @interface PLSong : NSObject
 

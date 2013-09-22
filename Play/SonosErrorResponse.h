@@ -6,12 +6,9 @@
 //  Copyright (c) 2013 Nathan Borror. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
+@import Foundation;
 
 @interface SonosErrorResponse : NSObject <NSXMLParserDelegate>
-{
-  NSMutableString *currentString;
-}
 
 @property (nonatomic, weak) id parentParserDelegate;
 @property (nonatomic, strong) NSString *code;

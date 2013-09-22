@@ -15,21 +15,15 @@
 #import "RdioSong.h"
 #import "RdioAlbum.h"
 
-@interface SonosController ()
-{
-  NSInputStream *inputStream;
-  int volumeLevel;
+@implementation SonosController {
+  int _volumeLevel;
 }
-@end
-
-@implementation SonosController
 
 - (id)initWithInput:(SonosInput *)input
 {
-  self = [super init];
-  if (self) {
+  if (self = [super init]) {
     _isPlaying = YES;
-    volumeLevel = 0;
+    _volumeLevel = 0;
   }
   return self;
 }
@@ -89,7 +83,7 @@
   NSEnumerator *enumerator = [params keyEnumerator];
   NSString *key;
   while (key = [enumerator nextObject]) {
-    requestParams = [NSString stringWithFormat:@"<%@>%@</%@>%@", key, [params objectForKey:key], key, requestParams];
+    requestParams = [NSMutableString stringWithFormat:@"<%@>%@</%@>%@", key, [params objectForKey:key], key, requestParams];
   }
 
   NSString *requestBody = [NSString stringWithFormat:@""
@@ -187,6 +181,18 @@
   }];
 }
 
+- (void)queue:(SonosInput *)input track:(NSString *)track completion:(void (^)(SOAPEnvelope *, NSError *))block
+{
+  NSDictionary *params = @{@"InstanceID": @0,
+                           @"EnqueuedURI": track,
+                           @"EnqueuedURIMetaData": @"",
+                           @"DesiredFirstTrackNumberEnqueued": @0,
+                           @"EnqueueAsNext": @1};
+  [SonosController request:SonosRequestTypeAVTransport input:input action:@"AddURIToQueue" params:params completion:^(id obj, NSError *error) {
+    [self play:nil track:nil completion:block];
+  }];
+}
+
 - (void)lineIn:(SonosInput *)input completion:(void (^)(SOAPEnvelope *, NSError *))block
 {
   [self play:input track:[NSString stringWithFormat:@"x-rincon-stream:%@", input.uid] completion:block];
@@ -201,13 +207,13 @@
 
 - (void)volume:(SonosInput *)input level:(int)level completion:(void (^)(SOAPEnvelope *, NSError *))block
 {
-  if (volumeLevel == level) return;
+  if (_volumeLevel == level) return;
 
   NSDictionary *params = @{@"InstanceID": @0,
                            @"Channel":@"Master",
                            @"DesiredVolume":[NSNumber numberWithInt:level]};
   [SonosController request:SonosRequestTypeRenderingControl input:input action:@"SetVolume" params:params completion:^(id obj, NSError *error) {
-    volumeLevel = level;
+    _volumeLevel = level;
     if (block) block(obj, error);
   }];
 }

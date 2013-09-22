@@ -9,74 +9,161 @@
 #import "PLSpeakersViewController.h"
 #import "PLLibraryViewController.h"
 #import "PLAddInputViewController.h"
-#import "PLNowPlayingViewController.h"
-#import "PLControlMenu.h"
-#import "PLVolumeSlider.h"
+#import "PLInputCell.h"
 #import "SonosInput.h"
 #import "SonosInputStore.h"
-#import "SonosInputCell.h"
 #import "SonosController.h"
 #import "SonosPositionInfoResponse.h"
 #import "SOAPEnvelope.h"
-#import "NBKit/NBAnimationHelper.h"
-#import "NBKit/NBDialog.h"
-#import "NBKit/NBAnimationHelper.h"
+#import "UIImage+BlurImage.h"
 
-static const CGFloat kInputOffRestingX = 23.0;
-static const CGFloat kInputOnRestingX = 185.0;
-static const CGFloat kControlButtonWidth = 60.0;
-static const CGFloat kControlButtonHeight = 60.0;
-static const CGFloat kControlButtonTopSpacing = 2.0;
-static const CGFloat kControlButtonSpacing = 30.0;
-static const CGFloat kControlVolumeSpacing = 10.0;
+static const CGFloat kInputGridTotalCells = 10;
+static const CGFloat kInputGridTotalColumns = 2;
+static const CGFloat kSongTitleFontSize = 17.0;
+static const CGFloat kMiniBarHeight = 44;
 
-@interface PLSpeakersViewController ()
-{
-  NSArray *inputList;
-  CGPoint cellPanCoordBegan;
-  PLControlMenu *controlMenu;
-  UIView *paired;
-  NSMutableArray *pairedSpeakers;
-  NBDialog *dialog;
+@implementation PLSpeakersViewController {
+  UIScrollView *_scrollView;
+  CGPoint _cellPanCoordBegan;
+  UIView *_paired;
+  NSMutableArray *_pairedSpeakers;
+  UIDynamicAnimator *_animator;
+  NSMutableArray *_boxes;
+  NSMutableArray *_cells;
+  UIView *_miniBar;
 }
-@end
 
-@implementation PLSpeakersViewController
-
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+- (id)init
 {
-  self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-  if (self) {
-    [self.navigationItem setTitle:@"Speakers"];
-    pairedSpeakers = [[NSMutableArray alloc] init];
-
-    // Add Button
-    UIBarButtonItem *addButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addInput)];
-    [self.navigationItem setLeftBarButtonItem:addButton];
-
-    // TODO: Remove this and load these using UPnP's discovery stuff
-    SonosInputStore *inputStore = [SonosInputStore sharedStore];
-    [inputStore addInputWithIP:@"10.0.1.9" name:@"Living Room" uid:@"RINCON_000E58D0540801400" icon:[UIImage imageNamed:@"SonosAmp"]];
-    [inputStore addInputWithIP:@"10.0.1.10" name:@"Bedroom" uid:@"RINCON_000E587641F201400" icon:[UIImage imageNamed:@"SonosSpeakerPlay3Light"]];
-    [inputStore addInputWithIP:@"10.0.1.11" name:@"Kitchen" uid:@"RINCON_000E587BBA5201400" icon:[UIImage imageNamed:@"SonosSpeakerPlay3Dark"]];
-
-    // Make the first input in the master input for now.
-    [inputStore setMaster:[inputStore inputAtIndex:0]];
-
-    [self setBackground];
-    [self setInputs];
-
-    controlMenu = [[PLControlMenu alloc] initWithFrame:CGRectMake(0, 15, CGRectGetWidth(self.view.bounds), CGRectGetHeight(self.view.bounds)-15)];
-    [self.view addSubview:controlMenu];
+  if (self = [super init]) {
+    _pairedSpeakers = [[NSMutableArray alloc] init];
+    _boxes = [[NSMutableArray alloc] init];
+    _cells = [[NSMutableArray alloc] init];
+    _animator = [[UIDynamicAnimator alloc] initWithReferenceView:_scrollView];
   }
   return self;
 }
 
-- (void)nowPlaying
+- (void)viewDidLoad
 {
-  PLNowPlayingViewController *viewController = [[PLNowPlayingViewController alloc] init];
-  UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:viewController];
-  [self.navigationController presentViewController:navController animated:YES completion:nil];
+  [super viewDidLoad];
+
+  [self setTitle:@"Speakers"];
+  [self.view setBackgroundColor:[UIColor colorWithRed:.85 green:.86 blue:.88 alpha:1]];
+
+  UIBarButtonItem *addButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addInput)];
+
+  if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
+    UIBarButtonItem *done = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(done)];
+    [self.navigationItem setRightBarButtonItem:done];
+    [self.navigationItem setLeftBarButtonItem:addButton];
+  } else {
+    [self.navigationItem setRightBarButtonItem:addButton];
+  }
+
+  _scrollView = [[UIScrollView alloc] initWithFrame:CGRectZero];
+  [_scrollView setAutoresizingMask:UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight];
+  [_scrollView setShowsVerticalScrollIndicator:NO];
+  [self.view addSubview:_scrollView];
+
+  // Build a grid for the speakers to use for placement
+  const CGFloat kCellWidth = CGRectGetWidth(self.view.frame)/kInputGridTotalColumns;
+  const CGFloat kCellHeight = kCellWidth;
+
+  NSInteger currentColumn = 0, currentRow = 0;
+  for (NSInteger i=0; i<kInputGridTotalCells; i++) {
+    CALayer *box = [CALayer layer];
+    [_scrollView.layer addSublayer:box];
+    [_boxes addObject:box];
+    [box setFrame:CGRectMake(currentColumn * kCellWidth, currentRow * kCellHeight, kCellWidth, kCellHeight)];
+
+    if (currentColumn+1 < kInputGridTotalColumns) {
+      currentColumn++;
+    } else {
+      currentColumn = 0;
+      currentRow++;
+    }
+  }
+  [_scrollView setContentSize:CGSizeMake(CGRectGetWidth(_scrollView.frame), kCellHeight*(kInputGridTotalCells/kInputGridTotalColumns))];
+
+  // Display speakers in the grid layout
+  [[[SonosInputStore sharedStore] allInputs] enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+    SonosInput *input = (SonosInput *)obj;
+    [input setDelegate:self];
+
+    CALayer *box = (CALayer *)[_boxes objectAtIndex:idx];
+
+    PLInputCell *cell = [self inputCellForInput:input];
+    [cell addTarget:self action:@selector(inputCellWasSelected:) forControlEvents:UIControlEventTouchUpInside];
+    [cell setCenter:box.position];
+    [_cells addObject:cell];
+    [_scrollView addSubview:cell];
+
+    [input setView:cell];
+
+    // Allow people to drag speakers into new grid cells
+    UIPanGestureRecognizer *cellPan = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(panCell:)];
+    [cell addGestureRecognizer:cellPan];
+  }];
+
+  // Mini Bar - Omitted on large devices
+  if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
+    _miniBar = [[UIView alloc] initWithFrame:CGRectZero];
+    [_miniBar setBackgroundColor:[UIColor colorWithWhite:.95 alpha:1]];
+    [self.view addSubview:_miniBar];
+
+    UIButton *miniTitle = [[UIButton alloc] init];
+    [miniTitle setAutoresizingMask:UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight];
+    [miniTitle addTarget:self action:@selector(done) forControlEvents:UIControlEventTouchUpInside];
+    [miniTitle setTitle:@"Come Together" forState:UIControlStateNormal];
+    [miniTitle setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    [miniTitle.titleLabel setFont:[UIFont boldSystemFontOfSize:kSongTitleFontSize]];
+    [miniTitle sizeToFit];
+    [miniTitle setCenter:CGPointMake(CGRectGetWidth(_miniBar.bounds)/2, CGRectGetHeight(_miniBar.bounds)/2)];
+    [_miniBar addSubview:miniTitle];
+
+    UIButton *miniPause = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, kMiniBarHeight, kMiniBarHeight)];
+    [miniPause setBackgroundImage:[UIImage imageNamed:@"PLPause"] forState:UIControlStateNormal];
+    [_miniBar addSubview:miniPause];
+  }
+}
+
+- (void)viewWillLayoutSubviews
+{
+  [super viewWillLayoutSubviews];
+
+  [_scrollView setFrame:CGRectMake(0, 0, CGRectGetWidth(self.view.bounds), CGRectGetHeight(self.view.bounds))];
+  [_miniBar setFrame:CGRectMake(0, CGRectGetHeight(self.view.bounds)-kMiniBarHeight, CGRectGetWidth(self.view.bounds), kMiniBarHeight)];
+
+  // Reposition box grid
+  const CGFloat kCellWidth = CGRectGetWidth(self.view.frame)/kInputGridTotalColumns;
+  const CGFloat kCellHeight = kCellWidth;
+
+  NSInteger currentColumn = 0, currentRow = 0;
+  for (NSInteger i=0; i<kInputGridTotalCells; i++) {
+    CALayer *box = [_boxes objectAtIndex:i];
+    [box setFrame:CGRectMake(currentColumn * kCellWidth, currentRow * kCellHeight, kCellWidth, kCellHeight)];
+
+    if (currentColumn+1 < kInputGridTotalColumns) {
+      currentColumn++;
+    } else {
+      currentColumn = 0;
+      currentRow++;
+    }
+  }
+  [_scrollView setContentSize:CGSizeMake(CGRectGetWidth(_scrollView.frame), kCellHeight*(kInputGridTotalCells/kInputGridTotalColumns))];
+
+  // Reposition speakers
+  [[[SonosInputStore sharedStore] allInputs] enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+    CALayer *box = (CALayer *)[_boxes objectAtIndex:idx];
+    PLInputCell *cell = [_cells objectAtIndex:idx];
+    [cell setCenter:box.position];
+  }];
+}
+
+- (void)done
+{
+  [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (void)addInput
@@ -86,113 +173,48 @@ static const CGFloat kControlVolumeSpacing = 10.0;
   [self.navigationController presentViewController:navigationController animated:YES completion:nil];
 }
 
-- (void)setBackground
-{
-  [self.view setBackgroundColor:[UIColor colorWithWhite:.2 alpha:1]];
-
-  // Drag inputs here to turn them on
-  paired = [[UIView alloc] initWithFrame:CGRectMake(CGRectGetWidth(self.view.bounds)/2, 0, CGRectGetWidth(self.view.bounds)/2, CGRectGetHeight(self.view.bounds))];
-  [self.view addSubview:paired];
-
-  // Divider
-  UIImageView *divider = [[UIImageView alloc] initWithImage:[[UIImage imageNamed:@"InputDivider"] resizableImageWithCapInsets:UIEdgeInsetsMake(2, 2, 2, 2) resizingMode:UIImageResizingModeStretch]];
-  [divider setFrame:CGRectMake((CGRectGetWidth(self.view.bounds)/2)-2, 15, 4, CGRectGetHeight(self.view.bounds)-40)];
-  [divider setAutoresizingMask:UIViewAutoresizingFlexibleHeight];
-  [self.view addSubview:divider];
-}
-
 #pragma mark - InputCells
-
-- (void)setInputs
-{
-  for (int i = 0; i < [self numberOfInputs]; i++) {
-    SonosInput *input = [[SonosInputStore sharedStore] inputAtIndex:i];
-    SonosInputCell *cell = [self inputCellForInput:input];
-    [cell addTarget:self action:@selector(inputCellWasSelected:) forControlEvents:UIControlEventTouchUpInside];
-
-    if ([input isEqual:[[SonosInputStore sharedStore] master]]) {
-      [cell setFrame:CGRectOffset(cell.bounds, kInputOnRestingX, (CGRectGetHeight(cell.bounds)*i)+(20*(i+1))+30)];
-      [pairedSpeakers addObject:input];
-    } else {
-      [cell setFrame:CGRectOffset(cell.bounds, kInputOffRestingX, (CGRectGetHeight(cell.bounds)*i)+(20*(i+1))+30)];
-    }
-
-    [cell setOrigin:cell.center];
-    [self.view addSubview:cell];
-
-    UIPanGestureRecognizer *cellPan = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(panCell:)];
-    [cell addGestureRecognizer:cellPan];
-
-    // Check to see if any inputs are playing other speakers.
-    // This would mean they're a slave of another speaker.
-    [[SonosController sharedController] trackInfo:input completion:^(SOAPEnvelope *envelope, NSError *error) {
-      SonosPositionInfoResponse *response = (SonosPositionInfoResponse *)[envelope response];
-      NSMutableString *uri = [NSMutableString stringWithFormat:@"%@", response.uri];
-
-      NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:@"x-rincon:" options:0 error:nil];
-      NSTextCheckingResult *match = [regex firstMatchInString:uri options:0 range:NSMakeRange(0, uri.length)];
-
-      if (match) {
-        [self inputCell:cell isHighlighted:YES];
-        [pairedSpeakers addObject:cell];
-      }
-    }];
-  }
-}
 
 - (NSInteger)numberOfInputs
 {
   return [[[SonosInputStore sharedStore] allInputs] count];
 }
 
-- (SonosInputCell *)inputCellForInput:(SonosInput *)input
+- (PLInputCell *)inputCellForInput:(SonosInput *)input
 {
-  SonosInputCell *cell = [[SonosInputCell alloc] initWithInput:input];
+  PLInputCell *cell = [[PLInputCell alloc] initWithInput:input];
   return cell;
 }
 
-- (void)inputCellWasSelected:(SonosInputCell *)inputCell
+- (void)inputCellWasSelected:(PLInputCell *)cell
 {
   PLLibraryViewController *viewController = [[PLLibraryViewController alloc] init];
   [self.navigationController pushViewController:viewController animated:YES];
 }
 
-- (void)inputCell:(SonosInputCell *)inputCell isHighlighted:(BOOL)active
+- (void)moveInputCell:(PLInputCell *)cell toPoint:(CGPoint)point
 {
-  SonosInputStore *inputStore = [SonosInputStore sharedStore];
+  // TODO: Figure out how to paire speakers with this new behavior
+  UISnapBehavior *snap = [[UISnapBehavior alloc] initWithItem:cell snapToPoint:point];
+  [snap setDamping:.7];
+  [_animator addBehavior:snap];
+}
 
-  CGPoint fromPoint = inputCell.center;
-  CGPoint toPoint;
-
-  if (active) {
-    // If there are no speakers in the grouped colum, set the master to
-    // the speaker being dragged over.
-    if ([pairedSpeakers count] == 0) {
-      [inputStore setMaster:inputCell.input];
-    }
-
-    toPoint = CGPointMake(kInputOnRestingX+CGRectGetWidth(inputCell.bounds)/2, inputCell.origin.y);
-    [pairedSpeakers addObject:inputCell];
-    [inputCell pair:inputStore.master];
-  } else {
-    toPoint = CGPointMake(kInputOffRestingX+CGRectGetWidth(inputCell.bounds)/2, inputCell.origin.y);
-    [pairedSpeakers removeObjectIdenticalTo:inputCell];
-    [inputCell unpair];
-  }
-
-  [NBAnimationHelper animatePosition:inputCell from:fromPoint to:toPoint forKey:@"cellBounce" delegate:nil];
+- (void)pairSonosInput:(SonosInput *)master with:(SonosInput *)slave
+{
+  [slave pairWithSonosInput:master];
 }
 
 #pragma mark - UIPanGestureRecognizer
 
 - (void)panCell:(UIGestureRecognizer *)recognizer
 {
-  SonosInputCell *cell = (SonosInputCell *)[recognizer view];
-  [cell.layer removeAllAnimations];
+  PLInputCell *cell = (PLInputCell *)[recognizer view];
+  [_animator removeAllBehaviors];
 
   switch (recognizer.state) {
     case UIGestureRecognizerStateBegan: {
-      cellPanCoordBegan = [recognizer locationInView:cell];
+      _cellPanCoordBegan = [recognizer locationInView:cell];
       [cell setOrigin:cell.center];
       [cell startDragging];
       [self.view bringSubviewToFront:cell];
@@ -200,26 +222,64 @@ static const CGFloat kControlVolumeSpacing = 10.0;
     case UIGestureRecognizerStateChanged: {
       CGPoint panCoordChange = [recognizer locationInView:cell];
 
-      CGFloat deltaX = panCoordChange.x - cellPanCoordBegan.x;
-      CGFloat deltaY = panCoordChange.y - cellPanCoordBegan.y;
+      CGFloat deltaX = panCoordChange.x - _cellPanCoordBegan.x;
+      CGFloat deltaY = panCoordChange.y - _cellPanCoordBegan.y;
 
       CGPoint newPoint = CGPointMake(cell.center.x + deltaX, cell.center.y + deltaY);
       cell.center = newPoint;
+
+      [_boxes enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+        CALayer *box = (CALayer *)obj;
+        if (CGRectContainsPoint(box.frame, cell.center)) {
+          [box setBackgroundColor:[UIColor colorWithWhite:.97 alpha:1].CGColor];
+        } else {
+          [box setBackgroundColor:[UIColor clearColor].CGColor];
+        }
+      }];
     } break;
     case UIGestureRecognizerStateEnded:
     case UIGestureRecognizerStateCancelled: {
       [cell stopDragging];
-      if (CGRectContainsPoint(paired.frame, cell.center)) {
-        [self inputCell:cell isHighlighted:YES];
-      } else {
-        [self inputCell:cell isHighlighted:NO];
-      }
-      [self.view bringSubviewToFront:controlMenu];
+      [_boxes enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+        CALayer *box = (CALayer *)obj;
+        if (CGRectContainsPoint(box.frame, cell.center)) {
+          [box setBackgroundColor:[UIColor clearColor].CGColor];
+          [self moveInputCell:cell toPoint:box.position];
+        }
+      }];
     } break;
     case UIGestureRecognizerStateFailed:
     case UIGestureRecognizerStatePossible:
       break;
   }
+}
+
+#pragma mark - SonosInputDelegate
+
+- (void)input:(SonosInput *)input pairedWith:(SonosInput *)pairedWithInput
+{
+//  PLInputCell *inputCell = (PLInputCell *)[input view];
+//  PLInputCell *masterCell = (PLInputCell *)[pairedWithInput view];
+//  [self moveInputCell:inputCell toPoint:masterCell.center];
+}
+
+- (void)input:(SonosInput *)input unpairedWith:(SonosInput *)unpairedWithInput
+{
+
+}
+
+#pragma mark - UISplitViewControllerDelegate
+
+- (BOOL)splitViewController:(UISplitViewController *)svc shouldHideViewController:(UIViewController *)vc inOrientation:(UIInterfaceOrientation)orientation
+{
+  return NO;
+}
+
+#pragma mark - PLNowPlayingViewControllerDelegate
+
+- (void)nowPlayingViewController:(PLNowPlayingViewController *)viewController handleViewController:(UIViewController *)toViewController
+{
+  [self.navigationController pushViewController:toViewController animated:YES];
 }
 
 @end

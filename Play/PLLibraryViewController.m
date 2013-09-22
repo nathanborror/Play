@@ -12,40 +12,23 @@
 #import "PLPlaylistsViewController.h"
 #import "PLNowPlayingViewController.h"
 #import "SonosInputStore.h"
-#import "RdioPlaylistsViewController.h"
+#import "RdioPlaylistViewController.h"
 
-@interface PLLibraryViewController ()
-{
-  UITableView *libraryTableView;
-  NSArray *sourceList;
+@implementation PLLibraryViewController {
+  UITableView *_libraryTableView;
+  NSArray *_sourceList;
 }
-@end
 
-@implementation PLLibraryViewController
-
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+- (id)init
 {
-  self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-  if (self) {
-    [self.navigationItem setTitle:@"Library"];
-
-    // Now Playing Button
-    UIBarButtonItem *nowPlayingButton = [[UIBarButtonItem alloc] initWithTitle:@"Playing" style:UIBarButtonItemStyleDone target:self action:@selector(nowPlaying)];
-    [self.navigationItem setRightBarButtonItem:nowPlayingButton];
-
-    // Table
-    libraryTableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStylePlain];
-    [libraryTableView setDelegate:self];
-    [libraryTableView setDataSource:self];
-    [self.view addSubview:libraryTableView];
-
-    // Library Items
-    sourceList = @[
+  if (self = [super init]) {
+    _sourceList = @[
       [[PLSource alloc] initWithName:@"Playlists" selection:nil],
       [[PLSource alloc] initWithName:@"Rdio" selection:^(){
-        RdioPlaylistsViewController *viewController = [[RdioPlaylistsViewController alloc] init];
+        RdioPlaylistViewController *viewController = [[RdioPlaylistViewController alloc] init];
         [self.navigationController pushViewController:viewController animated:YES];
       }],
+      [[PLSource alloc] initWithName:@"Radio Stations" selection:nil],
       [[PLSource alloc] initWithName:@"Line In" selection:^() {
         PLNowPlayingViewController *viewController = [[PLNowPlayingViewController alloc] initWithLineIn:[[SonosInputStore sharedStore] master]];
         UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:viewController];
@@ -54,6 +37,29 @@
     ];
   }
   return self;
+}
+
+- (void)viewDidLoad
+{
+  [super viewDidLoad];
+
+  [self setTitle:@"Library"];
+
+  UIBarButtonItem *nowPlayingButton = [[UIBarButtonItem alloc] initWithTitle:@"Playing" style:UIBarButtonItemStyleDone target:self action:@selector(nowPlaying)];
+  [self.navigationItem setRightBarButtonItem:nowPlayingButton];
+
+  _libraryTableView = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStylePlain];
+  [_libraryTableView setDelegate:self];
+  [_libraryTableView setDataSource:self];
+  [_libraryTableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"PLLibraryTableViewCell"];
+  [self.view addSubview:_libraryTableView];
+}
+
+- (void)viewDidLayoutSubviews
+{
+  [super viewDidLayoutSubviews];
+
+  [_libraryTableView setFrame:CGRectMake(0, 0, CGRectGetWidth(self.view.bounds), CGRectGetHeight(self.view.bounds))];
 }
 
 - (void)nowPlaying
@@ -67,23 +73,20 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-  return [sourceList count];
+  return [_sourceList count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-  PLSource *source = [sourceList objectAtIndex:indexPath.row];
+  PLSource *source = [_sourceList objectAtIndex:indexPath.row];
   UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"PLLibraryTableViewCell"];
-  if (!cell) {
-    cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"PLLibraryTableViewCell"];
-  }
   [cell.textLabel setText:source.name];
   return cell;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-  PLSource *source = [sourceList objectAtIndex:indexPath.row];
+  PLSource *source = [_sourceList objectAtIndex:indexPath.row];
   if (source.selectionBlock == nil) {
     PLPlaylistsViewController *viewController = [[PLPlaylistsViewController alloc] init];
     [self.navigationController pushViewController:viewController animated:YES];

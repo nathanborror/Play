@@ -8,18 +8,13 @@
 
 #import "NBDirectionGestureRecognizer.h"
 
-const static int kDirectionPanThreshold = 5;
+static const CGFloat kDirectionPanThreshold = 5;
 
-@interface NBDirectionGestureRecognizer ()
-{
-  BOOL drag;
-  int moveX;
-  int moveY;
+@implementation NBDirectionGestureRecognizer {
+  BOOL _drag;
+  int _moveX;
+  int _moveY;
 }
-@end
-
-@implementation NBDirectionGestureRecognizer
-@synthesize direction;
 
 - (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event {
   [super touchesMoved:touches withEvent:event];
@@ -31,21 +26,21 @@ const static int kDirectionPanThreshold = 5;
   CGPoint nowPoint = [[touches anyObject] locationInView:self.view];
   CGPoint previousPoint = [[touches anyObject] previousLocationInView:self.view];
 
-  moveX += previousPoint.x - nowPoint.x;
-  moveY += previousPoint.y - nowPoint.y;
+  _moveX += previousPoint.x - nowPoint.x;
+  _moveY += previousPoint.y - nowPoint.y;
 
-  if (!drag) {
-    if (abs(moveX) > kDirectionPanThreshold) {
-      if (direction == NBDirectionPanGestureRecognizerVertical) {
+  if (!_drag) {
+    if (abs(_moveX) > kDirectionPanThreshold) {
+      if (_direction == NBDirectionPanGestureRecognizerVertical) {
         self.state = UIGestureRecognizerStateFailed;
       } else {
-        drag = YES;
+        _drag = YES;
       }
-    } else if (abs(moveY) > kDirectionPanThreshold) {
-      if (direction == NBDirectionPanGestureRecognizerHorizontal) {
+    } else if (abs(_moveY) > kDirectionPanThreshold) {
+      if (_direction == NBDirectionPanGestureRecognizerHorizontal) {
         self.state = UIGestureRecognizerStateFailed;
       } else {
-        drag = YES;
+        _drag = YES;
       }
     }
   }
@@ -54,9 +49,9 @@ const static int kDirectionPanThreshold = 5;
 - (void)reset
 {
   [super reset];
-  drag = NO;
-  moveX = 0;
-  moveY = 0;
+  _drag = NO;
+  _moveX = 0;
+  _moveY = 0;
 }
 
 @end

@@ -6,7 +6,7 @@
 //  Copyright (c) 2012 Nathan Borror. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
+@import Foundation;
 
 typedef NS_ENUM(NSInteger, SonosRequestType) {
   SonosRequestTypeAVTransport,
@@ -47,6 +47,7 @@ typedef NS_ENUM(NSInteger, SonosRequestType) {
 - (void)stop:(SonosInput *)input completion:(void(^)(SOAPEnvelope *envelope, NSError *error))block;
 - (void)next:(SonosInput *)input completion:(void(^)(SOAPEnvelope *envelope, NSError *error))block;
 - (void)previous:(SonosInput *)input completion:(void(^)(SOAPEnvelope *envelope, NSError *error))block;
+- (void)queue:(SonosInput *)input track:(NSString *)track completion:(void(^)(SOAPEnvelope *envelope, NSError *error))block;
 - (void)volume:(SonosInput *)input completion:(void(^)(SOAPEnvelope *envelope, NSError *error))block;
 - (void)volume:(SonosInput *)input level:(int)level completion:(void(^)(SOAPEnvelope *envelope, NSError *error))block;
 - (void)lineIn:(SonosInput *)input completion:(void(^)(SOAPEnvelope *envelope, NSError *error))block;

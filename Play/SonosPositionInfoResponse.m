@@ -8,51 +8,52 @@
 
 #import "SonosPositionInfoResponse.h"
 
-@implementation SonosPositionInfoResponse
-@synthesize parentParserDelegate, track, duration, metaData, uri, relTime, absTime, relCount, absCount;
+@implementation SonosPositionInfoResponse {
+  NSMutableString *_currentString;
+}
 
 #pragma mark - NSXMLParserDelegate
 
 - (void)parser:(NSXMLParser *)parser didStartElement:(NSString *)elementName namespaceURI:(NSString *)namespaceURI qualifiedName:(NSString *)qName attributes:(NSDictionary *)attributeDict
 {
   if ([elementName isEqual:@"Track"]) {
-    currentString = [[NSMutableString alloc] init];
-    [self setTrack:currentString];
+    _currentString = [[NSMutableString alloc] init];
+    [self setTrack:_currentString];
   } else if ([elementName isEqual:@"TrackDuration"]) {
-    currentString = [[NSMutableString alloc] init];
-    [self setDuration:currentString];
+    _currentString = [[NSMutableString alloc] init];
+    [self setDuration:_currentString];
   } else if ([elementName isEqual:@"TrackMetaData"]) {
-    currentString = [[NSMutableString alloc] init];
-    [self setMetaData:currentString];
+    _currentString = [[NSMutableString alloc] init];
+    [self setMetaData:_currentString];
   } else if ([elementName isEqual:@"TrackURI"]) {
-    currentString = [[NSMutableString alloc] init];
-    [self setUri:currentString];
+    _currentString = [[NSMutableString alloc] init];
+    [self setUri:_currentString];
   } else if ([elementName isEqual:@"RelTime"]) {
-    currentString = [[NSMutableString alloc] init];
-    [self setRelTime:currentString];
+    _currentString = [[NSMutableString alloc] init];
+    [self setRelTime:_currentString];
   } else if ([elementName isEqual:@"AbsTime"]) {
-    currentString = [[NSMutableString alloc] init];
-    [self setAbsTime:currentString];
+    _currentString = [[NSMutableString alloc] init];
+    [self setAbsTime:_currentString];
   } else if ([elementName isEqual:@"RelCount"]) {
-    currentString = [[NSMutableString alloc] init];
-    [self setRelCount:currentString];
+    _currentString = [[NSMutableString alloc] init];
+    [self setRelCount:_currentString];
   } else if ([elementName isEqual:@"AbsCount"]) {
-    currentString = [[NSMutableString alloc] init];
-    [self setAbsCount:currentString];
+    _currentString = [[NSMutableString alloc] init];
+    [self setAbsCount:_currentString];
   }
 }
 
 - (void)parser:(NSXMLParser *)parser foundCharacters:(NSString *)string
 {
-  [currentString appendString:string];
+  [_currentString appendString:string];
 }
 
 - (void)parser:(NSXMLParser *)parser didEndElement:(NSString *)elementName namespaceURI:(NSString *)namespaceURI qualifiedName:(NSString *)qName
 {
-  currentString = nil;
+  _currentString = nil;
 
   if ([elementName isEqual:@"u:GetPositionInfoResponse"]) {
-    [parser setDelegate:parentParserDelegate];
+    [parser setDelegate:_parentParserDelegate];
   }
 }
 

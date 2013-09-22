@@ -9,7 +9,6 @@
 #import "PLSong.h"
 
 @implementation PLSong
-@synthesize artist, album, title, uri, albumArt, duration;
 
 - (id)initWithArtist:(NSString *)aArtist
                album:(NSString *)aAlbum
@@ -18,14 +17,13 @@
             albumArt:(UIImage *)aAlbumArt
             duration:(NSString *)aDuration
 {
-  self = [super init];
-  if (self) {
-    self.artist = aArtist;
-    self.album = aAlbum;
-    self.title = aTitle;
-    self.uri = aUri;
-    self.albumArt = aAlbumArt;
-    self.duration = aDuration;
+  if (self = [super init]) {
+    _artist = aArtist;
+    _album = aAlbum;
+    _title = aTitle;
+    _uri = aUri;
+    _albumArt = aAlbumArt;
+    _duration = aDuration;
   }
   return self;
 }

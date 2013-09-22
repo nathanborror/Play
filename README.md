@@ -10,4 +10,4 @@ Now open the file PLSpeakersViewController.m and replace lines 51-53 with your s
 
 ## Current mock
 
-![Current Mock](https://raw.github.com/nathanborror/Play/master/MOCK.png)
+![Current Mock](https://raw.github.com/nathanborror/Play/ios7/MOCK.png)

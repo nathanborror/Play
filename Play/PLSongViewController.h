@@ -6,9 +6,9 @@
 //  Copyright (c) 2013 Nathan Borror. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
-#import <MediaPlayer/MediaPlayer.h>
-#import <AVFoundation/AVFoundation.h>
+@import UIKit;
+@import MediaPlayer;
+@import AVFoundation;
 
 @interface PLSongViewController : UIViewController <UITableViewDelegate, UITableViewDataSource>
 

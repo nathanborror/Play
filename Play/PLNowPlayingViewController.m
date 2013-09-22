@@ -7,56 +7,60 @@
 //
 
 #import "PLNowPlayingViewController.h"
-#import "SonosController.h"
 #import "PLSong.h"
+#import "PLDial.h"
+#import "PLProgressBar.h"
+#import "PLVolumeCell.h"
+#import "PLSpeakersViewController.h"
+#import "PLNextUpViewController.h"
 #import "SOAPEnvelope.h"
+#import "SonosController.h"
 #import "SonosPositionInfoResponse.h"
 #import "SonosInputStore.h"
 #import "SonosInput.h"
-#import "PLVolumeSlider.h"
+#import "UIImage+BlurImage.h"
 #import "NBKit/NBDirectionGestureRecognizer.h"
-#import "NBKit/NBDial.h"
-#import "NBKit/NBAnimationHelper.h"
+#import "PresentSpeakersAnimator.h"
 #import "RdioSong.h"
 
 static const CGFloat kProgressPadding = 50.0;
 
-static const CGFloat kControlBarPadding = 20.0;
-static const CGFloat kControlBarPreviousNextPadding = 40.0;
-static const CGFloat kControlBarButtonWidth = 75.0;
+static const CGFloat kControlBarHeight = 250.0;
+static const CGFloat kControlBarPadding = 16.0;
+static const CGFloat kControlBarPreviousNextPadding = 46.0;
+static const CGFloat kControlBarButtonWidth = 65.0;
 static const CGFloat kControlBarButtonHeight = kControlBarButtonWidth;
 static const CGFloat kControlBarButtonPadding = 20.0;
-static const CGFloat kControlBarRestingYPortrait = 151.0;
-static const CGFloat kControlBarRestingYLandscape = 235.0;
+static const CGFloat kControlBarButtonTopMargin = 132.0;
 
 static const CGFloat kNavigationBarHeight = 80.0;
 
+static const CGFloat kVelocity = 0.1;
+static const CGFloat kDamping = 0.6;
+
+static const CGFloat kSongTitleFontSize = 17.0;
+static const CGFloat kAlbumTitleFontSize = 15.0;
+
 @interface PLNowPlayingViewController ()
 {
-  SonosController *sonos;
+  SonosController *_sonos;
 
-  UIImageView *controlBar;
-  UISlider *volumeSlider;
-  UIButton *playPauseButton;
-  UIButton *stopButton;
-  UIButton *nextButton;
-  UIButton *previousButton;
-  UIButton *speakersButton;
-  UIImageView *album;
+  UITableView *_volumeTable;
+  UIView *_controlBar;
+  UISlider *_volumeSlider;
 
-  UIView *trackInfo;
-  UILabel *title;
-  UILabel *timeTotal;
-  UILabel *timeElapsed;
-  UISlider *progress;
+  UIButton *_playPauseButton;
+  UIButton *_stopButton;
+  UIButton *_nextButton;
+  UIButton *_previousButton;
+  UIButton *_speakersButton;
 
-  UITableView *songList;
-  UIView *tableHeader;
-  NSArray *songListData;
+  CGPoint _panCoordBegan;
 
-  CGPoint panCoordBegan;
+  NSArray *_songListData;
+  NSArray *_speakers;
 
-  UIImageView *navBar;
+  UIView *_miniBar;
 }
 @end
 
@@ -66,168 +70,15 @@ static const CGFloat kNavigationBarHeight = 80.0;
 {
   self = [super init];
   if (self) {
-    [self.view setBackgroundColor:[UIColor colorWithRed:.2 green:.2 blue:.2 alpha:1]];
-    [self.view setClipsToBounds:YES];
+    _sonos = [SonosController sharedController];
 
-    [self.navigationItem setTitle:@"Now Playing"];
+    // TODO: This needs to be replace with a discover method
+    SonosInputStore *inputStore = [SonosInputStore sharedStore];
+    SonosInput *livingRoom = [inputStore addInputWithIP:@"10.0.1.9" name:@"Living Room" uid:@"RINCON_000E58D0540801400" icon:[UIImage imageNamed:@"SonosAmp"]];
+    [inputStore addInputWithIP:@"10.0.1.10" name:@"Bedroom" uid:@"RINCON_000E587641F201400" icon:[UIImage imageNamed:@"SonosSpeakerPlay3Light"]];
+    [inputStore addInputWithIP:@"10.0.1.11" name:@"Kitchen" uid:@"RINCON_000E587BBA5201400" icon:[UIImage imageNamed:@"SonosSpeakerPlay3Dark"]];
 
-    sonos = [SonosController sharedController];
-
-    // Background
-    UIImageView *background = [[UIImageView alloc] initWithFrame:CGRectMake(-100, -100, CGRectGetWidth(self.view.bounds)+200, CGRectGetHeight(self.view.bounds)+200)];
-    [background setAutoresizingMask:UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight];
-    [self.view addSubview:background];
-
-    // Header
-    tableHeader = [[UIView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(self.view.bounds), 390)];
-    [tableHeader setAutoresizingMask:UIViewAutoresizingFlexibleWidth];
-
-    // Header: Album Art
-    album = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 320, 320)];
-    [album setAutoresizingMask:UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin];
-    [album setImage:[UIImage imageNamed:@"TempAlbum.png"]];
-    [album.layer setShadowRadius:5];
-    [album.layer setShadowOffset:CGSizeMake(0, 5)];
-    [album.layer setShadowOpacity:.5];
-    [album.layer setShadowColor:[UIColor blackColor].CGColor];
-    [tableHeader addSubview:album];
-
-    // Blurred Background
-    CIImage *inputImage = [[CIImage alloc] initWithImage:album.image];
-    CIFilter *blurFilter = [CIFilter filterWithName:@"CIGaussianBlur"];
-    [blurFilter setDefaults];
-    [blurFilter setValue:inputImage forKey:@"inputImage"];
-    [blurFilter setValue:[NSNumber numberWithFloat:20.0f] forKey:@"inputRadius"];
-    CIImage *outputImage = [blurFilter valueForKey:@"outputImage"];
-    CIContext *context = [CIContext contextWithOptions:nil];
-    [background setImage:[UIImage imageWithCGImage:[context createCGImage:outputImage fromRect:outputImage.extent]]];
-
-    // Song List
-    songList = [[UITableView alloc] initWithFrame:CGRectMake(0, kNavigationBarHeight, CGRectGetWidth(self.view.bounds), CGRectGetHeight(self.view.bounds))];
-    [songList setAutoresizingMask:UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight];
-    [songList setBackgroundColor:[UIColor clearColor]];
-    [songList setTableHeaderView:tableHeader];
-    [songList setContentInset:UIEdgeInsetsMake(0, 0, 700, 0)];
-    [songList setDelegate:self];
-    [songList setDataSource:self];
-    [songList setSeparatorColor:[UIColor colorWithWhite:1 alpha:.3]];
-    [songList setScrollIndicatorInsets:UIEdgeInsetsMake(0, 0, 0, -7)];
-    [self.view addSubview:songList];
-
-    // ---- Custom Navigation Bar ----
-
-    navBar = [[UIImageView alloc] initWithImage:[[UIImage imageNamed:@"NavBar"] resizableImageWithCapInsets:UIEdgeInsetsMake(4, 4, 4, 4) resizingMode:UIImageResizingModeStretch]];
-    [navBar setUserInteractionEnabled:YES];
-    [navBar setFrame:CGRectMake(0, 0, CGRectGetWidth(self.view.bounds), kNavigationBarHeight)];
-    [navBar.layer setShadowOffset:CGSizeMake(0, 2)];
-    [navBar.layer setShadowColor:[UIColor colorWithWhite:.2 alpha:1].CGColor];
-    [navBar.layer setShadowRadius:1.0];
-    [navBar.layer setShadowOpacity:.3];
-    [self.view addSubview:navBar];
-
-    UIButton *done = [[UIButton alloc] initWithFrame:CGRectMake(CGRectGetWidth(navBar.bounds)-55-6, 7, 55, 30)];
-    [done addTarget:self action:@selector(done) forControlEvents:UIControlEventTouchUpInside];
-    [done setBackgroundImage:[[UIImage imageNamed:@"BarButtonItemDone"] resizableImageWithCapInsets:UIEdgeInsetsMake(4,4,4,4) resizingMode:UIImageResizingModeStretch] forState:UIControlStateNormal];
-    [done setTitle:@"Done" forState:UIControlStateNormal];
-    [done.titleLabel setFont:[UIFont boldSystemFontOfSize:12]];
-    [done.titleLabel setShadowOffset:CGSizeMake(0, -1)];
-    [navBar addSubview:done];
-
-    // Track Info
-    trackInfo = [[UIView alloc] init];
-
-    title = [[UILabel alloc] initWithFrame:CGRectMake(0, 10, CGRectGetWidth(self.view.bounds), 20)];
-    [title setAutoresizingMask:UIViewAutoresizingFlexibleWidth];
-    [title setTextColor:[UIColor colorWithWhite:1 alpha:.9]];
-    [title setBackgroundColor:[UIColor clearColor]];
-    [title setTextAlignment:NSTextAlignmentCenter];
-    [title setFont:[UIFont boldSystemFontOfSize:14]];
-    [title setText:@"Come Together"];
-    [trackInfo addSubview:title];
-
-    // Track Info: Progress Bar
-    progress = [[UISlider alloc] initWithFrame:CGRectMake(kProgressPadding, 45, 320 - (kProgressPadding * 2), 20)];
-    [progress setAutoresizingMask:UIViewAutoresizingFlexibleWidth];
-    [progress setThumbImage:[UIImage imageNamed:@"SliderThumbSmall.png"] forState:UIControlStateNormal];
-    [progress setThumbImage:[UIImage imageNamed:@"SliderThumbSmallPressed.png"] forState:UIControlStateHighlighted];
-    [trackInfo addSubview:progress];
-
-    // Track Info: Elapsed Time
-    timeElapsed = [[UILabel alloc] initWithFrame:CGRectMake(5, 46, 40, 20)];
-    [timeElapsed setTextColor:[UIColor colorWithWhite:1 alpha:.9]];
-    [timeElapsed setBackgroundColor:[UIColor clearColor]];
-    [timeElapsed setTextAlignment:NSTextAlignmentRight];
-    [timeElapsed setFont:[UIFont systemFontOfSize:12]];
-    [timeElapsed setText:@"02:23"];
-    [trackInfo addSubview:timeElapsed];
-
-    // Track Info: Total Time
-    timeTotal = [[UILabel alloc] initWithFrame:CGRectMake(278, 46, 40, 20)];
-    [timeTotal setAutoresizingMask:UIViewAutoresizingFlexibleLeftMargin];
-    [timeTotal setTextColor:[UIColor colorWithWhite:1 alpha:.9]];
-    [timeTotal setBackgroundColor:[UIColor clearColor]];
-    [timeTotal setTextAlignment:NSTextAlignmentLeft];
-    [timeTotal setFont:[UIFont systemFontOfSize:12]];
-    [timeTotal setText:@"06:12"];
-    [trackInfo addSubview:timeTotal];
-
-    [trackInfo sizeToFit];
-    [navBar addSubview:trackInfo];
-
-    // ---- Control Bar ----
-
-    controlBar = [[UIImageView alloc] initWithFrame:CGRectMake(0, CGRectGetHeight(self.view.bounds)-kControlBarRestingYPortrait, CGRectGetWidth(self.view.frame), CGRectGetHeight(self.view.frame))];
-    [controlBar setImage:[[UIImage imageNamed:@"ControlBar.png"] resizableImageWithCapInsets:UIEdgeInsetsMake(6, 6, 6, 6) resizingMode:UIImageResizingModeStretch]];
-    [controlBar setAutoresizingMask:UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleTopMargin];
-    [controlBar setUserInteractionEnabled:YES];
-    [controlBar.layer setShadowOffset:CGSizeMake(0, -2)];
-    [controlBar.layer setShadowColor:[UIColor colorWithWhite:.2 alpha:1].CGColor];
-    [controlBar.layer setShadowRadius:1.0];
-    [controlBar.layer setShadowOpacity:.3];
-
-    UIImageView *grip = [[UIImageView alloc] initWithFrame:CGRectMake((CGRectGetWidth(self.view.frame)/2)-17, 6, 35, 3)];
-    [grip setImage:[UIImage imageNamed:@"ControlBarGrip"]];
-    [grip setAutoresizingMask:UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin];
-    [controlBar addSubview:grip];
-
-    playPauseButton = [[UIButton alloc] initWithFrame:CGRectMake((CGRectGetWidth(controlBar.bounds)/2)-kControlBarButtonWidth/2, kControlBarPadding, kControlBarButtonWidth, kControlBarButtonHeight)];
-    [playPauseButton setBackgroundImage:[UIImage imageNamed:@"ControlPause.png"] forState:UIControlStateNormal];
-    [playPauseButton addTarget:self action:@selector(playPause) forControlEvents:UIControlEventTouchUpInside];
-    [playPauseButton setShowsTouchWhenHighlighted:YES];
-    [controlBar addSubview:playPauseButton];
-
-    nextButton = [[UIButton alloc] initWithFrame:CGRectMake(CGRectGetWidth(controlBar.bounds)-(kControlBarButtonWidth+kControlBarPreviousNextPadding), kControlBarPadding, kControlBarButtonWidth, kControlBarButtonHeight)];
-    [nextButton setBackgroundImage:[UIImage imageNamed:@"ControlNext.png"] forState:UIControlStateNormal];
-    [nextButton addTarget:self action:@selector(next) forControlEvents:UIControlEventTouchUpInside];
-    [nextButton setShowsTouchWhenHighlighted:YES];
-    [controlBar addSubview:nextButton];
-
-    previousButton = [[UIButton alloc] initWithFrame:CGRectMake(kControlBarPreviousNextPadding, kControlBarPadding, kControlBarButtonWidth, kControlBarButtonHeight)];
-    [previousButton setBackgroundImage:[UIImage imageNamed:@"ControlPrevious.png"] forState:UIControlStateNormal];
-    [previousButton addTarget:self action:@selector(previous) forControlEvents:UIControlEventTouchUpInside];
-    [previousButton setShowsTouchWhenHighlighted:YES];
-    [controlBar addSubview:previousButton];
-
-    // NBDial
-    NBDial *dial = [[NBDial alloc] initWithFrame:CGRectMake(kControlBarButtonPadding, 110, CGRectGetWidth(controlBar.bounds)-(kControlBarButtonPadding*2), 44)];
-    [dial setMaxValue:100];
-    [dial setMinValue:0];
-    [dial setValue:20];
-    [controlBar addSubview:dial];
-
-    NSArray *speakers = [[SonosInputStore sharedStore] allInputs];
-    for (int i = 0; i < speakers.count; i++) {
-      PLVolumeSlider *speakerVolume = [[PLVolumeSlider alloc] initWithFrame:CGRectMake(kControlBarButtonPadding, 185 + (i * 70), CGRectGetWidth(controlBar.bounds)-(kControlBarButtonPadding * 2), 44)];
-      [speakerVolume setInput:[speakers objectAtIndex:i]];
-      [controlBar addSubview:speakerVolume];
-    }
-
-    [self.view addSubview:controlBar];
-
-    // Control Bar pan gesture
-    NBDirectionGestureRecognizer *controlPan = [[NBDirectionGestureRecognizer alloc] initWithTarget:self action:@selector(panControlBar:)];
-    [controlPan setDirection:NBDirectionPanGestureRecognizerVertical];
-    [controlBar addGestureRecognizer:controlPan];
+    [inputStore setMaster:livingRoom];
   }
   return self;
 }
@@ -243,74 +94,155 @@ static const CGFloat kNavigationBarHeight = 80.0;
 
 - (id)initWithRdioSong:(RdioSong *)song
 {
-  self = [self init];
-  if (self) {
-    [sonos play:nil rdioSong:song completion:nil];
-
-    NSURL *url = [NSURL URLWithString:song.albumArt];
-    NSData *data = [NSData dataWithContentsOfURL:url];
-    UIImage *image = [[UIImage alloc] initWithData:data];
-    [album setImage:image];
+  if (self = [self init]) {
+    [_sonos play:nil rdioSong:song completion:nil];
   }
   return self;
 }
 
 - (id)initWithLineIn:(SonosInput *)input
 {
-  self = [self init];
-  if (self) {
-    [sonos lineIn:input completion:nil];
-    [album setImage:[UIImage imageNamed:@"LineIn.png"]];
-    [title setText:[NSString stringWithFormat:@"%@ - Line In", [input name]]];
-    [timeElapsed setText:@"00:00"];
-    [timeTotal setText:@"00:00"];
+  if (self = [self init]) {
+    [_sonos lineIn:input completion:nil];
   }
   return self;
 }
 
-- (void)viewWillAppear:(BOOL)animated
+- (void)viewDidLoad
 {
-  [super viewWillAppear:animated];
-  [self.navigationController setNavigationBarHidden:YES];
+  [super viewDidLoad];
+
+  if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
+    UIBarButtonItem *speakerButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"PLSpeakers"] style:UIBarButtonItemStylePlain target:self action:@selector(showSpeakers)];
+    [self.navigationItem setLeftBarButtonItem:speakerButton];
+  }
+
+  UIBarButtonItem *queueButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"PLQueue"] style:UIBarButtonItemStylePlain target:self action:@selector(showQueue)];
+  [self.navigationItem setRightBarButtonItem:queueButton];
+
+  _volumeTable = [[UITableView alloc] initWithFrame:CGRectZero];
+  [_volumeTable registerClass:[PLVolumeCell class] forCellReuseIdentifier:@"PLVolumeCell"];
+  [_volumeTable setDelegate:self];
+  [_volumeTable setDataSource:self];
+  [_volumeTable setAutoresizingMask:UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight];
+  [_volumeTable setRowHeight:80];
+  [_volumeTable setSeparatorStyle:UITableViewCellSeparatorStyleNone];
+  [self.view addSubview:_volumeTable];
+
+  // Control Bar
+  _controlBar = [[UIView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(self.view.bounds), kControlBarHeight)];
+  [_controlBar setBackgroundColor:[UIColor whiteColor]];
+  [_controlBar setAutoresizingMask:UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleTopMargin];
+  [_controlBar setUserInteractionEnabled:YES];
+
+  _playPauseButton = [[UIButton alloc] initWithFrame:CGRectMake((CGRectGetWidth(_controlBar.bounds)/2)-kControlBarButtonWidth/2, kControlBarButtonTopMargin, kControlBarButtonWidth, kControlBarButtonHeight)];
+  [_playPauseButton setAutoresizingMask:UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin];
+  [_playPauseButton setBackgroundImage:[UIImage imageNamed:@"ControlPause.png"] forState:UIControlStateNormal];
+  [_playPauseButton addTarget:self action:@selector(playPause) forControlEvents:UIControlEventTouchUpInside];
+  [_playPauseButton setShowsTouchWhenHighlighted:YES];
+  [_controlBar addSubview:_playPauseButton];
+
+  _nextButton = [[UIButton alloc] initWithFrame:CGRectMake(CGRectGetWidth(_controlBar.bounds)-(kControlBarButtonWidth+kControlBarPreviousNextPadding), kControlBarButtonTopMargin, kControlBarButtonWidth, kControlBarButtonHeight)];
+  [_nextButton setAutoresizingMask:UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin];
+  [_nextButton setBackgroundImage:[UIImage imageNamed:@"ControlNext.png"] forState:UIControlStateNormal];
+  [_nextButton addTarget:self action:@selector(next) forControlEvents:UIControlEventTouchUpInside];
+  [_nextButton setShowsTouchWhenHighlighted:YES];
+  [_controlBar addSubview:_nextButton];
+
+  _previousButton = [[UIButton alloc] initWithFrame:CGRectMake(kControlBarPreviousNextPadding, kControlBarButtonTopMargin, kControlBarButtonWidth, kControlBarButtonHeight)];
+  [_previousButton setAutoresizingMask:UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin];
+  [_previousButton setBackgroundImage:[UIImage imageNamed:@"ControlPrevious.png"] forState:UIControlStateNormal];
+  [_previousButton addTarget:self action:@selector(previous) forControlEvents:UIControlEventTouchUpInside];
+  [_previousButton setShowsTouchWhenHighlighted:YES];
+  [_controlBar addSubview:_previousButton];
+
+  // Song Info
+  UILabel *songTitle = [[UILabel alloc] initWithFrame:CGRectMake(0, 42, CGRectGetWidth(self.view.bounds), kSongTitleFontSize+8)];
+  [songTitle setAutoresizingMask:UIViewAutoresizingFlexibleWidth];
+  [songTitle setText:@"Come Together"];
+  [songTitle setFont:[UIFont boldSystemFontOfSize:kSongTitleFontSize]];
+  [songTitle setBackgroundColor:[UIColor clearColor]];
+  [songTitle setTextAlignment:NSTextAlignmentCenter];
+  [_controlBar addSubview:songTitle];
+
+  UILabel *artistTitle = [[UILabel alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(songTitle.frame), CGRectGetWidth(self.view.bounds), kAlbumTitleFontSize+8)];
+  [artistTitle setAutoresizingMask:UIViewAutoresizingFlexibleWidth];
+  [artistTitle setText:@"The Beatles — Abby Road"];
+  [artistTitle setFont:[UIFont systemFontOfSize:kAlbumTitleFontSize]];
+  [artistTitle setBackgroundColor:[UIColor clearColor]];
+  [artistTitle setTextAlignment:NSTextAlignmentCenter];
+  [_controlBar addSubview:artistTitle];
+
+  PLProgressBar *progress = [[PLProgressBar alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(self.view.bounds)-90, 20)];
+  [progress setMinimumValue:0];
+  [progress setMaximumValue:5.0];
+  [progress setValue:1];
+  [self.navigationItem setTitleView:progress];
+
+  _speakers = [[SonosInputStore sharedStore] allInputs];
+
+  [_volumeTable setTableHeaderView:_controlBar];
+}
+
+- (void)viewDidLayoutSubviews
+{
+  [super viewDidLayoutSubviews];
+
+  [_volumeTable setFrame:CGRectMake(0, 0, CGRectGetWidth(self.view.bounds), CGRectGetHeight(self.view.bounds))];
+  [_volumeTable.tableHeaderView setFrame:CGRectMake(0, 0, CGRectGetWidth(_volumeTable.bounds), kControlBarHeight)];
 }
 
 - (void)playPause
 {
-  if (sonos.isPlaying) {
-    [sonos pause:nil completion:nil];
-    [playPauseButton setBackgroundImage:[UIImage imageNamed:@"ControlPlay.png"] forState:UIControlStateNormal];
+  if (_sonos.isPlaying) {
+    [_sonos pause:nil completion:nil];
+    [_playPauseButton setBackgroundImage:[UIImage imageNamed:@"ControlPlay.png"] forState:UIControlStateNormal];
   } else {
-    [sonos play:nil track:nil completion:nil];
-    [playPauseButton setBackgroundImage:[UIImage imageNamed:@"ControlPause.png"] forState:UIControlStateNormal];
+    [_sonos play:nil track:nil completion:nil];
+    [_playPauseButton setBackgroundImage:[UIImage imageNamed:@"ControlPause.png"] forState:UIControlStateNormal];
   }
 }
 
 - (void)next
 {
-  [sonos next:nil completion:nil];
+  [_sonos next:nil completion:nil];
 }
 
 - (void)previous
 {
-  [sonos previous:nil completion:nil];
+  [_sonos previous:nil completion:nil];
 }
 
 - (void)volume:(UISlider *)sender
 {
-  [sonos volume:nil level:(int)[sender value] completion:nil];
+  [_sonos volume:nil level:(int)[sender value] completion:nil];
 }
 
-- (void)done
+- (void)showSpeakers
 {
-  [self.navigationController dismissViewControllerAnimated:YES completion:nil];
+  PLSpeakersViewController *viewController = [[PLSpeakersViewController alloc] init];
+  [viewController setModalPresentationStyle:UIModalPresentationCustom];
+  [viewController setTransitioningDelegate:self];
+  [self.navigationController presentViewController:viewController animated:YES completion:nil];
+}
+
+- (void)showQueue
+{
+  PLNextUpViewController *viewController = [[PLNextUpViewController alloc] init];
+
+  if (!self.splitViewController) {
+    UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:viewController];
+    [self.navigationController presentViewController:navController animated:YES completion:nil];
+  } else {
+    if (_delegate) {
+      [_delegate nowPlayingViewController:self handleViewController:viewController];
+    }
+  }
 }
 
 - (void)setCurrentSong:(PLSong *)song
 {
-  [title setText:[NSString stringWithFormat:@"%@ - %@", song.title, song.album]];
-  [album setImage:song.albumArt];
-  [timeTotal setText:song.duration];
-  [sonos play:nil track:[song uri] completion:nil];
+  [_sonos play:nil track:song.uri completion:nil];
 }
 
 - (void)willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
@@ -319,101 +251,49 @@ static const CGFloat kNavigationBarHeight = 80.0;
     // Portrait
     [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationFade];
     [self.navigationController setNavigationBarHidden:NO animated:YES];
-
-    [controlBar setFrame:CGRectOffset(controlBar.bounds, 0, kControlBarRestingYPortrait)];
-    [volumeSlider setFrame:CGRectMake(kControlBarButtonPadding, 80, CGRectGetWidth(controlBar.bounds)-(kControlBarButtonPadding*2), 20)];
-    [album setFrame:CGRectMake(30, 90, 260, 260)];
-    [trackInfo setFrame:CGRectOffset(trackInfo.bounds, 0, 0)];
   } else {
     // Landscape
     [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarAnimationFade];
     [self.navigationController setNavigationBarHidden:YES animated:YES];
-
-    [controlBar setFrame:CGRectOffset(controlBar.bounds, 0, kControlBarRestingYLandscape)];
-    [volumeSlider setFrame:CGRectMake(kControlBarButtonPadding+280, 34, 250, 20)];
-    [album setFrame:CGRectMake(15, 15, 209, 209)];
-    [trackInfo setFrame:CGRectOffset(trackInfo.bounds, CGRectGetWidth(album.bounds)+20, 20)];
   }
 }
 
-- (void)showSpeakerVolumes
-{
-  [NBAnimationHelper animatePosition:controlBar
-                                from:controlBar.center
-                                  to:CGPointMake(controlBar.center.x, (CGRectGetHeight(controlBar.bounds)/2)+78)
-                              forKey:@"bounce"
-                            delegate:nil];
-}
-
-- (void)hideSpeakerVolumes
-{
-  [NBAnimationHelper animatePosition:controlBar
-                                from:controlBar.center
-                                  to:CGPointMake(controlBar.center.x, (CGRectGetHeight(controlBar.bounds)/2)+397)
-                              forKey:@"bounce"
-                            delegate:nil];
-}
-
-#pragma mark - NBDirectionGestureRecognizer
-
-- (void)panControlBar:(NBDirectionGestureRecognizer *)recognizer
-{
-  if (recognizer.state == UIGestureRecognizerStateBegan) {
-    panCoordBegan = [recognizer locationInView:controlBar];
-  }
-
-  if (recognizer.state == UIGestureRecognizerStateChanged) {
-    CGPoint panCoordChange = [recognizer locationInView:controlBar];
-
-    CGFloat deltaY = panCoordChange.y - panCoordBegan.y;
-    CGPoint newPoint = CGPointMake(controlBar.center.x, controlBar.center.y + deltaY);
-
-    if (newPoint.y > 290.0) {
-      controlBar.center = newPoint;
-    }
-  }
-
-  if (recognizer.state == UIGestureRecognizerStateEnded) {
-    CGPoint velocityPoint = [recognizer velocityInView:controlBar];
-
-    if (velocityPoint.y >= 0) {
-      [self hideSpeakerVolumes];
-    } else {
-      [self showSpeakerVolumes];
-    }
-  }
-}
-
-#pragma mark - UITableViewController
+#pragma mark - UITableViewDataSource
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-  return [songListData count];
+  return [_speakers count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-  PLSong *song = [songListData objectAtIndex:indexPath.row];
-  UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"TableViewCell"];
-  if (!cell) {
-    cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"TableViewCell"];
-  }
-  [cell.textLabel setFont:[UIFont systemFontOfSize:16]];
-  [cell.textLabel setTextColor:[UIColor whiteColor]];
-  [cell.textLabel setText:song.title];
-  
-  if (indexPath.row % 2) {
-    [cell.contentView setBackgroundColor:[UIColor colorWithRed:.15 green:.15 blue:.15 alpha:1]];
-  } else {
-    [cell.contentView setBackgroundColor:[UIColor clearColor]];
-  }
+  PLVolumeCell *cell = (PLVolumeCell *)[tableView dequeueReusableCellWithIdentifier:@"PLVolumeCell"];
+  SonosInput *input = [[SonosInputStore sharedStore] inputAtIndex:indexPath.row];
+  [cell setInput:input];
   return cell;
 }
 
+#pragma mark - UITableViewDelegate
+
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-  PLSong *song = [songListData objectAtIndex:indexPath.row];
-  [self setCurrentSong:song];
+
+}
+
+#pragma mark - UIViewControllerTransitioningDelegate
+
+- (id<UIViewControllerAnimatedTransitioning>)animationControllerForPresentedController:(UIViewController *)presented presentingController:(UIViewController *)presenting sourceController:(UIViewController *)source
+{
+  PresentSpeakersAnimator *animator = [[PresentSpeakersAnimator alloc] init];
+  [animator setPresenting:YES];
+  return animator;
+}
+
+- (id <UIViewControllerAnimatedTransitioning>)animationControllerForDismissedController:(UIViewController *)dismissed
+{
+  PresentSpeakersAnimator *animator = [[PresentSpeakersAnimator alloc] init];
+  [animator setPresenting:NO];
+  return animator;
 }
 
 @end

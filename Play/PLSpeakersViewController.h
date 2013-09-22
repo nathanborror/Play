@@ -6,9 +6,12 @@
 //  Copyright (c) 2013 Nathan Borror. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
-#import <QuartzCore/QuartzCore.h>
+@import UIKit;
+@import QuartzCore;
 
-@interface PLSpeakersViewController : UIViewController
+#import "SonosInput.h"
+#import "PLNowPlayingViewController.h"
+
+@interface PLSpeakersViewController : UIViewController <SonosInputDelegate, UISplitViewControllerDelegate, PLNowPlayingViewControllerDelegate>
 
 @end

@@ -15,26 +15,24 @@
 #import "SonosInputStore.h"
 #import "PLNowPlayingViewController.h"
 
-@interface RdioCollectionViewController ()
-{
-  Rdio *rdio;
-  NSInteger trackCount;
-  NSMutableArray *sections;
-  UILocalizedIndexedCollation *collation;
+@implementation RdioCollectionViewController {
+  Rdio *_rdio;
+  NSInteger _trackCount;
+  NSMutableArray *_sections;
+  UILocalizedIndexedCollation *_collation;
 }
-@end
-
-@implementation RdioCollectionViewController
 
 - (id)init
 {
-  self = [super init];
-  if (self) {
-    [self setTitle:@"Collection"];
-
-    // Now Playing Button
-    UIBarButtonItem *nowPlayingButton = [[UIBarButtonItem alloc] initWithTitle:@"Playing" style:UIBarButtonItemStyleDone target:self action:@selector(nowPlaying)];
-    [self.navigationItem setRightBarButtonItem:nowPlayingButton];
+  if (self = [super init]) {
+    if ([_itemList count] == 0) {
+      NSString *key = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFRdioConsumerKey"];
+      NSString *secret = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFRdioConsumerSecret"];
+      _rdio = [[Rdio alloc] initWithConsumerKey:key andSecret:secret delegate:self];
+      [_rdio authorizeUsingAccessToken:[[NSUserDefaults standardUserDefaults] objectForKey:@"rdioAccessKey"] fromController:self];
+    } else {
+      [self configureSections];
+    }
   }
   return self;
 }
@@ -43,14 +41,10 @@
 {
   [super viewDidLoad];
 
-  if ([_itemList count] == 0) {
-    NSString *key = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFRdioConsumerKey"];
-    NSString *secret = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFRdioConsumerSecret"];
-    rdio = [[Rdio alloc] initWithConsumerKey:key andSecret:secret delegate:self];
-    [rdio authorizeUsingAccessToken:[[NSUserDefaults standardUserDefaults] objectForKey:@"rdioAccessKey"] fromController:self];
-  } else {
-    [self configureSections];
-  }
+  [self setTitle:@"Collection"];
+
+  UIBarButtonItem *nowPlayingButton = [[UIBarButtonItem alloc] initWithTitle:@"Playing" style:UIBarButtonItemStyleDone target:self action:@selector(nowPlaying)];
+  [self.navigationItem setRightBarButtonItem:nowPlayingButton];
 }
 
 - (void)nowPlaying
@@ -62,9 +56,9 @@
 
 - (void)configureSections
 {
-  collation = [UILocalizedIndexedCollation currentCollation];
+  _collation = [UILocalizedIndexedCollation currentCollation];
 
-  NSInteger sectionTitlesCount = [[collation sectionTitles] count];
+  NSInteger sectionTitlesCount = [[_collation sectionTitles] count];
   NSMutableArray *newSections = [[NSMutableArray alloc] initWithCapacity:sectionTitlesCount];
 
   for (int i = 0; i < sectionTitlesCount; i++) {
@@ -72,17 +66,17 @@
   }
 
   for (id item in _itemList) {
-    NSInteger sectionNumber = [collation sectionForObject:item collationStringSelector:@selector(name)];
+    NSInteger sectionNumber = [_collation sectionForObject:item collationStringSelector:@selector(name)];
     [[newSections objectAtIndex:sectionNumber] addObject:item];
   }
 
   for (int i = 0; i < sectionTitlesCount; i++) {
     NSMutableArray *itemsForSection = [newSections objectAtIndex:i];
-    NSArray *sortedItemsForSection = [collation sortedArrayFromArray:itemsForSection collationStringSelector:@selector(name)];
+    NSArray *sortedItemsForSection = [_collation sortedArrayFromArray:itemsForSection collationStringSelector:@selector(name)];
     [newSections replaceObjectAtIndex:i withObject:sortedItemsForSection];
   }
   
-  sections = newSections;
+  _sections = newSections;
 
   [self.tableView reloadData];
 }
@@ -103,7 +97,7 @@
 {
   [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
   NSLog(@"Starting RdioCollectionSync");
-  [rdio callAPIMethod:@"currentUser" withParameters:@{@"extras":@"trackCount"} delegate:self];
+  [_rdio callAPIMethod:@"currentUser" withParameters:@{@"extras":@"trackCount"} delegate:self];
 }
 
 - (void)rdioAuthorizationFailed:(NSString *)error
@@ -126,16 +120,16 @@
     }
 
     [trackArray addObjectsFromArray:data];
-    if ([trackArray count] == trackCount) {
+    if ([trackArray count] == _trackCount) {
       [self buildRdioDataFromArray:trackArray];
     }
   } else if ([[request.parameters objectForKey:@"method"] isEqualToString:@"currentUser"]) {
     // Got the users track count. Divide it by 1000 and launch a new request
     // for every method to get a total of all tracks.
-    trackCount = [[data objectForKey:@"trackCount"] integerValue];
+    _trackCount = [[data objectForKey:@"trackCount"] integerValue];
     NSInteger count = 0;
-    while (count < trackCount) {
-      [rdio callAPIMethod:@"getTracksInCollection" withParameters:@{
+    while (count < _trackCount) {
+      [_rdio callAPIMethod:@"getTracksInCollection" withParameters:@{
         @"count":@"500",
         @"start":[NSString stringWithFormat:@"%i", count]
       } delegate:self];
@@ -202,11 +196,11 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-  return [[collation sectionTitles] count];
+  return [[_collation sectionTitles] count];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-  return [[sections objectAtIndex:section] count];
+  return [[_sections objectAtIndex:section] count];
 }
 
 - (UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -219,7 +213,7 @@
     [cell.textLabel setText:@"Loading..."];
     [cell.textLabel setTextColor:[UIColor grayColor]];
   } else {
-    NSArray *itemsInSection = [sections objectAtIndex:indexPath.section];
+    NSArray *itemsInSection = [_sections objectAtIndex:indexPath.section];
     [cell.textLabel setText:[[itemsInSection objectAtIndex:indexPath.row] name]];
     [cell.textLabel setTextColor:[UIColor blackColor]];
   }
@@ -228,24 +222,24 @@
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
-  return [[collation sectionTitles] objectAtIndex:section];
+  return [[_collation sectionTitles] objectAtIndex:section];
 }
 
 - (NSArray *)sectionIndexTitlesForTableView:(UITableView *)tableView
 {
-  return [collation sectionIndexTitles];
+  return [_collation sectionIndexTitles];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView sectionForSectionIndexTitle:(NSString *)title atIndex:(NSInteger)index
 {
-  return [collation sectionForSectionIndexTitleAtIndex:index];
+  return [_collation sectionForSectionIndexTitleAtIndex:index];
 }
 
 #pragma mark - UITableViewDelegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-  NSArray *itemsInSection = [sections objectAtIndex:indexPath.section];
+  NSArray *itemsInSection = [_sections objectAtIndex:indexPath.section];
   id rdioObject = [itemsInSection objectAtIndex:indexPath.row];
 
   if ([rdioObject isKindOfClass:[RdioSong class]]) {

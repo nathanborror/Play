@@ -7,8 +7,9 @@
 //
 
 #import "PLAppDelegate.h"
-#import "PLSpeakersViewController.h"
 #import "SonosInputStore.h"
+#import "PLNowPlayingViewController.h"
+#import "PLSpeakersViewController.h"
 
 @implementation PLAppDelegate
 
@@ -16,29 +17,33 @@
 {
   self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
 
-  // UINavigationBar appearance
-  [[UINavigationBar appearance] setBackgroundImage:[[UIImage imageNamed:@"NavBar"] resizableImageWithCapInsets:UIEdgeInsetsMake(4,4,4,4) resizingMode:UIImageResizingModeStretch] forBarMetrics:UIBarMetricsDefault];
-  [[UINavigationBar appearance] setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIColor whiteColor], UITextAttributeTextColor, [UIColor blackColor], UITextAttributeTextShadowColor, 0, UITextAttributeTextShadowOffset, nil]];
-  [[UINavigationBar appearance] setShadowImage:[[UIImage alloc] init]];
+  [[UISlider appearance] setMaximumTrackImage:[UIImage imageNamed:@"PLProgressMax"] forState:UIControlStateNormal];
+  [[UISlider appearance] setMinimumTrackImage:[UIImage imageNamed:@"PLProgressMin"] forState:UIControlStateNormal];
 
-  // UIBarButtonItem appearance
-  [[UIBarButtonItem appearance] setBackgroundImage:[[UIImage imageNamed:@"BarButtonItem"] resizableImageWithCapInsets:UIEdgeInsetsMake(4,4,4,4) resizingMode:UIImageResizingModeStretch] forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
-  [[UIBarButtonItem appearance] setBackgroundImage:[[UIImage imageNamed:@"BarButtonItemDone"] resizableImageWithCapInsets:UIEdgeInsetsMake(4,4,4,4) resizingMode:UIImageResizingModeStretch] forState:UIControlStateNormal style:UIBarButtonItemStyleDone barMetrics:UIBarMetricsDefault];
+  [self.window setTintColor:[UIColor colorWithRed:.99 green:.29 blue:.44 alpha:1]];
 
-  UIImage *backButtonImage = [[UIImage imageNamed:@"BarButtonItemBackIcon"] resizableImageWithCapInsets:UIEdgeInsetsMake(0, 0, 0, 0)];
-  [[UIBarButtonItem appearance] setBackButtonBackgroundImage:backButtonImage  forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
-  [[UIBarButtonItem appearance] setBackButtonTitlePositionAdjustment:UIOffsetMake(0, backButtonImage.size.height * 2) forBarMetrics:UIBarMetricsDefault];
-
-  // UISlider appearance
-  [[UISlider appearance] setMaximumTrackImage:[[UIImage imageNamed:@"SliderMaxValue.png"] resizableImageWithCapInsets:UIEdgeInsetsMake(3, 3, 3, 3) resizingMode:UIImageResizingModeStretch] forState:UIControlStateNormal];
-  [[UISlider appearance] setMinimumTrackImage:[[UIImage imageNamed:@"SliderMinValue.png"] resizableImageWithCapInsets:UIEdgeInsetsMake(3, 3, 3, 3) resizingMode:UIImageResizingModeStretch] forState:UIControlStateNormal];
-  [[UISlider appearance] setThumbImage:[UIImage imageNamed:@"SliderThumb.png"] forState:UIControlStateNormal];
-  [[UISlider appearance] setThumbImage:[UIImage imageNamed:@"SliderThumbPressed.png"] forState:UIControlStateHighlighted];
-
-  PLSpeakersViewController *viewController = [[PLSpeakersViewController alloc] init];
+  PLNowPlayingViewController *viewController = [[PLNowPlayingViewController alloc] init];
   UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:viewController];
-  [self.window setRootViewController:navController];
+  [navController.navigationBar setTranslucent:NO];
 
+  if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
+    PLSpeakersViewController *speakerViewController = [[PLSpeakersViewController alloc] init];
+    UINavigationController *speakerNavController = [[UINavigationController alloc] initWithRootViewController:speakerViewController];
+
+    [viewController setDelegate:speakerViewController];
+
+    NSArray *viewControllers = [NSArray arrayWithObjects:navController, speakerNavController, nil];
+
+    UISplitViewController *splitViewController = [[UISplitViewController alloc] init];
+    [splitViewController setViewControllers:viewControllers];
+    [splitViewController setDelegate:speakerViewController];
+
+    [self.window setRootViewController:splitViewController];
+  } else {
+    [self.window setRootViewController:navController];
+  }
+
+  [self.window setBackgroundColor:[UIColor whiteColor]];
   [self.window makeKeyAndVisible];
   return YES;
 }

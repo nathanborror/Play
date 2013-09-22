@@ -9,14 +9,12 @@
 #import "PLSource.h"
 
 @implementation PLSource
-@synthesize name;
 
 - (id)initWithName:(NSString *)aName selection:(void (^)())aSelectionBlock
 {
-  self = [super init];
-  if (self) {
-    self.name = aName;
-    self.selectionBlock = aSelectionBlock;
+  if (self = [super init]) {
+    _name = aName;
+    _selectionBlock = aSelectionBlock;
   }
   return self;
 }

@@ -9,6 +9,5 @@
 #import "RdioArtist.h"
 
 @implementation RdioArtist
-@synthesize key, name, albums;
 
 @end

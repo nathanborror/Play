@@ -6,17 +6,26 @@
 //  Copyright (c) 2012 Nathan Borror. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
-#import <QuartzCore/QuartzCore.h>
+@import UIKit;
+@import QuartzCore;
 
 @class PLSong;
 @class SonosInput;
 @class RdioSong;
+@class PLNowPlayingViewController;
 
-@interface PLNowPlayingViewController : UIViewController <UITableViewDelegate, UITableViewDataSource>
+@protocol PLNowPlayingViewControllerDelegate
+
+- (void)nowPlayingViewController:(PLNowPlayingViewController *)viewController handleViewController:(UIViewController *)toViewController;
+
+@end
+
+@interface PLNowPlayingViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, UIViewControllerTransitioningDelegate, UISplitViewControllerDelegate>
+
+@property (nonatomic, weak) id<PLNowPlayingViewControllerDelegate> delegate;
 
 - (id)initWithSong:(PLSong *)song;
-- (id)initWithLineIn:(SonosInput *)input;
 - (id)initWithRdioSong:(RdioSong *)song;
+- (id)initWithLineIn:(SonosInput *)input;
 
 @end

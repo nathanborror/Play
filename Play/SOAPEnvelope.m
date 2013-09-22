@@ -13,13 +13,11 @@
 #import "SonosVolumeResponse.h"
 
 @implementation SOAPEnvelope
-@synthesize action, response, parentParserDelegate;
 
 - (id)init
 {
-  self = [super init];
-  if (self) {
-    response = nil;
+  if (self = [super init]) {
+    _response = nil;
   }
   return self;
 }
@@ -67,7 +65,7 @@
 - (void)parser:(NSXMLParser *)parser didEndElement:(NSString *)elementName namespaceURI:(NSString *)namespaceURI qualifiedName:(NSString *)qName
 {
   if ([elementName isEqual:@"s:Envelope"]) {
-    [parser setDelegate:parentParserDelegate];
+    [parser setDelegate:_parentParserDelegate];
   }
 }
 

@@ -10,14 +10,10 @@
 #import "PLSong.h"
 #import "PLNowPlayingViewController.h"
 
-@interface PLSongViewController ()
-{
-  NSArray *songs;
-  UITableView *songTableView;
+@implementation PLSongViewController {
+  NSArray *_songs;
+  UITableView *_songTableView;
 }
-@end
-
-@implementation PLSongViewController
 
 - (id)init
 {
@@ -26,35 +22,43 @@
 
 - (id)initWithSongs:(NSArray *)aSongs
 {
-  self = [super init];
-  if (self) {
-    if (aSongs) {
-      songs = aSongs;
-
-      songTableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStylePlain];
-      [songTableView setDelegate:self];
-      [songTableView setDataSource:self];
-      [songTableView setAutoresizesSubviews:YES];
-      [self.view addSubview:songTableView];
-    }
+  if (self = [super init]) {
+    _songs = aSongs;
   }
   return self;
+}
+
+- (void)viewDidLoad
+{
+  [super viewDidLoad];
+
+  _songTableView = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStylePlain];
+  [_songTableView setDelegate:self];
+  [_songTableView setDataSource:self];
+  [_songTableView setAutoresizesSubviews:YES];
+  [_songTableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"PLSongTableViewCell"];
+  [self.view addSubview:_songTableView];
+}
+
+- (void)viewDidLayoutSubviews
+{
+  [super viewDidLayoutSubviews];
+
+  [_songTableView setFrame:CGRectMake(0, 0, CGRectGetWidth(self.view.bounds), CGRectGetHeight(self.view.bounds))];
 }
 
 #pragma mark - UITableViewController
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-  return [songs count];
+  return [_songs count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-  MPMediaItem *item = [songs objectAtIndex:indexPath.row];
+  MPMediaItem *item = [_songs objectAtIndex:indexPath.row];
   UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"PLSongTableViewCell"];
-  if (!cell) {
-    cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"PLSongTableViewCell"];
-  }
+
   [cell.textLabel setText:[item valueForProperty:MPMediaItemPropertyTitle]];
   UIImage *albumArt = [[item valueForProperty:MPMediaItemPropertyArtwork] imageWithSize:CGSizeMake(CGRectGetHeight(cell.bounds), CGRectGetHeight(cell.bounds))];
   [cell.imageView setImage:albumArt];
@@ -64,7 +68,7 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-  MPMediaItem *item = [songs objectAtIndex:indexPath.row];
+  MPMediaItem *item = [_songs objectAtIndex:indexPath.row];
   MPMediaItemArtwork *artwork = [item valueForProperty:MPMediaItemPropertyArtwork];
   PLSong *song = [[PLSong alloc] initWithArtist:[item valueForProperty:MPMediaItemPropertyAlbumArtist]
                                           album:[item valueForProperty:MPMediaItemPropertyArtist]

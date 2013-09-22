@@ -6,12 +6,9 @@
 //  Copyright (c) 2013 Nathan Borror. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+@import Foundation;
 
 @interface SonosVolumeResponse : NSObject <NSXMLParserDelegate>
-{
-  NSMutableString *currentString;
-}
 
 @property (nonatomic, weak) id parentParserDelegate;
 @property (nonatomic, strong) NSString *currentVolume;

@@ -6,7 +6,7 @@
 //  Copyright (c) 2012 Nathan Borror. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+@import UIKit;
 
 @interface PLAppDelegate : UIResponder <UIApplicationDelegate>
 

@@ -8,36 +8,37 @@
 
 #import "SonosErrorResponse.h"
 
-@implementation SonosErrorResponse
-@synthesize parentParserDelegate, code, string, detail;
+@implementation SonosErrorResponse {
+  NSMutableString *_currentString;
+}
 
 #pragma mark - NSXMLParserDelegate
 
 - (void)parser:(NSXMLParser *)parser didStartElement:(NSString *)elementName namespaceURI:(NSString *)namespaceURI qualifiedName:(NSString *)qName attributes:(NSDictionary *)attributeDict
 {
   if ([elementName isEqual:@"faultcode"]) {
-    currentString = [[NSMutableString alloc] init];
-    [self setCode:currentString];
+    _currentString = [[NSMutableString alloc] init];
+    [self setCode:_currentString];
   } else if ([elementName isEqual:@"faultstring"]) {
-    currentString = [[NSMutableString alloc] init];
-    [self setString:currentString];
+    _currentString = [[NSMutableString alloc] init];
+    [self setString:_currentString];
   } else if ([elementName isEqual:@"detail"]) {
-    currentString = [[NSMutableString alloc] init];
-    [self setDetail:currentString];
+    _currentString = [[NSMutableString alloc] init];
+    [self setDetail:_currentString];
   }
 }
 
 - (void)parser:(NSXMLParser *)parser foundCharacters:(NSString *)aString
 {
-  [currentString appendString:aString];
+  [_currentString appendString:aString];
 }
 
 - (void)parser:(NSXMLParser *)parser didEndElement:(NSString *)elementName namespaceURI:(NSString *)namespaceURI qualifiedName:(NSString *)qName
 {
-  currentString = nil;
+  _currentString = nil;
 
   if ([elementName isEqual:@"s:Fault"]) {
-    [parser setDelegate:parentParserDelegate];
+    [parser setDelegate:_parentParserDelegate];
   }
 }
 

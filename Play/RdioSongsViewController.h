@@ -6,10 +6,13 @@
 //  Copyright (c) 2013 Nathan Borror. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+@import UIKit;
+#import <Rdio/Rdio.h>
 
-@interface RdioSongsViewController : UITableViewController 
+@class RdioPlaylist;
 
-- (id)initWithSongs:(NSArray *)aSongs;
+@interface RdioSongsViewController : UITableViewController <RDAPIRequestDelegate, RdioDelegate>
+
+- (id)initWithPlaylist:(RdioPlaylist *)aPlaylist;
 
 @end
