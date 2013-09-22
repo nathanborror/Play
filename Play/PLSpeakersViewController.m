@@ -49,7 +49,7 @@ static const CGFloat kMiniBarHeight = 44;
   [super viewDidLoad];
 
   [self setTitle:@"Speakers"];
-  [self.view setBackgroundColor:[UIColor colorWithRed:.85 green:.86 blue:.88 alpha:1]];
+  [self.view setBackgroundColor:[UIColor colorWithWhite:.97 alpha:1]];
 
   UIBarButtonItem *addButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addInput)];
 
@@ -109,8 +109,13 @@ static const CGFloat kMiniBarHeight = 44;
   // Mini Bar - Omitted on large devices
   if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
     _miniBar = [[UIView alloc] initWithFrame:CGRectZero];
-    [_miniBar setBackgroundColor:[UIColor colorWithWhite:.95 alpha:1]];
+    [_miniBar setBackgroundColor:[UIColor colorWithWhite:1 alpha:1]];
     [self.view addSubview:_miniBar];
+
+    UIView *divider = [[UIView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(_miniBar.bounds), .5)];
+    [divider setAutoresizingMask:UIViewAutoresizingFlexibleWidth];
+    [divider setBackgroundColor:[UIColor colorWithWhite:.7 alpha:1]];
+    [_miniBar addSubview:divider];
 
     UIButton *miniTitle = [[UIButton alloc] init];
     [miniTitle setAutoresizingMask:UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight];

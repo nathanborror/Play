@@ -16,15 +16,13 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
   self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+  [self.window setTintColor:[UIColor colorWithRed:1 green:.16 blue:.41 alpha:1]];
 
   [[UISlider appearance] setMaximumTrackImage:[UIImage imageNamed:@"PLProgressMax"] forState:UIControlStateNormal];
   [[UISlider appearance] setMinimumTrackImage:[UIImage imageNamed:@"PLProgressMin"] forState:UIControlStateNormal];
 
-  [self.window setTintColor:[UIColor colorWithRed:.99 green:.29 blue:.44 alpha:1]];
-
   PLNowPlayingViewController *viewController = [[PLNowPlayingViewController alloc] init];
   UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:viewController];
-  [navController.navigationBar setTranslucent:NO];
 
   if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
     PLSpeakersViewController *speakerViewController = [[PLSpeakersViewController alloc] init];

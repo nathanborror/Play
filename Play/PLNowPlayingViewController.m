@@ -169,6 +169,7 @@ static const CGFloat kAlbumTitleFontSize = 15.0;
   [artistTitle setAutoresizingMask:UIViewAutoresizingFlexibleWidth];
   [artistTitle setText:@"The Beatles — Abby Road"];
   [artistTitle setFont:[UIFont systemFontOfSize:kAlbumTitleFontSize]];
+  [artistTitle setTextColor:[UIColor colorWithWhite:.55 alpha:1]];
   [artistTitle setBackgroundColor:[UIColor clearColor]];
   [artistTitle setTextAlignment:NSTextAlignmentCenter];
   [_controlBar addSubview:artistTitle];
