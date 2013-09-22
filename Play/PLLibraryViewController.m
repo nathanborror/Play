@@ -30,9 +30,13 @@
       }],
       [[PLSource alloc] initWithName:@"Radio Stations" selection:nil],
       [[PLSource alloc] initWithName:@"Line In" selection:^() {
-        PLNowPlayingViewController *viewController = [[PLNowPlayingViewController alloc] initWithLineIn:[[SonosInputStore sharedStore] master]];
-        UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:viewController];
-        [self.navigationController presentViewController:navController animated:YES completion:nil];
+        if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
+          PLNowPlayingViewController *viewController = [[PLNowPlayingViewController alloc] initWithLineIn:[[SonosInputStore sharedStore] master]];
+          UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:viewController];
+          [self.navigationController presentViewController:navController animated:YES completion:nil];
+        } else {
+          [self.navigationController popViewControllerAnimated:YES];
+        }
       }]
     ];
   }
@@ -44,9 +48,6 @@
   [super viewDidLoad];
 
   [self setTitle:@"Library"];
-
-  UIBarButtonItem *nowPlayingButton = [[UIBarButtonItem alloc] initWithTitle:@"Playing" style:UIBarButtonItemStyleDone target:self action:@selector(nowPlaying)];
-  [self.navigationItem setRightBarButtonItem:nowPlayingButton];
 
   _libraryTableView = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStylePlain];
   [_libraryTableView setDelegate:self];
@@ -60,13 +61,6 @@
   [super viewDidLayoutSubviews];
 
   [_libraryTableView setFrame:CGRectMake(0, 0, CGRectGetWidth(self.view.bounds), CGRectGetHeight(self.view.bounds))];
-}
-
-- (void)nowPlaying
-{
-  PLNowPlayingViewController *viewController = [[PLNowPlayingViewController alloc] init];
-  UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:viewController];
-  [self.navigationController presentViewController:navController animated:YES completion:nil];
 }
 
 #pragma mark - UITableViewController
