@@ -16,39 +16,39 @@
   UIDynamicAnimator *_animator;
 }
 
-- (id)initWithInput:(SonosInput *)aInput
+- (id)initWithFrame:(CGRect)frame
 {
-  if (self = [super init]) {
-    [self setFrame:CGRectMake(0, 0, 115, 85)];
-    self.input = aInput;
-    self.origin = self.center;
-
+  if (self = [super initWithFrame:frame]) {
+    _origin = self.center;
     _animator = [[UIDynamicAnimator alloc] initWithReferenceView:self];
 
+    [self setBackgroundColor:[UIColor whiteColor]];
+
+    // Speaker icon
+    _speakerIcon = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 115, 65)];
+    [self addSubview:_speakerIcon];
+
     // Speaker label
-    _label = [[UILabel alloc] initWithFrame:CGRectMake(0, 65, CGRectGetWidth(self.bounds), 20)];
-    [_label setText:_input.name];
+    _label = [[UILabel alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(_speakerIcon.frame), CGRectGetWidth(self.bounds), 20)];
     [_label setTextAlignment:NSTextAlignmentCenter];
     [_label setFont:[UIFont systemFontOfSize:11.0]];
     [_label setBackgroundColor:[UIColor clearColor]];
     [self addSubview:_label];
-
-    // Speaker icon
-    _speakerIcon = [[UIImageView alloc] initWithImage:_input.icon];
-    [self addSubview:_speakerIcon];
-
-    // Speaker indicator light
-//    _indicator = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"SpeakerOn"]];
-//    [_indicator setFrame:CGRectOffset(_indicator.bounds, CGRectGetWidth(_label.bounds)-26, -5)];
-//    [_label addSubview:_indicator];
-
-    // Check status every five seconds so we keep the indicator up-to-date
-    [NSTimer scheduledTimerWithTimeInterval:5.0 target:self selector:@selector(updateStatus) userInfo:nil repeats:YES];
-
-    // Update status to current state
-    [self updateStatus];
   }
   return self;
+}
+
+- (void)layoutSubviews
+{
+  [_speakerIcon setCenter:CGPointMake(CGRectGetWidth(self.bounds)/2, (CGRectGetHeight(self.bounds)/2)-10)];
+  [_label setFrame:CGRectOffset(_label.bounds, 0, CGRectGetMaxY(_speakerIcon.frame))];
+}
+
+- (void)setInput:(SonosInput *)input
+{
+  _input = input;
+  [_speakerIcon setImage:_input.icon];
+  [_label setText:_input.name];
 }
 
 - (void)updateStatus

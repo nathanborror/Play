@@ -27,6 +27,8 @@
 		D82B793516D7538000B5FF35 /* SonosVolumeResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = D82B793416D7538000B5FF35 /* SonosVolumeResponse.m */; };
 		D864953817B6F2D0006E7E46 /* PLProgressBar.m in Sources */ = {isa = PBXBuildFile; fileRef = D864953717B6F2D0006E7E46 /* PLProgressBar.m */; };
 		D8678A9B17D5D687001CE707 /* PresentSpeakersAnimator.m in Sources */ = {isa = PBXBuildFile; fileRef = D8678A9A17D5D687001CE707 /* PresentSpeakersAnimator.m */; };
+		D86FA4641813445D0017E98B /* NBReorderableCollectionViewLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = D86FA4631813445D0017E98B /* NBReorderableCollectionViewLayout.m */; };
+		D86FA46718134A370017E98B /* PLGroupHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = D86FA46618134A370017E98B /* PLGroupHeaderView.m */; };
 		D8824DDE1693880600D05AA0 /* PLAddInputViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D8824DDD1693880600D05AA0 /* PLAddInputViewController.m */; };
 		D8824DE916938CA300D05AA0 /* SonosInput.m in Sources */ = {isa = PBXBuildFile; fileRef = D8824DE816938CA300D05AA0 /* SonosInput.m */; };
 		D8824E2B169392FF00D05AA0 /* PLSource.m in Sources */ = {isa = PBXBuildFile; fileRef = D8824E2A169392FF00D05AA0 /* PLSource.m */; };
@@ -104,6 +106,10 @@
 		D864953717B6F2D0006E7E46 /* PLProgressBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PLProgressBar.m; sourceTree = "<group>"; };
 		D8678A9917D5D687001CE707 /* PresentSpeakersAnimator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PresentSpeakersAnimator.h; sourceTree = "<group>"; };
 		D8678A9A17D5D687001CE707 /* PresentSpeakersAnimator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PresentSpeakersAnimator.m; sourceTree = "<group>"; };
+		D86FA4621813445D0017E98B /* NBReorderableCollectionViewLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NBReorderableCollectionViewLayout.h; path = NBKit/NBReorderableCollectionViewLayout.h; sourceTree = "<group>"; };
+		D86FA4631813445D0017E98B /* NBReorderableCollectionViewLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NBReorderableCollectionViewLayout.m; path = NBKit/NBReorderableCollectionViewLayout.m; sourceTree = "<group>"; };
+		D86FA46518134A370017E98B /* PLGroupHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PLGroupHeaderView.h; sourceTree = "<group>"; };
+		D86FA46618134A370017E98B /* PLGroupHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PLGroupHeaderView.m; sourceTree = "<group>"; };
 		D8824DDC1693880600D05AA0 /* PLAddInputViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PLAddInputViewController.h; sourceTree = "<group>"; };
 		D8824DDD1693880600D05AA0 /* PLAddInputViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PLAddInputViewController.m; sourceTree = "<group>"; };
 		D8824DE716938CA300D05AA0 /* SonosInput.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SonosInput.h; sourceTree = "<group>"; };
@@ -275,6 +281,8 @@
 				D812F76917D832BD00E19402 /* PLQueueCell.m */,
 				D812F76E17D8373100E19402 /* PLVolumeCell.h */,
 				D812F76F17D8373100E19402 /* PLVolumeCell.m */,
+				D86FA46518134A370017E98B /* PLGroupHeaderView.h */,
+				D86FA46618134A370017E98B /* PLGroupHeaderView.m */,
 			);
 			name = "UI Elements";
 			sourceTree = "<group>";
@@ -380,6 +388,8 @@
 			children = (
 				D8B613D91718077400F12446 /* NBDirectionGestureRecognizer.h */,
 				D8B613DA1718077400F12446 /* NBDirectionGestureRecognizer.m */,
+				D86FA4621813445D0017E98B /* NBReorderableCollectionViewLayout.h */,
+				D86FA4631813445D0017E98B /* NBReorderableCollectionViewLayout.m */,
 			);
 			name = NBKit;
 			sourceTree = "<group>";
@@ -460,6 +470,7 @@
 				D88EA7FF16917C460011F6FB /* PLAppDelegate.m in Sources */,
 				D88EA80816917C460011F6FB /* PLNowPlayingViewController.m in Sources */,
 				D88EA81A1691902A0011F6FB /* SonosController.m in Sources */,
+				D86FA4641813445D0017E98B /* NBReorderableCollectionViewLayout.m in Sources */,
 				D88D11531692BE740039067F /* PLSong.m in Sources */,
 				D88D116016937AC80039067F /* PLLibraryViewController.m in Sources */,
 				D88D116316937AE00039067F /* PLSpeakersViewController.m in Sources */,
@@ -469,6 +480,7 @@
 				D8824E2B169392FF00D05AA0 /* PLSource.m in Sources */,
 				D8824E2E1693992B00D05AA0 /* PLTextField.m in Sources */,
 				D812F76717D82DC600E19402 /* PLNextUpViewController.m in Sources */,
+				D86FA46718134A370017E98B /* PLGroupHeaderView.m in Sources */,
 				D8824E3416939C5D00D05AA0 /* UIViewController+ModalCheck.m in Sources */,
 				D8824E371693A52200D05AA0 /* SonosInputStore.m in Sources */,
 				D8824E3E1693CEA600D05AA0 /* PLPlaylistsViewController.m in Sources */,

@@ -27,30 +27,23 @@
   [super viewDidLoad];
 
   [self setTitle:@"Next Up"];
-  [self.view setBackgroundColor:[UIColor whiteColor]];
 
   _queue = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStylePlain];
   [_queue registerClass:[PLQueueCell class] forCellReuseIdentifier:@"PLQueueCell"];
   [_queue setDelegate:self];
   [_queue setDataSource:self];
   [self.view addSubview:_queue];
-
-  if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
-    UIBarButtonItem *done = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(done)];
-    [self.navigationItem setRightBarButtonItem:done];
-  }
 }
 
 - (void)viewDidLayoutSubviews
 {
   [super viewDidLayoutSubviews];
-
   [_queue setFrame:CGRectMake(0, 0, CGRectGetWidth(self.view.bounds), CGRectGetHeight(self.view.bounds))];
 }
 
-- (void)done
+- (UITabBarItem *)tabBarItem
 {
-  [self.navigationController dismissViewControllerAnimated:YES completion:nil];
+  return [[UITabBarItem alloc] initWithTitle:@"Next Up" image:[UIImage imageNamed:@"PLNextUpTab"] selectedImage:[UIImage imageNamed:@"PLNextUpTabSelected"] ];
 }
 
 #pragma mark - UITableViewDataSource

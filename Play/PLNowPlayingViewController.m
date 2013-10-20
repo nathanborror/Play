@@ -75,10 +75,13 @@ static const CGFloat kAlbumTitleFontSize = 15.0;
     // TODO: This needs to be replace with a discover method
     SonosInputStore *inputStore = [SonosInputStore sharedStore];
     SonosInput *livingRoom = [inputStore addInputWithIP:@"10.0.1.9" name:@"Living Room" uid:@"RINCON_000E58D0540801400" icon:[UIImage imageNamed:@"SonosAmp"]];
-    [inputStore addInputWithIP:@"10.0.1.10" name:@"Bedroom" uid:@"RINCON_000E587641F201400" icon:[UIImage imageNamed:@"SonosSpeakerPlay3Light"]];
-    [inputStore addInputWithIP:@"10.0.1.11" name:@"Kitchen" uid:@"RINCON_000E587BBA5201400" icon:[UIImage imageNamed:@"SonosSpeakerPlay3Dark"]];
+    [inputStore addInputWithIP:@"10.0.1.16" name:@"Bedroom" uid:@"RINCON_000E58898D4C01400" icon:[UIImage imageNamed:@"SonosSpeakerPlay3Light"]];
+    [inputStore addInputWithIP:@"10.0.1.17" name:@"Kitchen" uid:@"RINCON_000E587BBA5201400" icon:[UIImage imageNamed:@"SonosSpeakerPlay3Dark"]];
+    [inputStore addInputWithIP:@"10.0.1.18" name:@"Bathroom" uid:@"RINCON_000E587641F201400" icon:[UIImage imageNamed:@"SonosSpeakerPlay3Dark"]];
 
     [inputStore setMaster:livingRoom];
+
+    _speakers = [[SonosInputStore sharedStore] allInputs];
   }
   return self;
 }
@@ -112,13 +115,7 @@ static const CGFloat kAlbumTitleFontSize = 15.0;
 {
   [super viewDidLoad];
 
-  if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
-    UIBarButtonItem *speakerButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"PLSpeakers"] style:UIBarButtonItemStylePlain target:self action:@selector(showSpeakers)];
-    [self.navigationItem setLeftBarButtonItem:speakerButton];
-  }
-
-  UIBarButtonItem *queueButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"PLQueue"] style:UIBarButtonItemStylePlain target:self action:@selector(showQueue)];
-  [self.navigationItem setRightBarButtonItem:queueButton];
+  [self setTitle:@"Playing"];
 
   _volumeTable = [[UITableView alloc] initWithFrame:CGRectZero];
   [_volumeTable registerClass:[PLVolumeCell class] forCellReuseIdentifier:@"PLVolumeCell"];
@@ -127,6 +124,7 @@ static const CGFloat kAlbumTitleFontSize = 15.0;
   [_volumeTable setAutoresizingMask:UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight];
   [_volumeTable setRowHeight:80];
   [_volumeTable setSeparatorStyle:UITableViewCellSeparatorStyleNone];
+  [_volumeTable setContentInset:UIEdgeInsetsMake(0, 0, 88, 0)];
   [self.view addSubview:_volumeTable];
 
   // Control Bar
@@ -180,8 +178,6 @@ static const CGFloat kAlbumTitleFontSize = 15.0;
   [progress setValue:1];
   [self.navigationItem setTitleView:progress];
 
-  _speakers = [[SonosInputStore sharedStore] allInputs];
-
   [_volumeTable setTableHeaderView:_controlBar];
 }
 
@@ -189,8 +185,13 @@ static const CGFloat kAlbumTitleFontSize = 15.0;
 {
   [super viewDidLayoutSubviews];
 
-  [_volumeTable setFrame:CGRectMake(0, 0, CGRectGetWidth(self.view.bounds), CGRectGetHeight(self.view.bounds))];
-  [_volumeTable.tableHeaderView setFrame:CGRectMake(0, 0, CGRectGetWidth(_volumeTable.bounds), kControlBarHeight)];
+  [_volumeTable setFrame:CGRectMake(0, 0, CGRectGetWidth(self.view.frame), CGRectGetHeight(self.view.frame))];
+  [_volumeTable.tableHeaderView setFrame:CGRectMake(0, 0, CGRectGetWidth(_volumeTable.frame), kControlBarHeight)];
+}
+
+- (UITabBarItem *)tabBarItem
+{
+  return [[UITabBarItem alloc] initWithTitle:@"Playing" image:[UIImage imageNamed:@"PLNowPlayingTab"] selectedImage:[UIImage imageNamed:@"PLNowPlayingTabSelected"] ];
 }
 
 - (void)playPause
@@ -219,28 +220,6 @@ static const CGFloat kAlbumTitleFontSize = 15.0;
   [_sonos volume:nil level:(int)[sender value] completion:nil];
 }
 
-- (void)showSpeakers
-{
-  PLSpeakersViewController *viewController = [[PLSpeakersViewController alloc] init];
-  [viewController setModalPresentationStyle:UIModalPresentationCustom];
-  [viewController setTransitioningDelegate:self];
-  [self.navigationController presentViewController:viewController animated:YES completion:nil];
-}
-
-- (void)showQueue
-{
-  PLNextUpViewController *viewController = [[PLNextUpViewController alloc] init];
-
-  if (!self.splitViewController) {
-    UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:viewController];
-    [self.navigationController presentViewController:navController animated:YES completion:nil];
-  } else {
-    if (_delegate) {
-      [_delegate nowPlayingViewController:self handleViewController:viewController];
-    }
-  }
-}
-
 - (void)setCurrentSong:(PLSong *)song
 {
   [_sonos play:nil track:song.uri completion:nil];
@@ -250,11 +229,9 @@ static const CGFloat kAlbumTitleFontSize = 15.0;
 {
   if (toInterfaceOrientation == UIInterfaceOrientationPortrait) {
     // Portrait
-    [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationFade];
     [self.navigationController setNavigationBarHidden:NO animated:YES];
   } else {
     // Landscape
-    [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarAnimationFade];
     [self.navigationController setNavigationBarHidden:YES animated:YES];
   }
 }

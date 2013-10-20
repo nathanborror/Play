@@ -8,10 +8,8 @@
 
 @import UIKit;
 @import QuartzCore;
+#import "NBReorderableCollectionViewLayout.h"
 
-#import "SonosInput.h"
-#import "PLNowPlayingViewController.h"
-
-@interface PLSpeakersViewController : UIViewController <SonosInputDelegate, UISplitViewControllerDelegate, PLNowPlayingViewControllerDelegate>
+@interface PLSpeakersViewController : UIViewController <UISplitViewControllerDelegate, UICollectionViewDelegate, NBReorderableCollectionViewDataSource>
 
 @end

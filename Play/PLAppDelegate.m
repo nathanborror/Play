@@ -10,6 +10,7 @@
 #import "SonosInputStore.h"
 #import "PLNowPlayingViewController.h"
 #import "PLSpeakersViewController.h"
+#import "PLNextUpViewController.h"
 
 @implementation PLAppDelegate
 
@@ -21,14 +22,12 @@
   [[UISlider appearance] setMaximumTrackImage:[UIImage imageNamed:@"PLProgressMax"] forState:UIControlStateNormal];
   [[UISlider appearance] setMinimumTrackImage:[UIImage imageNamed:@"PLProgressMin"] forState:UIControlStateNormal];
 
-  PLNowPlayingViewController *viewController = [[PLNowPlayingViewController alloc] init];
-  UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:viewController];
-
   if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
+    PLNowPlayingViewController *viewController = [[PLNowPlayingViewController alloc] init];
+    UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:viewController];
+
     PLSpeakersViewController *speakerViewController = [[PLSpeakersViewController alloc] init];
     UINavigationController *speakerNavController = [[UINavigationController alloc] initWithRootViewController:speakerViewController];
-
-    [viewController setDelegate:speakerViewController];
 
     NSArray *viewControllers = [NSArray arrayWithObjects:navController, speakerNavController, nil];
 
@@ -38,7 +37,14 @@
 
     [self.window setRootViewController:splitViewController];
   } else {
-    [self.window setRootViewController:navController];
+    UITabBarController *tabController = [[UITabBarController alloc] init];
+
+    PLNextUpViewController *nextUp = [[PLNextUpViewController alloc] init];
+    PLSpeakersViewController *speakers = [[PLSpeakersViewController alloc] init];
+    PLNowPlayingViewController *nowPlaying = [[PLNowPlayingViewController alloc] init];
+    [tabController setViewControllers:@[nowPlaying, speakers, nextUp]];
+
+    [self.window setRootViewController:tabController];
   }
 
   [self.window setBackgroundColor:[UIColor whiteColor]];
