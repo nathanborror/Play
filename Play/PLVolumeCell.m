@@ -25,6 +25,7 @@ static const CGFloat kVolumeBarMargin = 16;
 {
   if (self = [super initWithStyle:style reuseIdentifier:reuseIdentifier]) {
     _sonos = [SonosController sharedController];
+    [self setSelectionStyle:UITableViewCellSelectionStyleNone];
 
     _volumeDial = [[PLDial alloc] initWithFrame:CGRectMake(kVolumeBarMargin, 22, CGRectGetWidth(self.bounds)-(kVolumeBarMargin*2), 44)];
     [_volumeDial setAutoresizingMask:UIViewAutoresizingFlexibleWidth];

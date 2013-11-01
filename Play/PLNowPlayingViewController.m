@@ -20,6 +20,7 @@
 #import "SonosInput.h"
 #import "UIImage+BlurImage.h"
 #import "NBKit/NBDirectionGestureRecognizer.h"
+#import "NBKit/NBArrayDataSource.h"
 #import "PresentSpeakersAnimator.h"
 #import "RdioSong.h"
 
@@ -48,6 +49,7 @@ static const CGFloat kAlbumTitleFontSize = 15.0;
   UITableView *_volumeTable;
   UIView *_controlBar;
   UISlider *_volumeSlider;
+  NBArrayDataSource *_datasource;
 
   UIButton *_playPauseButton;
   UIButton *_stopButton;
@@ -117,10 +119,14 @@ static const CGFloat kAlbumTitleFontSize = 15.0;
 
   [self setTitle:@"Playing"];
 
+  _datasource = [[NBArrayDataSource alloc] initWithItems:_speakers cellIdentifier:@"PLVolumeCell" configureCellBlock:^(PLVolumeCell *cell, SonosInput *input) {
+    [cell setInput:input];
+  }];
+
   _volumeTable = [[UITableView alloc] initWithFrame:CGRectZero];
   [_volumeTable registerClass:[PLVolumeCell class] forCellReuseIdentifier:@"PLVolumeCell"];
   [_volumeTable setDelegate:self];
-  [_volumeTable setDataSource:self];
+  [_volumeTable setDataSource:_datasource];
   [_volumeTable setAutoresizingMask:UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight];
   [_volumeTable setRowHeight:80];
   [_volumeTable setSeparatorStyle:UITableViewCellSeparatorStyleNone];
@@ -234,21 +240,6 @@ static const CGFloat kAlbumTitleFontSize = 15.0;
     // Landscape
     [self.navigationController setNavigationBarHidden:YES animated:YES];
   }
-}
-
-#pragma mark - UITableViewDataSource
-
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
-{
-  return [_speakers count];
-}
-
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-  PLVolumeCell *cell = (PLVolumeCell *)[tableView dequeueReusableCellWithIdentifier:@"PLVolumeCell"];
-  SonosInput *input = [[SonosInputStore sharedStore] inputAtIndex:indexPath.row];
-  [cell setInput:input];
-  return cell;
 }
 
 #pragma mark - UITableViewDelegate

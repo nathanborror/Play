@@ -8,6 +8,6 @@
 
 @import UIKit;
 
-@interface PLLibraryViewController : UIViewController <UITableViewDelegate, UITableViewDataSource>
+@interface PLLibraryViewController : UIViewController <UITableViewDelegate>
 
 @end

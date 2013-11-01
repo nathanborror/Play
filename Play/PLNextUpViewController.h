@@ -8,6 +8,6 @@
 
 @import UIKit;
 
-@interface PLNextUpViewController : UIViewController <UITableViewDataSource, UITableViewDelegate>
+@interface PLNextUpViewController : UIViewController <UITableViewDelegate>
 
 @end

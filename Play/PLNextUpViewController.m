@@ -8,10 +8,12 @@
 
 #import "PLNextUpViewController.h"
 #import "PLQueueCell.h"
+#import "NBKit/NBArrayDataSource.h"
 
 @implementation PLNextUpViewController {
   UITableView *_queue;
   NSMutableArray *_items;
+  NBArrayDataSource *_datasource;
 }
 
 - (id)init
@@ -28,10 +30,14 @@
 
   [self setTitle:@"Next Up"];
 
+  _datasource = [[NBArrayDataSource alloc] initWithItems:_items cellIdentifier:@"PLQueueCell" configureCellBlock:^(id cell, id item) {
+    //
+  }];
+
   _queue = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStylePlain];
   [_queue registerClass:[PLQueueCell class] forCellReuseIdentifier:@"PLQueueCell"];
   [_queue setDelegate:self];
-  [_queue setDataSource:self];
+  [_queue setDataSource:_datasource];
   [self.view addSubview:_queue];
 }
 
@@ -44,19 +50,6 @@
 - (UITabBarItem *)tabBarItem
 {
   return [[UITabBarItem alloc] initWithTitle:@"Next Up" image:[UIImage imageNamed:@"PLNextUpTab"] selectedImage:[UIImage imageNamed:@"PLNextUpTabSelected"] ];
-}
-
-#pragma mark - UITableViewDataSource
-
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
-{
-  return [_items count];
-}
-
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-  PLQueueCell *cell = (PLQueueCell *)[tableView dequeueReusableCellWithIdentifier:@"PLQueueCell"];
-  return cell;
 }
 
 #pragma mark - UITableViewDelegate

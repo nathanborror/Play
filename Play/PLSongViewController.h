@@ -10,7 +10,7 @@
 @import MediaPlayer;
 @import AVFoundation;
 
-@interface PLSongViewController : UIViewController <UITableViewDelegate, UITableViewDataSource>
+@interface PLSongViewController : UIViewController <UITableViewDelegate>
 
 - (id)initWithSongs:(NSArray *)aSongs;
 

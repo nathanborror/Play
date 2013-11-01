@@ -40,6 +40,7 @@
 		D8824E401693D01700D05AA0 /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D8824E3F1693D01700D05AA0 /* MediaPlayer.framework */; };
 		D8824E431693D45500D05AA0 /* PLSongViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D8824E421693D45500D05AA0 /* PLSongViewController.m */; };
 		D8824E451693ECEC00D05AA0 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D8824E441693ECEC00D05AA0 /* AVFoundation.framework */; };
+		D883A9F518236B55004D8E9A /* NBArrayDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = D883A9F418236B55004D8E9A /* NBArrayDataSource.m */; };
 		D885BF4317686CB100793DAC /* Media.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D885BF42176856C600793DAC /* Media.xcassets */; };
 		D88D11531692BE740039067F /* PLSong.m in Sources */ = {isa = PBXBuildFile; fileRef = D88D11521692BE740039067F /* PLSong.m */; };
 		D88D116016937AC80039067F /* PLLibraryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D88D115F16937AC80039067F /* PLLibraryViewController.m */; };
@@ -129,6 +130,8 @@
 		D8824E411693D45400D05AA0 /* PLSongViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PLSongViewController.h; sourceTree = "<group>"; };
 		D8824E421693D45500D05AA0 /* PLSongViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PLSongViewController.m; sourceTree = "<group>"; };
 		D8824E441693ECEC00D05AA0 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		D883A9F318236B55004D8E9A /* NBArrayDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NBArrayDataSource.h; path = NBKit/NBArrayDataSource.h; sourceTree = "<group>"; };
+		D883A9F418236B55004D8E9A /* NBArrayDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NBArrayDataSource.m; path = NBKit/NBArrayDataSource.m; sourceTree = "<group>"; };
 		D885BF42176856C600793DAC /* Media.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Media.xcassets; sourceTree = "<group>"; };
 		D88D11511692BE740039067F /* PLSong.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PLSong.h; sourceTree = "<group>"; };
 		D88D11521692BE740039067F /* PLSong.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PLSong.m; sourceTree = "<group>"; };
@@ -386,6 +389,8 @@
 		D8B613D51717FD2200F12446 /* NBKit */ = {
 			isa = PBXGroup;
 			children = (
+				D883A9F318236B55004D8E9A /* NBArrayDataSource.h */,
+				D883A9F418236B55004D8E9A /* NBArrayDataSource.m */,
 				D8B613D91718077400F12446 /* NBDirectionGestureRecognizer.h */,
 				D8B613DA1718077400F12446 /* NBDirectionGestureRecognizer.m */,
 				D86FA4621813445D0017E98B /* NBReorderableCollectionViewLayout.h */,
@@ -484,6 +489,7 @@
 				D8824E3416939C5D00D05AA0 /* UIViewController+ModalCheck.m in Sources */,
 				D8824E371693A52200D05AA0 /* SonosInputStore.m in Sources */,
 				D8824E3E1693CEA600D05AA0 /* PLPlaylistsViewController.m in Sources */,
+				D883A9F518236B55004D8E9A /* NBArrayDataSource.m in Sources */,
 				D8824E431693D45500D05AA0 /* PLSongViewController.m in Sources */,
 				D819F64D16ADC2DA00B19B50 /* SOAPEnvelope.m in Sources */,
 				D819F65016ADC64300B19B50 /* SonosConnection.m in Sources */,

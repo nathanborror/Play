@@ -9,10 +9,12 @@
 #import "PLSongViewController.h"
 #import "PLSong.h"
 #import "PLNowPlayingViewController.h"
+#import "NBKit/NBArrayDataSource.h"
 
 @implementation PLSongViewController {
   NSArray *_songs;
   UITableView *_songTableView;
+  NBArrayDataSource *_datasource;
 }
 
 - (id)init
@@ -32,11 +34,17 @@
 {
   [super viewDidLoad];
 
+  _datasource = [[NBArrayDataSource alloc] initWithItems:_songs cellIdentifier:@"PLSongCell" configureCellBlock:^(UITableViewCell *cell, MPMediaItem *item) {
+    [cell.textLabel setText:[item valueForProperty:MPMediaItemPropertyTitle]];
+    UIImage *albumArt = [[item valueForProperty:MPMediaItemPropertyArtwork] imageWithSize:CGSizeMake(CGRectGetHeight(cell.bounds), CGRectGetHeight(cell.bounds))];
+    [cell.imageView setImage:albumArt];
+  }];
+
   _songTableView = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStylePlain];
   [_songTableView setDelegate:self];
-  [_songTableView setDataSource:self];
+  [_songTableView setDataSource:_datasource];
   [_songTableView setAutoresizesSubviews:YES];
-  [_songTableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"PLSongTableViewCell"];
+  [_songTableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"PLSongCell"];
   [self.view addSubview:_songTableView];
 }
 
@@ -47,24 +55,7 @@
   [_songTableView setFrame:CGRectMake(0, 0, CGRectGetWidth(self.view.bounds), CGRectGetHeight(self.view.bounds))];
 }
 
-#pragma mark - UITableViewController
-
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
-{
-  return [_songs count];
-}
-
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-  MPMediaItem *item = [_songs objectAtIndex:indexPath.row];
-  UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"PLSongTableViewCell"];
-
-  [cell.textLabel setText:[item valueForProperty:MPMediaItemPropertyTitle]];
-  UIImage *albumArt = [[item valueForProperty:MPMediaItemPropertyArtwork] imageWithSize:CGSizeMake(CGRectGetHeight(cell.bounds), CGRectGetHeight(cell.bounds))];
-  [cell.imageView setImage:albumArt];
-
-  return cell;
-}
+#pragma mark - UITableViewDelegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {

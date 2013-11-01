@@ -9,6 +9,6 @@
 @import UIKit;
 @import MediaPlayer;
 
-@interface PLPlaylistsViewController : UIViewController <UITableViewDelegate, UITableViewDataSource>
+@interface PLPlaylistsViewController : UIViewController <UITableViewDelegate>
 
 @end

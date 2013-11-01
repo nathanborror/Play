@@ -13,10 +13,12 @@
 #import "PLNowPlayingViewController.h"
 #import "SonosInputStore.h"
 #import "RdioPlaylistViewController.h"
+#import "NBKit/NBArrayDataSource.h"
 
 @implementation PLLibraryViewController {
   UITableView *_libraryTableView;
   NSArray *_sourceList;
+  NBArrayDataSource *_delegate;
 }
 
 - (id)init
@@ -49,9 +51,13 @@
 
   [self setTitle:@"Library"];
 
+  _delegate = [[NBArrayDataSource alloc] initWithItems:_sourceList cellIdentifier:@"PLLibraryTableViewCell" configureCellBlock:^(UITableViewCell *cell, PLSource *source) {
+    [cell.textLabel setText:source.name];
+  }];
+
   _libraryTableView = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStylePlain];
   [_libraryTableView setDelegate:self];
-  [_libraryTableView setDataSource:self];
+  [_libraryTableView setDataSource:_delegate];
   [_libraryTableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"PLLibraryTableViewCell"];
   [self.view addSubview:_libraryTableView];
 }
@@ -63,20 +69,7 @@
   [_libraryTableView setFrame:CGRectMake(0, 0, CGRectGetWidth(self.view.bounds), CGRectGetHeight(self.view.bounds))];
 }
 
-#pragma mark - UITableViewController
-
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
-{
-  return [_sourceList count];
-}
-
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-  PLSource *source = [_sourceList objectAtIndex:indexPath.row];
-  UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"PLLibraryTableViewCell"];
-  [cell.textLabel setText:source.name];
-  return cell;
-}
+#pragma mark - UITableViewDelegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {

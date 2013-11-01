@@ -14,7 +14,7 @@
 @class RdioSong;
 @class PLNowPlayingViewController;
 
-@interface PLNowPlayingViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, UIViewControllerTransitioningDelegate, UISplitViewControllerDelegate>
+@interface PLNowPlayingViewController : UIViewController <UITableViewDelegate, UIViewControllerTransitioningDelegate, UISplitViewControllerDelegate>
 
 - (id)initWithSong:(PLSong *)song;
 - (id)initWithRdioSong:(RdioSong *)song;
