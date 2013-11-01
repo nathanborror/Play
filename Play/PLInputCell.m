@@ -51,13 +51,13 @@
 - (void)pair:(SonosInput *)master
 {
   NSString *uri = [NSString stringWithFormat:@"x-rincon:%@", master.uid];
-  [[SonosController sharedController] play:self.input track:uri completion:nil];
+  [[SonosController sharedController] play:self.input uri:uri completion:nil];
 }
 
 - (void)unpair
 {
   NSString *uri = [NSString stringWithFormat:@"x-rincon-queue:%@#0", self.input.uid];
-  [[SonosController sharedController] play:self.input track:uri completion:nil];
+  [[SonosController sharedController] play:self.input uri:uri completion:nil];
 }
 
 @end
