@@ -12,8 +12,9 @@
 #import "PLPlaylistsViewController.h"
 #import "PLNowPlayingViewController.h"
 #import "SonosInputStore.h"
-#import "RdioPlaylistViewController.h"
 #import "SonosInput.h"
+#import "SonosController.h"
+#import "RdioPlaylistViewController.h"
 #import "NBKit/NBArrayDataSource.h"
 
 @implementation PLLibraryViewController {
@@ -40,6 +41,7 @@
       }],
       [[PLSource alloc] initWithName:@"Radio Stations" selection:nil],
       [[PLSource alloc] initWithName:@"Line In" selection:^() {
+        [[SonosController sharedController] lineIn:_input completion:nil];
         [self dismissViewControllerAnimated:YES completion:nil];
       }]
     ];

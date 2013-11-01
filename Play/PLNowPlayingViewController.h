@@ -18,6 +18,5 @@
 
 - (id)initWithSong:(PLSong *)song;
 - (id)initWithRdioSong:(RdioSong *)song;
-- (id)initWithLineIn:(SonosInput *)input;
 
 @end

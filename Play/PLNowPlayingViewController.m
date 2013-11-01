@@ -105,14 +105,6 @@ static const CGFloat kAlbumTitleFontSize = 15.0;
   return self;
 }
 
-- (id)initWithLineIn:(SonosInput *)input
-{
-  if (self = [self init]) {
-    [_sonos lineIn:input completion:nil];
-  }
-  return self;
-}
-
 - (void)viewDidLoad
 {
   [super viewDidLoad];
