@@ -59,7 +59,7 @@ typedef NS_ENUM(NSInteger, NBScrollingDirection) {
 @implementation UICollectionViewCell (ReorderableCollectionViewLayout)
 
 - (UIImage *)rasterizedImage {
-  UIGraphicsBeginImageContextWithOptions(self.bounds.size, self.isOpaque, 0.0f);
+  UIGraphicsBeginImageContextWithOptions(self.bounds.size, NO, 0);
   [self.layer renderInContext:UIGraphicsGetCurrentContext()];
   UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
   UIGraphicsEndImageContext();
@@ -79,7 +79,7 @@ typedef NS_ENUM(NSInteger, NBScrollingDirection) {
 
 - (id)init {
   if (self = [super init]) {
-    _scrollingSpeed = 300.0f;
+    _scrollingSpeed = 300;
     _scrollingTriggerEdgeInsets = UIEdgeInsetsMake(50.0f, 50.0f, 50.0f, 50.0f);
 
     [self addObserver:self forKeyPath:COLLECTION_VIEW_KEYPATH options:NSKeyValueObservingOptionNew context:nil];
@@ -89,7 +89,8 @@ typedef NS_ENUM(NSInteger, NBScrollingDirection) {
 
 - (void)setupCollectionView {
   _longPressGestureRecognizer = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(handleLongPressGesture:)];
-  _longPressGestureRecognizer.delegate = self;
+  [_longPressGestureRecognizer setMinimumPressDuration:.2];
+  [_longPressGestureRecognizer setDelegate:self];
 
   // Links the default long press gesture recognizer to the custom long press gesture recognizer we are creating now
   // by enforcing failure dependency so that they doesn't clash.
