@@ -13,17 +13,25 @@
 #import "PLNowPlayingViewController.h"
 #import "SonosInputStore.h"
 #import "RdioPlaylistViewController.h"
+#import "SonosInput.h"
 #import "NBKit/NBArrayDataSource.h"
 
 @implementation PLLibraryViewController {
   UITableView *_libraryTableView;
   NSArray *_sourceList;
+  SonosInput *_input;
   NBArrayDataSource *_delegate;
 }
 
-- (id)init
+- (id)initWithInput:(SonosInput *)input
 {
   if (self = [super init]) {
+    if (input) {
+      _input = input;
+    } else {
+      _input = [[SonosInputStore sharedStore] master];
+    }
+
     _sourceList = @[
       [[PLSource alloc] initWithName:@"Playlists" selection:nil],
       [[PLSource alloc] initWithName:@"Rdio" selection:^(){
@@ -32,13 +40,7 @@
       }],
       [[PLSource alloc] initWithName:@"Radio Stations" selection:nil],
       [[PLSource alloc] initWithName:@"Line In" selection:^() {
-        if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
-          PLNowPlayingViewController *viewController = [[PLNowPlayingViewController alloc] initWithLineIn:[[SonosInputStore sharedStore] master]];
-          UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:viewController];
-          [self.navigationController presentViewController:navController animated:YES completion:nil];
-        } else {
-          [self.navigationController popViewControllerAnimated:YES];
-        }
+        [self dismissViewControllerAnimated:YES completion:nil];
       }]
     ];
   }
@@ -50,6 +52,9 @@
   [super viewDidLoad];
 
   [self setTitle:@"Library"];
+
+  UIBarButtonItem *done = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(done:)];
+  [self.navigationItem setRightBarButtonItem:done];
 
   _delegate = [[NBArrayDataSource alloc] initWithItems:_sourceList cellIdentifier:@"PLLibraryTableViewCell" configureCellBlock:^(UITableViewCell *cell, PLSource *source) {
     [cell.textLabel setText:source.name];
@@ -67,6 +72,11 @@
   [super viewDidLayoutSubviews];
 
   [_libraryTableView setFrame:CGRectMake(0, 0, CGRectGetWidth(self.view.bounds), CGRectGetHeight(self.view.bounds))];
+}
+
+- (void)done:(id)sender
+{
+  [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 #pragma mark - UITableViewDelegate

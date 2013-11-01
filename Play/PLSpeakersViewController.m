@@ -120,7 +120,7 @@ static const CGFloat kMiniBarHeight = 44;
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-  PLInputCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"PLInputCell" forIndexPath:indexPath];
+  PLInputCell *cell = (PLInputCell *)[collectionView dequeueReusableCellWithReuseIdentifier:@"PLInputCell" forIndexPath:indexPath];
   NSArray *inputs = (NSArray *)[_data objectAtIndex:indexPath.section][@"inputs"];
   SonosInput *input = [inputs objectAtIndex:indexPath.row];
   [cell setInput:input];
@@ -159,6 +159,16 @@ static const CGFloat kMiniBarHeight = 44;
 
   [data1 removeObjectAtIndex:fromIndexPath.item];
   [data2 insertObject:index atIndex:toIndexPath.item];
+}
+
+#pragma mark - UICollectionViewDelegate
+
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
+{
+  PLInputCell *cell = (PLInputCell *)[collectionView dequeueReusableCellWithReuseIdentifier:@"PLInputCell" forIndexPath:indexPath];
+  PLLibraryViewController *viewController = [[PLLibraryViewController alloc] initWithInput:cell.input];
+  UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:viewController];
+  [self presentViewController:navController animated:YES completion:nil];
 }
 
 @end
