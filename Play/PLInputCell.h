@@ -22,12 +22,7 @@ typedef NS_ENUM(NSInteger, PLInputCellStatus) {
 @property (nonatomic, strong) SonosInput *input;
 @property (nonatomic, assign) CGPoint origin;
 @property (nonatomic, assign) PLInputCellStatus status;
-@property (nonatomic, strong) UILabel *label;
-@property (nonatomic, strong) UIImageView *indicator;
-@property (nonatomic, strong) UIImageView *speakerIcon;
 
-- (void)startDragging;
-- (void)stopDragging;
 - (void)pair:(SonosInput *)master;
 - (void)unpair;
 
