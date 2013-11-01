@@ -40,9 +40,13 @@
     UITabBarController *tabController = [[UITabBarController alloc] init];
 
     PLNextUpViewController *nextUp = [[PLNextUpViewController alloc] init];
+    UINavigationController *nextUpNavController = [[UINavigationController alloc] initWithRootViewController:nextUp];
+
     PLSpeakersViewController *speakers = [[PLSpeakersViewController alloc] init];
+
     PLNowPlayingViewController *nowPlaying = [[PLNowPlayingViewController alloc] init];
-    [tabController setViewControllers:@[nowPlaying, speakers, nextUp]];
+
+    [tabController setViewControllers:@[nowPlaying, speakers, nextUpNavController]];
 
     [self.window setRootViewController:tabController];
   }
