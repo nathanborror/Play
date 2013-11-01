@@ -206,7 +206,7 @@ static const CGFloat kAlbumTitleFontSize = 15.0;
     [_sonos pause:nil completion:nil];
     [_playPauseButton setBackgroundImage:[UIImage imageNamed:@"ControlPlay.png"] forState:UIControlStateNormal];
   } else {
-    [_sonos play:nil track:nil completion:nil];
+    [_sonos play:nil uri:nil completion:nil];
     [_playPauseButton setBackgroundImage:[UIImage imageNamed:@"ControlPause.png"] forState:UIControlStateNormal];
   }
 }
@@ -228,7 +228,7 @@ static const CGFloat kAlbumTitleFontSize = 15.0;
 
 - (void)setCurrentSong:(PLSong *)song
 {
-  [_sonos play:nil track:song.uri completion:nil];
+  [_sonos play:nil uri:song.uri completion:nil];
 }
 
 - (void)willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration

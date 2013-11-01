@@ -108,14 +108,15 @@
   [connection start];
 }
 
-- (void)play:(SonosInput *)input track:(NSString *)track completion:(void (^)(SOAPEnvelope *, NSError *))block
+- (void)play:(SonosInput *)input uri:(NSString *)uri completion:(void (^)(SOAPEnvelope *, NSError *))block
 {
-  if (track) {
+  if (uri) {
+    [input setUri:uri];
     NSDictionary *params = @{@"InstanceID": @0,
-                             @"CurrentURI":track,
+                             @"CurrentURI":uri,
                              @"CurrentURIMetaData": @""};
     [SonosController request:SonosRequestTypeAVTransport input:input action:@"SetAVTransportURI" params:params completion:^(id obj, NSError *error) {
-      [self play:nil track:nil completion:block];
+      [self play:nil uri:nil completion:block];
     }];
   } else {
     NSDictionary *params = @{@"InstanceID": @0, @"Speed":@1};
@@ -141,7 +142,7 @@
                            @"CurrentURI":trackURI,
                            @"CurrentURIMetaData": @""};
   [SonosController request:SonosRequestTypeAVTransport input:input action:@"SetAVTransportURI" params:params completion:^(id obj, NSError *error) {
-    [self play:nil track:nil completion:block];
+    [self play:nil uri:nil completion:block];
   }];
 }
 
@@ -189,13 +190,13 @@
                            @"DesiredFirstTrackNumberEnqueued": @0,
                            @"EnqueueAsNext": @1};
   [SonosController request:SonosRequestTypeAVTransport input:input action:@"AddURIToQueue" params:params completion:^(id obj, NSError *error) {
-    [self play:nil track:nil completion:block];
+    [self play:nil uri:nil completion:block];
   }];
 }
 
 - (void)lineIn:(SonosInput *)input completion:(void (^)(SOAPEnvelope *, NSError *))block
 {
-  [self play:input track:[NSString stringWithFormat:@"x-rincon-stream:%@", input.uid] completion:block];
+  [self play:input uri:[NSString stringWithFormat:@"x-rincon-stream:%@", input.uid] completion:block];
 }
 
 - (void)volume:(SonosInput *)input completion:(void (^)(SOAPEnvelope *, NSError *))block
