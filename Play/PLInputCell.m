@@ -9,8 +9,6 @@
 #import "PLInputCell.h"
 #import "SonosInput.h"
 #import "SonosController.h"
-#import "SonosTransportInfoResponse.h"
-#import "SOAPEnvelope.h"
 
 @implementation PLInputCell {
   UILabel *_label;

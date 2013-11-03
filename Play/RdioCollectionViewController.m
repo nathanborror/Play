@@ -244,7 +244,7 @@
 
   if ([rdioObject isKindOfClass:[RdioSong class]]) {
     SonosController *sonos = [SonosController sharedController];
-    [sonos play:nil rdioSong:(RdioSong *)rdioObject completion:^(SOAPEnvelope *envelope, NSError *error){
+    [sonos play:nil rdioSong:(RdioSong *)rdioObject completion:^(NSDictionary *response, NSError *error){
       [[[UIAlertView alloc] initWithTitle:@"Notice" message:@"Sent Rdio Track To Sonos" delegate:nil cancelButtonTitle:@"Okay!" otherButtonTitles:nil] show];
     }];
   } else if ([rdioObject isKindOfClass:[RdioAlbum class]]) {

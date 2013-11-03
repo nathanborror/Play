@@ -10,7 +10,6 @@
 #import "RdioPlaylist.h"
 #import "PLNowPlayingViewController.h"
 #import "RdioSongsViewController.h"
-#import "PLSongViewController.h"
 
 @implementation RdioPlaylistViewController {
   Rdio *_rdio;

@@ -8,9 +8,7 @@
 
 #import "SonosInput.h"
 #import "SonosController.h"
-#import "SonosPositionInfoResponse.h"
 #import "SonosInputStore.h"
-#import "SOAPEnvelope.h"
 
 @implementation SonosInput
 
@@ -22,9 +20,6 @@
     _uid = aUid;
     _icon = aIcon;
     _uri = nil;
-
-    [self checkUri];
-//    [NSTimer scheduledTimerWithTimeInterval:5 target:self selector:@selector(checkUri) userInfo:nil repeats:YES];
   }
   return self;
 }
@@ -32,33 +27,15 @@
 - (void)pairWithSonosInput:(SonosInput *)input
 {
   _uri = [NSString stringWithFormat:@"x-rincon:%@", input.uid];
-  [[SonosController sharedController] play:self track:_uri completion:nil];
+  [[SonosController sharedController] play:self uri:_uri completion:nil];
 }
 
 - (void)unpair
 {
   _uri = [NSString stringWithFormat:@"x-rincon-queue:%@#0", self.uid];
-  [[SonosController sharedController] play:self track:_uri completion:nil];
+  [[SonosController sharedController] play:self uri:_uri completion:nil];
 }
 
-- (void)checkUri
-{
-  [[SonosController sharedController] trackInfo:self completion:^(SOAPEnvelope *envelope, NSError *error) {
-    SonosPositionInfoResponse *response = (SonosPositionInfoResponse *)[envelope response];
-    _uri = [NSString stringWithFormat:@"%@", response.uri];
-
-    NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:@"x-rincon:" options:0 error:nil];
-    NSTextCheckingResult *match = [regex firstMatchInString:_uri options:0 range:NSMakeRange(0, _uri.length)];
-
-    if (match) {
-      NSString *uid = [_uri stringByReplacingOccurrencesOfString:@"x-rincon:" withString:@""];
-      SonosInput *pairedWithInput = [[SonosInputStore sharedStore] inputWithUid:uid];
-      if (self.delegate) {
-        [self.delegate input:self pairedWith:pairedWithInput];
-      }
-    }
-  }];
-}
 
 #pragma mark - NSCoding
 

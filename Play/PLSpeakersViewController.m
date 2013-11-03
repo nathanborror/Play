@@ -14,9 +14,6 @@
 #import "SonosInput.h"
 #import "SonosInputStore.h"
 #import "SonosController.h"
-#import "SonosPositionInfoResponse.h"
-#import "SOAPEnvelope.h"
-#import "UIImage+BlurImage.h"
 #import "NBReorderableCollectionViewLayout.h"
 
 static const CGFloat kInputGridTotalCells = 10;
@@ -28,7 +25,6 @@ static const CGFloat kMiniBarHeight = 44;
   UIScrollView *_scrollView;
   CGPoint _cellPanCoordBegan;
   UIView *_paired;
-  UIDynamicAnimator *_animator;
   NSArray *_data;
   UICollectionView *_collectionView;
 }
@@ -36,7 +32,6 @@ static const CGFloat kMiniBarHeight = 44;
 - (id)init
 {
   if (self = [super init]) {
-    _animator = [[UIDynamicAnimator alloc] initWithReferenceView:_scrollView];
     _data = @[
               @{@"title": @"Line In",
                 @"inputs": (NSMutableArray *)[[SonosInputStore sharedStore] allInputs]},

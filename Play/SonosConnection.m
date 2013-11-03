@@ -7,16 +7,9 @@
 //
 
 #import "SonosConnection.h"
-#import "SonosMockResponses.h"
-#import "SonosErrorResponse.h"
+#import "XMLReader.h"
 
 static NSMutableArray *sharedConnectionList = nil;
-
-#if TARGET_IPHONE_SIMULATOR
-static const BOOL kTargetSimulator = NO;
-# else
-static const BOOL kTargetSimulator = NO;
-#endif
 
 @implementation SonosConnection
 
@@ -32,15 +25,7 @@ static const BOOL kTargetSimulator = NO;
 - (void)start
 {
   container = [[NSMutableData alloc] init];
-
-  if (kTargetSimulator) {
-    // Bypass NSURLConnection and call connectionDidFinishLoading directly
-    NSData *mockResponse = [[SonosMockResponses sharedResponses] responseFor:[_request valueForHTTPHeaderField:@"SOAPACTION"]];
-    [container appendData:mockResponse];
-    [self connectionDidFinishLoading:nil];
-  } else {
-    internalConnection = [[NSURLConnection alloc] initWithRequest:self.request delegate:self startImmediately:YES];
-  }
+  internalConnection = [[NSURLConnection alloc] initWithRequest:self.request delegate:self startImmediately:YES];
 
   if (!sharedConnectionList) {
     sharedConnectionList = [[NSMutableArray alloc] init];
@@ -57,29 +42,10 @@ static const BOOL kTargetSimulator = NO;
 
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection
 {
-  id rootObject = nil;
-  if (_envelope) {
-    NSXMLParser *parser = [[NSXMLParser alloc] initWithData:container];
-
-    [parser setDelegate:[self envelope]];
-    [parser parse];
-    rootObject = [self envelope];
-  }
-
+  NSDictionary *response = [XMLReader dictionaryForXMLData:container options:XMLReaderOptionsProcessNamespaces error:nil];
   if (_completionBlock) {
-    if ([[rootObject response] class] == [SonosErrorResponse class]) {
-      SonosErrorResponse *error = (SonosErrorResponse *)[rootObject response];
-      NSLog(@"\n\nSonosErrorResponse:"
-            "\n\tRequest: %@"
-            "\n\tCode: %@"
-            "\n\tString: %@"
-            "\n\tDetail: %@"
-            "\n\tHTTPBody: %@"
-            "\n\n", _request.URL, error.code, error.string, error.detail, [[NSString alloc] initWithData:_request.HTTPBody encoding:NSUTF8StringEncoding]);
-    }
-    _completionBlock(rootObject, nil);
+    _completionBlock(response[@"s:Envelope"][@"s:Body"], nil);
   }
-
   [sharedConnectionList removeObject:self];
 }
 

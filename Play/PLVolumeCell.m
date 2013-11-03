@@ -8,10 +8,8 @@
 
 #import "PLVolumeCell.h"
 #import "PLDial.h"
-#import "SOAPEnvelope.h"
 #import "SonosController.h"
 #import "SonosInput.h"
-#import "SonosVolumeResponse.h"
 
 static const CGFloat kVolumeBarMargin = 16;
 
@@ -61,9 +59,9 @@ static const CGFloat kVolumeBarMargin = 16;
   [_name setBackgroundColor:[UIColor clearColor]];
   [self addSubview:_name];
 
-  [_sonos volume:_input completion:^(SOAPEnvelope *envelope, NSError *error) {
-    SonosVolumeResponse *volume = (SonosVolumeResponse *)[envelope response];
-    [_volumeDial setValue:[volume.currentVolume floatValue]];
+  [_sonos volume:_input completion:^(NSDictionary *response, NSError *error) {
+    NSString *value = response[@"u:GetVolumeResponse"][@"CurrentVolume"][@"text"];
+    [_volumeDial setValue:[value floatValue]];
   }];
 }
 

@@ -22,8 +22,6 @@ typedef NS_ENUM(NSInteger, SonosRequestType) {
   SonosRequestTypeGroupManagement,
 };
 
-@class SOAPEnvelope;
-@class SonosVolumeResponse;
 @class SonosInput;
 @class RdioSong;
 
@@ -41,18 +39,18 @@ typedef NS_ENUM(NSInteger, SonosRequestType) {
          params:(NSDictionary *)params
      completion:(void(^)(id obj, NSError *error))block;
 
-- (void)play:(SonosInput *)input uri:(NSString *)uri completion:(void(^)(SOAPEnvelope *envelope, NSError *error))block;
-- (void)play:(SonosInput *)input rdioSong:(RdioSong *)song completion:(void(^)(SOAPEnvelope *envelope, NSError *error))block;
-- (void)pause:(SonosInput *)input completion:(void(^)(SOAPEnvelope *envelope, NSError *error))block;
-- (void)stop:(SonosInput *)input completion:(void(^)(SOAPEnvelope *envelope, NSError *error))block;
-- (void)next:(SonosInput *)input completion:(void(^)(SOAPEnvelope *envelope, NSError *error))block;
-- (void)previous:(SonosInput *)input completion:(void(^)(SOAPEnvelope *envelope, NSError *error))block;
-- (void)queue:(SonosInput *)input track:(NSString *)track completion:(void(^)(SOAPEnvelope *envelope, NSError *error))block;
-- (void)volume:(SonosInput *)input completion:(void(^)(SOAPEnvelope *envelope, NSError *error))block;
-- (void)volume:(SonosInput *)input level:(int)level completion:(void(^)(SOAPEnvelope *envelope, NSError *error))block;
-- (void)lineIn:(SonosInput *)input completion:(void(^)(SOAPEnvelope *envelope, NSError *error))block;
-- (void)trackInfo:(SonosInput *)input completion:(void(^)(SOAPEnvelope *envelope, NSError *error))block;
-- (void)status:(SonosInput *)input completion:(void(^)(SOAPEnvelope *envelope, NSError *error))block;
-- (void)browse:(SonosInput *)input completion:(void(^)(SOAPEnvelope *envelope, NSError *error))block;
+- (void)play:(SonosInput *)input uri:(NSString *)uri completion:(void(^)(NSDictionary *response, NSError *error))block;
+- (void)play:(SonosInput *)input rdioSong:(RdioSong *)song completion:(void(^)(NSDictionary *response, NSError *error))block;
+- (void)pause:(SonosInput *)input completion:(void(^)(NSDictionary *response, NSError *error))block;
+- (void)stop:(SonosInput *)input completion:(void(^)(NSDictionary *response, NSError *error))block;
+- (void)next:(SonosInput *)input completion:(void(^)(NSDictionary *response, NSError *error))block;
+- (void)previous:(SonosInput *)input completion:(void(^)(NSDictionary *response, NSError *error))block;
+- (void)queue:(SonosInput *)input track:(NSString *)track completion:(void(^)(NSDictionary *response, NSError *error))block;
+- (void)volume:(SonosInput *)input completion:(void(^)(NSDictionary *response, NSError *error))block;
+- (void)volume:(SonosInput *)input level:(int)level completion:(void(^)(NSDictionary *response, NSError *error))block;
+- (void)lineIn:(SonosInput *)input completion:(void(^)(NSDictionary *response, NSError *error))block;
+- (void)trackInfo:(SonosInput *)input completion:(void(^)(NSDictionary *response, NSError *error))block;
+- (void)status:(SonosInput *)input completion:(void(^)(NSDictionary *response, NSError *error))block;
+- (void)browse:(SonosInput *)input completion:(void(^)(NSDictionary *response, NSError *error))block;
 
 @end

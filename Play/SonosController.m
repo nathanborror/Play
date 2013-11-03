@@ -10,8 +10,6 @@
 #import "SonosConnection.h"
 #import "SonosInput.h"
 #import "SonosInputStore.h"
-#import "SonosVolumeResponse.h"
-#import "SOAPEnvelope.h"
 #import "RdioSong.h"
 #import "RdioAlbum.h"
 
@@ -101,14 +99,11 @@
   [request addValue:[NSString stringWithFormat:@"%@#%@", xmlns, action] forHTTPHeaderField:@"SOAPACTION"];
   [request setHTTPBody:[requestBody dataUsingEncoding:NSUTF8StringEncoding]];
 
-  SOAPEnvelope *envelope = [[SOAPEnvelope alloc] init];
   SonosConnection *connection = [[SonosConnection alloc] initWithRequest:request completion:block];
-  
-  [connection setEnvelope:envelope];
   [connection start];
 }
 
-- (void)play:(SonosInput *)input uri:(NSString *)uri completion:(void (^)(SOAPEnvelope *, NSError *))block
+- (void)play:(SonosInput *)input uri:(NSString *)uri completion:(void (^)(NSDictionary *, NSError *))block
 {
   if (uri) {
     [input setUri:uri];
@@ -127,7 +122,7 @@
   }
 }
 
-- (void)play:(SonosInput *)input rdioSong:(RdioSong *)song completion:(void(^)(SOAPEnvelope *, NSError *))block
+- (void)play:(SonosInput *)input rdioSong:(RdioSong *)song completion:(void(^)(NSDictionary *, NSError *))block
 {
   // The Metadata shows correctly but may be user specific. Some of the numbers might
   // be tied to an individual Rdio user key, if that is the case more research needs
@@ -146,7 +141,7 @@
   }];
 }
 
-- (void)pause:(SonosInput *)input completion:(void (^)(SOAPEnvelope *, NSError *))block
+- (void)pause:(SonosInput *)input completion:(void (^)(NSDictionary *, NSError *))block
 {
   NSDictionary *params = @{@"InstanceID": @0, @"Speed": @1};
   [SonosController request:SonosRequestTypeAVTransport input:input action:@"Pause" params:params completion:^(id obj, NSError *error) {
@@ -155,7 +150,7 @@
   }];
 }
 
-- (void)stop:(SonosInput *)input completion:(void (^)(SOAPEnvelope *, NSError *))block
+- (void)stop:(SonosInput *)input completion:(void (^)(NSDictionary *, NSError *))block
 {
   NSDictionary *params = @{@"InstanceID": @0, @"Speed": @1};
   [SonosController request:SonosRequestTypeAVTransport input:input action:@"Stop" params:params completion:^(id obj, NSError *error) {
@@ -164,7 +159,7 @@
   }];
 }
 
-- (void)next:(SonosInput *)input completion:(void (^)(SOAPEnvelope *, NSError *))block
+- (void)next:(SonosInput *)input completion:(void (^)(NSDictionary *, NSError *))block
 {
   NSDictionary *params = @{@"InstanceID": @0, @"Speed": @1};
   [SonosController request:SonosRequestTypeAVTransport input:input action:@"Next" params:params completion:^(id obj, NSError *error) {
@@ -173,7 +168,7 @@
   }];
 }
 
-- (void)previous:(SonosInput *)input completion:(void (^)(SOAPEnvelope *, NSError *))block
+- (void)previous:(SonosInput *)input completion:(void (^)(NSDictionary *, NSError *))block
 {
   NSDictionary *params = @{@"InstanceID": @0, @"Speed": @1};
   [SonosController request:SonosRequestTypeAVTransport input:input action:@"Previous" params:params completion:^(id obj, NSError *error) {
@@ -182,7 +177,7 @@
   }];
 }
 
-- (void)queue:(SonosInput *)input track:(NSString *)track completion:(void (^)(SOAPEnvelope *, NSError *))block
+- (void)queue:(SonosInput *)input track:(NSString *)track completion:(void (^)(NSDictionary *, NSError *))block
 {
   NSDictionary *params = @{@"InstanceID": @0,
                            @"EnqueuedURI": track,
@@ -194,19 +189,19 @@
   }];
 }
 
-- (void)lineIn:(SonosInput *)input completion:(void (^)(SOAPEnvelope *, NSError *))block
+- (void)lineIn:(SonosInput *)input completion:(void (^)(NSDictionary *, NSError *))block
 {
   [self play:input uri:[NSString stringWithFormat:@"x-rincon-stream:%@", input.uid] completion:block];
 }
 
-- (void)volume:(SonosInput *)input completion:(void (^)(SOAPEnvelope *, NSError *))block
+- (void)volume:(SonosInput *)input completion:(void (^)(NSDictionary *, NSError *))block
 {
   NSDictionary *params = @{@"InstanceID": @0,
                            @"Channel":@"Master"};
   [SonosController request:SonosRequestTypeRenderingControl input:input action:@"GetVolume" params:params completion:block];
 }
 
-- (void)volume:(SonosInput *)input level:(int)level completion:(void (^)(SOAPEnvelope *, NSError *))block
+- (void)volume:(SonosInput *)input level:(int)level completion:(void (^)(NSDictionary *, NSError *))block
 {
   if (_volumeLevel == level) return;
 
@@ -219,19 +214,19 @@
   }];
 }
 
-- (void)trackInfo:(SonosInput *)input completion:(void (^)(SOAPEnvelope *, NSError *))block
+- (void)trackInfo:(SonosInput *)input completion:(void (^)(NSDictionary *, NSError *))block
 {
   NSDictionary *params = @{@"InstanceID": @0};
   [SonosController request:SonosRequestTypeAVTransport input:input action:@"GetPositionInfo" params:params completion:block];
 }
 
-- (void)status:(SonosInput *)input completion:(void (^)(SOAPEnvelope *, NSError *))block
+- (void)status:(SonosInput *)input completion:(void (^)(NSDictionary *, NSError *))block
 {
   NSDictionary *params = @{@"InstanceID": @0};
   [SonosController request:SonosRequestTypeAVTransport input:input action:@"GetTransportInfo" params:params completion:block];
 }
 
-- (void)browse:(SonosInput *)input completion:(void (^)(SOAPEnvelope *, NSError *))block
+- (void)browse:(SonosInput *)input completion:(void (^)(NSDictionary *, NSError *))block
 {
   NSDictionary *params = @{@"ObjectID": @"A:ARTIST",
                            @"BrowseFlag": @"BrowseDirectChildren",
