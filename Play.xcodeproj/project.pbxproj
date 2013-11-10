@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		D14B8285182E07C300F8B7DA /* UPNPDiscovery.m in Sources */ = {isa = PBXBuildFile; fileRef = D14B8284182E07C300F8B7DA /* UPNPDiscovery.m */; };
+		D14B8288182E07D500F8B7DA /* GCDAsyncUdpSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = D14B8287182E07D500F8B7DA /* GCDAsyncUdpSocket.m */; };
 		D158131216E883910009E11B /* Rdio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D158131116E883910009E11B /* Rdio.framework */; };
 		D158131516E883E40009E11B /* RdioArtist.m in Sources */ = {isa = PBXBuildFile; fileRef = D158131416E883E40009E11B /* RdioArtist.m */; };
 		D158131816E883F20009E11B /* RdioAlbum.m in Sources */ = {isa = PBXBuildFile; fileRef = D158131716E883F20009E11B /* RdioAlbum.m */; };
@@ -64,6 +66,10 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		D14B8283182E07C300F8B7DA /* UPNPDiscovery.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UPNPDiscovery.h; sourceTree = "<group>"; };
+		D14B8284182E07C300F8B7DA /* UPNPDiscovery.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UPNPDiscovery.m; sourceTree = "<group>"; };
+		D14B8286182E07D500F8B7DA /* GCDAsyncUdpSocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCDAsyncUdpSocket.h; sourceTree = "<group>"; };
+		D14B8287182E07D500F8B7DA /* GCDAsyncUdpSocket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCDAsyncUdpSocket.m; sourceTree = "<group>"; };
 		D158131116E883910009E11B /* Rdio.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Rdio.framework; path = Play/Rdio.framework; sourceTree = "<group>"; };
 		D158131316E883E40009E11B /* RdioArtist.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RdioArtist.h; sourceTree = "<group>"; };
 		D158131416E883E40009E11B /* RdioArtist.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RdioArtist.m; sourceTree = "<group>"; };
@@ -225,6 +231,10 @@
 		D8633D27182709D700A2CCA5 /* Vendor */ = {
 			isa = PBXGroup;
 			children = (
+				D14B8286182E07D500F8B7DA /* GCDAsyncUdpSocket.h */,
+				D14B8287182E07D500F8B7DA /* GCDAsyncUdpSocket.m */,
+				D14B8283182E07C300F8B7DA /* UPNPDiscovery.h */,
+				D14B8284182E07C300F8B7DA /* UPNPDiscovery.m */,
 				D8633D28182709E700A2CCA5 /* XMLReader.h */,
 				D8633D29182709E700A2CCA5 /* XMLReader.m */,
 			);
@@ -473,10 +483,12 @@
 				D8824E371693A52200D05AA0 /* SonosInputStore.m in Sources */,
 				D8824E3E1693CEA600D05AA0 /* PLPlaylistsViewController.m in Sources */,
 				D883A9F518236B55004D8E9A /* NBArrayDataSource.m in Sources */,
+				D14B8285182E07C300F8B7DA /* UPNPDiscovery.m in Sources */,
 				D8824E431693D45500D05AA0 /* PLSongViewController.m in Sources */,
 				D819F65016ADC64300B19B50 /* SonosConnection.m in Sources */,
 				D158131516E883E40009E11B /* RdioArtist.m in Sources */,
 				D158131816E883F20009E11B /* RdioAlbum.m in Sources */,
+				D14B8288182E07D500F8B7DA /* GCDAsyncUdpSocket.m in Sources */,
 				D8633D2A182709E700A2CCA5 /* XMLReader.m in Sources */,
 				D8678A9B17D5D687001CE707 /* PresentSpeakersAnimator.m in Sources */,
 				D158131B16E884020009E11B /* RdioSong.m in Sources */,

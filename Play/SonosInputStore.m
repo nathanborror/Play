@@ -27,11 +27,15 @@
 
 + (SonosInputStore *)sharedStore
 {
-  static SonosInputStore *inputStore = nil;
+  static SonosInputStore *inputStore;
   if (!inputStore) {
     inputStore = [[SonosInputStore alloc] init];
   }
   return inputStore;
+}
+
+- (void)setInputs:(NSArray*)inputs{
+    _inputList = [inputs mutableCopy];
 }
 
 - (NSArray *)allInputs

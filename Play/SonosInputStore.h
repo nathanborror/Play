@@ -6,7 +6,7 @@
 //  Copyright (c) 2013 Nathan Borror. All rights reserved.
 //
 
-@import Foundation;
+#import <Foundation/Foundation.h>
 
 @class SonosInput;
 
@@ -15,6 +15,8 @@
 @property (nonatomic, readwrite) SonosInput *master;
 
 + (SonosInputStore *)sharedStore;
+
+- (void)setInputs:(NSArray*)inputs;
 
 - (NSArray *)allInputs;
 - (SonosInput *)inputAtIndex:(NSUInteger)index;

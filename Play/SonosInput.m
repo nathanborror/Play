@@ -27,7 +27,7 @@
 - (void)pairWithSonosInput:(SonosInput *)input
 {
   _uri = [NSString stringWithFormat:@"x-rincon:%@", input.uid];
-  [[SonosController sharedController] play:self uri:_uri completion:nil];
+    [[SonosController sharedController] play:self uri:_uri completion:nil];
 }
 
 - (void)unpair

@@ -72,15 +72,22 @@ static const CGFloat kAlbumTitleFontSize = 15.0;
     _sonos = [SonosController sharedController];
 
     // TODO: This needs to be replace with a discover method
-    SonosInputStore *inputStore = [SonosInputStore sharedStore];
+    /*SonosInputStore *inputStore = [SonosInputStore sharedStore];
     SonosInput *livingRoom = [inputStore addInputWithIP:@"10.0.1.9" name:@"Living Room" uid:@"RINCON_000E58D0540801400" icon:[UIImage imageNamed:@"SonosAmp"]];
     [inputStore addInputWithIP:@"10.0.1.16" name:@"Bedroom" uid:@"RINCON_000E58898D4C01400" icon:[UIImage imageNamed:@"SonosSpeakerPlay3Light"]];
     [inputStore addInputWithIP:@"10.0.1.17" name:@"Kitchen" uid:@"RINCON_000E587BBA5201400" icon:[UIImage imageNamed:@"SonosSpeakerPlay3Dark"]];
     [inputStore addInputWithIP:@"10.0.1.18" name:@"Bathroom" uid:@"RINCON_000E587641F201400" icon:[UIImage imageNamed:@"SonosSpeakerPlay3Dark"]];
 
-    [inputStore setMaster:livingRoom];
-
-    _speakers = [[SonosInputStore sharedStore] allInputs];
+    [inputStore setMaster:livingRoom];*/
+      [SonosController discover:^(NSArray *inputs, NSError *error){
+          SonosInputStore *store = [inputs objectAtIndex:0];
+          for (SonosInput *input in store.allInputs){
+              [[SonosInputStore sharedStore] addInputWithIP:input.ip name:input.name uid:input.uid icon:nil];
+          }
+         _speakers = [[SonosInputStore sharedStore] allInputs];
+      }];
+    //_speakers = [[SonosInputStore sharedStore] allInputs];
+      
   }
   return self;
 }

@@ -6,7 +6,7 @@
 //  Copyright (c) 2013 Nathan Borror. All rights reserved.
 //
 
-@import Foundation;
+#import <Foundation/Foundation.h>
 
 @interface SonosConnection : NSObject <NSURLConnectionDelegate, NSURLConnectionDataDelegate>
 {
