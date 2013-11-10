@@ -50,30 +50,60 @@
 
   switch (type) {
     case SonosRequestTypeAVTransport:
+      // http://SPEAKER_IP:1400/xml/AVTransport1.xml
       url = [NSURL URLWithString:[NSString stringWithFormat:@"http://%@:1400/MediaRenderer/AVTransport/Control", input.ip]];
       xmlns = @"urn:schemas-upnp-org:service:AVTransport:1";
       break;
     case SonosRequestTypeConnectionManager:
-      url = [NSURL URLWithString:[NSString stringWithFormat:@"http://%@:1400/MediaRenderer/ConnectionManager/Control", input.ip]];
+      // http://SPEAKER_IP:1400/xml/ConnectionManager1.xml
+      url = [NSURL URLWithString:[NSString stringWithFormat:@"http://%@:1400/MediaServer/ConnectionManager/Control", input.ip]];
       xmlns = @"urn:schemas-upnp-org:service:ConnectionManager:1";
       break;
     case SonosRequestTypeRenderingControl:
+      // http://SPEAKER_IP:1400/xml/RenderingControl1.xml
       url = [NSURL URLWithString:[NSString stringWithFormat:@"http://%@:1400/MediaRenderer/RenderingControl/Control", input.ip]];
       xmlns = @"urn:schemas-upnp-org:service:RenderingControl:1";
       break;
     case SonosRequestTypeContentDirectory:
+      // http://SPEAKER_IP:1400/xml/ContentDirectory1.xml
       url = [NSURL URLWithString:[NSString stringWithFormat:@"http://%@:1400/MediaServer/ContentDirectory/Control", input.ip]];
       xmlns = @"urn:schemas-upnp-org:service:ContentDirectory:1";
       break;
+    case SonosRequestTypeQueue:
+      // http://SPEAKER_IP:1400/xml/Queue1.xml
+      url = [NSURL URLWithString:[NSString stringWithFormat:@"http://%@:1400/MediaRenderer/Queue/Control", input.ip]];
+      xmlns = @"urn:schemas-upnp-org:service:Queue:1";
+      break;
     case SonosRequestTypeAlarmClock:
+      // http://SPEAKER_IP:1400/xml/AlarmClock1.xml
       url = [NSURL URLWithString:[NSString stringWithFormat:@"http://%@:1400/AlarmClock/Control", input.ip]];
       xmlns = @"urn:schemas-upnp-org:service:AlarmClock:1";
       break;
     case SonosRequestTypeMusicServices:
+      // http://SPEAKER_IP:1400/xml/MusicServices1.xml
+      url = [NSURL URLWithString:[NSString stringWithFormat:@"http://%@:1400/MusicServices/Control", input.ip]];
+      xmlns = @"urn:schemas-upnp-org:service:MusicServices:1";
+      break;
     case SonosRequestTypeAudioIn:
+      // http://SPEAKER_IP:1400/xml/AudioIn1.xml
+      url = [NSURL URLWithString:[NSString stringWithFormat:@"http://%@:1400/AudioIn/Control", input.ip]];
+      xmlns = @"urn:schemas-upnp-org:service:AudioIn:1";
+      break;
     case SonosRequestTypeDeviceProperties:
+      // http://SPEAKER_IP:1400/xml/DeviceProperties1.xml
+      url = [NSURL URLWithString:[NSString stringWithFormat:@"http://%@:1400/DeviceProperties/Control", input.ip]];
+      xmlns = @"urn:schemas-upnp-org:service:DeviceProperties:1";
+      break;
     case SonosRequestTypeSystemProperties:
+      // http://SPEAKER_IP:1400/xml/SystemProperties1.xml
+      url = [NSURL URLWithString:[NSString stringWithFormat:@"http://%@:1400/SystemProperties/Control", input.ip]];
+      xmlns = @"urn:schemas-upnp-org:service:SystemProperties:1";
+      break;
     case SonosRequestTypeZoneGroupTopology:
+      // http://SPEAKER_IP:1400/xml/ZoneGroupTopology1.xml
+      url = [NSURL URLWithString:[NSString stringWithFormat:@"http://%@:1400/ZoneGroupTopology/Control", input.ip]];
+      xmlns = @"urn:schemas-upnp-org:service:ZoneGroupTopology:1";
+      break;
     case SonosRequestTypeGroupManagement:
       break;
   }
@@ -285,6 +315,12 @@
 {
   NSDictionary *params = @{@"InstanceID": @0};
   [SonosController request:SonosRequestTypeAVTransport input:input action:@"GetPositionInfo" params:params completion:block];
+}
+
+- (void)mediaInfo:(SonosInput *)input completion:(void (^)(NSDictionary *, NSError *))block
+{
+  NSDictionary *params = @{@"InstanceID": @0};
+  [SonosController request:SonosRequestTypeAVTransport input:input action:@"GetMediaInfo" params:params completion:block];
 }
 
 - (void)status:(SonosInput *)input completion:(void (^)(NSDictionary *, NSError *))block

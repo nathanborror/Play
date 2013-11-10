@@ -42,8 +42,12 @@
 - (void)setInput:(SonosInput *)input
 {
   _input = input;
+  [_input addObserver:self forKeyPath:@"uri" options:0 context:nil];
+
   [_speakerIcon setImage:_input.icon];
   [_label setText:_input.name];
+
+  [self refreshStatus];
 }
 
 - (void)pair:(SonosInput *)master
@@ -56,6 +60,24 @@
 {
   NSString *uri = [NSString stringWithFormat:@"x-rincon-queue:%@#0", self.input.uid];
   [[SonosController sharedController] play:self.input uri:uri completion:nil];
+}
+
+- (void)refreshStatus
+{
+  if (_input.status != PLInputStatusSlave) {
+    [_label setFont:[UIFont boldSystemFontOfSize:11]];
+  } else {
+    [_label setFont:[UIFont systemFontOfSize:11]];
+  }
+}
+
+#pragma mark - KVO
+
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
+{
+  if (object == _input && [keyPath isEqualToString:@"uri"]) {
+    [self refreshStatus];
+  }
 }
 
 @end

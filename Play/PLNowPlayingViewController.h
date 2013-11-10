@@ -10,9 +10,7 @@
 @import QuartzCore;
 
 @class PLSong;
-@class SonosInput;
 @class RdioSong;
-@class PLNowPlayingViewController;
 
 @interface PLNowPlayingViewController : UIViewController <UITableViewDelegate, UIViewControllerTransitioningDelegate, UISplitViewControllerDelegate>
 

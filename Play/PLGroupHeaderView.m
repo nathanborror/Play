@@ -17,7 +17,7 @@
   if (self = [super initWithFrame:frame]) {
     _title = [[UILabel alloc] initWithFrame:CGRectZero];
     [_title setTextAlignment:NSTextAlignmentCenter];
-    [_title setFont:[UIFont systemFontOfSize:16.0]];
+    [_title setFont:[UIFont systemFontOfSize:12]];
     [_title setBackgroundColor:[UIColor clearColor]];
     [self addSubview:_title];
 

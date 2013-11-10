@@ -32,12 +32,7 @@ static const CGFloat kMiniBarHeight = 44;
 - (id)init
 {
   if (self = [super init]) {
-    _data = @[
-              @{@"title": @"Line In",
-                @"inputs": (NSMutableArray *)[[SonosInputStore sharedStore] allInputs]},
-              @{@"title": @"Test",
-                @"inputs": [[NSMutableArray alloc] init]}
-            ];
+
   }
   return self;
 }
@@ -47,6 +42,7 @@ static const CGFloat kMiniBarHeight = 44;
   [super viewDidLoad];
 
   [self setTitle:@"Speakers"];
+  [self loadInputs];
 
   NBReorderableCollectionViewLayout *layout = [[NBReorderableCollectionViewLayout alloc] init];
   [layout setMinimumLineSpacing:1];
@@ -68,6 +64,41 @@ static const CGFloat kMiniBarHeight = 44;
   [_collectionView setAutoresizingMask:UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight];
   [_collectionView setBackgroundColor:[UIColor whiteColor]];
   [self.view addSubview:_collectionView];
+}
+
+- (void)loadInputs
+{
+  NSArray *all = [[SonosInputStore sharedStore] allInputs];
+  NSMutableArray *masters = [[NSMutableArray alloc] init];
+  NSMutableArray *slaves = [[NSMutableArray alloc] init];
+
+  // Gather all the slaves
+  [all enumerateObjectsUsingBlock:^(SonosInput *input, NSUInteger idx, BOOL *stop) {
+    if (input.status == PLInputStatusSlave) {
+      [slaves addObject:input];
+    }
+  }];
+
+  [all enumerateObjectsUsingBlock:^(SonosInput *master, NSUInteger idx, BOOL *stop) {
+    if (master.status != PLInputStatusSlave) {
+      // Create inputs array and add the master as the first speaker
+      NSMutableArray *inputs = [[NSMutableArray alloc] init];
+      [inputs addObject:master];
+
+      // Enumerate over all slave speakers
+      [slaves enumerateObjectsUsingBlock:^(SonosInput *slave, NSUInteger idx, BOOL *stop) {
+        if ([[NSString stringWithFormat:@"x-rincon:%@", master.uid] isEqualToString:slave.uri]) {
+          [inputs addObject:slave];
+        }
+      }];
+
+      // Add dictionary of master and slaves
+      [masters addObject:@{@"master": master, @"inputs": inputs}];
+    }
+  }];
+
+  _data = masters;
+  [_collectionView reloadData];
 }
 
 - (UITabBarItem *)tabBarItem
@@ -118,6 +149,7 @@ static const CGFloat kMiniBarHeight = 44;
   PLInputCell *cell = (PLInputCell *)[collectionView dequeueReusableCellWithReuseIdentifier:@"PLInputCell" forIndexPath:indexPath];
   NSArray *inputs = (NSArray *)[_data objectAtIndex:indexPath.section][@"inputs"];
   SonosInput *input = [inputs objectAtIndex:indexPath.row];
+  [input addObserver:self forKeyPath:@"uri" options:NSKeyValueChangeOldKey context:nil];
   [cell setInput:input];
   return cell;
 }
@@ -129,7 +161,15 @@ static const CGFloat kMiniBarHeight = 44;
 
   if ([kind isEqualToString:UICollectionElementKindSectionHeader]) {
     PLGroupHeaderView *header = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"PLGroupHeaderView" forIndexPath:indexPath];
-    [header.title setText:group[@"title"]];
+    SonosInput *master = (SonosInput *)group[@"master"];
+
+    [[SonosController sharedController] mediaInfo:master completion:^(NSDictionary *response, NSError *error) {
+      NSString *title = response[@"u:GetMediaInfoResponse"][@"CurrentURIMetaData"][@"dc:title"][@"text"];
+      if (!title) {
+        title = response[@"u:GetMediaInfoResponse"][@"CurrentURI"][@"text"];
+      }
+      [header.title setText:title];
+    }];
     supplement = header;
   }
   return supplement;
@@ -164,6 +204,15 @@ static const CGFloat kMiniBarHeight = 44;
   PLLibraryViewController *viewController = [[PLLibraryViewController alloc] initWithInput:cell.input];
   UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:viewController];
   [self presentViewController:navController animated:YES completion:nil];
+}
+
+#pragma mark KVO
+
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
+{
+  if ([keyPath isEqualToString:@"uri"]) {
+    [self loadInputs];
+  }
 }
 
 @end
