@@ -8,14 +8,12 @@
 
 @import Foundation;
 
-@class SonosInput;
-
-@protocol SonosInputDelegate <NSObject>
-
-- (void)input:(SonosInput *)input pairedWith:(SonosInput *)pairedWithInput;
-- (void)input:(SonosInput *)input unpairedWith:(SonosInput *)unpairedWithInput;
-
-@end
+typedef NS_ENUM(NSInteger, PLInputStatus) {
+  PLInputStatusPlaying,
+  PLInputStatusStopped,
+  PLInputStatusPaused,
+  PLInputStatusSlave,
+};
 
 @interface SonosInput : NSObject <NSCoding>
 
@@ -24,8 +22,7 @@
 @property (nonatomic, strong) NSString *uid;
 @property (nonatomic, strong) NSString *uri;
 @property (nonatomic, strong) UIImage *icon;
-@property (nonatomic, strong) id <SonosInputDelegate> delegate;
-@property (nonatomic, strong) UIView *view;
+@property (nonatomic, readonly) PLInputStatus status;
 
 - (id)initWithIP:(NSString *)aIP
             name:(NSString *)aName

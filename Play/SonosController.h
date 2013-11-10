@@ -13,6 +13,7 @@ typedef NS_ENUM(NSInteger, SonosRequestType) {
   SonosRequestTypeConnectionManager,
   SonosRequestTypeRenderingControl,
   SonosRequestTypeContentDirectory,
+  SonosRequestTypeQueue,
   SonosRequestTypeAlarmClock,
   SonosRequestTypeMusicServices,
   SonosRequestTypeAudioIn,
@@ -50,6 +51,7 @@ typedef NS_ENUM(NSInteger, SonosRequestType) {
 - (void)volume:(SonosInput *)input level:(int)level completion:(void(^)(NSDictionary *response, NSError *error))block;
 - (void)lineIn:(SonosInput *)input completion:(void(^)(NSDictionary *response, NSError *error))block;
 - (void)trackInfo:(SonosInput *)input completion:(void(^)(NSDictionary *response, NSError *error))block;
+- (void)mediaInfo:(SonosInput *)input completion:(void(^)(NSDictionary *response, NSError *error))block;
 - (void)status:(SonosInput *)input completion:(void(^)(NSDictionary *response, NSError *error))block;
 - (void)browse:(SonosInput *)input completion:(void(^)(NSDictionary *response, NSError *error))block;
 

@@ -43,8 +43,17 @@ static NSMutableArray *sharedConnectionList = nil;
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection
 {
   NSDictionary *response = [XMLReader dictionaryForXMLData:container options:XMLReaderOptionsProcessNamespaces error:nil];
+  NSDictionary *body = response[@"s:Envelope"][@"s:Body"];
+
+  // Check for embedded XML
+  if (body[@"u:GetMediaInfoResponse"][@"CurrentURIMetaData"][@"text"]) {
+    NSString *metadataString = body[@"u:GetMediaInfoResponse"][@"CurrentURIMetaData"][@"text"];
+    NSDictionary *metadata = [XMLReader dictionaryForXMLString:metadataString error:nil];
+    body[@"u:GetMediaInfoResponse"][@"CurrentURIMetaData"] = metadata[@"DIDL-Lite"][@"item"];
+  }
+
   if (_completionBlock) {
-    _completionBlock(response[@"s:Envelope"][@"s:Body"], nil);
+    _completionBlock(body, nil);
   }
   [sharedConnectionList removeObject:self];
 }

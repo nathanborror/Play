@@ -4,7 +4,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <s:Envelope s:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" xmlns:s="http://schemas.xmlsoap.org/soap/envelope/">
   <s:Body>
-    <u:Action xmlns:u="serviceType"></u:Action>
+    <u:ACTION_NAME xmlns:u="urn:schemas-upnp-org:service:SERVICE_NAME:1"></u:ACTION_NAME>
   </s:Body>
 </s:Envelope>
 
