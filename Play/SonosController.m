@@ -12,6 +12,8 @@
 #import "SonosInputStore.h"
 #import "RdioSong.h"
 #import "RdioAlbum.h"
+#import "UPNPDiscovery.h"
+#import "XMLReader.h"
 
 @implementation SonosController {
   int _volumeLevel;
@@ -133,6 +135,48 @@
   [connection start];
 }
 
++ (void)discover:(void(^)(NSArray *inputs, NSError *error))block{
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        UPNPDiscovery *discover = [[UPNPDiscovery alloc] init];
+        [discover FindDevicesWithST:@"urn:schemas-upnp-org:device:ZonePlayer:1" completion:^(NSArray *ipAddresses){
+            if (ipAddresses.count>0){
+                NSString *ipAddress = [ipAddresses objectAtIndex:0];
+                NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"http://%@/status/topology", ipAddress]];
+                NSURLRequest *request = [[NSURLRequest alloc] initWithURL:url cachePolicy:NSURLRequestReloadIgnoringCacheData timeoutInterval:5];
+                [NSURLConnection sendAsynchronousRequest:request queue:[[NSOperationQueue alloc] init] completionHandler:^(NSURLResponse *response, NSData *data, NSError *error){
+                    NSHTTPURLResponse *hResponse = (NSHTTPURLResponse*)response;
+                    if (hResponse.statusCode == 200){
+                        NSDictionary *responseDictionary = [XMLReader dictionaryForXMLData:data error:&error];
+                        NSArray *inputDictionaryArray = responseDictionary[@"ZPSupportInfo"][@"ZonePlayers"][@"ZonePlayer"];
+                        NSArray *inputStores = [inputDictionaryArray valueForKey:@"group"];
+                        NSMutableDictionary *zoneDictionary = [NSMutableDictionary dictionary];
+                        for (NSString *string in inputStores){
+                            if (![string hasSuffix:@":0"]){
+                                [zoneDictionary setObject:[[SonosInputStore alloc] init] forKey:string];
+                            }
+                        }
+                        for (NSDictionary *dictionary in inputDictionaryArray){
+                            NSString *name = dictionary[@"text"];
+                            NSString *uuid = dictionary[@"uuid"];
+                            NSString *group = dictionary[@"group"];
+                            NSString *ip = [[dictionary[@"location"] stringByReplacingOccurrencesOfString:@"http://" withString:@""] stringByReplacingOccurrencesOfString:@":1400/xml/device_description.xml" withString:@""];
+                            
+                            SonosInputStore *inputStore = [zoneDictionary objectForKey:group];
+                            [inputStore addInputWithIP:ip name:name uid:uuid icon:nil];
+                            if ([dictionary[@"coordinator"] isEqualToString:@"true"]){
+                                inputStore.master = [[inputStore allInputs] lastObject];
+                            }
+                            
+                        }
+                        block([zoneDictionary allValues], error);
+                    }
+                }];
+            }
+        }];
+    
+    });
+}
+
 - (void)play:(SonosInput *)input uri:(NSString *)uri completion:(void (^)(NSDictionary *, NSError *))block
 {
   if (uri) {
@@ -207,6 +251,14 @@
   }];
 }
 
+- (void)seek:(SonosInput *)input timestamp:(NSString*)timestamp completion:(void(^)(NSDictionary *response, NSError *error))block{
+    NSDictionary *params = @{@"InstanceID": @0, @"Unit": @"REL_TIME"};
+    [SonosController request:SonosRequestTypeAVTransport input:input action:@"Seek" params:params completion:^(id obj, NSError *error) {
+        _isPlaying = YES;
+        if (block) block(obj, error);
+    }];
+}
+
 - (void)queue:(SonosInput *)input track:(NSString *)track completion:(void (^)(NSDictionary *, NSError *))block
 {
   NSDictionary *params = @{@"InstanceID": @0,
@@ -217,6 +269,21 @@
   [SonosController request:SonosRequestTypeAVTransport input:input action:@"AddURIToQueue" params:params completion:^(id obj, NSError *error) {
     [self play:nil uri:nil completion:block];
   }];
+}
+
+- (void)queue:(SonosInput *)input rdioSong:(RdioSong *)song completion:(void(^)(NSDictionary *response, NSError *error))block{
+    NSString *albumKey = [song.album.key substringFromIndex:1];
+    NSString *songKey = [song.key substringFromIndex:1];
+    NSString *trackURI = [NSString stringWithFormat:@"x-sonos-http:_t%%3a%%3a%@%%3a%%3ap%%3a%%3a%@.mp3?sid=11&amp;flags=32", songKey, albumKey];
+    
+    NSDictionary *params = @{@"InstanceID": @0,
+                             @"EnqueuedURI": trackURI,
+                             @"EnqueuedURIMetaData": @"",
+                             @"DesiredFirstTrackNumberEnqueued": @0,
+                             @"EnqueueAsNext": @1};
+    [SonosController request:SonosRequestTypeAVTransport input:input action:@"AddURIToQueue" params:params completion:^(id obj, NSError *error) {
+        [self play:nil uri:nil completion:block];
+    }];
 }
 
 - (void)lineIn:(SonosInput *)input completion:(void (^)(NSDictionary *, NSError *))block
