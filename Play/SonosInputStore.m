@@ -39,6 +39,30 @@
   return _inputList;
 }
 
+- (NSArray *)allInputsGrouped
+{
+  NSMutableArray *groupedInputs = [[NSMutableArray alloc] init];
+
+  // Find all the master inputs
+  [_inputList enumerateObjectsUsingBlock:^(SonosInput *master, NSUInteger idx, BOOL *stop) {
+    if (master.status != PLInputStatusSlave) {
+      NSMutableArray *inputs = [[NSMutableArray alloc] init];
+
+      // Associate grouped inputs with their respective master
+      // input using the 'group' attribute.
+      [_inputList enumerateObjectsUsingBlock:^(SonosInput *input, NSUInteger idx, BOOL *stop) {
+        if ([master.group isEqualToString:input.group]) {
+          [inputs addObject:input];
+        }
+      }];
+
+      [groupedInputs addObject:@{@"master": master, @"inputs": inputs}];
+    }
+  }];
+
+  return groupedInputs;
+}
+
 - (SonosInput *)inputAtIndex:(NSUInteger)index
 {
   return [_inputList objectAtIndex:index];
@@ -54,9 +78,9 @@
   return nil;
 }
 
-- (SonosInput *)addInputWithIP:(NSString *)aIP name:(NSString *)aName uid:(NSString *)aUid icon:(UIImage *)aIcon
+- (SonosInput *)addInputWithIP:(NSString *)aIP name:(NSString *)aName uid:(NSString *)aUid
 {
-  SonosInput *input = [[SonosInput alloc] initWithIP:aIP name:aName uid:aUid icon:aIcon];
+  SonosInput *input = [[SonosInput alloc] initWithIP:aIP name:aName uid:aUid];
   [_inputList addObject:input];
   return input;
 }

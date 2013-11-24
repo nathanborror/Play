@@ -59,18 +59,18 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-  MPMediaItem *item = [_songs objectAtIndex:indexPath.row];
-  MPMediaItemArtwork *artwork = [item valueForProperty:MPMediaItemPropertyArtwork];
-  PLSong *song = [[PLSong alloc] initWithArtist:[item valueForProperty:MPMediaItemPropertyAlbumArtist]
-                                          album:[item valueForProperty:MPMediaItemPropertyArtist]
-                                          title:[item valueForProperty:MPMediaItemPropertyTitle]
-                                            uri:[[item valueForProperty:MPMediaItemPropertyAssetURL] absoluteString]
-                                       albumArt: [artwork imageWithSize:CGSizeMake(320, 320)]
-                                       duration:@"0:00:00"];
+//  MPMediaItem *item = [_songs objectAtIndex:indexPath.row];
+//  MPMediaItemArtwork *artwork = [item valueForProperty:MPMediaItemPropertyArtwork];
+//  PLSong *song = [[PLSong alloc] initWithArtist:[item valueForProperty:MPMediaItemPropertyAlbumArtist]
+//                                          album:[item valueForProperty:MPMediaItemPropertyArtist]
+//                                          title:[item valueForProperty:MPMediaItemPropertyTitle]
+//                                            uri:[[item valueForProperty:MPMediaItemPropertyAssetURL] absoluteString]
+//                                       albumArt: [artwork imageWithSize:CGSizeMake(320, 320)]
+//                                       duration:@"0:00:00"];
 
-  PLNowPlayingViewController *viewController = [[PLNowPlayingViewController alloc] initWithSong:song];
-  UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:viewController];
-  [self.navigationController presentViewController:navController animated:YES completion:nil];
+//  PLNowPlayingViewController *viewController = [[PLNowPlayingViewController alloc] initWithSong:song];
+//  UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:viewController];
+//  [self.navigationController presentViewController:navController animated:YES completion:nil];
 }
 
 @end

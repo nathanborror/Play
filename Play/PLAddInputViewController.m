@@ -100,7 +100,7 @@ static const CGFloat kFieldPadding = 10.0;
 
 - (void)done
 {
-  [[SonosInputStore sharedStore] addInputWithIP:[_ipTextField text] name:[_nameTextField text] uid:[_uidTextField text] icon:nil];
+  [[SonosInputStore sharedStore] addInputWithIP:[_ipTextField text] name:[_nameTextField text] uid:[_uidTextField text]];
   [self.navigationController dismissViewControllerAnimated:YES completion:nil];
 }
 

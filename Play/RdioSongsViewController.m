@@ -134,11 +134,11 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-  RdioSong *song = (RdioSong *)[_songs objectAtIndex:indexPath.row];
+//  RdioSong *song = (RdioSong *)[_songs objectAtIndex:indexPath.row];
 
-  PLNowPlayingViewController *viewController = [[PLNowPlayingViewController alloc] initWithRdioSong:song];
-  UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:viewController];
-  [self.navigationController presentViewController:navController animated:YES completion:nil];
+//  PLNowPlayingViewController *viewController = [[PLNowPlayingViewController alloc] initWithRdioSong:song];
+//  UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:viewController];
+//  [self.navigationController presentViewController:navController animated:YES completion:nil];
 }
 
 @end

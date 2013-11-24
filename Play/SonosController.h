@@ -40,6 +40,8 @@ typedef NS_ENUM(NSInteger, SonosRequestType) {
          params:(NSDictionary *)params
      completion:(void(^)(id obj, NSError *error))block;
 
++ (void)discover:(void(^)(NSArray *inputs, NSError *error))block;
+
 - (void)play:(SonosInput *)input uri:(NSString *)uri completion:(void(^)(NSDictionary *response, NSError *error))block;
 - (void)play:(SonosInput *)input rdioSong:(RdioSong *)song completion:(void(^)(NSDictionary *response, NSError *error))block;
 - (void)pause:(SonosInput *)input completion:(void(^)(NSDictionary *response, NSError *error))block;

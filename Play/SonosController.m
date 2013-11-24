@@ -12,6 +12,8 @@
 #import "SonosInputStore.h"
 #import "RdioSong.h"
 #import "RdioAlbum.h"
+#import "UPNPDiscovery.h"
+#import "XMLReader.h"
 
 @implementation SonosController {
   int _volumeLevel;
@@ -35,11 +37,7 @@
   return sharedController;
 }
 
-+ (void)request:(SonosRequestType)type
-          input:(SonosInput *)input
-         action:(NSString *)action
-         params:(NSDictionary *)params
-     completion:(void (^)(id, NSError *))block
++ (void)request:(SonosRequestType)type input:(SonosInput *)input action:(NSString *)action params:(NSDictionary *)params completion:(void (^)(id, NSError *))block
 {
   if (!input) input = [[SonosInputStore sharedStore] master];
 
@@ -106,7 +104,6 @@
       break;
   }
 
-  // Enumerate
   NSMutableString *requestParams = [[NSMutableString alloc] init];
   NSEnumerator *enumerator = [params keyEnumerator];
   NSString *key;
@@ -131,6 +128,73 @@
 
   SonosConnection *connection = [[SonosConnection alloc] initWithRequest:request completion:block];
   [connection start];
+}
+
++ (void)discover:(void (^)(NSArray *, NSError *))block
+{
+  dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+    UPNPDiscovery *discover = [[UPNPDiscovery alloc] init];
+
+    [discover findWithUrn:@"urn:schemas-upnp-org:device:ZonePlayer:1" completion:^(NSArray *addresses) {
+
+      // If no addresses, switch into demo mode and show dummy inputs.
+      if (addresses.count == 0) {
+        SonosInput *livingroom = [[SonosInputStore sharedStore] addInputWithIP:@"10.0.1.9" name:@"Living Room" uid:@"RINCON_000E58D0540801400"];
+        [livingroom setGroup:@"RINCON_000E587641F201400"];
+        [livingroom setStatus:PLInputStatusStopped];
+
+        SonosInput *kitchen = [[SonosInputStore sharedStore] addInputWithIP:@"10.0.1.17" name:@"Kitchen" uid:@"RINCON_000E587BBA5201400"];
+        [kitchen setGroup:@"RINCON_000E587641F201400"];
+        [kitchen setStatus:PLInputStatusSlave];
+
+        SonosInput *bathroom = [[SonosInputStore sharedStore] addInputWithIP:@"10.0.1.18" name:@"Bathroom" uid:@"RINCON_000E587641F201400"];
+        [bathroom setGroup:@"RINCON_000E587641F201400"];
+        [bathroom setStatus:PLInputStatusSlave];
+
+        SonosInput *bedroom = [[SonosInputStore sharedStore] addInputWithIP:@"10.0.1.16" name:@"Bedroom" uid:@"RINCON_000E58898D4C01400"];
+        [bedroom setGroup:@"RINCON_000E58898D4C01400"];
+        [bedroom setStatus:PLInputStatusStopped];
+
+        block([[SonosInputStore sharedStore] allInputs], nil);
+        return;
+      }
+
+      NSString *ip = [addresses objectAtIndex:0];
+      NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"http://%@/status/topology", ip]];
+      NSURLRequest *request = [[NSURLRequest alloc] initWithURL:url cachePolicy:NSURLRequestReloadIgnoringCacheData timeoutInterval:5];
+      [NSURLConnection sendAsynchronousRequest:request queue:[[NSOperationQueue alloc] init] completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
+        NSHTTPURLResponse *hResponse = (NSHTTPURLResponse *)response;
+        if (hResponse.statusCode != 200) return;
+
+        NSDictionary *xml = [XMLReader dictionaryForXMLData:data error:&error];
+        for (NSDictionary *dict in xml[@"ZPSupportInfo"][@"ZonePlayers"][@"ZonePlayer"]) {
+          // Find IP
+          NSString *location = dict[@"location"];
+          NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:@"\\d{1,3}.\\d{1,3}.\\d{1,3}.\\d{1,3}" options:0 error:nil];
+          NSTextCheckingResult *match = [regex firstMatchInString:location options:0 range:NSMakeRange(0, location.length)];
+
+          // Find group
+          NSString *group = dict[@"group"];
+          NSRegularExpression *groupRegex = [NSRegularExpression regularExpressionWithPattern:@"RINCON_\\w{17}" options:0 error:nil];
+          NSTextCheckingResult *groupMatch = [groupRegex firstMatchInString:group options:0 range:NSMakeRange(0, group.length)];
+
+          if (![dict[@"text"] isEqualToString:@"Sonos Bridge"]) {
+            SonosInput *input = [[SonosInputStore sharedStore] addInputWithIP:[location substringWithRange:match.range] name:dict[@"text"] uid:dict[@"uuid"]];
+            [input setGroup:[group substringWithRange:groupMatch.range]];
+            NSLog(@"%@ : %@", input.name, input.group);
+
+            // Set input status
+            if ([dict[@"coordinator"] isEqualToString:@"true"]) {
+              [input setStatus:PLInputStatusStopped];
+            } else {
+              [input setStatus:PLInputStatusSlave];
+            }
+          }
+        }
+        block([[SonosInputStore sharedStore] allInputs], error);
+      }];
+    }];
+  });
 }
 
 - (void)play:(SonosInput *)input uri:(NSString *)uri completion:(void (^)(NSDictionary *, NSError *))block

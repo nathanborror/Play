@@ -25,16 +25,8 @@ static const CGFloat kMiniBarHeight = 44;
   UIScrollView *_scrollView;
   CGPoint _cellPanCoordBegan;
   UIView *_paired;
-  NSArray *_data;
+  NSArray *_groupings;
   UICollectionView *_collectionView;
-}
-
-- (id)init
-{
-  if (self = [super init]) {
-
-  }
-  return self;
 }
 
 - (void)viewDidLoad
@@ -42,17 +34,19 @@ static const CGFloat kMiniBarHeight = 44;
   [super viewDidLoad];
 
   [self setTitle:@"Speakers"];
-  [self loadInputs];
+  [self.view setBackgroundColor:[UIColor colorWithWhite:.1 alpha:1]];
+
+  _groupings = [[SonosInputStore sharedStore] allInputsGrouped];
 
   NBReorderableCollectionViewLayout *layout = [[NBReorderableCollectionViewLayout alloc] init];
   [layout setMinimumLineSpacing:1];
   [layout setMinimumInteritemSpacing:0];
-  [layout setHeaderReferenceSize:CGSizeMake(CGRectGetWidth(self.view.bounds), 44)];
+  [layout setHeaderReferenceSize:CGSizeMake(CGRectGetWidth(self.view.bounds), 36)];
 
   if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
-    [layout setItemSize:CGSizeMake(149, 112)];
+    [layout setItemSize:CGSizeMake(149, 100)];
   } else {
-    [layout setItemSize:CGSizeMake(160, 112)];
+    [layout setItemSize:CGSizeMake(160, 100)];
   }
 
   _collectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0, 60, CGRectGetWidth(self.view.bounds), CGRectGetWidth(self.view.bounds)) collectionViewLayout:layout];
@@ -62,48 +56,75 @@ static const CGFloat kMiniBarHeight = 44;
   [_collectionView setDelegate:self];
   [_collectionView setDataSource:self];
   [_collectionView setAutoresizingMask:UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight];
-  [_collectionView setBackgroundColor:[UIColor whiteColor]];
+  [_collectionView setBackgroundColor:[UIColor clearColor]];
   [self.view addSubview:_collectionView];
+
+  if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
+
+  } else {
+    [_groupings enumerateObjectsUsingBlock:^(NSDictionary *group, NSUInteger idx, BOOL *stop) {
+      SonosInput *master = (SonosInput *)group[@"master"];
+      UIView *snapshot = master.nowPlayingSnapshot;
+
+      if (!snapshot) {
+        snapshot = [[UIView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(self.view.bounds), CGRectGetHeight(self.view.bounds))];
+        [snapshot setBackgroundColor:[UIColor whiteColor]];
+        [master setNowPlayingSnapshot:snapshot];
+      }
+
+      [snapshot setCenter:CGPointMake(CGRectGetWidth(self.view.bounds)/2, 0)];
+      [snapshot.layer setZPosition:999-(idx*99)];
+      [self.view addSubview:snapshot];
+
+      UIButton *button = [[UIButton alloc] initWithFrame:snapshot.bounds];
+      [button addTarget:self action:@selector(showNowPlaying) forControlEvents:UIControlEventTouchUpInside];
+      [snapshot addSubview:button];
+    }];
+  }
 }
 
-- (void)loadInputs
+- (void)viewDidAppear:(BOOL)animated
 {
-  NSArray *all = [[SonosInputStore sharedStore] allInputs];
-  NSMutableArray *masters = [[NSMutableArray alloc] init];
-  NSMutableArray *slaves = [[NSMutableArray alloc] init];
+  [super viewDidAppear:animated];
 
-  // Gather all the slaves
-  [all enumerateObjectsUsingBlock:^(SonosInput *input, NSUInteger idx, BOOL *stop) {
-    if (input.status == PLInputStatusSlave) {
-      [slaves addObject:input];
-    }
-  }];
+  if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
 
-  [all enumerateObjectsUsingBlock:^(SonosInput *master, NSUInteger idx, BOOL *stop) {
-    if (master.status != PLInputStatusSlave) {
-      // Create inputs array and add the master as the first speaker
-      NSMutableArray *inputs = [[NSMutableArray alloc] init];
-      [inputs addObject:master];
+  } else {
+    [_groupings enumerateObjectsUsingBlock:^(NSDictionary *group, NSUInteger idx, BOOL *stop) {
+      UIView *snapshot = [(SonosInput *)group[@"master"] nowPlayingSnapshot];
 
-      // Enumerate over all slave speakers
-      [slaves enumerateObjectsUsingBlock:^(SonosInput *slave, NSUInteger idx, BOOL *stop) {
-        if ([[NSString stringWithFormat:@"x-rincon:%@", master.uid] isEqualToString:slave.uri]) {
-          [inputs addObject:slave];
-        }
+      [UIView animateWithDuration:.5 animations:^{
+        CATransform3D rotation = CATransform3DIdentity;
+        rotation.m34 = 1.0 / -500;
+        rotation = CATransform3DTranslate(rotation, 0, CGRectGetHeight(self.view.frame)-88-(88 * idx), -10);
+        rotation = CATransform3DRotate(rotation, (-25.0 * M_PI / 180.0), 1, 0, 0);
+
+        [snapshot.layer setAnchorPoint:CGPointMake(.5, 0)];
+        [snapshot.layer setShouldRasterize:YES];
+        [snapshot.layer setTransform:rotation];
       }];
-
-      // Add dictionary of master and slaves
-      [masters addObject:@{@"master": master, @"inputs": inputs}];
-    }
-  }];
-
-  _data = masters;
-  [_collectionView reloadData];
+    }];
+  }
 }
 
-- (UITabBarItem *)tabBarItem
+- (void)showNowPlaying
 {
-  return [[UITabBarItem alloc] initWithTitle:@"Speakers" image:[UIImage imageNamed:@"PLSpeakersTab"] selectedImage:[UIImage imageNamed:@"PLSpeakersTabSelected"] ];
+  [_groupings enumerateObjectsUsingBlock:^(NSDictionary *group, NSUInteger idx, BOOL *stop) {
+    UIView *snapshot = [(SonosInput *)group[@"master"] nowPlayingSnapshot];
+
+    [UIView animateWithDuration:.5 animations:^{
+      CATransform3D rotation = CATransform3DIdentity;
+      rotation.m34 = 1.0 / -500;
+      rotation = CATransform3DTranslate(rotation, 0, 0, 1);
+      rotation = CATransform3DRotate(rotation, (0.0 * M_PI / 180.0), 1, 0, 0);
+
+      [snapshot.layer setAnchorPoint:CGPointMake(.5, 0)];
+      [snapshot.layer setShouldRasterize:YES];
+      [snapshot.layer setTransform:rotation];
+    } completion:^(BOOL finished) {
+      [self dismissViewControllerAnimated:NO completion:nil];
+    }];
+  }];
 }
 
 - (void)viewWillLayoutSubviews
@@ -135,21 +156,20 @@ static const CGFloat kMiniBarHeight = 44;
 
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView
 {
-  return _data.count;
+  return _groupings.count;
 }
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
-  NSArray *inputs = (NSArray *)[_data objectAtIndex:section][@"inputs"];
+  NSArray *inputs = (NSArray *)[_groupings objectAtIndex:section][@"inputs"];
   return inputs.count;
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
   PLInputCell *cell = (PLInputCell *)[collectionView dequeueReusableCellWithReuseIdentifier:@"PLInputCell" forIndexPath:indexPath];
-  NSArray *inputs = (NSArray *)[_data objectAtIndex:indexPath.section][@"inputs"];
+  NSArray *inputs = (NSArray *)[_groupings objectAtIndex:indexPath.section][@"inputs"];
   SonosInput *input = [inputs objectAtIndex:indexPath.row];
-  [input addObserver:self forKeyPath:@"uri" options:NSKeyValueChangeOldKey context:nil];
   [cell setInput:input];
   return cell;
 }
@@ -157,11 +177,13 @@ static const CGFloat kMiniBarHeight = 44;
 - (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath
 {
   UICollectionReusableView *supplement;
-  NSDictionary *group = [_data objectAtIndex:indexPath.section];
+  NSDictionary *group = [_groupings objectAtIndex:indexPath.section];
 
   if ([kind isEqualToString:UICollectionElementKindSectionHeader]) {
     PLGroupHeaderView *header = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"PLGroupHeaderView" forIndexPath:indexPath];
     SonosInput *master = (SonosInput *)group[@"master"];
+
+    [header.title setText:@"Demo Mode"];
 
     [[SonosController sharedController] mediaInfo:master completion:^(NSDictionary *response, NSError *error) {
       NSString *title = response[@"u:GetMediaInfoResponse"][@"CurrentURIMetaData"][@"dc:title"][@"text"];
@@ -187,8 +209,8 @@ static const CGFloat kMiniBarHeight = 44;
 
 - (void)collectionView:(UICollectionView *)collectionView itemAtIndexPath:(NSIndexPath *)fromIndexPath willMoveToIndexPath:(NSIndexPath *)toIndexPath
 {
-  NSMutableArray *data1 = [_data objectAtIndex:fromIndexPath.section][@"inputs"];
-  NSMutableArray *data2 = [_data objectAtIndex:toIndexPath.section][@"inputs"];
+  NSMutableArray *data1 = [_groupings objectAtIndex:fromIndexPath.section][@"inputs"];
+  NSMutableArray *data2 = [_groupings objectAtIndex:toIndexPath.section][@"inputs"];
 
   NSString *index = [data1 objectAtIndex:fromIndexPath.item];
 
@@ -203,16 +225,12 @@ static const CGFloat kMiniBarHeight = 44;
   PLInputCell *cell = (PLInputCell *)[collectionView dequeueReusableCellWithReuseIdentifier:@"PLInputCell" forIndexPath:indexPath];
   PLLibraryViewController *viewController = [[PLLibraryViewController alloc] initWithInput:cell.input];
   UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:viewController];
-  [self presentViewController:navController animated:YES completion:nil];
-}
 
-#pragma mark KVO
-
-- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
-{
-  if ([keyPath isEqualToString:@"uri"]) {
-    [self loadInputs];
+  if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
+    [navController setModalPresentationStyle:UIModalPresentationFormSheet];
   }
+
+  [self presentViewController:navController animated:YES completion:nil];
 }
 
 @end

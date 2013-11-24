@@ -12,24 +12,12 @@
 
 @implementation SonosInput
 
-- (id)initWithIP:(NSString *)aIP name:(NSString *)aName uid:(NSString *)aUid icon:(UIImage *)aIcon
+- (id)initWithIP:(NSString *)aIP name:(NSString *)aName uid:(NSString *)aUid
 {
   if (self = [super init]) {
     _ip = aIP;
     _name = aName;
     _uid = aUid;
-    _icon = aIcon;
-
-    [[SonosController sharedController] mediaInfo:self completion:^(NSDictionary *response, NSError *error) {
-      [self setUri:response[@"u:GetMediaInfoResponse"][@"CurrentURI"][@"text"]];
-      _status = PLInputStatusStopped;
-
-      NSString *masterUID = [_uri stringByReplacingOccurrencesOfString:@"x-rincon:" withString:@""];
-      SonosInput *master = [[SonosInputStore sharedStore] inputWithUid:masterUID];
-      if (master) {
-        [self pairWithSonosInput:master];
-      }
-    }];
   }
   return self;
 }
@@ -62,7 +50,6 @@
     [self setIp:[aDecoder decodeObjectForKey:@"ip"]];
     [self setName:[aDecoder decodeObjectForKey:@"name"]];
     [self setUid:[aDecoder decodeObjectForKey:@"uid"]];
-    [self setIcon:[aDecoder decodeObjectForKey:@"icon"]];
     [self setUri:[aDecoder decodeObjectForKey:@"uri"]];
   }
   return self;
@@ -73,7 +60,6 @@
   [aCoder encodeObject:_ip forKey:@"ip"];
   [aCoder encodeObject:_name forKey:@"name"];
   [aCoder encodeObject:_uid forKey:@"uid"];
-  [aCoder encodeObject:_icon forKey:@"icon"];
   [aCoder encodeObject:_uri forKey:@"uri"];
 }
 

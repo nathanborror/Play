@@ -21,13 +21,13 @@ typedef NS_ENUM(NSInteger, PLInputStatus) {
 @property (nonatomic, strong) NSString *name;
 @property (nonatomic, strong) NSString *uid;
 @property (nonatomic, strong) NSString *uri;
-@property (nonatomic, strong) UIImage *icon;
-@property (nonatomic, readonly) PLInputStatus status;
+@property (nonatomic, strong) NSString *group;
+@property (nonatomic, strong) UIView *nowPlayingSnapshot;
+@property (nonatomic, assign) PLInputStatus status;
 
 - (id)initWithIP:(NSString *)aIP
             name:(NSString *)aName
-             uid:(NSString *)aUid
-            icon:(UIImage *)aIcon;
+             uid:(NSString *)aUid;
 
 - (void)pairWithSonosInput:(SonosInput *)master;
 - (void)unpair;

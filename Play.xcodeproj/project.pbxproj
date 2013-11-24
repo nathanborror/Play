@@ -52,6 +52,8 @@
 		D88EA80516917C460011F6FB /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D88EA80416917C460011F6FB /* Default-568h@2x.png */; };
 		D88EA80816917C460011F6FB /* PLNowPlayingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D88EA80716917C460011F6FB /* PLNowPlayingViewController.m */; };
 		D88EA81A1691902A0011F6FB /* SonosController.m in Sources */ = {isa = PBXBuildFile; fileRef = D88EA8191691902A0011F6FB /* SonosController.m */; };
+		D8916C3F1830501600B2E139 /* GCDAsyncUdpSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = D8916C3E1830501600B2E139 /* GCDAsyncUdpSocket.m */; };
+		D8916C421830507E00B2E139 /* UPNPDiscovery.m in Sources */ = {isa = PBXBuildFile; fileRef = D8916C411830507E00B2E139 /* UPNPDiscovery.m */; };
 		D89337F71788DC0E00AF8A1B /* RdioPlaylistViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D89337F61788DBE600AF8A1B /* RdioPlaylistViewController.m */; };
 		D89337FA178A1E6900AF8A1B /* RdioPlaylist.m in Sources */ = {isa = PBXBuildFile; fileRef = D89337F91788DC4200AF8A1B /* RdioPlaylist.m */; };
 		D89337FD178A2B9800AF8A1B /* RdioSongsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D89337FC178A2B6B00AF8A1B /* RdioSongsViewController.m */; };
@@ -143,6 +145,10 @@
 		D88EA80716917C460011F6FB /* PLNowPlayingViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PLNowPlayingViewController.m; sourceTree = "<group>"; };
 		D88EA8181691902A0011F6FB /* SonosController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SonosController.h; sourceTree = "<group>"; };
 		D88EA8191691902A0011F6FB /* SonosController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SonosController.m; sourceTree = "<group>"; };
+		D8916C3D1830501600B2E139 /* GCDAsyncUdpSocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCDAsyncUdpSocket.h; sourceTree = "<group>"; };
+		D8916C3E1830501600B2E139 /* GCDAsyncUdpSocket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCDAsyncUdpSocket.m; sourceTree = "<group>"; };
+		D8916C401830507E00B2E139 /* UPNPDiscovery.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UPNPDiscovery.h; sourceTree = "<group>"; };
+		D8916C411830507E00B2E139 /* UPNPDiscovery.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UPNPDiscovery.m; sourceTree = "<group>"; };
 		D89337F51788DBE600AF8A1B /* RdioPlaylistViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RdioPlaylistViewController.h; sourceTree = "<group>"; };
 		D89337F61788DBE600AF8A1B /* RdioPlaylistViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RdioPlaylistViewController.m; sourceTree = "<group>"; };
 		D89337F81788DC4200AF8A1B /* RdioPlaylist.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RdioPlaylist.h; sourceTree = "<group>"; };
@@ -342,6 +348,10 @@
 				D8824E3D1693CEA500D05AA0 /* PLPlaylistsViewController.m */,
 				D8824E411693D45400D05AA0 /* PLSongViewController.h */,
 				D8824E421693D45500D05AA0 /* PLSongViewController.m */,
+				D8916C3D1830501600B2E139 /* GCDAsyncUdpSocket.h */,
+				D8916C3E1830501600B2E139 /* GCDAsyncUdpSocket.m */,
+				D8916C401830507E00B2E139 /* UPNPDiscovery.h */,
+				D8916C411830507E00B2E139 /* UPNPDiscovery.m */,
 				D819F65116AE044F00B19B50 /* Sonos */,
 				D8824DE616938C8900D05AA0 /* Data */,
 				D158131016E883580009E11B /* Rdio */,
@@ -448,6 +458,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D8916C3F1830501600B2E139 /* GCDAsyncUdpSocket.m in Sources */,
 				D8B4A33A17C0A9E900782ED8 /* PLDial.m in Sources */,
 				D812F76A17D832BD00E19402 /* PLQueueCell.m in Sources */,
 				D89337FD178A2B9800AF8A1B /* RdioSongsViewController.m in Sources */,
@@ -456,6 +467,7 @@
 				D8DFB67D176D0F1A00593F92 /* UIImage+BlurImage.m in Sources */,
 				D88EA7FB16917C460011F6FB /* main.m in Sources */,
 				D88EA7FF16917C460011F6FB /* PLAppDelegate.m in Sources */,
+				D8916C421830507E00B2E139 /* UPNPDiscovery.m in Sources */,
 				D88EA80816917C460011F6FB /* PLNowPlayingViewController.m in Sources */,
 				D88EA81A1691902A0011F6FB /* SonosController.m in Sources */,
 				D86FA4641813445D0017E98B /* NBReorderableCollectionViewLayout.m in Sources */,

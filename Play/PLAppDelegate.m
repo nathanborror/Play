@@ -7,6 +7,7 @@
 //
 
 #import "PLAppDelegate.h"
+#import "SonosController.h"
 #import "SonosInputStore.h"
 #import "PLNowPlayingViewController.h"
 #import "PLSpeakersViewController.h"
@@ -16,43 +17,40 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-  self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-  [self.window setTintColor:[UIColor colorWithRed:1 green:.16 blue:.41 alpha:1]];
+  _window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+  [_window setTintColor:[UIColor colorWithRed:1 green:.16 blue:.41 alpha:1]];
+  [_window setBackgroundColor:[UIColor whiteColor]];
 
   [[UISlider appearance] setMaximumTrackImage:[UIImage imageNamed:@"PLProgressMax"] forState:UIControlStateNormal];
   [[UISlider appearance] setMinimumTrackImage:[UIImage imageNamed:@"PLProgressMin"] forState:UIControlStateNormal];
 
-  if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
-    PLNowPlayingViewController *viewController = [[PLNowPlayingViewController alloc] init];
-    UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:viewController];
+  // Find all Sonos speakers before anything else.
+  [SonosController discover:^(NSArray *inputs, NSError *error) {
+    dispatch_async(dispatch_get_main_queue(), ^{
+      NSArray *groupings = [[SonosInputStore sharedStore] allInputsGrouped];
 
-    PLSpeakersViewController *speakerViewController = [[PLSpeakersViewController alloc] init];
-    UINavigationController *speakerNavController = [[UINavigationController alloc] initWithRootViewController:speakerViewController];
+      if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
+        PLNowPlayingViewController *viewController = [[PLNowPlayingViewController alloc] initWIthGroup:[groupings firstObject]];
+        UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:viewController];
 
-    NSArray *viewControllers = [NSArray arrayWithObjects:navController, speakerNavController, nil];
+        PLSpeakersViewController *speakerViewController = [[PLSpeakersViewController alloc] init];
 
-    UISplitViewController *splitViewController = [[UISplitViewController alloc] init];
-    [splitViewController setViewControllers:viewControllers];
-    [splitViewController setDelegate:speakerViewController];
+        NSArray *viewControllers = [NSArray arrayWithObjects:navController, speakerViewController, nil];
 
-    [self.window setRootViewController:splitViewController];
-  } else {
-    UITabBarController *tabController = [[UITabBarController alloc] init];
+        UISplitViewController *splitViewController = [[UISplitViewController alloc] init];
+        [splitViewController setViewControllers:viewControllers];
+        [splitViewController setDelegate:speakerViewController];
 
-    PLNextUpViewController *nextUp = [[PLNextUpViewController alloc] init];
-    UINavigationController *nextUpNavController = [[UINavigationController alloc] initWithRootViewController:nextUp];
+        [self.window setRootViewController:splitViewController];
+      } else {
+        PLNowPlayingViewController *nowPlaying = [[PLNowPlayingViewController alloc] initWIthGroup:[groupings firstObject]];
+        UINavigationController *nowPlayingNavController = [[UINavigationController alloc] initWithRootViewController:nowPlaying];
+        [_window setRootViewController:nowPlayingNavController];
+      }
+    });
+  }];
 
-    PLSpeakersViewController *speakers = [[PLSpeakersViewController alloc] init];
-
-    PLNowPlayingViewController *nowPlaying = [[PLNowPlayingViewController alloc] init];
-
-    [tabController setViewControllers:@[nowPlaying, speakers, nextUpNavController]];
-
-    [self.window setRootViewController:tabController];
-  }
-
-  [self.window setBackgroundColor:[UIColor whiteColor]];
-  [self.window makeKeyAndVisible];
+  [_window makeKeyAndVisible];
   return YES;
 }
 

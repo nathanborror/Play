@@ -9,12 +9,8 @@
 @import UIKit;
 @import QuartzCore;
 
-@class PLSong;
-@class RdioSong;
+@interface PLNowPlayingViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, UISplitViewControllerDelegate>
 
-@interface PLNowPlayingViewController : UIViewController <UITableViewDelegate, UIViewControllerTransitioningDelegate, UISplitViewControllerDelegate>
-
-- (id)initWithSong:(PLSong *)song;
-- (id)initWithRdioSong:(RdioSong *)song;
+- (id)initWIthGroup:(NSDictionary *)group;
 
 @end

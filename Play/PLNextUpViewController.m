@@ -47,11 +47,6 @@
   [_queue setFrame:CGRectMake(0, 0, CGRectGetWidth(self.view.bounds), CGRectGetHeight(self.view.bounds))];
 }
 
-- (UITabBarItem *)tabBarItem
-{
-  return [[UITabBarItem alloc] initWithTitle:@"Next Up" image:[UIImage imageNamed:@"PLNextUpTab"] selectedImage:[UIImage imageNamed:@"PLNextUpTabSelected"] ];
-}
-
 #pragma mark - UITableViewDelegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
