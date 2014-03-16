@@ -31,7 +31,6 @@
 		D8824E2B169392FF00D05AA0 /* PLSource.m in Sources */ = {isa = PBXBuildFile; fileRef = D8824E2A169392FF00D05AA0 /* PLSource.m */; };
 		D8824E2E1693992B00D05AA0 /* PLTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = D8824E2D1693992B00D05AA0 /* PLTextField.m */; };
 		D8824E3016939A3500D05AA0 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D8824E2F16939A3500D05AA0 /* QuartzCore.framework */; };
-		D8824E3416939C5D00D05AA0 /* UIViewController+ModalCheck.m in Sources */ = {isa = PBXBuildFile; fileRef = D8824E3316939C5D00D05AA0 /* UIViewController+ModalCheck.m */; };
 		D8824E371693A52200D05AA0 /* PLInputStore.m in Sources */ = {isa = PBXBuildFile; fileRef = D8824E361693A52200D05AA0 /* PLInputStore.m */; };
 		D8824E3E1693CEA600D05AA0 /* PLPlaylistsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D8824E3D1693CEA500D05AA0 /* PLPlaylistsViewController.m */; };
 		D8824E401693D01700D05AA0 /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D8824E3F1693D01700D05AA0 /* MediaPlayer.framework */; };
@@ -113,8 +112,6 @@
 		D8824E2C1693992B00D05AA0 /* PLTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PLTextField.h; sourceTree = "<group>"; };
 		D8824E2D1693992B00D05AA0 /* PLTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PLTextField.m; sourceTree = "<group>"; };
 		D8824E2F16939A3500D05AA0 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
-		D8824E3216939C5D00D05AA0 /* UIViewController+ModalCheck.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+ModalCheck.h"; sourceTree = "<group>"; };
-		D8824E3316939C5D00D05AA0 /* UIViewController+ModalCheck.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+ModalCheck.m"; sourceTree = "<group>"; };
 		D8824E351693A52100D05AA0 /* PLInputStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PLInputStore.h; sourceTree = "<group>"; };
 		D8824E361693A52200D05AA0 /* PLInputStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PLInputStore.m; sourceTree = "<group>"; };
 		D8824E3C1693CEA500D05AA0 /* PLPlaylistsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PLPlaylistsViewController.h; sourceTree = "<group>"; };
@@ -287,8 +284,6 @@
 		D8824E3116939C3900D05AA0 /* Categories */ = {
 			isa = PBXGroup;
 			children = (
-				D8824E3216939C5D00D05AA0 /* UIViewController+ModalCheck.h */,
-				D8824E3316939C5D00D05AA0 /* UIViewController+ModalCheck.m */,
 				D8949E3118B186D9002A439C /* UIColor+Common.h */,
 				D8949E3218B186D9002A439C /* UIColor+Common.m */,
 				D81E454018BF112A007EA2E3 /* UIFont+Common.h */,
@@ -492,7 +487,6 @@
 				D8824E2E1693992B00D05AA0 /* PLTextField.m in Sources */,
 				D812F76717D82DC600E19402 /* PLNextUpViewController.m in Sources */,
 				D86FA46718134A370017E98B /* PLGroupHeaderView.m in Sources */,
-				D8824E3416939C5D00D05AA0 /* UIViewController+ModalCheck.m in Sources */,
 				D8824E371693A52200D05AA0 /* PLInputStore.m in Sources */,
 				D8824E3E1693CEA600D05AA0 /* PLPlaylistsViewController.m in Sources */,
 				D883A9F518236B55004D8E9A /* NBArrayDataSource.m in Sources */,
