@@ -7,7 +7,7 @@
 //
 
 #import "PLInputCell.h"
-#import "SonosInput.h"
+#import "PLInput.h"
 #import "SonosController.h"
 
 @implementation PLInputCell {
@@ -16,7 +16,7 @@
   UIImageView *_speakerIcon;
 }
 
-- (id)initWithFrame:(CGRect)frame
+- (instancetype)initWithFrame:(CGRect)frame
 {
   if (self = [super initWithFrame:frame]) {
     _origin = self.center;
@@ -40,10 +40,9 @@
   [_label setFrame:CGRectOffset(_label.bounds, 0, CGRectGetMaxY(_speakerIcon.frame))];
 }
 
-- (void)setInput:(SonosInput *)input
+- (void)setInput:(PLInput *)input
 {
   _input = input;
-  [_input addObserver:self forKeyPath:@"uri" options:0 context:nil];
 
   [_label setText:_input.name];
 
@@ -70,7 +69,7 @@
   [self refreshStatus];
 }
 
-- (void)pair:(SonosInput *)master
+- (void)pair:(PLInput *)master
 {
   NSString *uri = [NSString stringWithFormat:@"x-rincon:%@", master.uid];
   [[SonosController sharedController] play:self.input uri:uri completion:nil];
@@ -88,15 +87,6 @@
     [_label setFont:[UIFont boldSystemFontOfSize:11]];
   } else {
     [_label setFont:[UIFont systemFontOfSize:11]];
-  }
-}
-
-#pragma mark - KVO
-
-- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
-{
-  if (object == _input && [keyPath isEqualToString:@"uri"]) {
-    [self refreshStatus];
   }
 }
 

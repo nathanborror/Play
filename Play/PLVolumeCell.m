@@ -9,7 +9,7 @@
 #import "PLVolumeCell.h"
 #import "PLDial.h"
 #import "SonosController.h"
-#import "SonosInput.h"
+#import "PLInput.h"
 
 static const CGFloat kVolumeBarMargin = 16;
 
@@ -46,7 +46,7 @@ static const CGFloat kVolumeBarMargin = 16;
   [_sonos volume:_input level:(int)[dial value] completion:nil];
 }
 
-- (void)setInput:(SonosInput *)aInput
+- (void)setInput:(PLInput *)aInput
 {
   _input = aInput;
 

@@ -7,10 +7,10 @@
 //
 
 @import UIKit;
-#import "SonosInput.h"
+#import "PLInput.h"
 
 @interface PLLibraryViewController : UIViewController <UITableViewDelegate>
 
-- (id)initWithInput:(SonosInput *)input;
+- (id)initWithInput:(PLInput *)input;
 
 @end

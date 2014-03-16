@@ -8,8 +8,8 @@
 
 #import "SonosController.h"
 #import "SonosConnection.h"
-#import "SonosInput.h"
-#import "SonosInputStore.h"
+#import "PLInput.h"
+#import "PLInputStore.h"
 #import "RdioSong.h"
 #import "RdioAlbum.h"
 #import "UPNPDiscovery.h"
@@ -19,7 +19,7 @@
   int _volumeLevel;
 }
 
-- (id)initWithInput:(SonosInput *)input
+- (instancetype)initWithInput:(PLInput *)input
 {
   if (self = [super init]) {
     _isPlaying = YES;
@@ -32,14 +32,14 @@
 {
   static SonosController *sharedController = nil;
   if (!sharedController) {
-    sharedController = [[SonosController alloc] initWithInput:[[SonosInputStore sharedStore] master]];
+    sharedController = [[SonosController alloc] initWithInput:[[PLInputStore sharedStore] master]];
   }
   return sharedController;
 }
 
-+ (void)request:(SonosRequestType)type input:(SonosInput *)input action:(NSString *)action params:(NSDictionary *)params completion:(void (^)(id, NSError *))block
++ (void)request:(SonosRequestType)type input:(PLInput *)input action:(NSString *)action params:(NSDictionary *)params completion:(void (^)(id, NSError *))block
 {
-  if (!input) input = [[SonosInputStore sharedStore] master];
+  if (!input) input = [[PLInputStore sharedStore] master];
 
   NSURL *url;
   NSString *xmlns;
@@ -139,23 +139,23 @@
 
       // If no addresses, switch into demo mode and show dummy inputs.
       if (addresses.count == 0) {
-        SonosInput *livingroom = [[SonosInputStore sharedStore] addInputWithIP:@"10.0.1.9" name:@"Living Room" uid:@"RINCON_000E58D0540801400"];
+        PLInput *livingroom = [[PLInputStore sharedStore] addInputWithIP:@"10.0.1.9" name:@"Living Room" uid:@"RINCON_000E58D0540801400"];
         [livingroom setGroup:@"RINCON_000E587641F201400"];
         [livingroom setStatus:PLInputStatusStopped];
 
-        SonosInput *kitchen = [[SonosInputStore sharedStore] addInputWithIP:@"10.0.1.17" name:@"Kitchen" uid:@"RINCON_000E587BBA5201400"];
+        PLInput *kitchen = [[PLInputStore sharedStore] addInputWithIP:@"10.0.1.17" name:@"Kitchen" uid:@"RINCON_000E587BBA5201400"];
         [kitchen setGroup:@"RINCON_000E587641F201400"];
         [kitchen setStatus:PLInputStatusSlave];
 
-        SonosInput *bathroom = [[SonosInputStore sharedStore] addInputWithIP:@"10.0.1.18" name:@"Bathroom" uid:@"RINCON_000E587641F201400"];
+        PLInput *bathroom = [[PLInputStore sharedStore] addInputWithIP:@"10.0.1.18" name:@"Bathroom" uid:@"RINCON_000E587641F201400"];
         [bathroom setGroup:@"RINCON_000E587641F201400"];
         [bathroom setStatus:PLInputStatusSlave];
 
-        SonosInput *bedroom = [[SonosInputStore sharedStore] addInputWithIP:@"10.0.1.16" name:@"Bedroom" uid:@"RINCON_000E58898D4C01400"];
+        PLInput *bedroom = [[PLInputStore sharedStore] addInputWithIP:@"10.0.1.16" name:@"Bedroom" uid:@"RINCON_000E58898D4C01400"];
         [bedroom setGroup:@"RINCON_000E58898D4C01400"];
         [bedroom setStatus:PLInputStatusStopped];
 
-        block([[SonosInputStore sharedStore] allInputs], nil);
+        block([[PLInputStore sharedStore] allInputs], nil);
         return;
       }
 
@@ -179,9 +179,8 @@
           NSTextCheckingResult *groupMatch = [groupRegex firstMatchInString:group options:0 range:NSMakeRange(0, group.length)];
 
           if (![dict[@"text"] isEqualToString:@"Sonos Bridge"]) {
-            SonosInput *input = [[SonosInputStore sharedStore] addInputWithIP:[location substringWithRange:match.range] name:dict[@"text"] uid:dict[@"uuid"]];
+            PLInput *input = [[PLInputStore sharedStore] addInputWithIP:[location substringWithRange:match.range] name:dict[@"text"] uid:dict[@"uuid"]];
             [input setGroup:[group substringWithRange:groupMatch.range]];
-            NSLog(@"%@ : %@", input.name, input.group);
 
             // Set input status
             if ([dict[@"coordinator"] isEqualToString:@"true"]) {
@@ -191,13 +190,13 @@
             }
           }
         }
-        block([[SonosInputStore sharedStore] allInputs], error);
+        block([[PLInputStore sharedStore] allInputs], error);
       }];
     }];
   });
 }
 
-- (void)play:(SonosInput *)input uri:(NSString *)uri completion:(void (^)(NSDictionary *, NSError *))block
+- (void)play:(PLInput *)input uri:(NSString *)uri completion:(void (^)(NSDictionary *, NSError *))block
 {
   if (uri) {
     [input setUri:uri];
@@ -216,7 +215,7 @@
   }
 }
 
-- (void)play:(SonosInput *)input rdioSong:(RdioSong *)song completion:(void(^)(NSDictionary *, NSError *))block
+- (void)play:(PLInput *)input rdioSong:(RdioSong *)song completion:(void(^)(NSDictionary *, NSError *))block
 {
   // The Metadata shows correctly but may be user specific. Some of the numbers might
   // be tied to an individual Rdio user key, if that is the case more research needs
@@ -235,7 +234,7 @@
   }];
 }
 
-- (void)pause:(SonosInput *)input completion:(void (^)(NSDictionary *, NSError *))block
+- (void)pause:(PLInput *)input completion:(void (^)(NSDictionary *, NSError *))block
 {
   NSDictionary *params = @{@"InstanceID": @0, @"Speed": @1};
   [SonosController request:SonosRequestTypeAVTransport input:input action:@"Pause" params:params completion:^(id obj, NSError *error) {
@@ -244,7 +243,7 @@
   }];
 }
 
-- (void)stop:(SonosInput *)input completion:(void (^)(NSDictionary *, NSError *))block
+- (void)stop:(PLInput *)input completion:(void (^)(NSDictionary *, NSError *))block
 {
   NSDictionary *params = @{@"InstanceID": @0, @"Speed": @1};
   [SonosController request:SonosRequestTypeAVTransport input:input action:@"Stop" params:params completion:^(id obj, NSError *error) {
@@ -253,7 +252,7 @@
   }];
 }
 
-- (void)next:(SonosInput *)input completion:(void (^)(NSDictionary *, NSError *))block
+- (void)next:(PLInput *)input completion:(void (^)(NSDictionary *, NSError *))block
 {
   NSDictionary *params = @{@"InstanceID": @0, @"Speed": @1};
   [SonosController request:SonosRequestTypeAVTransport input:input action:@"Next" params:params completion:^(id obj, NSError *error) {
@@ -262,7 +261,7 @@
   }];
 }
 
-- (void)previous:(SonosInput *)input completion:(void (^)(NSDictionary *, NSError *))block
+- (void)previous:(PLInput *)input completion:(void (^)(NSDictionary *, NSError *))block
 {
   NSDictionary *params = @{@"InstanceID": @0, @"Speed": @1};
   [SonosController request:SonosRequestTypeAVTransport input:input action:@"Previous" params:params completion:^(id obj, NSError *error) {
@@ -271,7 +270,7 @@
   }];
 }
 
-- (void)queue:(SonosInput *)input track:(NSString *)track completion:(void (^)(NSDictionary *, NSError *))block
+- (void)queue:(PLInput *)input track:(NSString *)track completion:(void (^)(NSDictionary *, NSError *))block
 {
   NSDictionary *params = @{@"InstanceID": @0,
                            @"EnqueuedURI": track,
@@ -283,19 +282,19 @@
   }];
 }
 
-- (void)lineIn:(SonosInput *)input completion:(void (^)(NSDictionary *, NSError *))block
+- (void)lineIn:(PLInput *)input completion:(void (^)(NSDictionary *, NSError *))block
 {
   [self play:input uri:[NSString stringWithFormat:@"x-rincon-stream:%@", input.uid] completion:block];
 }
 
-- (void)volume:(SonosInput *)input completion:(void (^)(NSDictionary *, NSError *))block
+- (void)volume:(PLInput *)input completion:(void (^)(NSDictionary *, NSError *))block
 {
   NSDictionary *params = @{@"InstanceID": @0,
                            @"Channel":@"Master"};
   [SonosController request:SonosRequestTypeRenderingControl input:input action:@"GetVolume" params:params completion:block];
 }
 
-- (void)volume:(SonosInput *)input level:(int)level completion:(void (^)(NSDictionary *, NSError *))block
+- (void)volume:(PLInput *)input level:(int)level completion:(void (^)(NSDictionary *, NSError *))block
 {
   if (_volumeLevel == level) return;
 
@@ -308,25 +307,25 @@
   }];
 }
 
-- (void)trackInfo:(SonosInput *)input completion:(void (^)(NSDictionary *, NSError *))block
+- (void)trackInfo:(PLInput *)input completion:(void (^)(NSDictionary *, NSError *))block
 {
   NSDictionary *params = @{@"InstanceID": @0};
   [SonosController request:SonosRequestTypeAVTransport input:input action:@"GetPositionInfo" params:params completion:block];
 }
 
-- (void)mediaInfo:(SonosInput *)input completion:(void (^)(NSDictionary *, NSError *))block
+- (void)mediaInfo:(PLInput *)input completion:(void (^)(NSDictionary *, NSError *))block
 {
   NSDictionary *params = @{@"InstanceID": @0};
   [SonosController request:SonosRequestTypeAVTransport input:input action:@"GetMediaInfo" params:params completion:block];
 }
 
-- (void)status:(SonosInput *)input completion:(void (^)(NSDictionary *, NSError *))block
+- (void)status:(PLInput *)input completion:(void (^)(NSDictionary *, NSError *))block
 {
   NSDictionary *params = @{@"InstanceID": @0};
   [SonosController request:SonosRequestTypeAVTransport input:input action:@"GetTransportInfo" params:params completion:block];
 }
 
-- (void)browse:(SonosInput *)input completion:(void (^)(NSDictionary *, NSError *))block
+- (void)browse:(PLInput *)input completion:(void (^)(NSDictionary *, NSError *))block
 {
   NSDictionary *params = @{@"ObjectID": @"A:ARTIST",
                            @"BrowseFlag": @"BrowseDirectChildren",

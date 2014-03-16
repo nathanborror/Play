@@ -14,8 +14,6 @@
 #import "PLSpeakersViewController.h"
 #import "PLNextUpViewController.h"
 #import "SonosController.h"
-#import "SonosInputStore.h"
-#import "SonosInput.h"
 #import "RdioSong.h"
 
 static const CGFloat kProgressPadding = 50.0;
@@ -32,6 +30,8 @@ static const CGFloat kNavigationBarHeight = 80.0;
 
 static const CGFloat kVelocity = 0.1;
 static const CGFloat kDamping = 0.6;
+#import "PLInputStore.h"
+#import "PLInput.h"
 
 static const CGFloat kSongTitleFontSize = 17.0;
 static const CGFloat kAlbumTitleFontSize = 15.0;

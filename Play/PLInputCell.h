@@ -6,17 +6,17 @@
 //  Copyright (c) 2013 Nathan Borror. All rights reserved.
 //
 
-@import UIKit;
-@import QuartzCore;
+#import <UIKit/UIKit.h>
+#import <QuartzCore/QuartzCore.h>
 
-@class SonosInput;
+@class PLInput;
 
 @interface PLInputCell : UICollectionViewCell
 
-@property (nonatomic, strong) SonosInput *input;
+@property (nonatomic, strong) PLInput *input;
 @property (nonatomic, assign) CGPoint origin;
 
-- (void)pair:(SonosInput *)master;
+- (void)pair:(PLInput *)master;
 - (void)unpair;
 
 @end

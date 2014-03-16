@@ -23,38 +23,38 @@ typedef NS_ENUM(NSInteger, SonosRequestType) {
   SonosRequestTypeGroupManagement,
 };
 
-@class SonosInput;
+@class PLInput;
 @class RdioSong;
 
 @interface SonosController : NSObject
 
 @property (nonatomic, readonly) BOOL isPlaying;
 
-- (id)initWithInput:(SonosInput *)input;
+- (instancetype)initWithInput:(PLInput *)input;
 
 + (SonosController *)sharedController;
 
 + (void)request:(SonosRequestType)type
-          input:(SonosInput *)input
+          input:(PLInput *)input
          action:(NSString *)action
          params:(NSDictionary *)params
      completion:(void(^)(id obj, NSError *error))block;
 
 + (void)discover:(void(^)(NSArray *inputs, NSError *error))block;
 
-- (void)play:(SonosInput *)input uri:(NSString *)uri completion:(void(^)(NSDictionary *response, NSError *error))block;
-- (void)play:(SonosInput *)input rdioSong:(RdioSong *)song completion:(void(^)(NSDictionary *response, NSError *error))block;
-- (void)pause:(SonosInput *)input completion:(void(^)(NSDictionary *response, NSError *error))block;
-- (void)stop:(SonosInput *)input completion:(void(^)(NSDictionary *response, NSError *error))block;
-- (void)next:(SonosInput *)input completion:(void(^)(NSDictionary *response, NSError *error))block;
-- (void)previous:(SonosInput *)input completion:(void(^)(NSDictionary *response, NSError *error))block;
-- (void)queue:(SonosInput *)input track:(NSString *)track completion:(void(^)(NSDictionary *response, NSError *error))block;
-- (void)volume:(SonosInput *)input completion:(void(^)(NSDictionary *response, NSError *error))block;
-- (void)volume:(SonosInput *)input level:(int)level completion:(void(^)(NSDictionary *response, NSError *error))block;
-- (void)lineIn:(SonosInput *)input completion:(void(^)(NSDictionary *response, NSError *error))block;
-- (void)trackInfo:(SonosInput *)input completion:(void(^)(NSDictionary *response, NSError *error))block;
-- (void)mediaInfo:(SonosInput *)input completion:(void(^)(NSDictionary *response, NSError *error))block;
-- (void)status:(SonosInput *)input completion:(void(^)(NSDictionary *response, NSError *error))block;
-- (void)browse:(SonosInput *)input completion:(void(^)(NSDictionary *response, NSError *error))block;
+- (void)play:(PLInput *)input uri:(NSString *)uri completion:(void(^)(NSDictionary *response, NSError *error))block;
+- (void)play:(PLInput *)input rdioSong:(RdioSong *)song completion:(void(^)(NSDictionary *response, NSError *error))block;
+- (void)pause:(PLInput *)input completion:(void(^)(NSDictionary *response, NSError *error))block;
+- (void)stop:(PLInput *)input completion:(void(^)(NSDictionary *response, NSError *error))block;
+- (void)next:(PLInput *)input completion:(void(^)(NSDictionary *response, NSError *error))block;
+- (void)previous:(PLInput *)input completion:(void(^)(NSDictionary *response, NSError *error))block;
+- (void)queue:(PLInput *)input track:(NSString *)track completion:(void(^)(NSDictionary *response, NSError *error))block;
+- (void)volume:(PLInput *)input completion:(void(^)(NSDictionary *response, NSError *error))block;
+- (void)volume:(PLInput *)input level:(int)level completion:(void(^)(NSDictionary *response, NSError *error))block;
+- (void)lineIn:(PLInput *)input completion:(void(^)(NSDictionary *response, NSError *error))block;
+- (void)trackInfo:(PLInput *)input completion:(void(^)(NSDictionary *response, NSError *error))block;
+- (void)mediaInfo:(PLInput *)input completion:(void(^)(NSDictionary *response, NSError *error))block;
+- (void)status:(PLInput *)input completion:(void(^)(NSDictionary *response, NSError *error))block;
+- (void)browse:(PLInput *)input completion:(void(^)(NSDictionary *response, NSError *error))block;
 
 @end

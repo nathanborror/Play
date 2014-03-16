@@ -11,8 +11,8 @@
 #import "PLAddInputViewController.h"
 #import "PLInputCell.h"
 #import "PLGroupHeaderView.h"
-#import "SonosInput.h"
-#import "SonosInputStore.h"
+#import "PLInput.h"
+#import "PLInputStore.h"
 #import "SonosController.h"
 #import "NBReorderableCollectionViewLayout.h"
 

@@ -11,8 +11,6 @@
 #import "RdioArtist.h"
 #import "RdioAlbum.h"
 #import "SonosController.h"
-#import "SonosInput.h"
-#import "SonosInputStore.h"
 #import "PLNowPlayingViewController.h"
 
 @implementation RdioCollectionViewController {

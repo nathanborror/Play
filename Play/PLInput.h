@@ -1,5 +1,5 @@
 //
-//  SonosInput.h
+//  PLInput.h
 //  Play
 //
 //  Created by Nathan Borror on 1/1/13.
@@ -15,21 +15,18 @@ typedef NS_ENUM(NSInteger, PLInputStatus) {
   PLInputStatusSlave,
 };
 
-@interface SonosInput : NSObject <NSCoding>
+@interface PLInput : NSObject <NSCoding>
 
 @property (nonatomic, strong) NSString *ip;
 @property (nonatomic, strong) NSString *name;
 @property (nonatomic, strong) NSString *uid;
 @property (nonatomic, strong) NSString *uri;
 @property (nonatomic, strong) NSString *group;
-@property (nonatomic, strong) UIView *nowPlayingSnapshot;
 @property (nonatomic, assign) PLInputStatus status;
 
-- (id)initWithIP:(NSString *)aIP
-            name:(NSString *)aName
-             uid:(NSString *)aUid;
+- (instancetype)initWithIP:(NSString *)aIP name:(NSString *)aName uid:(NSString *)aUid;
 
-- (void)pairWithSonosInput:(SonosInput *)master;
+- (void)pairWithInput:(PLInput *)master;
 - (void)unpair;
 
 @end

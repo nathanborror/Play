@@ -11,8 +11,8 @@
 #import "PLSource.h"
 #import "PLPlaylistsViewController.h"
 #import "PLNowPlayingViewController.h"
-#import "SonosInputStore.h"
-#import "SonosInput.h"
+#import "PLInputStore.h"
+#import "PLInput.h"
 #import "SonosController.h"
 #import "RdioPlaylistViewController.h"
 #import "NBKit/NBArrayDataSource.h"
@@ -20,17 +20,17 @@
 @implementation PLLibraryViewController {
   UITableView *_libraryTableView;
   NSArray *_sourceList;
-  SonosInput *_input;
+  PLInput *_input;
   NBArrayDataSource *_delegate;
 }
 
-- (id)initWithInput:(SonosInput *)input
+- (instancetype)initWithInput:(PLInput *)input
 {
   if (self = [super init]) {
     if (input) {
       _input = input;
     } else {
-      _input = [[SonosInputStore sharedStore] master];
+      _input = [[PLInputStore sharedStore] master];
     }
 
     _sourceList = @[

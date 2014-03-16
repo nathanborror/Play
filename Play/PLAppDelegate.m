@@ -8,7 +8,7 @@
 
 #import "PLAppDelegate.h"
 #import "SonosController.h"
-#import "SonosInputStore.h"
+#import "PLInputStore.h"
 #import "PLNowPlayingViewController.h"
 #import "PLSpeakersViewController.h"
 #import "PLNextUpViewController.h"

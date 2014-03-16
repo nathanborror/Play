@@ -1,18 +1,18 @@
 //
-//  SonosInput.m
+//  PLInput.m
 //  Play
 //
 //  Created by Nathan Borror on 1/1/13.
 //  Copyright (c) 2013 Nathan Borror. All rights reserved.
 //
 
-#import "SonosInput.h"
+#import "PLInput.h"
 #import "SonosController.h"
-#import "SonosInputStore.h"
+#import "PLInputStore.h"
 
-@implementation SonosInput
+@implementation PLInput
 
-- (id)initWithIP:(NSString *)aIP name:(NSString *)aName uid:(NSString *)aUid
+- (instancetype)initWithIP:(NSString *)aIP name:(NSString *)aName uid:(NSString *)aUid
 {
   if (self = [super init]) {
     _ip = aIP;
@@ -24,26 +24,26 @@
 
 - (NSString *)description
 {
-  return [NSString stringWithFormat:@"<SonosInput: %@ (%@)>", _name, _uri];
+  return [NSString stringWithFormat:@"<PLInput: %@>", _name];
 }
 
-- (void)pairWithSonosInput:(SonosInput *)master
-{
-  _uri = [NSString stringWithFormat:@"x-rincon:%@", master.uid];
-  [[SonosController sharedController] play:self uri:_uri completion:nil];
-  _status = PLInputStatusSlave;
-}
-
-- (void)unpair
-{
-  _uri = [NSString stringWithFormat:@"x-rincon-queue:%@#0", self.uid];
-  [[SonosController sharedController] play:self uri:_uri completion:nil];
-  _status = PLInputStatusStopped;
-}
+//- (void)pairWithInput:(PLInput *)master
+//{
+//  _uri = [NSString stringWithFormat:@"x-rincon:%@", master.uid];
+//  [[SonosController sharedController] play:self uri:_uri completion:nil];
+//  _status = PLInputStatusSlave;
+//}
+//
+//- (void)unpair
+//{
+//  _uri = [NSString stringWithFormat:@"x-rincon-queue:%@#0", self.uid];
+//  [[SonosController sharedController] play:self uri:_uri completion:nil];
+//  _status = PLInputStatusStopped;
+//}
 
 #pragma mark - NSCoding
 
-- (id)initWithCoder:(NSCoder *)aDecoder
+- (instancetype)initWithCoder:(NSCoder *)aDecoder
 {
   self = [super init];
   if (self) {
