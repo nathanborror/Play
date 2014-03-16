@@ -175,7 +175,7 @@
 
           // Find group
           NSString *group = dict[@"group"];
-          NSRegularExpression *groupRegex = [NSRegularExpression regularExpressionWithPattern:@"RINCON_\\w{17}" options:0 error:nil];
+          NSRegularExpression *groupRegex = [NSRegularExpression regularExpressionWithPattern:@"RINCON_\\w{17}:\\w{2}" options:0 error:nil];
           NSTextCheckingResult *groupMatch = [groupRegex firstMatchInString:group options:0 range:NSMakeRange(0, group.length)];
 
           if (![dict[@"text"] isEqualToString:@"Sonos Bridge"]) {
