@@ -13,9 +13,6 @@
 #import "UIColor+Common.h"
 #import "UIFont+Common.h"
 
-static const CGFloat kNameVerticalMargin = 12.0;
-static const CGFloat kNameHorizontalMargin = 16.0;
-
 @implementation PLVolumeCell {
   PLDial *_volumeDial;
   UILabel *_name;
