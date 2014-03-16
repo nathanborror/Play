@@ -11,7 +11,6 @@
 #import "PLInputStore.h"
 #import "PLNowPlayingViewController.h"
 #import "PLSpeakersViewController.h"
-#import "PLNextUpViewController.h"
 #import "PLLoadingViewController.h"
 
 @implementation PLAppDelegate

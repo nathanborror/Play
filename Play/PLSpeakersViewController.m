@@ -8,7 +8,6 @@
 
 #import "PLSpeakersViewController.h"
 #import "PLLibraryViewController.h"
-#import "PLAddInputViewController.h"
 #import "PLInputCell.h"
 #import "PLGroupHeaderView.h"
 #import "PLInput.h"
@@ -140,9 +139,6 @@ static const CGFloat kMiniBarHeight = 44;
 
 - (void)addInput
 {
-  PLAddInputViewController *viewController = [[PLAddInputViewController alloc] init];
-  UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:viewController];
-  [self.navigationController presentViewController:navigationController animated:YES completion:nil];
 }
 
 #pragma mark - UISplitViewControllerDelegate

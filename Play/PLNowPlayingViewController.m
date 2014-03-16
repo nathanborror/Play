@@ -8,13 +8,9 @@
 
 #import "PLNowPlayingViewController.h"
 #import "PLSong.h"
-#import "PLDial.h"
-#import "PLProgressBar.h"
 #import "PLVolumeCell.h"
 #import "PLSpeakersViewController.h"
-#import "PLNextUpViewController.h"
 #import "SonosController.h"
-#import "RdioSong.h"
 
 static const CGFloat kProgressPadding = 50.0;
 
