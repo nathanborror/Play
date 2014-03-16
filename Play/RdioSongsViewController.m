@@ -45,15 +45,13 @@
 
   [self setTitle:@"Songs"];
 
-  UIBarButtonItem *nowPlayingButton = [[UIBarButtonItem alloc] initWithTitle:@"Playing" style:UIBarButtonItemStyleDone target:self action:@selector(nowPlaying)];
-  [self.navigationItem setRightBarButtonItem:nowPlayingButton];
+  UIBarButtonItem *done = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(done)];
+  [self.navigationItem setRightBarButtonItem:done];
 }
 
-- (void)nowPlaying
+- (void)done
 {
-  PLNowPlayingViewController *viewController = [[PLNowPlayingViewController alloc] init];
-  UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:viewController];
-  [self.navigationController presentViewController:navController animated:YES completion:nil];
+  [self.navigationController dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (void)getRdioSongsForPlaylist
