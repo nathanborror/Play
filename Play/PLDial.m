@@ -21,7 +21,7 @@ static const CGFloat kDialHeight = 32;
   CGFloat minOriginX;
 }
 
-- (id)initWithFrame:(CGRect)frame
+- (instancetype)initWithFrame:(CGRect)frame
 {
   if (self = [super initWithFrame:frame]) {
     _max = [[UIView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(self.bounds), kDialHeight)];

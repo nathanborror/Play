@@ -10,12 +10,12 @@
 
 @implementation PLSong
 
-- (id)initWithArtist:(NSString *)aArtist
-               album:(NSString *)aAlbum
-               title:(NSString *)aTitle
-                 uri:(NSString *)aUri
-            albumArt:(UIImage *)aAlbumArt
-            duration:(NSString *)aDuration
+- (instancetype)initWithArtist:(NSString *)aArtist
+                         album:(NSString *)aAlbum
+                         title:(NSString *)aTitle
+                           uri:(NSString *)aUri
+                      albumArt:(UIImage *)aAlbumArt
+                      duration:(NSString *)aDuration
 {
   if (self = [super init]) {
     _artist = aArtist;

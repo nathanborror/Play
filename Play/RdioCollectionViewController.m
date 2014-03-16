@@ -20,7 +20,7 @@
   UILocalizedIndexedCollation *_collation;
 }
 
-- (id)init
+- (instancetype)init
 {
   if (self = [super init]) {
     if ([_itemList count] == 0) {

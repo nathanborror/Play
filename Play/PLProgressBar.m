@@ -10,7 +10,7 @@
 
 @implementation PLProgressBar
 
-- (id)initWithFrame:(CGRect)frame
+- (instancetype)initWithFrame:(CGRect)frame
 {
   if (self = [super initWithFrame:frame]) {
     [self setMaximumTrackTintColor:[UIColor colorWithRed:.85 green:.86 blue:.88 alpha:1]];

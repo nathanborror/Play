@@ -12,6 +12,6 @@
 
 @interface PLSongViewController : UIViewController <UITableViewDelegate>
 
-- (id)initWithSongs:(NSArray *)aSongs;
+- (instancetype)initWithSongs:(NSArray *)aSongs;
 
 @end

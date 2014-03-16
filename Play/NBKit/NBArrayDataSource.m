@@ -18,12 +18,12 @@
 
 @implementation NBArrayDataSource
 
-- (id)init
+- (instancetype)init
 {
   return nil;
 }
 
-- (id)initWithItems:(NSArray *)anItems cellIdentifier:(NSString *)aCellIdentifier configureCellBlock:(TableViewCellConfigureBlock)aConfigureBlock
+- (instancetype)initWithItems:(NSArray *)anItems cellIdentifier:(NSString *)aCellIdentifier configureCellBlock:(TableViewCellConfigureBlock)aConfigureBlock
 {
   if (self = [super init]) {
     _items = anItems;
@@ -33,7 +33,7 @@
   return self;
 }
 
-- (id)itemAtIndexPath:(NSIndexPath *)indexPath
+- (instancetype)itemAtIndexPath:(NSIndexPath *)indexPath
 {
   return _items[(NSInteger)indexPath.item];
 }

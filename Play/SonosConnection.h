@@ -17,7 +17,7 @@
 @property (nonatomic, copy) NSURLRequest *request;
 @property (nonatomic, copy) void (^completionBlock)(id obj, NSError *error);
 
-- (id)initWithRequest:(NSURLRequest *)req completion:(void(^)(id obj, NSError *error))block;
+- (instancetype)initWithRequest:(NSURLRequest *)req completion:(void(^)(id obj, NSError *error))block;
 - (void)start;
 
 @end

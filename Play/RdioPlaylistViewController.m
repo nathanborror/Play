@@ -17,7 +17,7 @@
   NSMutableArray *_playlists;
 }
 
-- (id)init
+- (instancetype)init
 {
   if (self = [super init]) {
     _playlists = [[NSMutableArray alloc] init];

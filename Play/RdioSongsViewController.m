@@ -23,7 +23,7 @@
 
 @implementation RdioSongsViewController
 
-- (id)initWithPlaylist:(RdioPlaylist *)aPlaylist
+- (instancetype)initWithPlaylist:(RdioPlaylist *)aPlaylist
 {
   if (self = [super init]) {
     _playlist = aPlaylist;

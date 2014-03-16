@@ -19,7 +19,7 @@ static const CGFloat kVolumeBarMargin = 16;
   SonosController *_sonos;
 }
 
-- (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
+- (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
   if (self = [super initWithStyle:style reuseIdentifier:reuseIdentifier]) {
     _sonos = [SonosController sharedController];

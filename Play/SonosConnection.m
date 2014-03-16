@@ -13,7 +13,7 @@ static NSMutableArray *sharedConnectionList = nil;
 
 @implementation SonosConnection
 
-- (id)initWithRequest:(NSURLRequest *)req completion:(void (^)(id, NSError *))block
+- (instancetype)initWithRequest:(NSURLRequest *)req completion:(void (^)(id, NSError *))block
 {
   if (self = [super init]) {
     [self setRequest:req];

@@ -17,11 +17,11 @@
 @property (nonatomic, readwrite) UIImage *albumArt;
 @property (nonatomic, readwrite) NSString *duration;
 
-- (id)initWithArtist:(NSString *)aArtist
-               album:(NSString *)aAlbum
-               title:(NSString *)aTitle
-                 uri:(NSString *)aUri
-            albumArt:(UIImage *)aAlbumArt
-            duration:(NSString *)aDuration;
+- (instancetype)initWithArtist:(NSString *)aArtist
+                         album:(NSString *)aAlbum
+                         title:(NSString *)aTitle
+                           uri:(NSString *)aUri
+                      albumArt:(UIImage *)aAlbumArt
+                      duration:(NSString *)aDuration;
 
 @end

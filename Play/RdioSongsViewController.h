@@ -13,6 +13,6 @@
 
 @interface RdioSongsViewController : UITableViewController <RDAPIRequestDelegate, RdioDelegate>
 
-- (id)initWithPlaylist:(RdioPlaylist *)aPlaylist;
+- (instancetype)initWithPlaylist:(RdioPlaylist *)aPlaylist;
 
 @end

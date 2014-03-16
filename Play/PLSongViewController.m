@@ -17,12 +17,12 @@
   NBArrayDataSource *_datasource;
 }
 
-- (id)init
+- (instancetype)init
 {
   return [self initWithSongs:nil];
 }
 
-- (id)initWithSongs:(NSArray *)aSongs
+- (instancetype)initWithSongs:(NSArray *)aSongs
 {
   if (self = [super init]) {
     _songs = aSongs;

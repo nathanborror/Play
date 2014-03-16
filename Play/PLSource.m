@@ -10,7 +10,7 @@
 
 @implementation PLSource
 
-- (id)initWithName:(NSString *)aName selection:(void (^)())aSelectionBlock
+- (instancetype)initWithName:(NSString *)aName selection:(void (^)())aSelectionBlock
 {
   if (self = [super init]) {
     _name = aName;

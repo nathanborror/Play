@@ -77,7 +77,7 @@ typedef NS_ENUM(NSInteger, NBScrollingDirection) {
   CADisplayLink *_displayLink;
 }
 
-- (id)init {
+- (instancetype)init {
   if (self = [super init]) {
     _scrollingSpeed = 300;
     _scrollingTriggerEdgeInsets = UIEdgeInsetsMake(50.0f, 50.0f, 50.0f, 50.0f);

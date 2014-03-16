@@ -13,6 +13,6 @@
 @property (nonatomic, readwrite) NSString *name;
 @property (nonatomic, copy) void (^selectionBlock)();
 
-- (id)initWithName:(NSString *)aName selection:(void (^)())aSelectionBlock;
+- (instancetype)initWithName:(NSString *)aName selection:(void (^)())aSelectionBlock;
 
 @end
