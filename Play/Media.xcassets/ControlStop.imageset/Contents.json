@@ -3,12 +3,12 @@
     {
       "idiom" : "universal",
       "scale" : "1x",
-      "filename" : "ControlPrevious.png"
+      "filename" : "ControlStop.png"
     },
     {
       "idiom" : "universal",
       "scale" : "2x",
-      "filename" : "ControlPrevious@2x.png"
+      "filename" : "ControlStop@2x.png"
     }
   ],
   "info" : {

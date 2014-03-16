@@ -10,6 +10,6 @@
 @import QuartzCore;
 #import "NBReorderableCollectionViewLayout.h"
 
-@interface PLSpeakersViewController : UIViewController <UISplitViewControllerDelegate, UICollectionViewDelegate, NBReorderableCollectionViewDataSource>
+@interface PLSpeakersViewController : UIViewController <UISplitViewControllerDelegate, UICollectionViewDelegate, NBReorderableCollectionViewDataSource, NBReorderableCollectionViewDelegateFlowLayout>
 
 @end

@@ -19,10 +19,11 @@
 		D812F77017D8373100E19402 /* PLVolumeCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D812F76F17D8373100E19402 /* PLVolumeCell.m */; };
 		D819F65016ADC64300B19B50 /* SonosConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = D819F64F16ADC64300B19B50 /* SonosConnection.m */; };
 		D81E454218BF112A007EA2E3 /* UIFont+Common.m in Sources */ = {isa = PBXBuildFile; fileRef = D81E454118BF112A007EA2E3 /* UIFont+Common.m */; };
+		D81E454618BF19D3007EA2E3 /* DragDownAnimator.m in Sources */ = {isa = PBXBuildFile; fileRef = D81E454518BF19D3007EA2E3 /* DragDownAnimator.m */; };
 		D8633D2A182709E700A2CCA5 /* XMLReader.m in Sources */ = {isa = PBXBuildFile; fileRef = D8633D29182709E700A2CCA5 /* XMLReader.m */; };
 		D864953817B6F2D0006E7E46 /* PLProgressBar.m in Sources */ = {isa = PBXBuildFile; fileRef = D864953717B6F2D0006E7E46 /* PLProgressBar.m */; };
 		D86FA4641813445D0017E98B /* NBReorderableCollectionViewLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = D86FA4631813445D0017E98B /* NBReorderableCollectionViewLayout.m */; };
-		D86FA46718134A370017E98B /* PLGroupHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = D86FA46618134A370017E98B /* PLGroupHeaderView.m */; };
+		D86FA46718134A370017E98B /* PLSectionHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = D86FA46618134A370017E98B /* PLSectionHeaderView.m */; };
 		D8824DE916938CA300D05AA0 /* PLInput.m in Sources */ = {isa = PBXBuildFile; fileRef = D8824DE816938CA300D05AA0 /* PLInput.m */; };
 		D8824E2B169392FF00D05AA0 /* PLSource.m in Sources */ = {isa = PBXBuildFile; fileRef = D8824E2A169392FF00D05AA0 /* PLSource.m */; };
 		D8824E3016939A3500D05AA0 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D8824E2F16939A3500D05AA0 /* QuartzCore.framework */; };
@@ -84,14 +85,16 @@
 		D81DE37A16ED687400F21111 /* Play-Debug.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Play-Debug.xcconfig"; sourceTree = "<group>"; };
 		D81E454018BF112A007EA2E3 /* UIFont+Common.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIFont+Common.h"; sourceTree = "<group>"; };
 		D81E454118BF112A007EA2E3 /* UIFont+Common.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIFont+Common.m"; sourceTree = "<group>"; };
+		D81E454418BF19D3007EA2E3 /* DragDownAnimator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DragDownAnimator.h; sourceTree = "<group>"; };
+		D81E454518BF19D3007EA2E3 /* DragDownAnimator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DragDownAnimator.m; sourceTree = "<group>"; };
 		D8633D28182709E700A2CCA5 /* XMLReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = XMLReader.h; path = Vendor/XMLReader.h; sourceTree = "<group>"; };
 		D8633D29182709E700A2CCA5 /* XMLReader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = XMLReader.m; path = Vendor/XMLReader.m; sourceTree = "<group>"; };
 		D864953617B6F2D0006E7E46 /* PLProgressBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PLProgressBar.h; sourceTree = "<group>"; };
 		D864953717B6F2D0006E7E46 /* PLProgressBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PLProgressBar.m; sourceTree = "<group>"; };
 		D86FA4621813445D0017E98B /* NBReorderableCollectionViewLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NBReorderableCollectionViewLayout.h; path = NBKit/NBReorderableCollectionViewLayout.h; sourceTree = "<group>"; };
 		D86FA4631813445D0017E98B /* NBReorderableCollectionViewLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NBReorderableCollectionViewLayout.m; path = NBKit/NBReorderableCollectionViewLayout.m; sourceTree = "<group>"; };
-		D86FA46518134A370017E98B /* PLGroupHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PLGroupHeaderView.h; sourceTree = "<group>"; };
-		D86FA46618134A370017E98B /* PLGroupHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PLGroupHeaderView.m; sourceTree = "<group>"; };
+		D86FA46518134A370017E98B /* PLSectionHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PLSectionHeaderView.h; sourceTree = "<group>"; };
+		D86FA46618134A370017E98B /* PLSectionHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PLSectionHeaderView.m; sourceTree = "<group>"; };
 		D8824DE716938CA300D05AA0 /* PLInput.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PLInput.h; sourceTree = "<group>"; };
 		D8824DE816938CA300D05AA0 /* PLInput.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PLInput.m; sourceTree = "<group>"; };
 		D8824E29169392FF00D05AA0 /* PLSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PLSource.h; sourceTree = "<group>"; };
@@ -207,25 +210,31 @@
 				D88EA8191691902A0011F6FB /* SonosController.m */,
 				D819F64E16ADC64300B19B50 /* SonosConnection.h */,
 				D819F64F16ADC64300B19B50 /* SonosConnection.m */,
-				D819F65C16AE1BB900B19B50 /* Examples.xml */,
+				D8916C3D1830501600B2E139 /* GCDAsyncUdpSocket.h */,
+				D8916C3E1830501600B2E139 /* GCDAsyncUdpSocket.m */,
+				D8916C401830507E00B2E139 /* UPNPDiscovery.h */,
+				D8916C411830507E00B2E139 /* UPNPDiscovery.m */,
 			);
 			name = Sonos;
+			sourceTree = "<group>";
+		};
+		D81E454318BF19AB007EA2E3 /* Transitions */ = {
+			isa = PBXGroup;
+			children = (
+				D81E454418BF19D3007EA2E3 /* DragDownAnimator.h */,
+				D81E454518BF19D3007EA2E3 /* DragDownAnimator.m */,
+			);
+			name = Transitions;
 			sourceTree = "<group>";
 		};
 		D8633D27182709D700A2CCA5 /* Vendor */ = {
 			isa = PBXGroup;
 			children = (
-				D8633D28182709E700A2CCA5 /* XMLReader.h */,
-				D8633D29182709E700A2CCA5 /* XMLReader.m */,
+				D8B613D51717FD2200F12446 /* NBKit */,
+				D8949E3718B196E6002A439C /* XMLReader */,
 			);
 			name = Vendor;
-			sourceTree = "<group>";
-		};
-		D8678A9817D5D665001CE707 /* Animators */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = Animators;
+			path = Play;
 			sourceTree = "<group>";
 		};
 		D8824DE616938C8900D05AA0 /* Data */ = {
@@ -254,8 +263,8 @@
 				D864953717B6F2D0006E7E46 /* PLProgressBar.m */,
 				D812F76E17D8373100E19402 /* PLVolumeCell.h */,
 				D812F76F17D8373100E19402 /* PLVolumeCell.m */,
-				D86FA46518134A370017E98B /* PLGroupHeaderView.h */,
-				D86FA46618134A370017E98B /* PLGroupHeaderView.m */,
+				D86FA46518134A370017E98B /* PLSectionHeaderView.h */,
+				D86FA46618134A370017E98B /* PLSectionHeaderView.m */,
 			);
 			name = "UI Elements";
 			sourceTree = "<group>";
@@ -277,6 +286,7 @@
 				D88EA7F416917C460011F6FB /* Play */,
 				D88EA7ED16917C460011F6FB /* Frameworks */,
 				D88EA7EB16917C460011F6FB /* Products */,
+				D8633D27182709D700A2CCA5 /* Vendor */,
 			);
 			sourceTree = "<group>";
 		};
@@ -311,10 +321,14 @@
 		D88EA7F416917C460011F6FB /* Play */ = {
 			isa = PBXGroup;
 			children = (
-				D8633D27182709D700A2CCA5 /* Vendor */,
-				D8678A9817D5D665001CE707 /* Animators */,
-				D8B613D51717FD2200F12446 /* NBKit */,
+				D81E454318BF19AB007EA2E3 /* Transitions */,
+				D819F65116AE044F00B19B50 /* Sonos */,
+				D8824DE616938C8900D05AA0 /* Data */,
+				D158131016E883580009E11B /* Rdio */,
+				D8824E281693921400D05AA0 /* UI Elements */,
 				D8824E3116939C3900D05AA0 /* Categories */,
+				D88EA7F516917C460011F6FB /* Supporting Files */,
+				D885BF42176856C600793DAC /* Media.xcassets */,
 				D88EA7FD16917C460011F6FB /* PLAppDelegate.h */,
 				D88EA7FE16917C460011F6FB /* PLAppDelegate.m */,
 				D88D115E16937AC80039067F /* PLLibraryViewController.h */,
@@ -327,16 +341,6 @@
 				D8824E3D1693CEA500D05AA0 /* PLPlaylistsViewController.m */,
 				D8824E411693D45400D05AA0 /* PLSongViewController.h */,
 				D8824E421693D45500D05AA0 /* PLSongViewController.m */,
-				D8916C3D1830501600B2E139 /* GCDAsyncUdpSocket.h */,
-				D8916C3E1830501600B2E139 /* GCDAsyncUdpSocket.m */,
-				D8916C401830507E00B2E139 /* UPNPDiscovery.h */,
-				D8916C411830507E00B2E139 /* UPNPDiscovery.m */,
-				D819F65116AE044F00B19B50 /* Sonos */,
-				D8824DE616938C8900D05AA0 /* Data */,
-				D158131016E883580009E11B /* Rdio */,
-				D8824E281693921400D05AA0 /* UI Elements */,
-				D88EA7F516917C460011F6FB /* Supporting Files */,
-				D885BF42176856C600793DAC /* Media.xcassets */,
 				D8B244BF184AC8200015961B /* PLLoadingViewController.h */,
 				D8B244C0184AC8200015961B /* PLLoadingViewController.m */,
 			);
@@ -346,6 +350,7 @@
 		D88EA7F516917C460011F6FB /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				D819F65C16AE1BB900B19B50 /* Examples.xml */,
 				D88EA7F616917C460011F6FB /* Play-Info.plist */,
 				D88EA7F716917C460011F6FB /* InfoPlist.strings */,
 				D88EA7FA16917C460011F6FB /* main.m */,
@@ -357,6 +362,15 @@
 				D81DE37A16ED687400F21111 /* Play-Debug.xcconfig */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		D8949E3718B196E6002A439C /* XMLReader */ = {
+			isa = PBXGroup;
+			children = (
+				D8633D28182709E700A2CCA5 /* XMLReader.h */,
+				D8633D29182709E700A2CCA5 /* XMLReader.m */,
+			);
+			name = XMLReader;
 			sourceTree = "<group>";
 		};
 		D8B613D51717FD2200F12446 /* NBKit */ = {
@@ -457,7 +471,7 @@
 				D8824DE916938CA300D05AA0 /* PLInput.m in Sources */,
 				D864953817B6F2D0006E7E46 /* PLProgressBar.m in Sources */,
 				D8824E2B169392FF00D05AA0 /* PLSource.m in Sources */,
-				D86FA46718134A370017E98B /* PLGroupHeaderView.m in Sources */,
+				D86FA46718134A370017E98B /* PLSectionHeaderView.m in Sources */,
 				D8824E371693A52200D05AA0 /* PLInputStore.m in Sources */,
 				D8824E3E1693CEA600D05AA0 /* PLPlaylistsViewController.m in Sources */,
 				D883A9F518236B55004D8E9A /* NBArrayDataSource.m in Sources */,
@@ -470,6 +484,7 @@
 				D158132116E885E50009E11B /* RdioCollectionViewController.m in Sources */,
 				D8B613DB1718077400F12446 /* NBDirectionGestureRecognizer.m in Sources */,
 				D81E454218BF112A007EA2E3 /* UIFont+Common.m in Sources */,
+				D81E454618BF19D3007EA2E3 /* DragDownAnimator.m in Sources */,
 				D812F77017D8373100E19402 /* PLVolumeCell.m in Sources */,
 				D8B613E4171B5B7300F12446 /* PLInputCell.m in Sources */,
 			);

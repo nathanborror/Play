@@ -3,12 +3,12 @@
     {
       "idiom" : "universal",
       "scale" : "1x",
-      "filename" : "ControlNext.png"
+      "filename" : "DialBackground.png"
     },
     {
       "idiom" : "universal",
       "scale" : "2x",
-      "filename" : "ControlNext@2x.png"
+      "filename" : "DialBackground@2x.png"
     }
   ],
   "info" : {

@@ -9,8 +9,6 @@
 @import UIKit;
 @import QuartzCore;
 
-@interface PLNowPlayingViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, UISplitViewControllerDelegate>
-
-- (id)initWIthGroup:(NSDictionary *)group;
+@interface PLNowPlayingViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, UISplitViewControllerDelegate, UIViewControllerTransitioningDelegate>
 
 @end

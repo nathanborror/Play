@@ -87,6 +87,11 @@ typedef NS_ENUM(NSInteger, NBScrollingDirection) {
   return self;
 }
 
+- (void)dealloc
+{
+  [self removeObserver:self forKeyPath:COLLECTION_VIEW_KEYPATH context:nil];
+}
+
 - (void)setupCollectionView {
   _longPressGestureRecognizer = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(handleLongPressGesture:)];
   [_longPressGestureRecognizer setMinimumPressDuration:.2];
@@ -249,12 +254,10 @@ typedef NS_ENUM(NSInteger, NBScrollingDirection) {
 
       collectionViewCell.highlighted = YES;
       UIImageView *highlightedImageView = [[UIImageView alloc] initWithImage:[collectionViewCell rasterizedImage]];
-      highlightedImageView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
       highlightedImageView.alpha = 1.0f;
 
       collectionViewCell.highlighted = NO;
       UIImageView *imageView = [[UIImageView alloc] initWithImage:[collectionViewCell rasterizedImage]];
-      imageView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
       imageView.alpha = 0.0f;
 
       [_currentView addSubview:imageView];

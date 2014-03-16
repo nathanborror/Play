@@ -7,61 +7,32 @@
 //
 
 #import "PLNowPlayingViewController.h"
-#import "PLSong.h"
-#import "PLVolumeCell.h"
 #import "PLSpeakersViewController.h"
+#import "PLVolumeCell.h"
 #import "SonosController.h"
-
-static const CGFloat kProgressPadding = 50.0;
-
-static const CGFloat kControlBarHeight = 128.0;
-static const CGFloat kControlBarPadding = 16.0;
-static const CGFloat kControlBarPreviousNextPadding = 46.0;
-static const CGFloat kControlBarButtonWidth = 44.0;
-static const CGFloat kControlBarButtonHeight = kControlBarButtonWidth;
-static const CGFloat kControlBarButtonPadding = 20.0;
-static const CGFloat kControlBarButtonTopMargin = 56.0;
-
-static const CGFloat kNavigationBarHeight = 80.0;
-
-static const CGFloat kVelocity = 0.1;
-static const CGFloat kDamping = 0.6;
 #import "PLInputStore.h"
 #import "PLInput.h"
+#import "UIColor+Common.h"
+#import "UIFont+Common.h"
+#import "DragDownAnimator.h"
 
-static const CGFloat kSongTitleFontSize = 17.0;
-static const CGFloat kAlbumTitleFontSize = 15.0;
+static const CGFloat kMarginLeft = 16.0;
 
 @interface PLNowPlayingViewController ()
 {
   SonosController *_sonos;
-
-  NSDictionary *_group;
+  NSArray *_groups;
   UITableView *_volumeTable;
-  UIView *_controlBar;
-  UISlider *_volumeSlider;
-
-  UIButton *_playPauseButton;
-  UIButton *_stopButton;
-  UIButton *_nextButton;
-  UIButton *_previousButton;
-  UIButton *_speakersButton;
-
-  CGPoint _panCoordBegan;
-
-  NSArray *_songListData;
-
-  UIView *_miniBar;
 }
 @end
 
 @implementation PLNowPlayingViewController
 
-- (id)initWIthGroup:(NSDictionary *)group
+- (instancetype)init
 {
   if (self = [super init]) {
     _sonos = [SonosController sharedController];
-    _group = group;
+    _groups = [[PLInputStore sharedStore] allInputsGrouped];
   }
   return self;
 }
@@ -70,95 +41,33 @@ static const CGFloat kAlbumTitleFontSize = 15.0;
 {
   [super viewDidLoad];
 
-  [self setTitle:@"Playing"];
-  [self.navigationController.navigationBar setBackgroundImage:[[UIImage alloc] init] forBarMetrics:UIBarMetricsDefault];
-  [self.navigationController.navigationBar setShadowImage:[[UIImage alloc] init]];
-  [self.navigationController.navigationBar setBarStyle:UIBarStyleBlack];
-  [self.navigationController.navigationBar setBarTintColor:[UIColor colorWithRed:1 green:.16 blue:.41 alpha:1]];
-  [self.navigationController.navigationBar setTintColor:[UIColor whiteColor]];
-
-  if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
-
-  } else {
-    UIBarButtonItem *speakers = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"PLSpeakers"] style:UIBarButtonItemStylePlain target:self action:@selector(showSpeakers)];
-    [self.navigationItem setRightBarButtonItem:speakers];
-  }
+  [self.view setBackgroundColor:[UIColor blackColor]];
 
   _volumeTable = [[UITableView alloc] initWithFrame:CGRectZero];
   [_volumeTable registerClass:[PLVolumeCell class] forCellReuseIdentifier:@"PLVolumeCell"];
   [_volumeTable setDelegate:self];
   [_volumeTable setDataSource:self];
-  [_volumeTable setAutoresizingMask:UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight];
-  [_volumeTable setRowHeight:80];
+  [_volumeTable setBackgroundColor:[UIColor clearColor]];
+  [_volumeTable setRowHeight:96];
   [_volumeTable setSeparatorStyle:UITableViewCellSeparatorStyleNone];
-  [_volumeTable setContentInset:UIEdgeInsetsMake(kControlBarHeight, 0, 88, 0)];
+  [_volumeTable setContentInset:UIEdgeInsetsMake(0, 0, 0, 0)];
   [self.view addSubview:_volumeTable];
 
-  // Control Bar
-  _controlBar = [[UIView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(self.view.bounds), kControlBarHeight)];
-  [_controlBar setBackgroundColor:self.navigationController.navigationBar.barTintColor];
-  [_controlBar setAutoresizingMask:UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleTopMargin];
-  [_controlBar setUserInteractionEnabled:YES];
-  [self.view addSubview:_controlBar];
-
-  _playPauseButton = [[UIButton alloc] initWithFrame:CGRectMake((CGRectGetWidth(_controlBar.bounds)/2)-kControlBarButtonWidth/2, kControlBarButtonTopMargin, kControlBarButtonWidth, kControlBarButtonHeight)];
-  [_playPauseButton setAutoresizingMask:UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin];
-  [_playPauseButton setBackgroundImage:[UIImage imageNamed:@"ControlPause.png"] forState:UIControlStateNormal];
-  [_playPauseButton addTarget:self action:@selector(playPause) forControlEvents:UIControlEventTouchUpInside];
-  [_playPauseButton setShowsTouchWhenHighlighted:YES];
-  [_controlBar addSubview:_playPauseButton];
-
-  _nextButton = [[UIButton alloc] initWithFrame:CGRectMake(CGRectGetWidth(_controlBar.bounds)-(kControlBarButtonWidth+kControlBarPreviousNextPadding), kControlBarButtonTopMargin, kControlBarButtonWidth, kControlBarButtonHeight)];
-  [_nextButton setAutoresizingMask:UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin];
-  [_nextButton setBackgroundImage:[UIImage imageNamed:@"ControlNext.png"] forState:UIControlStateNormal];
-  [_nextButton addTarget:self action:@selector(next) forControlEvents:UIControlEventTouchUpInside];
-  [_nextButton setShowsTouchWhenHighlighted:YES];
-  [_controlBar addSubview:_nextButton];
-
-  _previousButton = [[UIButton alloc] initWithFrame:CGRectMake(kControlBarPreviousNextPadding, kControlBarButtonTopMargin, kControlBarButtonWidth, kControlBarButtonHeight)];
-  [_previousButton setAutoresizingMask:UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin];
-  [_previousButton setBackgroundImage:[UIImage imageNamed:@"ControlPrevious.png"] forState:UIControlStateNormal];
-  [_previousButton addTarget:self action:@selector(previous) forControlEvents:UIControlEventTouchUpInside];
-  [_previousButton setShowsTouchWhenHighlighted:YES];
-  [_controlBar addSubview:_previousButton];
+  UIView *footer = [[UIView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(self.view.bounds), 128)];
+  [footer setBackgroundColor:[UIColor whiteColor]];
+  [_volumeTable setTableFooterView:footer];
 }
 
 - (void)viewDidLayoutSubviews
 {
   [super viewDidLayoutSubviews];
-
   [_volumeTable setFrame:CGRectMake(0, 0, CGRectGetWidth(self.view.frame), CGRectGetHeight(self.view.frame))];
-  [_volumeTable.tableHeaderView setFrame:CGRectMake(0, 0, CGRectGetWidth(_volumeTable.frame), kControlBarHeight)];
 }
 
 - (void)showSpeakers
 {
-  UIView *snapshot = [self.view snapshotViewAfterScreenUpdates:YES];
-  [_group[@"master"] setNowPlayingSnapshot:snapshot];
-
   PLSpeakersViewController *viewController = [[PLSpeakersViewController alloc] init];
   [self.navigationController presentViewController:viewController animated:NO completion:nil];
-}
-
-- (void)playPause
-{
-  if (_sonos.isPlaying) {
-    [_sonos pause:nil completion:nil];
-    [_playPauseButton setBackgroundImage:[UIImage imageNamed:@"ControlPlay.png"] forState:UIControlStateNormal];
-  } else {
-    [_sonos play:nil uri:nil completion:nil];
-    [_playPauseButton setBackgroundImage:[UIImage imageNamed:@"ControlPause.png"] forState:UIControlStateNormal];
-  }
-}
-
-- (void)next
-{
-  [_sonos next:nil completion:nil];
-}
-
-- (void)previous
-{
-  [_sonos previous:nil completion:nil];
 }
 
 - (void)volume:(UISlider *)sender
@@ -166,24 +75,76 @@ static const CGFloat kAlbumTitleFontSize = 15.0;
   [_sonos volume:nil level:(int)[sender value] completion:nil];
 }
 
-- (void)setCurrentSong:(PLSong *)song
-{
-  [_sonos play:nil uri:song.uri completion:nil];
-}
-
 #pragma mark - UITableViewDataSource
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{
+  return _groups.count;
+}
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-  return [_group[@"inputs"] count];
+  NSDictionary *group = [_groups objectAtIndex:section];
+  return [(NSArray *)group[@"inputs"] count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+  NSDictionary *group = [_groups objectAtIndex:indexPath.section];
+  PLInput *input = [group[@"inputs"] objectAtIndex:indexPath.item];
+
   PLVolumeCell *cell = (PLVolumeCell *)[tableView dequeueReusableCellWithIdentifier:@"PLVolumeCell"];
-  SonosInput *input = [_group[@"inputs"] objectAtIndex:indexPath.item];
   [cell setInput:input];
   return cell;
+}
+
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
+{
+  UIView *sectionHeader = [[UIView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(self.view.bounds), 64)];
+  [sectionHeader setBackgroundColor:[UIColor colorWithWhite:1 alpha:1]];
+
+  UILabel *title = [[UILabel alloc] initWithFrame:CGRectMake(kMarginLeft, 12, CGRectGetWidth(self.view.bounds)-32, 44)];
+  [title setTextColor:[UIColor text]];
+  [title setFont:[UIFont header]];
+  [title setText:@"Line In"];
+  [sectionHeader addSubview:title];
+
+  UIView *separator = [[UIView alloc] initWithFrame:CGRectMake(kMarginLeft, CGRectGetHeight(sectionHeader.bounds), CGRectGetWidth(sectionHeader.bounds), .5)];
+  [separator setBackgroundColor:[UIColor borderColor]];
+  [sectionHeader addSubview:separator];
+
+  return sectionHeader;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+{
+  return 64;
+}
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView
+{
+  if (scrollView.contentOffset.y < -20.0) {
+    PLSpeakersViewController *viewController = [[PLSpeakersViewController alloc] init];
+    [viewController setModalPresentationStyle:UIModalPresentationCustom];
+    [viewController setTransitioningDelegate:self];
+    [self presentViewController:viewController animated:YES completion:nil];
+  }
+}
+
+#pragma mark - UIViewControllerTransitioningDelegate
+
+- (id<UIViewControllerAnimatedTransitioning>)animationControllerForPresentedController:(UIViewController *)presented presentingController:(UIViewController *)presenting sourceController:(UIViewController *)source
+{
+  DragDownAnimator *animator = [[DragDownAnimator alloc] init];
+  [animator setPresenting:YES];
+  return animator;
+}
+
+- (id<UIViewControllerAnimatedTransitioning>)animationControllerForDismissedController:(UIViewController *)dismissed
+{
+  DragDownAnimator *animator = [[DragDownAnimator alloc] init];
+  [animator setPresenting:NO];
+  return animator;
 }
 
 @end

@@ -8,14 +8,13 @@
 
 #import "PLDial.h"
 #import "NBDirectionGestureRecognizer.h"
-
-static const CGFloat kDialHeight = 32;
+#import "UIColor+Common.h"
 
 @implementation PLDial {
   CGPoint _panCoordBegan;
   UIView *_max;
   UIView *_min;
-  UIImageView *_thumb;
+  UIView *_thumb;
 
   CGFloat maxOriginX;
   CGFloat minOriginX;
@@ -24,20 +23,18 @@ static const CGFloat kDialHeight = 32;
 - (instancetype)initWithFrame:(CGRect)frame
 {
   if (self = [super initWithFrame:frame]) {
-    _max = [[UIView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(self.bounds), kDialHeight)];
-    [_max setAutoresizingMask:UIViewAutoresizingFlexibleWidth];
-    [_max setBackgroundColor:[UIColor colorWithWhite:.92 alpha:1]];
-    [_max.layer setCornerRadius:CGRectGetHeight(_max.bounds)/2];
+    [self setClipsToBounds:NO];
+
+    _max = [[UIView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(self.bounds), CGRectGetHeight(self.bounds))];
+    [_max setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"DialBackground"]]];
     [self addSubview:_max];
 
-    _min = [[UIView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(self.bounds), kDialHeight)];
-    [_min setAutoresizingMask:UIViewAutoresizingFlexibleWidth];
-    [_min setBackgroundColor:[UIColor colorWithRed:1 green:.16 blue:.41 alpha:1]];
-    [_min.layer setCornerRadius:CGRectGetHeight(_min.bounds)/2];
+    _min = [[UIView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(self.bounds), CGRectGetHeight(self.bounds))];
+    [_min setBackgroundColor:[UIColor tintColor]];
     [self addSubview:_min];
 
-    _thumb = [[UIImageView alloc] initWithFrame:CGRectMake(0, -6, 43, 43)];
-    [_thumb setImage:[UIImage imageNamed:@"PLDialThumb"]];
+    _thumb = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 4, CGRectGetHeight(self.bounds))];
+    [_thumb setBackgroundColor:[UIColor tintColor]];
     [self addSubview:_thumb];
 
     NBDirectionGestureRecognizer *pan = [[NBDirectionGestureRecognizer alloc] initWithTarget:self action:@selector(panDial:)];
@@ -66,7 +63,7 @@ static const CGFloat kDialHeight = 32;
       _thumb.center = CGPointMake(minOriginX, _thumb.center.y);
     }
   }
-  [_min setFrame:CGRectMake(0, 0, CGRectGetMaxX(_thumb.frame)-10, kDialHeight)];
+  [_min setFrame:CGRectMake(0, 0, CGRectGetMaxX(_thumb.frame), CGRectGetHeight(self.bounds))];
 }
 
 #pragma mark - NBDirectionGestureRecognizer
