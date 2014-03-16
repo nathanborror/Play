@@ -12,6 +12,7 @@
 #import "PLNowPlayingViewController.h"
 #import "PLSpeakersViewController.h"
 #import "PLNextUpViewController.h"
+#import "PLLoadingViewController.h"
 
 @implementation PLAppDelegate
 
@@ -23,6 +24,8 @@
 
   [[UISlider appearance] setMaximumTrackImage:[UIImage imageNamed:@"PLProgressMax"] forState:UIControlStateNormal];
   [[UISlider appearance] setMinimumTrackImage:[UIImage imageNamed:@"PLProgressMin"] forState:UIControlStateNormal];
+  PLLoadingViewController *loadingViewController = [[PLLoadingViewController alloc] init];
+  [_window setRootViewController:loadingViewController];
 
   // Find all Sonos speakers before anything else.
   [SonosController discover:^(NSArray *inputs, NSError *error) {
