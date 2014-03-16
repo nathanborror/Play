@@ -59,7 +59,7 @@
 
 - (void)applicationDidEnterBackground:(UIApplication *)application
 {
-  [[SonosInputStore sharedStore] saveChanges];
+  [[PLInputStore sharedStore] saveChanges];
 }
 
 @end
