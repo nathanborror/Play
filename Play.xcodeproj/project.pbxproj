@@ -20,6 +20,7 @@
 		D812F76A17D832BD00E19402 /* PLQueueCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D812F76917D832BD00E19402 /* PLQueueCell.m */; };
 		D812F77017D8373100E19402 /* PLVolumeCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D812F76F17D8373100E19402 /* PLVolumeCell.m */; };
 		D819F65016ADC64300B19B50 /* SonosConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = D819F64F16ADC64300B19B50 /* SonosConnection.m */; };
+		D81E454218BF112A007EA2E3 /* UIFont+Common.m in Sources */ = {isa = PBXBuildFile; fileRef = D81E454118BF112A007EA2E3 /* UIFont+Common.m */; };
 		D8633D2A182709E700A2CCA5 /* XMLReader.m in Sources */ = {isa = PBXBuildFile; fileRef = D8633D29182709E700A2CCA5 /* XMLReader.m */; };
 		D864953817B6F2D0006E7E46 /* PLProgressBar.m in Sources */ = {isa = PBXBuildFile; fileRef = D864953717B6F2D0006E7E46 /* PLProgressBar.m */; };
 		D8678A9B17D5D687001CE707 /* PresentSpeakersAnimator.m in Sources */ = {isa = PBXBuildFile; fileRef = D8678A9A17D5D687001CE707 /* PresentSpeakersAnimator.m */; };
@@ -57,12 +58,12 @@
 		D89337F71788DC0E00AF8A1B /* RdioPlaylistViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D89337F61788DBE600AF8A1B /* RdioPlaylistViewController.m */; };
 		D89337FA178A1E6900AF8A1B /* RdioPlaylist.m in Sources */ = {isa = PBXBuildFile; fileRef = D89337F91788DC4200AF8A1B /* RdioPlaylist.m */; };
 		D89337FD178A2B9800AF8A1B /* RdioSongsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D89337FC178A2B6B00AF8A1B /* RdioSongsViewController.m */; };
+		D8949E3318B186D9002A439C /* UIColor+Common.m in Sources */ = {isa = PBXBuildFile; fileRef = D8949E3218B186D9002A439C /* UIColor+Common.m */; };
 		D898033B16D0159700D30813 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D898033A16D0159700D30813 /* OpenGLES.framework */; };
 		D898033D16D01A5600D30813 /* CoreImage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D898033C16D01A5600D30813 /* CoreImage.framework */; };
 		D8B4A33A17C0A9E900782ED8 /* PLDial.m in Sources */ = {isa = PBXBuildFile; fileRef = D8B4A33917C07B8E00782ED8 /* PLDial.m */; };
 		D8B613DB1718077400F12446 /* NBDirectionGestureRecognizer.m in Sources */ = {isa = PBXBuildFile; fileRef = D8B613DA1718077400F12446 /* NBDirectionGestureRecognizer.m */; };
 		D8B613E4171B5B7300F12446 /* PLInputCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D8B613E3171B5B7300F12446 /* PLInputCell.m */; };
-		D8DFB67D176D0F1A00593F92 /* UIImage+BlurImage.m in Sources */ = {isa = PBXBuildFile; fileRef = D8DFB67B176D0C7500593F92 /* UIImage+BlurImage.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -90,6 +91,8 @@
 		D819F64F16ADC64300B19B50 /* SonosConnection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SonosConnection.m; sourceTree = "<group>"; };
 		D819F65C16AE1BB900B19B50 /* Examples.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = Examples.xml; sourceTree = "<group>"; };
 		D81DE37A16ED687400F21111 /* Play-Debug.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Play-Debug.xcconfig"; sourceTree = "<group>"; };
+		D81E454018BF112A007EA2E3 /* UIFont+Common.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIFont+Common.h"; sourceTree = "<group>"; };
+		D81E454118BF112A007EA2E3 /* UIFont+Common.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIFont+Common.m"; sourceTree = "<group>"; };
 		D8633D28182709E700A2CCA5 /* XMLReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = XMLReader.h; path = Vendor/XMLReader.h; sourceTree = "<group>"; };
 		D8633D29182709E700A2CCA5 /* XMLReader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = XMLReader.m; path = Vendor/XMLReader.m; sourceTree = "<group>"; };
 		D864953617B6F2D0006E7E46 /* PLProgressBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PLProgressBar.h; sourceTree = "<group>"; };
@@ -155,6 +158,8 @@
 		D89337F91788DC4200AF8A1B /* RdioPlaylist.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RdioPlaylist.m; sourceTree = "<group>"; };
 		D89337FB178A2B6B00AF8A1B /* RdioSongsViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RdioSongsViewController.h; sourceTree = "<group>"; };
 		D89337FC178A2B6B00AF8A1B /* RdioSongsViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RdioSongsViewController.m; sourceTree = "<group>"; };
+		D8949E3118B186D9002A439C /* UIColor+Common.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+Common.h"; sourceTree = "<group>"; };
+		D8949E3218B186D9002A439C /* UIColor+Common.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+Common.m"; sourceTree = "<group>"; };
 		D898033A16D0159700D30813 /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
 		D898033C16D01A5600D30813 /* CoreImage.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreImage.framework; path = System/Library/Frameworks/CoreImage.framework; sourceTree = SDKROOT; };
 		D8B4A33817C07B8E00782ED8 /* PLDial.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PLDial.h; sourceTree = "<group>"; };
@@ -163,8 +168,6 @@
 		D8B613DA1718077400F12446 /* NBDirectionGestureRecognizer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NBDirectionGestureRecognizer.m; path = NBKit/NBDirectionGestureRecognizer.m; sourceTree = "<group>"; };
 		D8B613E2171B5B7300F12446 /* PLInputCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PLInputCell.h; sourceTree = "<group>"; };
 		D8B613E3171B5B7300F12446 /* PLInputCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PLInputCell.m; sourceTree = "<group>"; };
-		D8DFB67A176D0C7500593F92 /* UIImage+BlurImage.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIImage+BlurImage.h"; sourceTree = "<group>"; };
-		D8DFB67B176D0C7500593F92 /* UIImage+BlurImage.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIImage+BlurImage.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -283,8 +286,10 @@
 			children = (
 				D8824E3216939C5D00D05AA0 /* UIViewController+ModalCheck.h */,
 				D8824E3316939C5D00D05AA0 /* UIViewController+ModalCheck.m */,
-				D8DFB67A176D0C7500593F92 /* UIImage+BlurImage.h */,
-				D8DFB67B176D0C7500593F92 /* UIImage+BlurImage.m */,
+				D8949E3118B186D9002A439C /* UIColor+Common.h */,
+				D8949E3218B186D9002A439C /* UIColor+Common.m */,
+				D81E454018BF112A007EA2E3 /* UIFont+Common.h */,
+				D81E454118BF112A007EA2E3 /* UIFont+Common.m */,
 			);
 			name = Categories;
 			sourceTree = "<group>";
@@ -332,6 +337,7 @@
 				D8633D27182709D700A2CCA5 /* Vendor */,
 				D8678A9817D5D665001CE707 /* Animators */,
 				D8B613D51717FD2200F12446 /* NBKit */,
+				D8824E3116939C3900D05AA0 /* Categories */,
 				D88EA7FD16917C460011F6FB /* PLAppDelegate.h */,
 				D88EA7FE16917C460011F6FB /* PLAppDelegate.m */,
 				D812F76517D82DC600E19402 /* PLNextUpViewController.h */,
@@ -356,7 +362,6 @@
 				D8824DE616938C8900D05AA0 /* Data */,
 				D158131016E883580009E11B /* Rdio */,
 				D8824E281693921400D05AA0 /* UI Elements */,
-				D8824E3116939C3900D05AA0 /* Categories */,
 				D88EA7F516917C460011F6FB /* Supporting Files */,
 				D885BF42176856C600793DAC /* Media.xcassets */,
 			);
@@ -463,8 +468,8 @@
 				D812F76A17D832BD00E19402 /* PLQueueCell.m in Sources */,
 				D89337FD178A2B9800AF8A1B /* RdioSongsViewController.m in Sources */,
 				D89337FA178A1E6900AF8A1B /* RdioPlaylist.m in Sources */,
+				D8949E3318B186D9002A439C /* UIColor+Common.m in Sources */,
 				D89337F71788DC0E00AF8A1B /* RdioPlaylistViewController.m in Sources */,
-				D8DFB67D176D0F1A00593F92 /* UIImage+BlurImage.m in Sources */,
 				D88EA7FB16917C460011F6FB /* main.m in Sources */,
 				D88EA7FF16917C460011F6FB /* PLAppDelegate.m in Sources */,
 				D8916C421830507E00B2E139 /* UPNPDiscovery.m in Sources */,
@@ -494,6 +499,7 @@
 				D158131B16E884020009E11B /* RdioSong.m in Sources */,
 				D158132116E885E50009E11B /* RdioCollectionViewController.m in Sources */,
 				D8B613DB1718077400F12446 /* NBDirectionGestureRecognizer.m in Sources */,
+				D81E454218BF112A007EA2E3 /* UIFont+Common.m in Sources */,
 				D812F77017D8373100E19402 /* PLVolumeCell.m in Sources */,
 				D8B613E4171B5B7300F12446 /* PLInputCell.m in Sources */,
 			);
