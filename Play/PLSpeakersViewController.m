@@ -196,7 +196,7 @@ static NSString *kSectionHeader = @"PLSectionHeader";
   [data1 removeObjectAtIndex:fromIndexPath.item];
   [data2 insertObject:input atIndex:toIndexPath.item];
 
-  //[input pairWithInput:master];
+  [[PLInputStore sharedStore] pairInput:input withInput:master];
 }
 
 #pragma mark - UICollectionViewDelegate

@@ -27,20 +27,6 @@
   return [NSString stringWithFormat:@"<PLInput: %@>", _name];
 }
 
-//- (void)pairWithInput:(PLInput *)master
-//{
-//  _uri = [NSString stringWithFormat:@"x-rincon:%@", master.uid];
-//  [[SonosController sharedController] play:self uri:_uri completion:nil];
-//  _status = PLInputStatusSlave;
-//}
-//
-//- (void)unpair
-//{
-//  _uri = [NSString stringWithFormat:@"x-rincon-queue:%@#0", self.uid];
-//  [[SonosController sharedController] play:self uri:_uri completion:nil];
-//  _status = PLInputStatusStopped;
-//}
-
 #pragma mark - NSCoding
 
 - (instancetype)initWithCoder:(NSCoder *)aDecoder

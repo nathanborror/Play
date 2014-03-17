@@ -26,7 +26,4 @@ typedef NS_ENUM(NSInteger, PLInputStatus) {
 
 - (instancetype)initWithIP:(NSString *)aIP name:(NSString *)aName uid:(NSString *)aUid;
 
-- (void)pairWithInput:(PLInput *)master;
-- (void)unpair;
-
 @end
