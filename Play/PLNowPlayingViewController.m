@@ -48,7 +48,7 @@ static const CGFloat kMarginLeft = 16.0;
   [_volumeTable setTableFooterView:footer];
 
   _data = [[SonosControllerStore sharedStore] data];
-  [[SonosControllerStore sharedStore] addObserver:self forKeyPath:@"allControllers" options:NSKeyValueObservingOptionNew context:nil];
+  [[SonosControllerStore sharedStore] addObserver:self forKeyPath:@"data" options:NSKeyValueObservingOptionNew context:nil];
 }
 
 - (void)viewDidLayoutSubviews
@@ -57,16 +57,9 @@ static const CGFloat kMarginLeft = 16.0;
   [_volumeTable setFrame:CGRectMake(0, 0, CGRectGetWidth(self.view.frame), CGRectGetHeight(self.view.frame))];
 }
 
-- (void)viewDidAppear:(BOOL)animated
-{
-  [super viewDidAppear:animated];
-
-  NSLog(@"Now playing view did appear");
-}
-
 - (void)showBrowser
 {
-  NSLog(@"browser");
+  NSLog(@"Show browser...");
 }
 
 #pragma mark - UITableViewDataSource
@@ -160,7 +153,7 @@ static const CGFloat kMarginLeft = 16.0;
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
-  if ([keyPath isEqualToString:@"allControllers"]) {
+  if ([keyPath isEqualToString:@"data"]) {
     [[NSOperationQueue mainQueue] addOperationWithBlock:^{
       _data = [[SonosControllerStore sharedStore] data];
       [_volumeTable reloadData];

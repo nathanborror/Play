@@ -69,6 +69,8 @@ static NSString *kSectionHeader = @"PLSectionHeader";
   [self.view addSubview:_nowPlayingButton];
 
   _data = [[SonosControllerStore sharedStore] data];
+
+  [[SonosControllerStore sharedStore] addObserver:self forKeyPath:@"data" options:NSKeyValueObservingOptionNew context:nil];
 }
 
 - (void)handleSectionTap:(UITapGestureRecognizer *)recognizer
@@ -87,7 +89,6 @@ static NSString *kSectionHeader = @"PLSectionHeader";
 - (void)viewDidAppear:(BOOL)animated
 {
   [super viewDidAppear:animated];
-  NSLog(@"View did appear");
 
   if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
     [_nowPlayingButton setAlpha:1];
@@ -175,10 +176,10 @@ static NSString *kSectionHeader = @"PLSectionHeader";
     }
   }
 
+  [[SonosControllerStore sharedStore] pairController:controller with:coordinator];
+
   [data1 removeObjectAtIndex:fromIndexPath.item];
   [data2 insertObject:controller atIndex:toIndexPath.item];
-
-  [controller changeCoordinatorTo:coordinator completion:nil];
 }
 
 #pragma mark - UICollectionViewDelegate
@@ -195,6 +196,18 @@ static NSString *kSectionHeader = @"PLSectionHeader";
   }
 
   [self presentViewController:navController animated:YES completion:nil];
+}
+
+#pragma mark - KVO
+
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
+{
+  if ([keyPath isEqualToString:@"data"]) {
+    [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+      _data = [[SonosControllerStore sharedStore] data];
+      [_collectionView reloadData];
+    }];
+  }
 }
 
 @end
