@@ -9,14 +9,11 @@
 #import <UIKit/UIKit.h>
 #import <QuartzCore/QuartzCore.h>
 
-@class PLInput;
+@class SonosController;
 
 @interface PLInputCell : UICollectionViewCell
 
-@property (nonatomic, strong) PLInput *input;
+@property (nonatomic, strong) SonosController *controller;
 @property (nonatomic, assign) CGPoint origin;
-
-- (void)pair:(PLInput *)master;
-- (void)unpair;
 
 @end

@@ -7,50 +7,36 @@
 //
 
 #import "PLAppDelegate.h"
-#import "SonosController.h"
-#import "PLInputStore.h"
 #import "PLNowPlayingViewController.h"
 #import "PLSpeakersViewController.h"
-#import "PLLoadingViewController.h"
+#import "UIColor+Common.h"
+
+#import <SonosKit/SonosControllerStore.h>
 
 @implementation PLAppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
   _window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-  [_window setTintColor:[UIColor colorWithRed:1 green:.16 blue:.41 alpha:1]];
+  [_window setTintColor:[UIColor tintColor]];
   [_window setBackgroundColor:[UIColor whiteColor]];
 
-  PLLoadingViewController *loadingViewController = [[PLLoadingViewController alloc] init];
-  [_window setRootViewController:loadingViewController];
+  if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
+    PLNowPlayingViewController *nowPlaying = [[PLNowPlayingViewController alloc] init];
+    PLSpeakersViewController *speakers = [[PLSpeakersViewController alloc] init];
 
-  // Find all Sonos speakers before anything else.
-  [SonosController discover:^(NSArray *inputs, NSError *error) {
-    dispatch_async(dispatch_get_main_queue(), ^{
-      [_window.rootViewController removeFromParentViewController];
+    NSArray *viewControllers = [NSArray arrayWithObjects:nowPlaying, speakers, nil];
+    UISplitViewController *splitViewController = [[UISplitViewController alloc] init];
+    [splitViewController setViewControllers:viewControllers];
+    [splitViewController setDelegate:speakers];
+    [splitViewController.view setOpaque:NO];
+    [splitViewController.view setBackgroundColor:[UIColor colorWithWhite:.1 alpha:1]];
 
-      if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
-        PLNowPlayingViewController *viewController = [[PLNowPlayingViewController alloc] init];
-        UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:viewController];
-
-        PLSpeakersViewController *speakerViewController = [[PLSpeakersViewController alloc] init];
-
-        NSArray *viewControllers = [NSArray arrayWithObjects:navController, speakerViewController, nil];
-
-        UISplitViewController *splitViewController = [[UISplitViewController alloc] init];
-        [splitViewController setViewControllers:viewControllers];
-        [splitViewController setDelegate:speakerViewController];
-
-        [splitViewController.view setOpaque:NO];
-        [splitViewController.view setBackgroundColor:[UIColor colorWithWhite:.1 alpha:1]];
-
-        [self.window setRootViewController:splitViewController];
-      } else {
-        PLNowPlayingViewController *nowPlaying = [[PLNowPlayingViewController alloc] init];
-        [_window setRootViewController:nowPlaying];
-      }
-    });
-  }];
+    [_window setRootViewController:splitViewController];
+  } else {
+    PLNowPlayingViewController *nowPlaying = [[PLNowPlayingViewController alloc] init];
+    [_window setRootViewController:nowPlaying];
+  }
 
   [_window makeKeyAndVisible];
   return YES;
@@ -58,7 +44,7 @@
 
 - (void)applicationDidEnterBackground:(UIApplication *)application
 {
-  [[PLInputStore sharedStore] saveChanges];
+  [[SonosControllerStore sharedStore] saveChanges];
 }
 
 @end

@@ -12,7 +12,7 @@
 
 - (NSTimeInterval)transitionDuration:(id<UIViewControllerContextTransitioning>)transitionContext
 {
-  return .4;
+  return .45;
 }
 
 - (void)animateTransition:(id<UIViewControllerContextTransitioning>)transitionContext
@@ -30,7 +30,7 @@
     [transitionContext.containerView addSubview:toViewController.view];
   }
 
-  [UIView animateWithDuration:[self transitionDuration:transitionContext] delay:0 usingSpringWithDamping:.75 initialSpringVelocity:.2 options:UIViewAnimationOptionCurveLinear animations:^{
+  [UIView animateWithDuration:[self transitionDuration:transitionContext] delay:0 usingSpringWithDamping:.85 initialSpringVelocity:.2 options:UIViewAnimationOptionCurveLinear animations:^{
     if (_presenting) {
       [fromViewController.view setFrame:CGRectOffset(fromViewController.view.bounds, 0, CGRectGetHeight(fromViewController.view.bounds)-64)];
     } else {
@@ -40,7 +40,7 @@
     if (_presenting) {
       [fromViewController.view removeFromSuperview];
     }
-    [transitionContext completeTransition:YES];
+    [transitionContext completeTransition:![transitionContext transitionWasCancelled]];
   }];
 }
 

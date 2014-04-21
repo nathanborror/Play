@@ -8,9 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
+@class SonosController;
+
 @interface PLSectionHeaderView : UICollectionReusableView
 
-@property (nonatomic, strong) NSString *title;
-@property (nonatomic, strong) NSDictionary *group;
+@property (nonatomic, strong) SonosController *controller;
 
 @end

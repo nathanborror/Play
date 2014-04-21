@@ -8,8 +8,9 @@
 
 @import UIKit;
 @import QuartzCore;
-#import "NBReorderableCollectionViewLayout.h"
 
-@interface PLSpeakersViewController : UIViewController <UISplitViewControllerDelegate, UICollectionViewDelegate, NBReorderableCollectionViewDataSource, NBReorderableCollectionViewDelegateFlowLayout>
+#import <DraggableCollectionView/UICollectionView+Draggable.h>
+
+@interface PLSpeakersViewController : UIViewController <UISplitViewControllerDelegate, UICollectionViewDelegate, UICollectionViewDataSource_Draggable>
 
 @end

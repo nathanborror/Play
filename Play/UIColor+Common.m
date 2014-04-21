@@ -12,7 +12,7 @@
 
 + (UIColor *)tintColor
 {
-  return [UIColor colorWithRed:.18 green:.49 blue:.86 alpha:1];
+  return [UIColor colorWithRed:1 green:.16 blue:.41 alpha:1];
 }
 
 + (UIColor *)background

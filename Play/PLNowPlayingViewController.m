@@ -9,39 +9,29 @@
 #import "PLNowPlayingViewController.h"
 #import "PLSpeakersViewController.h"
 #import "PLVolumeCell.h"
-#import "SonosController.h"
-#import "PLInputStore.h"
-#import "PLInput.h"
 #import "UIColor+Common.h"
 #import "UIFont+Common.h"
 #import "DragDownAnimator.h"
 
+#import <SonosKit/SonosController.h>
+#import <SonosKit/SonosControllerStore.h>
+
 static const CGFloat kMarginLeft = 16.0;
 
-@interface PLNowPlayingViewController ()
-{
-  SonosController *_sonos;
-  NSArray *_groups;
+@implementation PLNowPlayingViewController {
+  NSArray *_data;
   UITableView *_volumeTable;
-}
-@end
-
-@implementation PLNowPlayingViewController
-
-- (instancetype)init
-{
-  if (self = [super init]) {
-    _sonos = [SonosController sharedController];
-    _groups = [[PLInputStore sharedStore] allInputsGrouped];
-  }
-  return self;
 }
 
 - (void)viewDidLoad
 {
   [super viewDidLoad];
 
-  [self.view setBackgroundColor:[UIColor blackColor]];
+  if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
+    [self.view setBackgroundColor:[UIColor blackColor]];
+  } else {
+    [self.view setBackgroundColor:[UIColor whiteColor]];
+  }
 
   _volumeTable = [[UITableView alloc] initWithFrame:CGRectZero];
   [_volumeTable registerClass:[PLVolumeCell class] forCellReuseIdentifier:@"PLVolumeCell"];
@@ -56,6 +46,9 @@ static const CGFloat kMarginLeft = 16.0;
   UIView *footer = [[UIView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(self.view.bounds), 128)];
   [footer setBackgroundColor:[UIColor whiteColor]];
   [_volumeTable setTableFooterView:footer];
+
+  _data = [[SonosControllerStore sharedStore] data];
+  [[SonosControllerStore sharedStore] addObserver:self forKeyPath:@"allControllers" options:NSKeyValueObservingOptionNew context:nil];
 }
 
 - (void)viewDidLayoutSubviews
@@ -64,54 +57,70 @@ static const CGFloat kMarginLeft = 16.0;
   [_volumeTable setFrame:CGRectMake(0, 0, CGRectGetWidth(self.view.frame), CGRectGetHeight(self.view.frame))];
 }
 
-- (void)showSpeakers
+- (void)viewDidAppear:(BOOL)animated
 {
-  PLSpeakersViewController *viewController = [[PLSpeakersViewController alloc] init];
-  [self.navigationController presentViewController:viewController animated:NO completion:nil];
+  [super viewDidAppear:animated];
+
+  NSLog(@"Now playing view did appear");
 }
 
-- (void)volume:(UISlider *)sender
+- (void)showBrowser
 {
-  [_sonos volume:nil level:(int)[sender value] completion:nil];
+  NSLog(@"browser");
 }
 
 #pragma mark - UITableViewDataSource
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-  return _groups.count;
+  return _data.count;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-  NSDictionary *group = [_groups objectAtIndex:section];
-  return [(NSArray *)group[@"inputs"] count];
+  NSArray *controllers = [_data objectAtIndex:section];
+  return controllers.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-  NSDictionary *group = [_groups objectAtIndex:indexPath.section];
-  PLInput *input = [group[@"inputs"] objectAtIndex:indexPath.item];
+  NSArray *controllers = [_data objectAtIndex:indexPath.section];
+  SonosController *controller = [controllers objectAtIndex:indexPath.row];
 
   PLVolumeCell *cell = (PLVolumeCell *)[tableView dequeueReusableCellWithIdentifier:@"PLVolumeCell"];
-  [cell setInput:input];
+  [cell setController:controller];
   return cell;
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
+  NSArray *controllers = [_data objectAtIndex:section];
+  SonosController *coordinator = [controllers lastObject];
+
   UIView *sectionHeader = [[UIView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(self.view.bounds), 64)];
   [sectionHeader setBackgroundColor:[UIColor colorWithWhite:1 alpha:1]];
 
-  UILabel *title = [[UILabel alloc] initWithFrame:CGRectMake(kMarginLeft, 12, CGRectGetWidth(self.view.bounds)-32, 44)];
-  [title setTextColor:[UIColor text]];
-  [title setFont:[UIFont header]];
-  [title setText:@"Line In"];
-  [sectionHeader addSubview:title];
+  UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(kMarginLeft, 12, CGRectGetWidth(self.view.bounds)-32, 44)];
+  [titleLabel setTextColor:[UIColor text]];
+  [titleLabel setFont:[UIFont header]];
+  [titleLabel setText:@"Unknown"];
+  [sectionHeader addSubview:titleLabel];
+
+  UIImageView *chevron = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"Chevron"]];
+  [chevron setFrame:CGRectMake(CGRectGetWidth(sectionHeader.bounds)-44, (CGRectGetHeight(sectionHeader.bounds)/2)-22, 44, 44)];
+  [sectionHeader addSubview:chevron];
 
   UIView *separator = [[UIView alloc] initWithFrame:CGRectMake(kMarginLeft, CGRectGetHeight(sectionHeader.bounds), CGRectGetWidth(sectionHeader.bounds), .5)];
   [separator setBackgroundColor:[UIColor borderColor]];
   [sectionHeader addSubview:separator];
+
+  UIButton *button = [[UIButton alloc] initWithFrame:sectionHeader.bounds];
+  [button addTarget:self action:@selector(showBrowser) forControlEvents:UIControlEventTouchUpInside];
+  [sectionHeader addSubview:button];
+
+  [coordinator trackInfo:^(NSDictionary *track, NSDictionary *response, NSError *error) {
+    [titleLabel setText:track[@"creator"][@"text"] ? track[@"creator"][@"text"] : @"Unknown"];
+  }];
 
   return sectionHeader;
 }
@@ -123,7 +132,7 @@ static const CGFloat kMarginLeft = 16.0;
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
-  if (scrollView.contentOffset.y < -20.0) {
+  if (scrollView.contentOffset.y < -20.0 && [[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
     PLSpeakersViewController *viewController = [[PLSpeakersViewController alloc] init];
     [viewController setModalPresentationStyle:UIModalPresentationCustom];
     [viewController setTransitioningDelegate:self];
@@ -135,16 +144,28 @@ static const CGFloat kMarginLeft = 16.0;
 
 - (id<UIViewControllerAnimatedTransitioning>)animationControllerForPresentedController:(UIViewController *)presented presentingController:(UIViewController *)presenting sourceController:(UIViewController *)source
 {
-  DragDownAnimator *animator = [[DragDownAnimator alloc] init];
+  DragDownAnimator *animator = [DragDownAnimator new];
   [animator setPresenting:YES];
   return animator;
 }
 
 - (id<UIViewControllerAnimatedTransitioning>)animationControllerForDismissedController:(UIViewController *)dismissed
 {
-  DragDownAnimator *animator = [[DragDownAnimator alloc] init];
+  DragDownAnimator *animator = [DragDownAnimator new];
   [animator setPresenting:NO];
   return animator;
+}
+
+#pragma mark - KVO
+
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
+{
+  if ([keyPath isEqualToString:@"allControllers"]) {
+    [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+      _data = [[SonosControllerStore sharedStore] data];
+      [_volumeTable reloadData];
+    }];
+  }
 }
 
 @end

@@ -8,10 +8,10 @@
 
 @import UIKit;
 
-@class PLInput;
+@class SonosController;
 
 @interface PLVolumeCell : UITableViewCell
 
-@property (nonatomic, strong) PLInput *input;
+@property (nonatomic, strong) SonosController *controller;
 
 @end

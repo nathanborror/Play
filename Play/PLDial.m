@@ -29,12 +29,11 @@
     [_max setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"DialBackground"]]];
     [self addSubview:_max];
 
-    _min = [[UIView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(self.bounds), CGRectGetHeight(self.bounds))];
+    _min = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 10, CGRectGetHeight(self.bounds))];
     [_min setBackgroundColor:[UIColor tintColor]];
     [self addSubview:_min];
 
     _thumb = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 4, CGRectGetHeight(self.bounds))];
-    [_thumb setBackgroundColor:[UIColor tintColor]];
     [self addSubview:_thumb];
 
     NBDirectionGestureRecognizer *pan = [[NBDirectionGestureRecognizer alloc] initWithTarget:self action:@selector(panDial:)];
@@ -63,7 +62,10 @@
       _thumb.center = CGPointMake(minOriginX, _thumb.center.y);
     }
   }
-  [_min setFrame:CGRectMake(0, 0, CGRectGetMaxX(_thumb.frame), CGRectGetHeight(self.bounds))];
+
+  [UIView animateWithDuration:.3 delay:0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
+    [_min setFrame:CGRectMake(0, 0, CGRectGetMaxX(_thumb.frame), CGRectGetHeight(self.bounds))];
+  } completion:nil];
 }
 
 #pragma mark - NBDirectionGestureRecognizer

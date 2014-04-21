@@ -7,7 +7,6 @@
 //
 
 #import "PLInputCell.h"
-#import "PLInput.h"
 #import "SonosController.h"
 
 @implementation PLInputCell {
@@ -40,23 +39,23 @@
   [_label setFrame:CGRectOffset(_label.bounds, 0, CGRectGetMaxY(_speakerIcon.frame))];
 }
 
-- (void)setInput:(PLInput *)input
+- (void)setController:(SonosController *)controller
 {
-  _input = input;
+  _controller = controller;
 
-  [_label setText:_input.name];
+  [_label setText:_controller.name];
 
-  NSString *uid = _input.uid;
+  NSString *uuid = _controller.uuid;
 
   // Determine type of speaker
   NSRegularExpression *regexPlay3 = [NSRegularExpression regularExpressionWithPattern:@"RINCON_000E587" options:0 error:nil];
-  NSTextCheckingResult *matchPlay3 = [regexPlay3 firstMatchInString:uid options:0 range:NSMakeRange(0, uid.length)];
+  NSTextCheckingResult *matchPlay3 = [regexPlay3 firstMatchInString:uuid options:0 range:NSMakeRange(0, uuid.length)];
 
   NSRegularExpression *regexPlay5 = [NSRegularExpression regularExpressionWithPattern:@"RINCON_000E588" options:0 error:nil];
-  NSTextCheckingResult *matchPlay5 = [regexPlay5 firstMatchInString:uid options:0 range:NSMakeRange(0, uid.length)];
+  NSTextCheckingResult *matchPlay5 = [regexPlay5 firstMatchInString:uuid options:0 range:NSMakeRange(0, uuid.length)];
 
   NSRegularExpression *regexAmp = [NSRegularExpression regularExpressionWithPattern:@"RINCON_000E58D" options:0 error:nil];
-  NSTextCheckingResult *matchAmp = [regexAmp firstMatchInString:uid options:0 range:NSMakeRange(0, uid.length)];
+  NSTextCheckingResult *matchAmp = [regexAmp firstMatchInString:uuid options:0 range:NSMakeRange(0, uuid.length)];
 
   if (matchPlay3) {
     [_speakerIcon setImage:[UIImage imageNamed:@"SonosPlay3"]];
@@ -64,29 +63,6 @@
     [_speakerIcon setImage:[UIImage imageNamed:@"SonosPlay5"]];
   } else if (matchAmp) {
     [_speakerIcon setImage:[UIImage imageNamed:@"SonosAmp"]];
-  }
-
-  [self refreshStatus];
-}
-
-- (void)pair:(PLInput *)master
-{
-  NSString *uri = [NSString stringWithFormat:@"x-rincon:%@", master.uid];
-  [[SonosController sharedController] play:self.input uri:uri completion:nil];
-}
-
-- (void)unpair
-{
-  NSString *uri = [NSString stringWithFormat:@"x-rincon-queue:%@#0", self.input.uid];
-  [[SonosController sharedController] play:self.input uri:uri completion:nil];
-}
-
-- (void)refreshStatus
-{
-  if (_input.status != PLInputStatusSlave) {
-    [_label setFont:[UIFont boldSystemFontOfSize:11]];
-  } else {
-    [_label setFont:[UIFont systemFontOfSize:11]];
   }
 }
 

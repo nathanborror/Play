@@ -9,21 +9,18 @@
 #import "PLVolumeCell.h"
 #import "PLDial.h"
 #import "SonosController.h"
-#import "PLInput.h"
 #import "UIColor+Common.h"
 #import "UIFont+Common.h"
 
 @implementation PLVolumeCell {
   PLDial *_volumeDial;
   UILabel *_name;
-  SonosController *_sonos;
+  SonosController *_controller;
 }
 
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
   if (self = [super initWithStyle:style reuseIdentifier:reuseIdentifier]) {
-    _sonos = [SonosController sharedController];
-
     [self setSelectionStyle:UITableViewCellSelectionStyleNone];
 
     _volumeDial = [[PLDial alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(self.bounds), 48)];
@@ -53,20 +50,25 @@
 
 - (void)changeVolume:(PLDial *)dial
 {
-  [_sonos volume:_input level:(int)[dial value] completion:nil];
+  [_controller setVolume:(int)[dial value] completion:nil];
+  
 }
 
-- (void)setInput:(PLInput *)aInput
+- (void)setController:(SonosController *)controller
 {
-  _input = aInput;
+  _controller = controller;
 
-  [_name setText:_input.name];
+  [_name setText:_controller.name];
   [_name sizeToFit];
 
-  [_sonos volume:_input completion:^(NSDictionary *response, NSError *error) {
-    NSString *value = response[@"u:GetVolumeResponse"][@"CurrentVolume"][@"text"];
-    [_volumeDial setValue:[value floatValue]];
+#if TARGET_IPHONE_SIMULATOR
+  int random = arc4random() % 50;
+  [_volumeDial setValue:random];
+#else
+  [_controller getVolume:^(NSInteger volume, NSDictionary *response, NSError *error) {
+    [_volumeDial setValue:volume];
   }];
+#endif
 }
 
 @end

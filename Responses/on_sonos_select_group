@@ -1,0 +1,229 @@
+
+POST /SystemProperties/Control HTTP/1.1
+CONNECTION: close
+ACCEPT-ENCODING: gzip
+HOST: 10.0.1.9:1400
+USER-AGENT: Linux UPnP/1.0 Sonos/21.4-61250 (MDCR_MacBookPro10,1)
+CONTENT-LENGTH: 280
+CONTENT-TYPE: text/xml; charset="utf-8"
+SOAPACTION: "urn:schemas-upnp-org:service:SystemProperties:1#GetString"
+
+<?xml version="1.0"?>
+<s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/" s:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/">
+  <s:Body>
+    <u:GetString xmlns:u="urn:schemas-upnp-org:service:SystemProperties:1">
+      <VariableName>R_CustomerID</VariableName>
+    </u:GetString>
+  </s:Body>
+</s:Envelope>
+
+
+
+HTTP/1.1 200 OK
+CONTENT-LENGTH: 291
+CONTENT-TYPE: text/xml; charset="utf-8"
+EXT: 
+Server: Linux UPnP/1.0 Sonos/21.4-61160c (ZP120)
+Connection: close
+
+<?xml version="1.0"?>
+<s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/" s:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/">
+  <s:Body>
+    <u:GetStringResponse xmlns:u="urn:schemas-upnp-org:service:SystemProperties:1">
+      <StringValue>110798486</StringValue>
+    </u:GetStringResponse>
+  </s:Body>
+</s:Envelope>
+
+
+
+POST /SystemProperties/Control HTTP/1.1
+CONNECTION: close
+ACCEPT-ENCODING: gzip
+HOST: 10.0.1.9:1400
+USER-AGENT: Linux UPnP/1.0 Sonos/21.4-61250 (MDCR_MacBookPro10,1)
+CONTENT-LENGTH: 278
+CONTENT-TYPE: text/xml; charset="utf-8"
+SOAPACTION: "urn:schemas-upnp-org:service:SystemProperties:1#GetString"
+
+<?xml version="1.0"?>
+<s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/" s:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/">
+  <s:Body>
+    <u:GetString xmlns:u="urn:schemas-upnp-org:service:SystemProperties:1">
+      <VariableName>UMTracking</VariableName>
+    </u:GetString>
+  </s:Body>
+</s:Envelope>
+
+
+
+HTTP/1.1 200 OK
+CONTENT-LENGTH: 290
+CONTENT-TYPE: text/xml; charset="utf-8"
+EXT: 
+Server: Linux UPnP/1.0 Sonos/21.4-61160c (ZP120)
+Connection: close
+
+<?xml version="1.0"?>
+<s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/" s:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/">
+  <s:Body>
+    <u:GetStringResponse xmlns:u="urn:schemas-upnp-org:service:SystemProperties:1">
+      <StringValue>NoReport</StringValue>
+    </u:GetStringResponse>
+  </s:Body>
+</s:Envelope>
+
+
+
+POST /SystemProperties/Control HTTP/1.1
+CONNECTION: close
+ACCEPT-ENCODING: gzip
+HOST: 10.0.1.9:1400
+USER-AGENT: Linux UPnP/1.0 Sonos/21.4-61250 (MDCR_MacBookPro10,1)
+CONTENT-LENGTH: 284
+CONTENT-TYPE: text/xml; charset="utf-8"
+SOAPACTION: "urn:schemas-upnp-org:service:SystemProperties:1#GetString"
+
+<?xml version="1.0"?>
+<s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/" s:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/">
+  <s:Body>
+    <u:GetString xmlns:u="urn:schemas-upnp-org:service:SystemProperties:1">
+      <VariableName>MSMetricsBaseURL</VariableName>
+    </u:GetString>
+  </s:Body>
+</s:Envelope>
+
+
+
+HTTP/1.1 500 Internal Server Error
+CONTENT-LENGTH: 347
+CONTENT-TYPE: text/xml; charset="utf-8"
+EXT: 
+Server: Linux UPnP/1.0 Sonos/21.4-61160c (ZP120)
+Connection: close
+
+<?xml version="1.0"?>
+<s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/" s:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/">
+  <s:Body>
+    <s:Fault>
+      <faultcode>s:Client</faultcode>
+      <faultstring>UPnPError</faultstring>
+      <detail>
+        <UPnPError xmlns="urn:schemas-upnp-org:control-1-0">
+          <errorCode>800</errorCode>
+        </UPnPError>
+      </detail>
+    </s:Fault>
+  </s:Body>
+</s:Envelope>
+
+
+
+POST /SystemProperties/Control HTTP/1.1
+CONNECTION: close
+ACCEPT-ENCODING: gzip
+HOST: 10.0.1.9:1400
+USER-AGENT: Linux UPnP/1.0 Sonos/21.4-61250 (MDCR_MacBookPro10,1)
+CONTENT-LENGTH: 284
+CONTENT-TYPE: text/xml; charset="utf-8"
+SOAPACTION: "urn:schemas-upnp-org:service:SystemProperties:1#GetString"
+
+<?xml version="1.0"?>
+<s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/" s:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/">
+  <s:Body>
+    <u:GetString xmlns:u="urn:schemas-upnp-org:service:SystemProperties:1">
+      <VariableName>TrackPlayBaseURL</VariableName>
+    </u:GetString>
+  </s:Body>
+</s:Envelope>
+
+
+
+HTTP/1.1 500 Internal Server Error
+CONTENT-LENGTH: 347
+CONTENT-TYPE: text/xml; charset="utf-8"
+EXT: 
+Server: Linux UPnP/1.0 Sonos/21.4-61160c (ZP120)
+Connection: close
+
+<?xml version="1.0"?>
+<s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/" s:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/">
+  <s:Body>
+    <s:Fault>
+      <faultcode>s:Client</faultcode>
+      <faultstring>UPnPError</faultstring>
+      <detail>
+        <UPnPError xmlns="urn:schemas-upnp-org:control-1-0">
+          <errorCode>800</errorCode>
+        </UPnPError>
+      </detail>
+    </s:Fault>
+  </s:Body>
+</s:Envelope>
+
+
+
+GET /HRMetrics/pollInterval.htm?hhid=Sonos_9dqcjPAwKl270SStX1iag4kF23 HTTP/1.1
+CONNECTION: close
+ACCEPT: */*
+Host: msmetrics.sonos-ws-us.com
+USER-AGENT: Sonos
+
+
+POST /SystemProperties/Control HTTP/1.1
+CONNECTION: close
+ACCEPT-ENCODING: gzip
+HOST: 10.0.1.9:1400
+USER-AGENT: Linux UPnP/1.0 Sonos/21.4-61250 (MDCR_MacBookPro10,1)
+CONTENT-LENGTH: 285
+CONTENT-TYPE: text/xml; charset="utf-8"
+SOAPACTION: "urn:schemas-upnp-org:service:SystemProperties:1#GetString"
+
+<?xml version="1.0"?>
+<s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/" s:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/">
+  <s:Body>
+    <u:GetString xmlns:u="urn:schemas-upnp-org:service:SystemProperties:1">
+      <VariableName>MSMetricsInterval</VariableName>
+    </u:GetString>
+  </s:Body>
+</s:Envelope>
+
+
+
+HTTP/1.1 500 Internal Server Error
+CONTENT-LENGTH: 347
+CONTENT-TYPE: text/xml; charset="utf-8"
+EXT: 
+Server: Linux UPnP/1.0 Sonos/21.4-61160c (ZP120)
+Connection: close
+
+<?xml version="1.0"?>
+<s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/" s:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/">
+  <s:Body>
+    <s:Fault>
+      <faultcode>s:Client</faultcode>
+      <faultstring>UPnPError</faultstring>
+      <detail>
+        <UPnPError xmlns="urn:schemas-upnp-org:control-1-0">
+          <errorCode>800</errorCode>
+        </UPnPError>
+      </detail>
+    </s:Fault>
+  </s:Body>
+</s:Envelope>
+
+
+
+GET /HRMetrics/wifiTxRateThreshold.htm?hhid=Sonos_9dqcjPAwKl270SStX1iag4kF23 HTTP/1.1
+CONNECTION: close
+ACCEPT: */*
+Host: msmetrics.sonos-ws-us.com
+USER-AGENT: Sonos
+
+
+GET /HRMetrics/wifiLatencyThreshold.htm?hhid=Sonos_9dqcjPAwKl270SStX1iag4kF23 HTTP/1.1
+CONNECTION: close
+ACCEPT: */*
+Host: msmetrics.sonos-ws-us.com
+USER-AGENT: Sonos
+

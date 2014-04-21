@@ -8,42 +8,28 @@
 
 #import "PLLibraryViewController.h"
 #import "PLNowPlayingViewController.h"
-#import "PLSource.h"
 #import "PLPlaylistsViewController.h"
 #import "PLNowPlayingViewController.h"
-#import "PLInputStore.h"
-#import "PLInput.h"
-#import "SonosController.h"
-#import "RdioPlaylistViewController.h"
 #import "NBKit/NBArrayDataSource.h"
+#import "PLSource.h"
+
+#import <SonosKit/SonosController.h>
 
 @implementation PLLibraryViewController {
   UITableView *_libraryTableView;
   NSArray *_sourceList;
-  PLInput *_input;
+  SonosController *_controller;
   NBArrayDataSource *_delegate;
 }
 
-- (instancetype)initWithInput:(PLInput *)input
+- (instancetype)initWithController:(SonosController *)controller
 {
   if (self = [super init]) {
-    if (input) {
-      _input = input;
-    } else {
-      _input = [[PLInputStore sharedStore] master];
-    }
-
+    _controller = controller;
     _sourceList = @[
       [[PLSource alloc] initWithName:@"Playlists" selection:nil],
-      [[PLSource alloc] initWithName:@"Rdio" selection:^(){
-        RdioPlaylistViewController *viewController = [[RdioPlaylistViewController alloc] init];
-        [self.navigationController pushViewController:viewController animated:YES];
-      }],
       [[PLSource alloc] initWithName:@"Radio Stations" selection:nil],
-      [[PLSource alloc] initWithName:@"Line In" selection:^() {
-        [[SonosController sharedController] lineIn:_input completion:nil];
-        [self dismissViewControllerAnimated:YES completion:nil];
-      }]
+      [[PLSource alloc] initWithName:@"Line In" selection:nil]
     ];
   }
   return self;
