@@ -66,4 +66,10 @@
   }
 }
 
+- (void)prepareForReuse
+{
+  [_speakerIcon setImage:[UIImage new]];
+  [_label setText:@""];
+}
+
 @end
