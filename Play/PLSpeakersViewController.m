@@ -69,7 +69,6 @@ static NSString *kSectionHeader = @"PLSectionHeader";
   [self.view addSubview:_nowPlayingButton];
 
   _data = [[SonosControllerStore sharedStore] data];
-
   [[SonosControllerStore sharedStore] addObserver:self forKeyPath:@"data" options:NSKeyValueObservingOptionNew context:nil];
 }
 
@@ -164,6 +163,10 @@ static NSString *kSectionHeader = @"PLSectionHeader";
 
 - (void)collectionView:(UICollectionView *)collectionView moveItemAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
 {
+  if ([fromIndexPath isEqual:toIndexPath]) {
+    return;
+  }
+
   NSMutableArray *data1 = [_data objectAtIndex:fromIndexPath.section];
   NSMutableArray *data2 = [_data objectAtIndex:toIndexPath.section];
   SonosController *controller = [data1 objectAtIndex:fromIndexPath.item];
@@ -205,7 +208,10 @@ static NSString *kSectionHeader = @"PLSectionHeader";
   if ([keyPath isEqualToString:@"data"]) {
     [[NSOperationQueue mainQueue] addOperationWithBlock:^{
       _data = [[SonosControllerStore sharedStore] data];
-      [_collectionView reloadData];
+
+      dispatch_async(dispatch_get_main_queue(), ^{
+        [_collectionView reloadData];
+      });
     }];
   }
 }
