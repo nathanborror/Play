@@ -111,7 +111,7 @@ static const CGFloat kMarginLeft = 16.0;
   [button addTarget:self action:@selector(showBrowser) forControlEvents:UIControlEventTouchUpInside];
   [sectionHeader addSubview:button];
 
-  [coordinator trackInfo:^(NSDictionary *track, NSDictionary *response, NSError *error) {
+  [coordinator getPositionInfo:^(NSDictionary *track, NSDictionary *response, NSError *error) {
     [titleLabel setText:track[@"creator"][@"text"] ? track[@"creator"][@"text"] : @"Unknown"];
   }];
 
@@ -122,6 +122,8 @@ static const CGFloat kMarginLeft = 16.0;
 {
   return 64;
 }
+
+#pragma mark - UIScrollViewDelegate
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {

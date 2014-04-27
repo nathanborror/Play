@@ -46,8 +46,8 @@ static const CGFloat kPadding = 16.0;
 {
   _controller = controller;
 
-  [_controller trackInfo:^(NSDictionary *track, NSDictionary *response, NSError *error) {
-    [_label setText:track[@"creator"][@"text"]];
+  [_controller getPositionInfo:^(NSDictionary *track, NSDictionary *response, NSError *error) {
+    [_label setText:track[@"title"][@"text"]];
   }];
 }
 
