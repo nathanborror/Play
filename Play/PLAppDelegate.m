@@ -23,15 +23,18 @@
   [_window setBackgroundColor:[UIColor whiteColor]];
 
   if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
-    PLNowPlayingViewController *nowPlaying = [[PLNowPlayingViewController alloc] init];
-    PLSpeakersViewController *speakers = [[PLSpeakersViewController alloc] init];
+    PLNowPlayingViewController *playingController = [[PLNowPlayingViewController alloc] init];
+    UINavigationController *playingNavController = [[UINavigationController alloc] initWithRootViewController:playingController];
 
-    NSArray *viewControllers = [NSArray arrayWithObjects:nowPlaying, speakers, nil];
+    PLSpeakersViewController *speakerController = [[PLSpeakersViewController alloc] init];
+    UINavigationController *speakerNavController = [[UINavigationController alloc] initWithRootViewController:speakerController];
+
+    NSArray *viewControllers = [NSArray arrayWithObjects:playingNavController, speakerNavController, nil];
     UISplitViewController *splitViewController = [[UISplitViewController alloc] init];
     [splitViewController setViewControllers:viewControllers];
-    [splitViewController setDelegate:speakers];
+    [splitViewController setDelegate:speakerController];
     [splitViewController.view setOpaque:NO];
-    [splitViewController.view setBackgroundColor:[UIColor colorWithWhite:.1 alpha:1]];
+    [splitViewController.view setBackgroundColor:[UIColor borderColor]];
 
     [_window setRootViewController:splitViewController];
   } else {
