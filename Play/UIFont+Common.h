@@ -12,5 +12,6 @@
 
 + (UIFont *)header;
 + (UIFont *)subheader;
++ (UIFont *)subheaderCoordinator;
 
 @end

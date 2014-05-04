@@ -41,9 +41,6 @@
 
   [self setTitle:@"Library"];
 
-  UIBarButtonItem *done = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(done:)];
-  [self.navigationItem setRightBarButtonItem:done];
-
   _delegate = [[NBArrayDataSource alloc] initWithItems:_sourceList cellIdentifier:@"PLLibraryTableViewCell" configureCellBlock:^(UITableViewCell *cell, PLSource *source) {
     [cell.textLabel setText:source.name];
   }];
@@ -62,9 +59,11 @@
   [_libraryTableView setFrame:CGRectMake(0, 0, CGRectGetWidth(self.view.bounds), CGRectGetHeight(self.view.bounds))];
 }
 
-- (void)done:(id)sender
+- (void)viewWillAppear:(BOOL)animated
 {
-  [self dismissViewControllerAnimated:YES completion:nil];
+  [super viewWillAppear:animated];
+
+  [self.navigationController setNavigationBarHidden:NO animated:YES];
 }
 
 #pragma mark - UITableViewDelegate

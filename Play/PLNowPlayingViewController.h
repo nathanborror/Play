@@ -9,6 +9,6 @@
 @import UIKit;
 @import QuartzCore;
 
-@interface PLNowPlayingViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, UISplitViewControllerDelegate, UIViewControllerTransitioningDelegate>
+@interface PLNowPlayingViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, UISplitViewControllerDelegate>
 
 @end

@@ -35,15 +35,13 @@
       "scale" : "2x"
     },
     {
-      "size" : "29x29",
       "idiom" : "ipad",
-      "filename" : "iPadIcon-1.png",
+      "size" : "29x29",
       "scale" : "1x"
     },
     {
-      "size" : "29x29",
       "idiom" : "ipad",
-      "filename" : "iPadIcon@2x-1.png",
+      "size" : "29x29",
       "scale" : "2x"
     },
     {

@@ -26,19 +26,23 @@ static NSString *kSectionHeader = @"PLSectionHeader";
   NSArray *_data;
 
   UIScrollView *_scrollView;
-  CGPoint _cellPanCoordBegan;
   UICollectionView *_collectionView;
-  UIButton *_nowPlayingButton;
 
   DraggableCollectionViewFlowLayout *_layout;
+}
+
+- (instancetype)init
+{
+  if (self = [super init]) {
+    [self setTitle:@"Speakers"];
+    [self.view setBackgroundColor:[UIColor colorWithWhite:.97 alpha:1]];
+  }
+  return self;
 }
 
 - (void)viewDidLoad
 {
   [super viewDidLoad];
-
-  [self setTitle:@"Speakers"];
-  [self.view setBackgroundColor:[UIColor blackColor]];
 
   _layout = [[DraggableCollectionViewFlowLayout alloc] init];
   [_layout setMinimumLineSpacing:0];
@@ -54,29 +58,11 @@ static NSString *kSectionHeader = @"PLSectionHeader";
   [_collectionView setDataSource:self];
   [_collectionView setBackgroundColor:[UIColor clearColor]];
   [_collectionView setDraggable:YES];
+  [_collectionView setContentInset:UIEdgeInsetsMake(0, 0, 96.0, 0)];
   [self.view addSubview:_collectionView];
-
-  _nowPlayingButton = [[UIButton alloc] initWithFrame:CGRectMake(0, CGRectGetHeight(self.view.bounds)-64, CGRectGetWidth(self.view.bounds), 64)];
-  [_nowPlayingButton setBackgroundColor:[UIColor whiteColor]];
-  [_nowPlayingButton addTarget:self action:@selector(dismiss) forControlEvents:UIControlEventTouchUpInside];
-  [_nowPlayingButton setTitleColor:[UIColor text] forState:UIControlStateNormal];
-  [_nowPlayingButton setTitle:@"Now Playing" forState:UIControlStateNormal];
-  [_nowPlayingButton setContentHorizontalAlignment:UIControlContentHorizontalAlignmentLeft];
-  [_nowPlayingButton setTitleEdgeInsets:UIEdgeInsetsMake(0, 16, 0, 0)];
-  [_nowPlayingButton.titleLabel setTextAlignment:NSTextAlignmentLeft];
-  [_nowPlayingButton.titleLabel setFont:[UIFont header]];
-  [_nowPlayingButton setAlpha:0];
-  [self.view addSubview:_nowPlayingButton];
 
   _data = [[SonosControllerStore sharedStore] data];
   [[SonosControllerStore sharedStore] addObserver:self forKeyPath:@"data" options:NSKeyValueObservingOptionNew context:nil];
-}
-
-- (void)handleSectionTap:(UITapGestureRecognizer *)recognizer
-{
-  PLNowPlayingViewController *viewController = [[PLNowPlayingViewController alloc] init];
-  UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:viewController];
-  [self presentViewController:navController animated:YES completion:nil];
 }
 
 - (void)viewWillLayoutSubviews
@@ -85,18 +71,15 @@ static NSString *kSectionHeader = @"PLSectionHeader";
   [_collectionView setFrame:self.view.bounds];
 }
 
-- (void)viewDidAppear:(BOOL)animated
+- (void)viewWillAppear:(BOOL)animated
 {
-  [super viewDidAppear:animated];
-
-  if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
-    [_nowPlayingButton setAlpha:1];
-  }
+  [super viewWillAppear:animated];
+  [self.navigationController setNavigationBarHidden:YES animated:YES];
 }
 
-- (void)dismiss
+- (UITabBarItem *)tabBarItem
 {
-  [self dismissViewControllerAnimated:YES completion:nil];
+  return [[UITabBarItem alloc] initWithTitle:@"Speaker" image:[UIImage imageNamed:@"SpeakersTab"] selectedImage:[UIImage imageNamed:@"SpeakersTabSelected"]];
 }
 
 #pragma mark - UISplitViewControllerDelegate
@@ -136,13 +119,6 @@ static NSString *kSectionHeader = @"PLSectionHeader";
   if ([kind isEqualToString:UICollectionElementKindSectionHeader]) {
     PLSectionHeaderView *header = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:kSectionHeader forIndexPath:indexPath];
     [header setController:coordinator];
-
-    // Add tap gesture
-    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleSectionTap:)];
-    [tap setDelaysTouchesBegan:YES];
-    [tap setNumberOfTapsRequired:1];
-    [header addGestureRecognizer:tap];
-
     reusableview = header;
   }
 
@@ -173,7 +149,7 @@ static NSString *kSectionHeader = @"PLSectionHeader";
   SonosController *coordinator;
 
   for (SonosController *controller in data2) {
-    if ([controller.group isEqualToString:controller.uuid]) {
+    if (controller.isCoordinator) {
       coordinator = controller;
       break;
     }
@@ -185,22 +161,6 @@ static NSString *kSectionHeader = @"PLSectionHeader";
   [data2 insertObject:controller atIndex:toIndexPath.item];
 }
 
-#pragma mark - UICollectionViewDelegate
-
-- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
-{
-  NSArray *controllers = [_data objectAtIndex:indexPath.section];
-  SonosController *controller = (SonosController *)[controllers objectAtIndex:indexPath.item];
-  PLLibraryViewController *viewController = [[PLLibraryViewController alloc] initWithController:controller];
-  UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:viewController];
-
-  if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
-    [navController setModalPresentationStyle:UIModalPresentationFormSheet];
-  }
-
-  [self presentViewController:navController animated:YES completion:nil];
-}
-
 #pragma mark - KVO
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
@@ -208,7 +168,6 @@ static NSString *kSectionHeader = @"PLSectionHeader";
   if ([keyPath isEqualToString:@"data"]) {
     [[NSOperationQueue mainQueue] addOperationWithBlock:^{
       _data = [[SonosControllerStore sharedStore] data];
-
       dispatch_async(dispatch_get_main_queue(), ^{
         [_collectionView reloadData];
       });

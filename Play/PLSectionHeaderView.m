@@ -7,39 +7,45 @@
 //
 
 #import "PLSectionHeaderView.h"
-#import "PLNowPlayingViewController.h"
-#import "SonosController.h"
+#import "UIColor+Common.h"
+#import "UIFont+Common.h"
 
-static const CGFloat kPadding = 16.0;
+#import <Shimmer/FBShimmeringView.h>
+#import <SonosKit/SonosController.h>
+
+static const CGFloat kMarginLeft = 16.0;
 
 @implementation PLSectionHeaderView {
-  UILabel *_label;
-  UIImageView *_chevron;
-  UIView *_divider;
+  UILabel *_title;
+  UIImageView *_accessoryView;
+  UIView *_seperator;
+  FBShimmeringView *_titleShimmer;
 }
 
 - (instancetype)initWithFrame:(CGRect)frame
 {
   if (self = [super initWithFrame:frame]) {
-    _label = [[UILabel alloc] initWithFrame:CGRectZero];
-    [_label setTextColor:[UIColor whiteColor]];
-    [self addSubview:_label];
+    [self setBackgroundColor:[UIColor clearColor]];
 
-    _chevron = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"Chevron"]];
-    [self addSubview:_chevron];
+    _titleShimmer = [[FBShimmeringView alloc] initWithFrame:CGRectMake(kMarginLeft, 12, CGRectGetWidth(self.bounds)-32, 44)];
+    [self addSubview:_titleShimmer];
 
-    _divider = [[UIView alloc] init];
-    [_divider setBackgroundColor:[UIColor whiteColor]];
-    [self addSubview:_divider];
+    _title = [[UILabel alloc] initWithFrame:_titleShimmer.bounds];
+    [_title setFont:[UIFont header]];
+    [_title setTextColor:[UIColor text]];
+    [_title setText:@"Loading"];
+    [_titleShimmer setContentView:_title];
+    [_titleShimmer setShimmering:YES];
+
+    _accessoryView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"Chevron"]];
+    [_accessoryView setFrame:CGRectMake(CGRectGetWidth(self.bounds)-44, (CGRectGetHeight(self.bounds)/2)-22, 44, 44)];
+    [self addSubview:_accessoryView];
+
+    _seperator = [[UIView alloc] initWithFrame:CGRectMake(kMarginLeft, CGRectGetHeight(self.bounds), CGRectGetWidth(self.bounds), .5)];
+    [_seperator setBackgroundColor:[UIColor borderColor]];
+    [self addSubview:_seperator];
   }
   return self;
-}
-
-- (void)layoutSubviews
-{
-  [_label setFrame:CGRectMake(kPadding, 0, CGRectGetWidth(self.frame)-(kPadding*2), CGRectGetHeight(self.frame))];
-  [_chevron setFrame:CGRectMake(CGRectGetWidth(self.bounds)-44, 0, 44, 44)];
-  [_divider setFrame:CGRectMake(16, CGRectGetHeight(self.bounds)-1, CGRectGetWidth(self.bounds)-16, .5)];
 }
 
 - (void)setController:(SonosController *)controller
@@ -47,7 +53,10 @@ static const CGFloat kPadding = 16.0;
   _controller = controller;
 
   [_controller getPositionInfo:^(NSDictionary *track, NSDictionary *response, NSError *error) {
-    [_label setText:track[@"title"][@"text"]];
+    NSString *title = track[@"creator"][@"text"];
+    if (!title) title = track[@"title"][@"text"];
+    [_title setText:title ? title : @"Line In"];
+    [_titleShimmer setShimmering:NO];
   }];
 }
 

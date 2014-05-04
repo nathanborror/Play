@@ -9,6 +9,7 @@
 #import "PLAppDelegate.h"
 #import "PLNowPlayingViewController.h"
 #import "PLSpeakersViewController.h"
+#import "PLSettingsController.h"
 #import "UIColor+Common.h"
 
 #import <SonosKit/SonosControllerStore.h>
@@ -34,8 +35,20 @@
 
     [_window setRootViewController:splitViewController];
   } else {
-    PLNowPlayingViewController *nowPlaying = [[PLNowPlayingViewController alloc] init];
-    [_window setRootViewController:nowPlaying];
+    UITabBarController *tabController = [[UITabBarController alloc] init];
+
+    PLNowPlayingViewController *playingController = [[PLNowPlayingViewController alloc] init];
+    UINavigationController *playingNavController = [[UINavigationController alloc] initWithRootViewController:playingController];
+
+    PLSpeakersViewController *speakerController = [[PLSpeakersViewController alloc] init];
+    UINavigationController *speakerNavController = [[UINavigationController alloc] initWithRootViewController:speakerController];
+
+    PLSettingsController *settingsController = [[PLSettingsController alloc] init];
+    UINavigationController *settingsNavController = [[UINavigationController alloc] initWithRootViewController:settingsController];
+
+    [tabController setViewControllers:@[playingNavController, speakerNavController, settingsNavController]];
+
+    [_window setRootViewController:tabController];
   }
 
   [_window makeKeyAndVisible];

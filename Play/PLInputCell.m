@@ -26,7 +26,7 @@
     _label = [[UILabel alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(_speakerIcon.frame), CGRectGetWidth(self.bounds), 20)];
     [_label setTextAlignment:NSTextAlignmentCenter];
     [_label setFont:[UIFont systemFontOfSize:11.0]];
-    [_label setTextColor:[UIColor whiteColor]];
+    [_label setTextColor:[UIColor blackColor]];
     [_label setBackgroundColor:[UIColor clearColor]];
     [self addSubview:_label];
   }

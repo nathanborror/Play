@@ -12,12 +12,17 @@
 
 + (UIFont *)header
 {
-  return [UIFont fontWithName:@"HelveticaNeue-Regular" size:16.0];
+  return [UIFont fontWithName:@"HelveticaNeue" size:18.0];
 }
 
 + (UIFont *)subheader
 {
   return [UIFont fontWithName:@"HelveticaNeue-Thin" size:14.0];
+}
+
++ (UIFont *)subheaderCoordinator
+{
+  return [UIFont fontWithName:@"HelveticaNeue" size:14.0];
 }
 
 @end

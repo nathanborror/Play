@@ -20,7 +20,6 @@
 		D82CBE7F18D6842A00A14BAE /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D82CBE6718D6842A00A14BAE /* UIKit.framework */; };
 		D82CBE8718D6842A00A14BAE /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = D82CBE8518D6842A00A14BAE /* InfoPlist.strings */; };
 		D82CBE8918D6842A00A14BAE /* PlayTests.m in Sources */ = {isa = PBXBuildFile; fileRef = D82CBE8818D6842A00A14BAE /* PlayTests.m */; };
-		D82CBE9918D6872000A14BAE /* DragDownAnimator.m in Sources */ = {isa = PBXBuildFile; fileRef = D82CBE9818D6872000A14BAE /* DragDownAnimator.m */; };
 		D82CBEB018D6879400A14BAE /* PLDial.m in Sources */ = {isa = PBXBuildFile; fileRef = D82CBEA718D6879400A14BAE /* PLDial.m */; };
 		D82CBEB118D6879400A14BAE /* PLInputCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D82CBEA918D6879400A14BAE /* PLInputCell.m */; };
 		D82CBEB218D6879400A14BAE /* PLProgressBar.m in Sources */ = {isa = PBXBuildFile; fileRef = D82CBEAB18D6879400A14BAE /* PLProgressBar.m */; };
@@ -37,6 +36,8 @@
 		D82CBEF418D6880A00A14BAE /* PLSpeakersViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D82CBEEE18D6880A00A14BAE /* PLSpeakersViewController.m */; };
 		D82CBEFC18D688B500A14BAE /* NBArrayDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = D82CBEF718D688B500A14BAE /* NBArrayDataSource.m */; };
 		D82CBEFD18D688B500A14BAE /* NBDirectionGestureRecognizer.m in Sources */ = {isa = PBXBuildFile; fileRef = D82CBEF918D688B500A14BAE /* NBDirectionGestureRecognizer.m */; };
+		D87443CC1915B0FC00136C13 /* PLVolumeHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = D87443CB1915B0FC00136C13 /* PLVolumeHeader.m */; };
+		D8D6A1E019161B83007509F7 /* PLSettingsController.m in Sources */ = {isa = PBXBuildFile; fileRef = D8D6A1DF19161B83007509F7 /* PLSettingsController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -66,8 +67,6 @@
 		D82CBE8418D6842A00A14BAE /* PlayTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "PlayTests-Info.plist"; sourceTree = "<group>"; };
 		D82CBE8618D6842A00A14BAE /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		D82CBE8818D6842A00A14BAE /* PlayTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PlayTests.m; sourceTree = "<group>"; };
-		D82CBE9718D6872000A14BAE /* DragDownAnimator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DragDownAnimator.h; sourceTree = "<group>"; };
-		D82CBE9818D6872000A14BAE /* DragDownAnimator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DragDownAnimator.m; sourceTree = "<group>"; };
 		D82CBEA618D6879400A14BAE /* PLDial.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PLDial.h; sourceTree = "<group>"; };
 		D82CBEA718D6879400A14BAE /* PLDial.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PLDial.m; sourceTree = "<group>"; };
 		D82CBEA818D6879400A14BAE /* PLInputCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PLInputCell.h; sourceTree = "<group>"; };
@@ -100,6 +99,10 @@
 		D82CBEF718D688B500A14BAE /* NBArrayDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NBArrayDataSource.m; path = NBKit/NBArrayDataSource.m; sourceTree = "<group>"; };
 		D82CBEF818D688B500A14BAE /* NBDirectionGestureRecognizer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NBDirectionGestureRecognizer.h; path = NBKit/NBDirectionGestureRecognizer.h; sourceTree = "<group>"; };
 		D82CBEF918D688B500A14BAE /* NBDirectionGestureRecognizer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NBDirectionGestureRecognizer.m; path = NBKit/NBDirectionGestureRecognizer.m; sourceTree = "<group>"; };
+		D87443CA1915B0FC00136C13 /* PLVolumeHeader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PLVolumeHeader.h; sourceTree = "<group>"; };
+		D87443CB1915B0FC00136C13 /* PLVolumeHeader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PLVolumeHeader.m; sourceTree = "<group>"; };
+		D8D6A1DE19161B83007509F7 /* PLSettingsController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PLSettingsController.h; sourceTree = "<group>"; };
+		D8D6A1DF19161B83007509F7 /* PLSettingsController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PLSettingsController.m; sourceTree = "<group>"; };
 		ED00638817F04333AA05FEB3 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		FFEBB8A235414C43AF8B8B9F /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -168,7 +171,6 @@
 				D82CBE9618D6871000A14BAE /* Categories */,
 				D82CBE9418D6870400A14BAE /* Data */,
 				D82CBE9318D686FE00A14BAE /* UI Elements */,
-				D82CBE9218D686F700A14BAE /* Animators */,
 				D82CBE7218D6842A00A14BAE /* PLAppDelegate.h */,
 				D82CBE7318D6842A00A14BAE /* PLAppDelegate.m */,
 				D82CBEE318D6880A00A14BAE /* PLLibraryViewController.h */,
@@ -181,6 +183,8 @@
 				D82CBEEC18D6880A00A14BAE /* PLSongViewController.m */,
 				D82CBEED18D6880A00A14BAE /* PLSpeakersViewController.h */,
 				D82CBEEE18D6880A00A14BAE /* PLSpeakersViewController.m */,
+				D8D6A1DE19161B83007509F7 /* PLSettingsController.h */,
+				D8D6A1DF19161B83007509F7 /* PLSettingsController.m */,
 				D82CBE7518D6842A00A14BAE /* Images.xcassets */,
 				D82CBE6A18D6842A00A14BAE /* Supporting Files */,
 			);
@@ -216,15 +220,6 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		D82CBE9218D686F700A14BAE /* Animators */ = {
-			isa = PBXGroup;
-			children = (
-				D82CBE9718D6872000A14BAE /* DragDownAnimator.h */,
-				D82CBE9818D6872000A14BAE /* DragDownAnimator.m */,
-			);
-			name = Animators;
-			sourceTree = "<group>";
-		};
 		D82CBE9318D686FE00A14BAE /* UI Elements */ = {
 			isa = PBXGroup;
 			children = (
@@ -238,6 +233,8 @@
 				D82CBEAD18D6879400A14BAE /* PLSectionHeaderView.m */,
 				D82CBEAE18D6879400A14BAE /* PLVolumeCell.h */,
 				D82CBEAF18D6879400A14BAE /* PLVolumeCell.m */,
+				D87443CA1915B0FC00136C13 /* PLVolumeHeader.h */,
+				D87443CB1915B0FC00136C13 /* PLVolumeHeader.m */,
 			);
 			name = "UI Elements";
 			sourceTree = "<group>";
@@ -413,6 +410,7 @@
 				D82CBEF118D6880A00A14BAE /* PLNowPlayingViewController.m in Sources */,
 				D82CBEE218D687E800A14BAE /* PLSource.m in Sources */,
 				D82CBEB418D6879400A14BAE /* PLVolumeCell.m in Sources */,
+				D87443CC1915B0FC00136C13 /* PLVolumeHeader.m in Sources */,
 				D82CBEB018D6879400A14BAE /* PLDial.m in Sources */,
 				D82CBE7418D6842A00A14BAE /* PLAppDelegate.m in Sources */,
 				D82CBEB118D6879400A14BAE /* PLInputCell.m in Sources */,
@@ -420,7 +418,7 @@
 				D82CBE7018D6842A00A14BAE /* main.m in Sources */,
 				D82CBEFD18D688B500A14BAE /* NBDirectionGestureRecognizer.m in Sources */,
 				D82CBEEF18D6880A00A14BAE /* PLLibraryViewController.m in Sources */,
-				D82CBE9918D6872000A14BAE /* DragDownAnimator.m in Sources */,
+				D8D6A1E019161B83007509F7 /* PLSettingsController.m in Sources */,
 				D82CBEB318D6879400A14BAE /* PLSectionHeaderView.m in Sources */,
 				D82CBED518D687BC00A14BAE /* UIColor+Common.m in Sources */,
 				D82CBEE118D687E800A14BAE /* PLSong.m in Sources */,

@@ -12,6 +12,8 @@
 #import "UIColor+Common.h"
 #import "UIFont+Common.h"
 
+#import <SonosKit/SonosController.h>
+
 @implementation PLVolumeCell {
   PLDial *_volumeDial;
   UILabel *_name;
@@ -26,7 +28,7 @@
     _volumeDial = [[PLDial alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(self.bounds), 48)];
     [_volumeDial setMaxValue:100.0];
     [_volumeDial setMinValue:0.0];
-    [_volumeDial setValue:10.0];
+    [_volumeDial setValue:0.0];
     [_volumeDial setTranslatesAutoresizingMaskIntoConstraints:NO];
     [_volumeDial setAutoresizingMask:UIViewAutoresizingFlexibleWidth];
     [_volumeDial addTarget:self action:@selector(changeVolume:) forControlEvents:UIControlEventValueChanged];
@@ -59,6 +61,9 @@
   _controller = controller;
 
   [_name setText:_controller.name];
+  if (_controller.coordinator) {
+    [_name setFont:[UIFont subheaderCoordinator]];
+  }
   [_name sizeToFit];
 
 #if TARGET_IPHONE_SIMULATOR
@@ -69,6 +74,12 @@
     [_volumeDial setValue:volume];
   }];
 #endif
+}
+
+- (void)prepareForReuse
+{
+  [_name setFont:[UIFont subheader]];
+  [_volumeDial setValue:0.0];
 }
 
 @end
