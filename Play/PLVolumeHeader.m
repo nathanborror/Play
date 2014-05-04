@@ -10,16 +10,15 @@
 #import "UIColor+Common.h"
 #import "UIFont+Common.h"
 
-#import <Shimmer/FBShimmeringView.h>
 #import <SonosKit/SonosController.h>
 
-static const CGFloat kMarginLeft = 16.0;
+static const CGFloat kMargin = 16.0;
+static const CGFloat kAccessorySize = 44.0;
 
 @implementation PLVolumeHeader {
   UILabel *_title;
   UIImageView *_accessoryView;
   UIView *_seperator;
-  FBShimmeringView *_titleShimmer;
 }
 
 - (instancetype)initWithFrame:(CGRect)frame
@@ -27,21 +26,17 @@ static const CGFloat kMarginLeft = 16.0;
   if (self = [super initWithFrame:frame]) {
     [self setBackgroundColor:[UIColor whiteColor]];
 
-    _titleShimmer = [[FBShimmeringView alloc] initWithFrame:CGRectMake(kMarginLeft, 12, CGRectGetWidth(self.bounds)-32, 44)];
-    [self addSubview:_titleShimmer];
-
-    _title = [[UILabel alloc] initWithFrame:_titleShimmer.bounds];
+    _title = [[UILabel alloc] initWithFrame:CGRectMake(kMargin, (CGRectGetHeight(self.bounds)/2)-(kAccessorySize/2), CGRectGetWidth(self.bounds)-(kAccessorySize+kMargin), kAccessorySize)];
     [_title setFont:[UIFont header]];
     [_title setTextColor:[UIColor text]];
     [_title setText:@"Loading"];
-    [_titleShimmer setContentView:_title];
-    [_titleShimmer setShimmering:YES];
+    [self addSubview:_title];
 
     _accessoryView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"Chevron"]];
-    [_accessoryView setFrame:CGRectMake(CGRectGetWidth(self.bounds)-44, (CGRectGetHeight(self.bounds)/2)-22, 44, 44)];
+    [_accessoryView setFrame:CGRectMake(CGRectGetWidth(self.bounds)-kAccessorySize, (CGRectGetHeight(self.bounds)/2)-(kAccessorySize/2), kAccessorySize, kAccessorySize)];
     [self addSubview:_accessoryView];
 
-    _seperator = [[UIView alloc] initWithFrame:CGRectMake(kMarginLeft, CGRectGetHeight(self.bounds), CGRectGetWidth(self.bounds), .5)];
+    _seperator = [[UIView alloc] initWithFrame:CGRectMake(kMargin, CGRectGetHeight(self.bounds), CGRectGetWidth(self.bounds), .5)];
     [_seperator setBackgroundColor:[UIColor borderColor]];
     [self addSubview:_seperator];
   }
@@ -56,7 +51,6 @@ static const CGFloat kMarginLeft = 16.0;
     NSString *title = track[@"creator"][@"text"];
     if (!title) title = track[@"title"][@"text"];
     [_title setText:title ? title : @"Line In"];
-    [_titleShimmer setShimmering:NO];
   }];
 }
 
