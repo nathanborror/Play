@@ -7,283 +7,163 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		73AAD239A21449039EACB6A5 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ED00638817F04333AA05FEB3 /* libPods.a */; };
-		D82CBE6418D6842A00A14BAE /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D82CBE6318D6842A00A14BAE /* Foundation.framework */; };
-		D82CBE6618D6842A00A14BAE /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D82CBE6518D6842A00A14BAE /* CoreGraphics.framework */; };
-		D82CBE6818D6842A00A14BAE /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D82CBE6718D6842A00A14BAE /* UIKit.framework */; };
-		D82CBE6E18D6842A00A14BAE /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = D82CBE6C18D6842A00A14BAE /* InfoPlist.strings */; };
-		D82CBE7018D6842A00A14BAE /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = D82CBE6F18D6842A00A14BAE /* main.m */; };
-		D82CBE7418D6842A00A14BAE /* PLAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = D82CBE7318D6842A00A14BAE /* PLAppDelegate.m */; };
-		D82CBE7618D6842A00A14BAE /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D82CBE7518D6842A00A14BAE /* Images.xcassets */; };
-		D82CBE7D18D6842A00A14BAE /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D82CBE7C18D6842A00A14BAE /* XCTest.framework */; };
-		D82CBE7E18D6842A00A14BAE /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D82CBE6318D6842A00A14BAE /* Foundation.framework */; };
-		D82CBE7F18D6842A00A14BAE /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D82CBE6718D6842A00A14BAE /* UIKit.framework */; };
-		D82CBE8718D6842A00A14BAE /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = D82CBE8518D6842A00A14BAE /* InfoPlist.strings */; };
-		D82CBE8918D6842A00A14BAE /* PlayTests.m in Sources */ = {isa = PBXBuildFile; fileRef = D82CBE8818D6842A00A14BAE /* PlayTests.m */; };
-		D82CBEB018D6879400A14BAE /* PLDial.m in Sources */ = {isa = PBXBuildFile; fileRef = D82CBEA718D6879400A14BAE /* PLDial.m */; };
-		D82CBEB118D6879400A14BAE /* PLInputCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D82CBEA918D6879400A14BAE /* PLInputCell.m */; };
-		D82CBEB218D6879400A14BAE /* PLProgressBar.m in Sources */ = {isa = PBXBuildFile; fileRef = D82CBEAB18D6879400A14BAE /* PLProgressBar.m */; };
-		D82CBEB318D6879400A14BAE /* PLSectionHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = D82CBEAD18D6879400A14BAE /* PLSectionHeaderView.m */; };
-		D82CBEB418D6879400A14BAE /* PLVolumeCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D82CBEAF18D6879400A14BAE /* PLVolumeCell.m */; };
-		D82CBED518D687BC00A14BAE /* UIColor+Common.m in Sources */ = {isa = PBXBuildFile; fileRef = D82CBED218D687BC00A14BAE /* UIColor+Common.m */; };
-		D82CBED618D687BC00A14BAE /* UIFont+Common.m in Sources */ = {isa = PBXBuildFile; fileRef = D82CBED418D687BC00A14BAE /* UIFont+Common.m */; };
-		D82CBEE118D687E800A14BAE /* PLSong.m in Sources */ = {isa = PBXBuildFile; fileRef = D82CBEDC18D687E800A14BAE /* PLSong.m */; };
-		D82CBEE218D687E800A14BAE /* PLSource.m in Sources */ = {isa = PBXBuildFile; fileRef = D82CBEDE18D687E800A14BAE /* PLSource.m */; };
-		D82CBEEF18D6880A00A14BAE /* PLLibraryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D82CBEE418D6880A00A14BAE /* PLLibraryViewController.m */; };
-		D82CBEF118D6880A00A14BAE /* PLNowPlayingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D82CBEE818D6880A00A14BAE /* PLNowPlayingViewController.m */; };
-		D82CBEF218D6880A00A14BAE /* PLPlaylistsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D82CBEEA18D6880A00A14BAE /* PLPlaylistsViewController.m */; };
-		D82CBEF318D6880A00A14BAE /* PLSongViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D82CBEEC18D6880A00A14BAE /* PLSongViewController.m */; };
-		D82CBEF418D6880A00A14BAE /* PLSpeakersViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D82CBEEE18D6880A00A14BAE /* PLSpeakersViewController.m */; };
-		D82CBEFC18D688B500A14BAE /* NBArrayDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = D82CBEF718D688B500A14BAE /* NBArrayDataSource.m */; };
-		D82CBEFD18D688B500A14BAE /* NBDirectionGestureRecognizer.m in Sources */ = {isa = PBXBuildFile; fileRef = D82CBEF918D688B500A14BAE /* NBDirectionGestureRecognizer.m */; };
-		D87443CC1915B0FC00136C13 /* PLVolumeHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = D87443CB1915B0FC00136C13 /* PLVolumeHeader.m */; };
-		D8D6A1E019161B83007509F7 /* PLSettingsController.m in Sources */ = {isa = PBXBuildFile; fileRef = D8D6A1DF19161B83007509F7 /* PLSettingsController.m */; };
+		D8599158193D921C008BE0EA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8599157193D921C008BE0EA /* AppDelegate.swift */; };
+		D859915A193D921C008BE0EA /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D8599159193D921C008BE0EA /* Images.xcassets */; };
+		D8599166193D921C008BE0EA /* PlayTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8599165193D921C008BE0EA /* PlayTests.swift */; };
+		D8599170193D927F008BE0EA /* PlayingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D859916F193D927F008BE0EA /* PlayingViewController.swift */; };
+		D8599172193D9290008BE0EA /* SpeakersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8599171193D9290008BE0EA /* SpeakersViewController.swift */; };
+		D8599174193D929F008BE0EA /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8599173193D929F008BE0EA /* SettingsViewController.swift */; };
+		D861E4CE194CDBBA00CAE939 /* VolumeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D861E4CD194CDBBA00CAE939 /* VolumeCell.swift */; };
+		D861E4D0194CDBCD00CAE939 /* SpeakerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D861E4CF194CDBCD00CAE939 /* SpeakerCell.swift */; };
+		D861E4D3194CE04700CAE939 /* NBDial.swift in Sources */ = {isa = PBXBuildFile; fileRef = D861E4D2194CE04700CAE939 /* NBDial.swift */; };
+		D861E4D6194CE26100CAE939 /* UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = D861E4D5194CE26100CAE939 /* UIColor.swift */; };
+		D861E4D8194CF1A000CAE939 /* UIFont.swift in Sources */ = {isa = PBXBuildFile; fileRef = D861E4D7194CF1A000CAE939 /* UIFont.swift */; };
+		D8853334194CFAA900BB19EC /* VolumeHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8853333194CFAA900BB19EC /* VolumeHeader.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		D82CBE8018D6842A00A14BAE /* PBXContainerItemProxy */ = {
+		D8599160193D921C008BE0EA /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = D82CBE5818D6842A00A14BAE /* Project object */;
+			containerPortal = D859914A193D921C008BE0EA /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = D82CBE5F18D6842A00A14BAE;
+			remoteGlobalIDString = D8599151193D921C008BE0EA;
 			remoteInfo = Play;
 		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		D82CBE6018D6842A00A14BAE /* Play.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Play.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		D82CBE6318D6842A00A14BAE /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
-		D82CBE6518D6842A00A14BAE /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
-		D82CBE6718D6842A00A14BAE /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
-		D82CBE6B18D6842A00A14BAE /* Play-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Play-Info.plist"; sourceTree = "<group>"; };
-		D82CBE6D18D6842A00A14BAE /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		D82CBE6F18D6842A00A14BAE /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		D82CBE7118D6842A00A14BAE /* Play-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Play-Prefix.pch"; sourceTree = "<group>"; };
-		D82CBE7218D6842A00A14BAE /* PLAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PLAppDelegate.h; sourceTree = "<group>"; };
-		D82CBE7318D6842A00A14BAE /* PLAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PLAppDelegate.m; sourceTree = "<group>"; };
-		D82CBE7518D6842A00A14BAE /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
-		D82CBE7B18D6842A00A14BAE /* PlayTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PlayTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		D82CBE7C18D6842A00A14BAE /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
-		D82CBE8418D6842A00A14BAE /* PlayTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "PlayTests-Info.plist"; sourceTree = "<group>"; };
-		D82CBE8618D6842A00A14BAE /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		D82CBE8818D6842A00A14BAE /* PlayTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PlayTests.m; sourceTree = "<group>"; };
-		D82CBEA618D6879400A14BAE /* PLDial.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PLDial.h; sourceTree = "<group>"; };
-		D82CBEA718D6879400A14BAE /* PLDial.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PLDial.m; sourceTree = "<group>"; };
-		D82CBEA818D6879400A14BAE /* PLInputCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PLInputCell.h; sourceTree = "<group>"; };
-		D82CBEA918D6879400A14BAE /* PLInputCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PLInputCell.m; sourceTree = "<group>"; };
-		D82CBEAA18D6879400A14BAE /* PLProgressBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PLProgressBar.h; sourceTree = "<group>"; };
-		D82CBEAB18D6879400A14BAE /* PLProgressBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PLProgressBar.m; sourceTree = "<group>"; };
-		D82CBEAC18D6879400A14BAE /* PLSectionHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PLSectionHeaderView.h; sourceTree = "<group>"; };
-		D82CBEAD18D6879400A14BAE /* PLSectionHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PLSectionHeaderView.m; sourceTree = "<group>"; };
-		D82CBEAE18D6879400A14BAE /* PLVolumeCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PLVolumeCell.h; sourceTree = "<group>"; };
-		D82CBEAF18D6879400A14BAE /* PLVolumeCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PLVolumeCell.m; sourceTree = "<group>"; };
-		D82CBED118D687BC00A14BAE /* UIColor+Common.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+Common.h"; sourceTree = "<group>"; };
-		D82CBED218D687BC00A14BAE /* UIColor+Common.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+Common.m"; sourceTree = "<group>"; };
-		D82CBED318D687BC00A14BAE /* UIFont+Common.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIFont+Common.h"; sourceTree = "<group>"; };
-		D82CBED418D687BC00A14BAE /* UIFont+Common.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIFont+Common.m"; sourceTree = "<group>"; };
-		D82CBEDB18D687E800A14BAE /* PLSong.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PLSong.h; sourceTree = "<group>"; };
-		D82CBEDC18D687E800A14BAE /* PLSong.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PLSong.m; sourceTree = "<group>"; };
-		D82CBEDD18D687E800A14BAE /* PLSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PLSource.h; sourceTree = "<group>"; };
-		D82CBEDE18D687E800A14BAE /* PLSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PLSource.m; sourceTree = "<group>"; };
-		D82CBEE318D6880A00A14BAE /* PLLibraryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PLLibraryViewController.h; sourceTree = "<group>"; };
-		D82CBEE418D6880A00A14BAE /* PLLibraryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PLLibraryViewController.m; sourceTree = "<group>"; };
-		D82CBEE718D6880A00A14BAE /* PLNowPlayingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PLNowPlayingViewController.h; sourceTree = "<group>"; };
-		D82CBEE818D6880A00A14BAE /* PLNowPlayingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PLNowPlayingViewController.m; sourceTree = "<group>"; };
-		D82CBEE918D6880A00A14BAE /* PLPlaylistsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PLPlaylistsViewController.h; sourceTree = "<group>"; };
-		D82CBEEA18D6880A00A14BAE /* PLPlaylistsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PLPlaylistsViewController.m; sourceTree = "<group>"; };
-		D82CBEEB18D6880A00A14BAE /* PLSongViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PLSongViewController.h; sourceTree = "<group>"; };
-		D82CBEEC18D6880A00A14BAE /* PLSongViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PLSongViewController.m; sourceTree = "<group>"; };
-		D82CBEED18D6880A00A14BAE /* PLSpeakersViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PLSpeakersViewController.h; sourceTree = "<group>"; };
-		D82CBEEE18D6880A00A14BAE /* PLSpeakersViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PLSpeakersViewController.m; sourceTree = "<group>"; };
-		D82CBEF618D688B500A14BAE /* NBArrayDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NBArrayDataSource.h; path = NBKit/NBArrayDataSource.h; sourceTree = "<group>"; };
-		D82CBEF718D688B500A14BAE /* NBArrayDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NBArrayDataSource.m; path = NBKit/NBArrayDataSource.m; sourceTree = "<group>"; };
-		D82CBEF818D688B500A14BAE /* NBDirectionGestureRecognizer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NBDirectionGestureRecognizer.h; path = NBKit/NBDirectionGestureRecognizer.h; sourceTree = "<group>"; };
-		D82CBEF918D688B500A14BAE /* NBDirectionGestureRecognizer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NBDirectionGestureRecognizer.m; path = NBKit/NBDirectionGestureRecognizer.m; sourceTree = "<group>"; };
-		D87443CA1915B0FC00136C13 /* PLVolumeHeader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PLVolumeHeader.h; sourceTree = "<group>"; };
-		D87443CB1915B0FC00136C13 /* PLVolumeHeader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PLVolumeHeader.m; sourceTree = "<group>"; };
-		D8D6A1DE19161B83007509F7 /* PLSettingsController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PLSettingsController.h; sourceTree = "<group>"; };
-		D8D6A1DF19161B83007509F7 /* PLSettingsController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PLSettingsController.m; sourceTree = "<group>"; };
-		ED00638817F04333AA05FEB3 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		FFEBB8A235414C43AF8B8B9F /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
+		D8599152193D921C008BE0EA /* Play.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Play.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		D8599156193D921C008BE0EA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		D8599157193D921C008BE0EA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		D8599159193D921C008BE0EA /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		D859915F193D921C008BE0EA /* PlayTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PlayTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		D8599164193D921C008BE0EA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		D8599165193D921C008BE0EA /* PlayTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayTests.swift; sourceTree = "<group>"; };
+		D859916F193D927F008BE0EA /* PlayingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayingViewController.swift; sourceTree = "<group>"; };
+		D8599171193D9290008BE0EA /* SpeakersViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpeakersViewController.swift; sourceTree = "<group>"; };
+		D8599173193D929F008BE0EA /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
+		D861E4CD194CDBBA00CAE939 /* VolumeCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = VolumeCell.swift; path = "UI Elements/VolumeCell.swift"; sourceTree = "<group>"; };
+		D861E4CF194CDBCD00CAE939 /* SpeakerCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SpeakerCell.swift; path = "UI Elements/SpeakerCell.swift"; sourceTree = "<group>"; };
+		D861E4D2194CE04700CAE939 /* NBDial.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NBDial.swift; path = Custom/NBDial.swift; sourceTree = "<group>"; };
+		D861E4D5194CE26100CAE939 /* UIColor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UIColor.swift; path = Extensions/UIColor.swift; sourceTree = "<group>"; };
+		D861E4D7194CF1A000CAE939 /* UIFont.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIFont.swift; sourceTree = "<group>"; };
+		D8853333194CFAA900BB19EC /* VolumeHeader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = VolumeHeader.swift; path = "UI Elements/VolumeHeader.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		D82CBE5D18D6842A00A14BAE /* Frameworks */ = {
+		D859914F193D921C008BE0EA /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D82CBE6618D6842A00A14BAE /* CoreGraphics.framework in Frameworks */,
-				D82CBE6818D6842A00A14BAE /* UIKit.framework in Frameworks */,
-				D82CBE6418D6842A00A14BAE /* Foundation.framework in Frameworks */,
-				73AAD239A21449039EACB6A5 /* libPods.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		D82CBE7818D6842A00A14BAE /* Frameworks */ = {
+		D859915C193D921C008BE0EA /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D82CBE7D18D6842A00A14BAE /* XCTest.framework in Frameworks */,
-				D82CBE7F18D6842A00A14BAE /* UIKit.framework in Frameworks */,
-				D82CBE7E18D6842A00A14BAE /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		D82CBE5718D6842A00A14BAE = {
+		D8599149193D921C008BE0EA = {
 			isa = PBXGroup;
 			children = (
-				D82CBE6918D6842A00A14BAE /* Play */,
-				D82CBE8218D6842A00A14BAE /* PlayTests */,
-				D82CBE6218D6842A00A14BAE /* Frameworks */,
-				D82CBE6118D6842A00A14BAE /* Products */,
-				FFEBB8A235414C43AF8B8B9F /* Pods.xcconfig */,
+				D8599154193D921C008BE0EA /* Play */,
+				D8599162193D921C008BE0EA /* PlayTests */,
+				D8599153193D921C008BE0EA /* Products */,
 			);
 			sourceTree = "<group>";
 		};
-		D82CBE6118D6842A00A14BAE /* Products */ = {
+		D8599153193D921C008BE0EA /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				D82CBE6018D6842A00A14BAE /* Play.app */,
-				D82CBE7B18D6842A00A14BAE /* PlayTests.xctest */,
+				D8599152193D921C008BE0EA /* Play.app */,
+				D859915F193D921C008BE0EA /* PlayTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		D82CBE6218D6842A00A14BAE /* Frameworks */ = {
+		D8599154193D921C008BE0EA /* Play */ = {
 			isa = PBXGroup;
 			children = (
-				D82CBE6318D6842A00A14BAE /* Foundation.framework */,
-				D82CBE6518D6842A00A14BAE /* CoreGraphics.framework */,
-				D82CBE6718D6842A00A14BAE /* UIKit.framework */,
-				D82CBE7C18D6842A00A14BAE /* XCTest.framework */,
-				ED00638817F04333AA05FEB3 /* libPods.a */,
-			);
-			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		D82CBE6918D6842A00A14BAE /* Play */ = {
-			isa = PBXGroup;
-			children = (
-				D82CBEF518D6889F00A14BAE /* NBKit */,
-				D82CBE9618D6871000A14BAE /* Categories */,
-				D82CBE9418D6870400A14BAE /* Data */,
-				D82CBE9318D686FE00A14BAE /* UI Elements */,
-				D82CBE7218D6842A00A14BAE /* PLAppDelegate.h */,
-				D82CBE7318D6842A00A14BAE /* PLAppDelegate.m */,
-				D82CBEE318D6880A00A14BAE /* PLLibraryViewController.h */,
-				D82CBEE418D6880A00A14BAE /* PLLibraryViewController.m */,
-				D82CBEE718D6880A00A14BAE /* PLNowPlayingViewController.h */,
-				D82CBEE818D6880A00A14BAE /* PLNowPlayingViewController.m */,
-				D82CBEE918D6880A00A14BAE /* PLPlaylistsViewController.h */,
-				D82CBEEA18D6880A00A14BAE /* PLPlaylistsViewController.m */,
-				D82CBEEB18D6880A00A14BAE /* PLSongViewController.h */,
-				D82CBEEC18D6880A00A14BAE /* PLSongViewController.m */,
-				D82CBEED18D6880A00A14BAE /* PLSpeakersViewController.h */,
-				D82CBEEE18D6880A00A14BAE /* PLSpeakersViewController.m */,
-				D8D6A1DE19161B83007509F7 /* PLSettingsController.h */,
-				D8D6A1DF19161B83007509F7 /* PLSettingsController.m */,
-				D82CBE7518D6842A00A14BAE /* Images.xcassets */,
-				D82CBE6A18D6842A00A14BAE /* Supporting Files */,
+				D861E4D4194CE1DE00CAE939 /* Extensions */,
+				D861E4D1194CE01D00CAE939 /* Custom */,
+				D8599175193D9572008BE0EA /* UI Elements */,
+				D8599157193D921C008BE0EA /* AppDelegate.swift */,
+				D859916F193D927F008BE0EA /* PlayingViewController.swift */,
+				D8599171193D9290008BE0EA /* SpeakersViewController.swift */,
+				D8599173193D929F008BE0EA /* SettingsViewController.swift */,
+				D8599159193D921C008BE0EA /* Images.xcassets */,
+				D8599155193D921C008BE0EA /* Supporting Files */,
 			);
 			path = Play;
 			sourceTree = "<group>";
 		};
-		D82CBE6A18D6842A00A14BAE /* Supporting Files */ = {
+		D8599155193D921C008BE0EA /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				D82CBE6B18D6842A00A14BAE /* Play-Info.plist */,
-				D82CBE6C18D6842A00A14BAE /* InfoPlist.strings */,
-				D82CBE6F18D6842A00A14BAE /* main.m */,
-				D82CBE7118D6842A00A14BAE /* Play-Prefix.pch */,
+				D8599156193D921C008BE0EA /* Info.plist */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		D82CBE8218D6842A00A14BAE /* PlayTests */ = {
+		D8599162193D921C008BE0EA /* PlayTests */ = {
 			isa = PBXGroup;
 			children = (
-				D82CBE8818D6842A00A14BAE /* PlayTests.m */,
-				D82CBE8318D6842A00A14BAE /* Supporting Files */,
+				D8599165193D921C008BE0EA /* PlayTests.swift */,
+				D8599163193D921C008BE0EA /* Supporting Files */,
 			);
 			path = PlayTests;
 			sourceTree = "<group>";
 		};
-		D82CBE8318D6842A00A14BAE /* Supporting Files */ = {
+		D8599163193D921C008BE0EA /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				D82CBE8418D6842A00A14BAE /* PlayTests-Info.plist */,
-				D82CBE8518D6842A00A14BAE /* InfoPlist.strings */,
+				D8599164193D921C008BE0EA /* Info.plist */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		D82CBE9318D686FE00A14BAE /* UI Elements */ = {
+		D8599175193D9572008BE0EA /* UI Elements */ = {
 			isa = PBXGroup;
 			children = (
-				D82CBEA618D6879400A14BAE /* PLDial.h */,
-				D82CBEA718D6879400A14BAE /* PLDial.m */,
-				D82CBEA818D6879400A14BAE /* PLInputCell.h */,
-				D82CBEA918D6879400A14BAE /* PLInputCell.m */,
-				D82CBEAA18D6879400A14BAE /* PLProgressBar.h */,
-				D82CBEAB18D6879400A14BAE /* PLProgressBar.m */,
-				D82CBEAC18D6879400A14BAE /* PLSectionHeaderView.h */,
-				D82CBEAD18D6879400A14BAE /* PLSectionHeaderView.m */,
-				D82CBEAE18D6879400A14BAE /* PLVolumeCell.h */,
-				D82CBEAF18D6879400A14BAE /* PLVolumeCell.m */,
-				D87443CA1915B0FC00136C13 /* PLVolumeHeader.h */,
-				D87443CB1915B0FC00136C13 /* PLVolumeHeader.m */,
+				D861E4CD194CDBBA00CAE939 /* VolumeCell.swift */,
+				D861E4CF194CDBCD00CAE939 /* SpeakerCell.swift */,
+				D8853333194CFAA900BB19EC /* VolumeHeader.swift */,
 			);
 			name = "UI Elements";
 			sourceTree = "<group>";
 		};
-		D82CBE9418D6870400A14BAE /* Data */ = {
+		D861E4D1194CE01D00CAE939 /* Custom */ = {
 			isa = PBXGroup;
 			children = (
-				D82CBEDB18D687E800A14BAE /* PLSong.h */,
-				D82CBEDC18D687E800A14BAE /* PLSong.m */,
-				D82CBEDD18D687E800A14BAE /* PLSource.h */,
-				D82CBEDE18D687E800A14BAE /* PLSource.m */,
+				D861E4D2194CE04700CAE939 /* NBDial.swift */,
 			);
-			name = Data;
+			name = Custom;
 			sourceTree = "<group>";
 		};
-		D82CBE9618D6871000A14BAE /* Categories */ = {
+		D861E4D4194CE1DE00CAE939 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
-				D82CBED118D687BC00A14BAE /* UIColor+Common.h */,
-				D82CBED218D687BC00A14BAE /* UIColor+Common.m */,
-				D82CBED318D687BC00A14BAE /* UIFont+Common.h */,
-				D82CBED418D687BC00A14BAE /* UIFont+Common.m */,
+				D861E4D5194CE26100CAE939 /* UIColor.swift */,
+				D861E4D7194CF1A000CAE939 /* UIFont.swift */,
 			);
-			name = Categories;
-			sourceTree = "<group>";
-		};
-		D82CBEF518D6889F00A14BAE /* NBKit */ = {
-			isa = PBXGroup;
-			children = (
-				D82CBEF618D688B500A14BAE /* NBArrayDataSource.h */,
-				D82CBEF718D688B500A14BAE /* NBArrayDataSource.m */,
-				D82CBEF818D688B500A14BAE /* NBDirectionGestureRecognizer.h */,
-				D82CBEF918D688B500A14BAE /* NBDirectionGestureRecognizer.m */,
-			);
-			name = NBKit;
+			name = Extensions;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		D82CBE5F18D6842A00A14BAE /* Play */ = {
+		D8599151193D921C008BE0EA /* Play */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = D82CBE8C18D6842A00A14BAE /* Build configuration list for PBXNativeTarget "Play" */;
+			buildConfigurationList = D8599169193D921C008BE0EA /* Build configuration list for PBXNativeTarget "Play" */;
 			buildPhases = (
-				9C916FCE02F64EEAB00EE531 /* Check Pods Manifest.lock */,
-				D82CBE5C18D6842A00A14BAE /* Sources */,
-				D82CBE5D18D6842A00A14BAE /* Frameworks */,
-				D82CBE5E18D6842A00A14BAE /* Resources */,
-				311B009A5C83485AA056F4FC /* Copy Pods Resources */,
+				D859914E193D921C008BE0EA /* Sources */,
+				D859914F193D921C008BE0EA /* Frameworks */,
+				D8599150193D921C008BE0EA /* Resources */,
 			);
 			buildRules = (
 			);
@@ -291,180 +171,119 @@
 			);
 			name = Play;
 			productName = Play;
-			productReference = D82CBE6018D6842A00A14BAE /* Play.app */;
+			productReference = D8599152193D921C008BE0EA /* Play.app */;
 			productType = "com.apple.product-type.application";
 		};
-		D82CBE7A18D6842A00A14BAE /* PlayTests */ = {
+		D859915E193D921C008BE0EA /* PlayTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = D82CBE8F18D6842A00A14BAE /* Build configuration list for PBXNativeTarget "PlayTests" */;
+			buildConfigurationList = D859916C193D921C008BE0EA /* Build configuration list for PBXNativeTarget "PlayTests" */;
 			buildPhases = (
-				D82CBE7718D6842A00A14BAE /* Sources */,
-				D82CBE7818D6842A00A14BAE /* Frameworks */,
-				D82CBE7918D6842A00A14BAE /* Resources */,
+				D859915B193D921C008BE0EA /* Sources */,
+				D859915C193D921C008BE0EA /* Frameworks */,
+				D859915D193D921C008BE0EA /* Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				D82CBE8118D6842A00A14BAE /* PBXTargetDependency */,
+				D8599161193D921C008BE0EA /* PBXTargetDependency */,
 			);
 			name = PlayTests;
 			productName = PlayTests;
-			productReference = D82CBE7B18D6842A00A14BAE /* PlayTests.xctest */;
+			productReference = D859915F193D921C008BE0EA /* PlayTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
-		D82CBE5818D6842A00A14BAE /* Project object */ = {
+		D859914A193D921C008BE0EA /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				CLASSPREFIX = PL;
-				LastUpgradeCheck = 0510;
+				LastUpgradeCheck = 0600;
 				ORGANIZATIONNAME = "Nathan Borror";
 				TargetAttributes = {
-					D82CBE7A18D6842A00A14BAE = {
-						TestTargetID = D82CBE5F18D6842A00A14BAE;
+					D8599151193D921C008BE0EA = {
+						CreatedOnToolsVersion = 6.0;
+					};
+					D859915E193D921C008BE0EA = {
+						CreatedOnToolsVersion = 6.0;
+						TestTargetID = D8599151193D921C008BE0EA;
 					};
 				};
 			};
-			buildConfigurationList = D82CBE5B18D6842A00A14BAE /* Build configuration list for PBXProject "Play" */;
+			buildConfigurationList = D859914D193D921C008BE0EA /* Build configuration list for PBXProject "Play" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
 			);
-			mainGroup = D82CBE5718D6842A00A14BAE;
-			productRefGroup = D82CBE6118D6842A00A14BAE /* Products */;
+			mainGroup = D8599149193D921C008BE0EA;
+			productRefGroup = D8599153193D921C008BE0EA /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				D82CBE5F18D6842A00A14BAE /* Play */,
-				D82CBE7A18D6842A00A14BAE /* PlayTests */,
+				D8599151193D921C008BE0EA /* Play */,
+				D859915E193D921C008BE0EA /* PlayTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		D82CBE5E18D6842A00A14BAE /* Resources */ = {
+		D8599150193D921C008BE0EA /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D82CBE6E18D6842A00A14BAE /* InfoPlist.strings in Resources */,
-				D82CBE7618D6842A00A14BAE /* Images.xcassets in Resources */,
+				D859915A193D921C008BE0EA /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		D82CBE7918D6842A00A14BAE /* Resources */ = {
+		D859915D193D921C008BE0EA /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D82CBE8718D6842A00A14BAE /* InfoPlist.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
 
-/* Begin PBXShellScriptBuildPhase section */
-		311B009A5C83485AA056F4FC /* Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Pods-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		9C916FCE02F64EEAB00EE531 /* Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Check Pods Manifest.lock";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
-			showEnvVarsInLog = 0;
-		};
-/* End PBXShellScriptBuildPhase section */
-
 /* Begin PBXSourcesBuildPhase section */
-		D82CBE5C18D6842A00A14BAE /* Sources */ = {
+		D859914E193D921C008BE0EA /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D82CBEFC18D688B500A14BAE /* NBArrayDataSource.m in Sources */,
-				D82CBEF218D6880A00A14BAE /* PLPlaylistsViewController.m in Sources */,
-				D82CBEF418D6880A00A14BAE /* PLSpeakersViewController.m in Sources */,
-				D82CBEF318D6880A00A14BAE /* PLSongViewController.m in Sources */,
-				D82CBEF118D6880A00A14BAE /* PLNowPlayingViewController.m in Sources */,
-				D82CBEE218D687E800A14BAE /* PLSource.m in Sources */,
-				D82CBEB418D6879400A14BAE /* PLVolumeCell.m in Sources */,
-				D87443CC1915B0FC00136C13 /* PLVolumeHeader.m in Sources */,
-				D82CBEB018D6879400A14BAE /* PLDial.m in Sources */,
-				D82CBE7418D6842A00A14BAE /* PLAppDelegate.m in Sources */,
-				D82CBEB118D6879400A14BAE /* PLInputCell.m in Sources */,
-				D82CBED618D687BC00A14BAE /* UIFont+Common.m in Sources */,
-				D82CBE7018D6842A00A14BAE /* main.m in Sources */,
-				D82CBEFD18D688B500A14BAE /* NBDirectionGestureRecognizer.m in Sources */,
-				D82CBEEF18D6880A00A14BAE /* PLLibraryViewController.m in Sources */,
-				D8D6A1E019161B83007509F7 /* PLSettingsController.m in Sources */,
-				D82CBEB318D6879400A14BAE /* PLSectionHeaderView.m in Sources */,
-				D82CBED518D687BC00A14BAE /* UIColor+Common.m in Sources */,
-				D82CBEE118D687E800A14BAE /* PLSong.m in Sources */,
-				D82CBEB218D6879400A14BAE /* PLProgressBar.m in Sources */,
+				D8599172193D9290008BE0EA /* SpeakersViewController.swift in Sources */,
+				D8599158193D921C008BE0EA /* AppDelegate.swift in Sources */,
+				D8599170193D927F008BE0EA /* PlayingViewController.swift in Sources */,
+				D861E4D3194CE04700CAE939 /* NBDial.swift in Sources */,
+				D861E4D0194CDBCD00CAE939 /* SpeakerCell.swift in Sources */,
+				D861E4D6194CE26100CAE939 /* UIColor.swift in Sources */,
+				D861E4CE194CDBBA00CAE939 /* VolumeCell.swift in Sources */,
+				D8599174193D929F008BE0EA /* SettingsViewController.swift in Sources */,
+				D8853334194CFAA900BB19EC /* VolumeHeader.swift in Sources */,
+				D861E4D8194CF1A000CAE939 /* UIFont.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		D82CBE7718D6842A00A14BAE /* Sources */ = {
+		D859915B193D921C008BE0EA /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D82CBE8918D6842A00A14BAE /* PlayTests.m in Sources */,
+				D8599166193D921C008BE0EA /* PlayTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		D82CBE8118D6842A00A14BAE /* PBXTargetDependency */ = {
+		D8599161193D921C008BE0EA /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = D82CBE5F18D6842A00A14BAE /* Play */;
-			targetProxy = D82CBE8018D6842A00A14BAE /* PBXContainerItemProxy */;
+			target = D8599151193D921C008BE0EA /* Play */;
+			targetProxy = D8599160193D921C008BE0EA /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
-/* Begin PBXVariantGroup section */
-		D82CBE6C18D6842A00A14BAE /* InfoPlist.strings */ = {
-			isa = PBXVariantGroup;
-			children = (
-				D82CBE6D18D6842A00A14BAE /* en */,
-			);
-			name = InfoPlist.strings;
-			sourceTree = "<group>";
-		};
-		D82CBE8518D6842A00A14BAE /* InfoPlist.strings */ = {
-			isa = PBXVariantGroup;
-			children = (
-				D82CBE8618D6842A00A14BAE /* en */,
-			);
-			name = InfoPlist.strings;
-			sourceTree = "<group>";
-		};
-/* End PBXVariantGroup section */
-
 /* Begin XCBuildConfiguration section */
-		D82CBE8A18D6842A00A14BAE /* Debug */ = {
+		D8599167193D921C008BE0EA /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -479,9 +298,11 @@
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -496,14 +317,16 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				METAL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
 		};
-		D82CBE8B18D6842A00A14BAE /* Release */ = {
+		D8599168193D921C008BE0EA /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -518,10 +341,12 @@
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;
 				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
@@ -529,114 +354,103 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				METAL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
 		};
-		D82CBE8D18D6842A00A14BAE /* Debug */ = {
+		D859916A193D921C008BE0EA /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = FFEBB8A235414C43AF8B8B9F /* Pods.xcconfig */;
 			buildSettings = {
-				ARCHS = armv7;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "Play/Play-Prefix.pch";
-				INFOPLIST_FILE = "Play/Play-Info.plist";
+				INFOPLIST_FILE = Play/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
 		};
-		D82CBE8E18D6842A00A14BAE /* Release */ = {
+		D859916B193D921C008BE0EA /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = FFEBB8A235414C43AF8B8B9F /* Pods.xcconfig */;
 			buildSettings = {
-				ARCHS = armv7;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "Play/Play-Prefix.pch";
-				INFOPLIST_FILE = "Play/Play-Info.plist";
+				INFOPLIST_FILE = Play/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
 		};
-		D82CBE9018D6842A00A14BAE /* Debug */ = {
+		D859916D193D921C008BE0EA /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/Play.app/Play";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
-					"$(DEVELOPER_FRAMEWORKS_DIR)",
 				);
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "Play/Play-Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
 				);
-				INFOPLIST_FILE = "PlayTests/PlayTests-Info.plist";
+				INFOPLIST_FILE = PlayTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				METAL_ENABLE_DEBUG_INFO = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUNDLE_LOADER)";
-				WRAPPER_EXTENSION = xctest;
 			};
 			name = Debug;
 		};
-		D82CBE9118D6842A00A14BAE /* Release */ = {
+		D859916E193D921C008BE0EA /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/Play.app/Play";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
-					"$(DEVELOPER_FRAMEWORKS_DIR)",
 				);
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "Play/Play-Prefix.pch";
-				INFOPLIST_FILE = "PlayTests/PlayTests-Info.plist";
+				INFOPLIST_FILE = PlayTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				METAL_ENABLE_DEBUG_INFO = NO;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUNDLE_LOADER)";
-				WRAPPER_EXTENSION = xctest;
 			};
 			name = Release;
 		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		D82CBE5B18D6842A00A14BAE /* Build configuration list for PBXProject "Play" */ = {
+		D859914D193D921C008BE0EA /* Build configuration list for PBXProject "Play" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				D82CBE8A18D6842A00A14BAE /* Debug */,
-				D82CBE8B18D6842A00A14BAE /* Release */,
+				D8599167193D921C008BE0EA /* Debug */,
+				D8599168193D921C008BE0EA /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		D82CBE8C18D6842A00A14BAE /* Build configuration list for PBXNativeTarget "Play" */ = {
+		D8599169193D921C008BE0EA /* Build configuration list for PBXNativeTarget "Play" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				D82CBE8D18D6842A00A14BAE /* Debug */,
-				D82CBE8E18D6842A00A14BAE /* Release */,
+				D859916A193D921C008BE0EA /* Debug */,
+				D859916B193D921C008BE0EA /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		D82CBE8F18D6842A00A14BAE /* Build configuration list for PBXNativeTarget "PlayTests" */ = {
+		D859916C193D921C008BE0EA /* Build configuration list for PBXNativeTarget "PlayTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				D82CBE9018D6842A00A14BAE /* Debug */,
-				D82CBE9118D6842A00A14BAE /* Release */,
+				D859916D193D921C008BE0EA /* Debug */,
+				D859916E193D921C008BE0EA /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
-	rootObject = D82CBE5818D6842A00A14BAE /* Project object */;
+	rootObject = D859914A193D921C008BE0EA /* Project object */;
 }
