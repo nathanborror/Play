@@ -10,8 +10,8 @@ import UIKit
 
 class VolumeCell: UITableViewCell {
 
-    let kDialHeight = 48.0
-    let kNameMargin = 16.0
+    let kDialHeight:CGFloat = 48.0
+    let kNameMargin:CGFloat = 16.0
 
     let name = UILabel()
     let dial = NBDial(frame: CGRectZero)
@@ -35,7 +35,6 @@ class VolumeCell: UITableViewCell {
         dial.minValue = 0.0
         dial.value = 10.0
         self.addSubview(dial)
-
     }
 
 }

@@ -10,8 +10,8 @@ import UIKit
 
 class VolumeHeader: UIButton {
 
-    let kMargin = 16.0
-    let kAccessorySize = 44.0
+    let kMargin:CGFloat = 16.0
+    let kAccessorySize:CGFloat = 44.0
 
     let title = UILabel()
     let accessoryView = UIImageView()

@@ -11,11 +11,11 @@ import UIKit
 class NBDial: UIControl {
 
     var panCoordBegan = CGPoint(x: 0.0, y: 0.0)
-    var maxOrigin = 0.0
-    var minOrigin = 0.0
+    var maxOrigin:CGFloat = 0.0
+    var minOrigin:CGFloat = 0.0
 
-    var maxValue = 0.0
-    var minValue = 0.0
+    var maxValue:CGFloat = 0.0
+    var minValue:CGFloat = 0.0
     var value: CGFloat = 0.0 {
         didSet {
             let newPoint = CGPoint(x: self.findPosition(value), y: thumb.center.y)

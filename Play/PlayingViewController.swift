@@ -12,7 +12,7 @@ class PlayingViewController: UIViewController {
 
     let playingTable: UITableView = UITableView(frame: CGRectZero, style: .Plain)
     let kCellIdentifier = "VolumeCell"
-    let kCellHeight = 96.0
+    let kCellHeight:CGFloat = 96.0
 
     init() {
         super.init(nibName: nil, bundle: nil)
