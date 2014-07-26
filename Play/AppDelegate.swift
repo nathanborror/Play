@@ -18,11 +18,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         self.window!.tintColor = UIColor.tintColor()
 
         let playingController = PlayingViewController()
+        let playingNav = UINavigationController(rootViewController: playingController)
+
         let speakersController = SpeakersViewController()
+        let speakersNav = UINavigationController(rootViewController: speakersController)
+
         let settingsController = SettingsViewController()
+        let settingsNav = UINavigationController(rootViewController: settingsController)
 
         let tabController = UITabBarController()
-        tabController.setViewControllers([playingController, speakersController, settingsController], animated: false)
+        tabController.setViewControllers([playingNav, speakersNav, settingsNav], animated: false)
 
         self.window!.rootViewController = tabController
 
