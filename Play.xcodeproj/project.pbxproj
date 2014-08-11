@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		D83666CD19986A02009409D0 /* XMLReader.m in Sources */ = {isa = PBXBuildFile; fileRef = D83666CC19986A02009409D0 /* XMLReader.m */; };
+		D83666CF1998A89E009409D0 /* Alamofire.swift in Sources */ = {isa = PBXBuildFile; fileRef = D83666CE1998A89E009409D0 /* Alamofire.swift */; };
+		D83666D31998A9AF009409D0 /* UIFont.swift in Sources */ = {isa = PBXBuildFile; fileRef = D83666D21998A9AF009409D0 /* UIFont.swift */; };
 		D8599158193D921C008BE0EA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8599157193D921C008BE0EA /* AppDelegate.swift */; };
 		D859915A193D921C008BE0EA /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D8599159193D921C008BE0EA /* Images.xcassets */; };
 		D8599166193D921C008BE0EA /* PlayTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8599165193D921C008BE0EA /* PlayTests.swift */; };
@@ -17,7 +20,6 @@
 		D861E4D0194CDBCD00CAE939 /* SpeakerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D861E4CF194CDBCD00CAE939 /* SpeakerCell.swift */; };
 		D861E4D3194CE04700CAE939 /* NBDial.swift in Sources */ = {isa = PBXBuildFile; fileRef = D861E4D2194CE04700CAE939 /* NBDial.swift */; };
 		D861E4D6194CE26100CAE939 /* UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = D861E4D5194CE26100CAE939 /* UIColor.swift */; };
-		D861E4D8194CF1A000CAE939 /* UIFont.swift in Sources */ = {isa = PBXBuildFile; fileRef = D861E4D7194CF1A000CAE939 /* UIFont.swift */; };
 		D8853334194CFAA900BB19EC /* VolumeHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8853333194CFAA900BB19EC /* VolumeHeader.swift */; };
 /* End PBXBuildFile section */
 
@@ -32,6 +34,11 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		D83666CA199869EB009409D0 /* XMLReader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = XMLReader.h; path = Vendor/XMLReader.h; sourceTree = "<group>"; };
+		D83666CC19986A02009409D0 /* XMLReader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = XMLReader.m; path = Vendor/XMLReader.m; sourceTree = "<group>"; };
+		D83666CE1998A89E009409D0 /* Alamofire.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Alamofire.swift; path = Vendor/Alamofire.swift; sourceTree = "<group>"; };
+		D83666D11998A948009409D0 /* Play-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Play-Bridging-Header.h"; sourceTree = SOURCE_ROOT; };
+		D83666D21998A9AF009409D0 /* UIFont.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UIFont.swift; path = Extensions/UIFont.swift; sourceTree = "<group>"; };
 		D8599152193D921C008BE0EA /* Play.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Play.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D8599156193D921C008BE0EA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D8599157193D921C008BE0EA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -46,7 +53,6 @@
 		D861E4CF194CDBCD00CAE939 /* SpeakerCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SpeakerCell.swift; path = "UI Elements/SpeakerCell.swift"; sourceTree = "<group>"; };
 		D861E4D2194CE04700CAE939 /* NBDial.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NBDial.swift; path = Custom/NBDial.swift; sourceTree = "<group>"; };
 		D861E4D5194CE26100CAE939 /* UIColor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UIColor.swift; path = Extensions/UIColor.swift; sourceTree = "<group>"; };
-		D861E4D7194CF1A000CAE939 /* UIFont.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIFont.swift; sourceTree = "<group>"; };
 		D8853333194CFAA900BB19EC /* VolumeHeader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = VolumeHeader.swift; path = "UI Elements/VolumeHeader.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -68,12 +74,24 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		D83666C9199869C1009409D0 /* Vendor */ = {
+			isa = PBXGroup;
+			children = (
+				D83666CE1998A89E009409D0 /* Alamofire.swift */,
+				D83666CA199869EB009409D0 /* XMLReader.h */,
+				D83666CC19986A02009409D0 /* XMLReader.m */,
+			);
+			name = Vendor;
+			sourceTree = "<group>";
+		};
 		D8599149193D921C008BE0EA = {
 			isa = PBXGroup;
 			children = (
 				D8599154193D921C008BE0EA /* Play */,
 				D8599162193D921C008BE0EA /* PlayTests */,
+				D87079181960B81400BD2E63 /* Frameworks */,
 				D8599153193D921C008BE0EA /* Products */,
+				D83666C9199869C1009409D0 /* Vendor */,
 			);
 			sourceTree = "<group>";
 		};
@@ -105,6 +123,7 @@
 		D8599155193D921C008BE0EA /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				D83666D11998A948009409D0 /* Play-Bridging-Header.h */,
 				D8599156193D921C008BE0EA /* Info.plist */,
 			);
 			name = "Supporting Files";
@@ -148,10 +167,17 @@
 		D861E4D4194CE1DE00CAE939 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				D83666D21998A9AF009409D0 /* UIFont.swift */,
 				D861E4D5194CE26100CAE939 /* UIColor.swift */,
-				D861E4D7194CF1A000CAE939 /* UIFont.swift */,
 			);
 			name = Extensions;
+			sourceTree = "<group>";
+		};
+		D87079181960B81400BD2E63 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -252,15 +278,17 @@
 			buildActionMask = 2147483647;
 			files = (
 				D8599172193D9290008BE0EA /* SpeakersViewController.swift in Sources */,
+				D83666D31998A9AF009409D0 /* UIFont.swift in Sources */,
 				D8599158193D921C008BE0EA /* AppDelegate.swift in Sources */,
 				D8599170193D927F008BE0EA /* PlayingViewController.swift in Sources */,
 				D861E4D3194CE04700CAE939 /* NBDial.swift in Sources */,
 				D861E4D0194CDBCD00CAE939 /* SpeakerCell.swift in Sources */,
 				D861E4D6194CE26100CAE939 /* UIColor.swift in Sources */,
 				D861E4CE194CDBBA00CAE939 /* VolumeCell.swift in Sources */,
+				D83666CD19986A02009409D0 /* XMLReader.m in Sources */,
 				D8599174193D929F008BE0EA /* SettingsViewController.swift in Sources */,
+				D83666CF1998A89E009409D0 /* Alamofire.swift in Sources */,
 				D8853334194CFAA900BB19EC /* VolumeHeader.swift in Sources */,
-				D861E4D8194CF1A000CAE939 /* UIFont.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -367,9 +395,12 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CLANG_ENABLE_MODULES = YES;
 				INFOPLIST_FILE = Play/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "Play-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
 		};
@@ -378,9 +409,11 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CLANG_ENABLE_MODULES = YES;
 				INFOPLIST_FILE = Play/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "Play-Bridging-Header.h";
 			};
 			name = Release;
 		};
