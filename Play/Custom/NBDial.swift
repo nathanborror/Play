@@ -10,6 +10,8 @@ import UIKit
 
 class NBDial: UIControl {
 
+    let kDirectionThreshold = 5
+
     var panCoordBegan = CGPoint(x: 0.0, y: 0.0)
     var maxOrigin:CGFloat = 0.0
     var minOrigin:CGFloat = 0.0
@@ -56,6 +58,7 @@ class NBDial: UIControl {
         self.addSubview(thumb)
 
         let panGesture = UIPanGestureRecognizer(target: self, action: "handlePanGesture:")
+        panGesture.delegate = self
         self.addGestureRecognizer(panGesture)
 
         maxOrigin = CGRectGetWidth(self.bounds) - 15.0
@@ -92,4 +95,13 @@ class NBDial: UIControl {
     func findPosition(x: CGFloat) -> CGFloat {
         return ((((maxOrigin - minOrigin) * (x - minValue)) / (maxValue - minValue)) + minOrigin)
     }
+}
+
+extension NBDial: UIGestureRecognizerDelegate {
+
+    override func gestureRecognizerShouldBegin(gestureRecognizer: UIGestureRecognizer) -> Bool {
+        let velocity = (gestureRecognizer as UIPanGestureRecognizer).velocityInView(self)
+        return fabs(velocity.y) < fabs(velocity.x)
+    }
+
 }
