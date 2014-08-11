@@ -10,6 +10,11 @@ import UIKit
 
 class SettingsViewController: UIViewController {
 
+    let kCellIdentifier = "SonosControllerCell"
+
+    var tableView: UITableView?
+    var tableData: [SonosController]?
+
     override init() {
         super.init(nibName: nil, bundle: nil)
         self.title = "Settings"
@@ -21,10 +26,55 @@ class SettingsViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        let addButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Add, target: self, action: "addSpeaker:")
+        self.navigationItem.setRightBarButtonItem(addButton, animated: true)
+
+        tableView = UITableView(frame: CGRectZero, style: .Plain)
+        tableView!.registerClass(UITableViewCell.self, forCellReuseIdentifier: kCellIdentifier)
+        tableView!.delegate = self
+        tableView!.dataSource = self
+        self.view.addSubview(tableView!)
+
+        tableData = SonosControllerStore.sharedStore.allControllers
+        if tableData == nil {
+            println("No data")
+        }
     }
 
     func tabBarItem() -> UITabBarItem {
         return UITabBarItem(title: "More", image: UIImage(named: "MoreTab"), selectedImage: UIImage(named: "MoreTabSelected"))
     }
 
+    func addSpeaker(sender: UIBarButtonItem) {
+        let viewController = AddSpeakerViewController()
+        let navController = UINavigationController(rootViewController: viewController)
+        self.navigationController.presentViewController(navController, animated: true, completion: nil)
+    }
+
+}
+
+extension SettingsViewController: UITableViewDataSource {
+
+    func tableView(tableView: UITableView!, numberOfRowsInSection section: Int) -> Int {
+        if let count = tableData?.count {
+            return count
+        }
+        return 0
+    }
+
+    func tableView(tableView: UITableView!, cellForRowAtIndexPath indexPath: NSIndexPath!) -> UITableViewCell! {
+        let controller = tableData![indexPath.row]
+        let cell = tableView.dequeueReusableCellWithIdentifier(kCellIdentifier) as UITableViewCell
+        return cell as UITableViewCell
+    }
+
+}
+
+extension SettingsViewController: UITableViewDelegate {
+
+    func tableView(tableView: UITableView!, didSelectRowAtIndexPath indexPath: NSIndexPath!) {
+        // Do something
+    }
+    
 }

@@ -10,9 +10,16 @@ import UIKit
 
 class PlayingViewController: UIViewController {
 
-    let playingTable: UITableView = UITableView(frame: CGRectZero, style: .Plain)
     let kCellIdentifier = "VolumeCell"
     let kCellHeight:CGFloat = 96.0
+
+    var controllerStore = SonosControllerStore.sharedStore
+    var tableView: UITableView?
+    var tableData: [AnyObject]? {
+    didSet{
+        self.tableView!.reloadData()
+    }
+    }
 
     override init() {
         super.init(nibName: nil, bundle: nil)
@@ -26,18 +33,35 @@ class PlayingViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        playingTable.registerClass(VolumeCell.self, forCellReuseIdentifier: kCellIdentifier)
-        playingTable.delegate = self
-        playingTable.dataSource = self
-        playingTable.rowHeight = kCellHeight
-        playingTable.separatorStyle = .None
-        playingTable.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 96.0, right: 0)
-        self.view.addSubview(playingTable)
+        tableView = UITableView(frame: CGRectZero, style: .Plain)
+        tableView!.registerClass(VolumeCell.self, forCellReuseIdentifier: kCellIdentifier)
+        tableView!.delegate = self
+        tableView!.dataSource = self
+        tableView!.rowHeight = kCellHeight
+        tableView!.separatorStyle = .None
+        tableView!.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 96.0, right: 0)
+        self.view.addSubview(tableView!)
+
+        // Populate controllers
+        tableData = controllerStore.allControllers
+
+        // Get descriptions
+        for controller in tableData! {
+            let speaker = controller as SonosController
+
+            speaker.volume { (response, error) in
+//                println(response)
+            }
+
+            speaker.positionInfo({ (response, error) -> Void in
+//                println(response)
+            })
+        }
     }
 
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        playingTable.frame = self.view.bounds
+        tableView!.frame = self.view.bounds
     }
 
     func tabBarItem() -> UITabBarItem {
@@ -50,16 +74,17 @@ class PlayingViewController: UIViewController {
 }
 
 extension PlayingViewController: UITableViewDataSource {
-    func numberOfSectionsInTableView(tableView: UITableView!) -> Int {
-        return 5
-    }
-
     func tableView(tableView: UITableView!, numberOfRowsInSection section: Int) -> Int {
-        return 1
+        if let count = tableData?.count {
+            return count
+        }
+        return 0
     }
 
     func tableView(tableView: UITableView!, cellForRowAtIndexPath indexPath: NSIndexPath!) -> UITableViewCell! {
+        var controller = tableData![indexPath.item] as SonosController
         let cell: VolumeCell! = tableView.dequeueReusableCellWithIdentifier(kCellIdentifier) as VolumeCell
+        cell.controller = controller
         return cell as UITableViewCell
     }
 }

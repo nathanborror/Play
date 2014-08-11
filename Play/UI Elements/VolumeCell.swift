@@ -16,6 +16,13 @@ class VolumeCell: UITableViewCell {
     let name = UILabel()
     let dial = NBDial(frame: CGRectZero)
 
+    var controller: SonosController? {
+        didSet{
+            let options: NSKeyValueObservingOptions = .New | .Old | .Initial | .Prior
+            self.controller!.addObserver(self, forKeyPath: "name", options: options, context: nil)
+        }
+    }
+
     override init(style: UITableViewCellStyle, reuseIdentifier: String) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
 
@@ -41,4 +48,10 @@ class VolumeCell: UITableViewCell {
         super.init(coder: aDecoder)
     }
 
+    override func observeValueForKeyPath(keyPath: String!, ofObject object: AnyObject!, change: [NSObject : AnyObject]!, context: UnsafeMutablePointer<()>) {
+        if keyPath == "name" {
+            let speaker = object as SonosController
+            self.name.text = speaker.name
+        }
+    }
 }
