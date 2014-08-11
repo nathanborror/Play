@@ -10,6 +10,8 @@
 		D83666CD19986A02009409D0 /* XMLReader.m in Sources */ = {isa = PBXBuildFile; fileRef = D83666CC19986A02009409D0 /* XMLReader.m */; };
 		D83666CF1998A89E009409D0 /* Alamofire.swift in Sources */ = {isa = PBXBuildFile; fileRef = D83666CE1998A89E009409D0 /* Alamofire.swift */; };
 		D83666D31998A9AF009409D0 /* UIFont.swift in Sources */ = {isa = PBXBuildFile; fileRef = D83666D21998A9AF009409D0 /* UIFont.swift */; };
+		D85569D3194D500900B3CD57 /* SonosController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D85569D2194D500900B3CD57 /* SonosController.swift */; };
+		D85569D5194D501400B3CD57 /* SonosControllerStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = D85569D4194D501400B3CD57 /* SonosControllerStore.swift */; };
 		D8599158193D921C008BE0EA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8599157193D921C008BE0EA /* AppDelegate.swift */; };
 		D859915A193D921C008BE0EA /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D8599159193D921C008BE0EA /* Images.xcassets */; };
 		D8599166193D921C008BE0EA /* PlayTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8599165193D921C008BE0EA /* PlayTests.swift */; };
@@ -39,6 +41,8 @@
 		D83666CE1998A89E009409D0 /* Alamofire.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Alamofire.swift; path = Vendor/Alamofire.swift; sourceTree = "<group>"; };
 		D83666D11998A948009409D0 /* Play-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Play-Bridging-Header.h"; sourceTree = SOURCE_ROOT; };
 		D83666D21998A9AF009409D0 /* UIFont.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UIFont.swift; path = Extensions/UIFont.swift; sourceTree = "<group>"; };
+		D85569D2194D500900B3CD57 /* SonosController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SonosController.swift; path = SonosKit/SonosController.swift; sourceTree = "<group>"; };
+		D85569D4194D501400B3CD57 /* SonosControllerStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SonosControllerStore.swift; path = SonosKit/SonosControllerStore.swift; sourceTree = "<group>"; };
 		D8599152193D921C008BE0EA /* Play.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Play.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D8599156193D921C008BE0EA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D8599157193D921C008BE0EA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -84,6 +88,15 @@
 			name = Vendor;
 			sourceTree = "<group>";
 		};
+		D85569D1194D4FE900B3CD57 /* SonosKit */ = {
+			isa = PBXGroup;
+			children = (
+				D85569D2194D500900B3CD57 /* SonosController.swift */,
+				D85569D4194D501400B3CD57 /* SonosControllerStore.swift */,
+			);
+			name = SonosKit;
+			sourceTree = "<group>";
+		};
 		D8599149193D921C008BE0EA = {
 			isa = PBXGroup;
 			children = (
@@ -107,6 +120,7 @@
 		D8599154193D921C008BE0EA /* Play */ = {
 			isa = PBXGroup;
 			children = (
+				D85569D1194D4FE900B3CD57 /* SonosKit */,
 				D861E4D4194CE1DE00CAE939 /* Extensions */,
 				D861E4D1194CE01D00CAE939 /* Custom */,
 				D8599175193D9572008BE0EA /* UI Elements */,
@@ -281,11 +295,13 @@
 				D83666D31998A9AF009409D0 /* UIFont.swift in Sources */,
 				D8599158193D921C008BE0EA /* AppDelegate.swift in Sources */,
 				D8599170193D927F008BE0EA /* PlayingViewController.swift in Sources */,
+				D85569D3194D500900B3CD57 /* SonosController.swift in Sources */,
 				D861E4D3194CE04700CAE939 /* NBDial.swift in Sources */,
 				D861E4D0194CDBCD00CAE939 /* SpeakerCell.swift in Sources */,
 				D861E4D6194CE26100CAE939 /* UIColor.swift in Sources */,
 				D861E4CE194CDBBA00CAE939 /* VolumeCell.swift in Sources */,
 				D83666CD19986A02009409D0 /* XMLReader.m in Sources */,
+				D85569D5194D501400B3CD57 /* SonosControllerStore.swift in Sources */,
 				D8599174193D929F008BE0EA /* SettingsViewController.swift in Sources */,
 				D83666CF1998A89E009409D0 /* Alamofire.swift in Sources */,
 				D8853334194CFAA900BB19EC /* VolumeHeader.swift in Sources */,
