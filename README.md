@@ -11,3 +11,15 @@ Now open the file PLNowPlayingViewController.m and replace lines 79-82 with your
 ## Current mock
 
 ![Current Mock](https://raw.github.com/nathanborror/Play/master/Mocks/MOCK.png)
+
+## UPnP
+
+You can also visit speakers directly in a browser:
+
+- http://<SPEAKER_IP>:1400/status - status information
+- http://<SPEAKER_IP>:1400/reboot - reboots speaker
+- http://<SPEAKER_IP>:1400/support/review - support information?
+- http://<SPEAKER_IP>:1400/support - XML dump of the latter
+- http://<SPEAKER_IP>:1400/xml/zone_player.xml
+- http://<SPEAKER_IP>:1400/xml/device_description.xml - info about the speaker
+- http://<SPEAKER_IP>:1400/xml/<SERVICE>1.xml
