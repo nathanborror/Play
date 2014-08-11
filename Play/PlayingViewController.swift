@@ -14,9 +14,13 @@ class PlayingViewController: UIViewController {
     let kCellIdentifier = "VolumeCell"
     let kCellHeight:CGFloat = 96.0
 
-    init() {
+    override init() {
         super.init(nibName: nil, bundle: nil)
         self.title = "Playing"
+    }
+
+    required init(coder aDecoder: NSCoder!) {
+        super.init(coder: aDecoder)
     }
 
     override func viewDidLoad() {

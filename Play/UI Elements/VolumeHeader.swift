@@ -17,7 +17,7 @@ class VolumeHeader: UIButton {
     let accessoryView = UIImageView()
     let seperator = UIView()
 
-    init(frame: CGRect) {
+    override init(frame: CGRect) {
         super.init(frame: frame)
 
         self.backgroundColor = UIColor.whiteColor()
@@ -36,6 +36,10 @@ class VolumeHeader: UIButton {
         seperator.frame = CGRect(x: kMargin, y: CGRectGetHeight(self.bounds)-0.5, width: CGRectGetWidth(self.bounds)-kMargin, height: 0.5)
         seperator.backgroundColor = UIColor.borderColor()
         self.addSubview(seperator)
+    }
+
+    required init(coder aDecoder: NSCoder!) {
+        super.init(coder: aDecoder)
     }
 
 }

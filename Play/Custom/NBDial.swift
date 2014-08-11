@@ -37,7 +37,7 @@ class NBDial: UIControl {
     let min = UIView()
     let thumb = UIView()
 
-    init(frame: CGRect) {
+    override init(frame: CGRect) {
         super.init(frame: frame)
         self.clipsToBounds = false
 
@@ -60,6 +60,10 @@ class NBDial: UIControl {
 
         maxOrigin = CGRectGetWidth(self.bounds) - 15.0
         minOrigin = 15.0
+    }
+
+    required init(coder aDecoder: NSCoder!) {
+        super.init(coder: aDecoder)
     }
 
     override func layoutSubviews() {

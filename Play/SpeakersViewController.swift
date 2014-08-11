@@ -10,9 +10,13 @@ import UIKit
 
 class SpeakersViewController: UIViewController {
 
-    init() {
+    override init() {
         super.init(nibName: nil, bundle: nil)
         self.title = "Speakers"
+    }
+
+    required init(coder aDecoder: NSCoder!) {
+        super.init(coder: aDecoder)
     }
 
     override func viewDidLoad() {

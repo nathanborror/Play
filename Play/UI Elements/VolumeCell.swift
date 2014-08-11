@@ -16,7 +16,7 @@ class VolumeCell: UITableViewCell {
     let name = UILabel()
     let dial = NBDial(frame: CGRectZero)
 
-    init(style: UITableViewCellStyle, reuseIdentifier: String) {
+    override init(style: UITableViewCellStyle, reuseIdentifier: String) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
 
         self.selectionStyle = .None
@@ -35,6 +35,10 @@ class VolumeCell: UITableViewCell {
         dial.minValue = 0.0
         dial.value = 10.0
         self.addSubview(dial)
+    }
+
+    required init(coder aDecoder: NSCoder!) {
+        super.init(coder: aDecoder)
     }
 
 }
