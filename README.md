@@ -10,7 +10,7 @@ Now open the file PLNowPlayingViewController.m and replace lines 79-82 with your
 
 ## Current mock
 
-![Current Mock](https://raw.github.com/nathanborror/Play/master/Mocks/MOCK.png)
+![Current Mock](https://raw.github.com/nathanborror/Play/swift/Mocks/MOCK.png)
 
 ## UPnP
 
