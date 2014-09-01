@@ -23,7 +23,7 @@ enum SonosRequestType: Int {
     case GroupManagement
 }
 
-class SonosController: NSObject/*, NSCoding*/ {
+class SonosController: NSObject {
 
     dynamic var uuid = String()
     dynamic var name = String()
@@ -120,13 +120,3 @@ class SonosController: NSObject/*, NSCoding*/ {
         request(SonosRequestType.RenderingControl, action: "GetVolume", params: params, completion: block)
     }
 }
-
-//extension SonosController: NSCoding {
-//
-//    func encodeWithCoder(encoder: NSCoder!) {
-//        encoder.encodeObject(uuid, forKey: "uuid")
-//        encoder.encodeObject(name, forKey: "name")
-//        encoder.encodeObject(ip, forKey: "ip")
-//    }
-//
-//}

@@ -26,7 +26,7 @@ class PlayingViewController: UIViewController {
         self.title = "Playing"
     }
 
-    required init(coder aDecoder: NSCoder!) {
+    required init(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
 
@@ -44,19 +44,6 @@ class PlayingViewController: UIViewController {
 
         // Populate controllers
         tableData = controllerStore.allControllers
-
-        // Get descriptions
-        for controller in tableData! {
-            let speaker = controller as SonosController
-
-            speaker.volume { (response, error) in
-//                println(response)
-            }
-
-            speaker.positionInfo({ (response, error) -> Void in
-//                println(response)
-            })
-        }
     }
 
     override func viewDidLayoutSubviews() {

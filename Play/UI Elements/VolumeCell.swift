@@ -44,7 +44,7 @@ class VolumeCell: UITableViewCell {
         self.addSubview(dial)
     }
 
-    required init(coder aDecoder: NSCoder!) {
+    required init(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
 
