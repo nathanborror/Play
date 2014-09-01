@@ -37,7 +37,7 @@ class SonosController: NSObject {
         self.ip = ip
     }
 
-    func request(type: SonosRequestType, action: String, params: [String: String], completion: ([String: AnyObject]) -> Void) {
+    func request(type: SonosRequestType, action: String, params: [String: String], completion: (([String: AnyObject]) -> Void)?) {
         let (url, schema) = self.getURLAndSchema(type)
 
         var requestParams = ""
@@ -50,8 +50,8 @@ class SonosController: NSObject {
 
         Requests.Post(url, body: body, headers: headers) { (data: NSData!, response: NSURLResponse!, err: NSError!) -> Void in
             let dict = XML.parseData(data)
-            if dict != nil {
-                completion(dict!)
+            if dict != nil && completion != nil {
+                completion!(dict!)
             }
         }
     }
