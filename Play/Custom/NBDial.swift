@@ -31,7 +31,9 @@ class NBDial: UIControl {
                     thumb.center = CGPoint(x: minOrigin, y: thumb.center.y);
                 }
             }
-            min.frame = CGRect(x: 0, y: 0, width: CGRectGetMaxX(thumb.frame), height: CGRectGetHeight(self.bounds))
+            UIView.animateWithDuration(0.5, delay: 0.0, usingSpringWithDamping: 0.8, initialSpringVelocity: 0.1, options: .CurveLinear, animations: {
+                self.min.frame = CGRect(x: 0, y: 0, width: CGRectGetMaxX(self.thumb.frame), height: CGRectGetHeight(self.bounds))
+            }, completion: nil)
         }
     }
 
