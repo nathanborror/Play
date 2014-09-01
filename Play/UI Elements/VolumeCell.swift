@@ -18,9 +18,6 @@ class VolumeCell: UITableViewCell {
 
     var controller: SonosController? {
         didSet{
-            let options: NSKeyValueObservingOptions = .New | .Old | .Initial | .Prior
-            self.controller!.addObserver(self, forKeyPath: "name", options: options, context: nil)
-
             self.controller!.volume { (response) in
                 // TODO: This sucks and will eventually be replaced with sanity
                 let envelope = response["Envelope"] as NSDictionary
@@ -30,6 +27,15 @@ class VolumeCell: UITableViewCell {
                 let volume = currentVolume["text"] as NSString
 
                 self.dial.value =  CGFloat(volume.floatValue)
+            }
+
+            self.controller!.description { (response) in
+                // TODO: Ditto
+                var root = response["root"] as NSDictionary
+                var device = root["device"] as NSDictionary
+                var deviceName = device["roomName"] as NSDictionary
+
+                self.name.text = deviceName["text"] as String
             }
         }
     }
@@ -44,9 +50,9 @@ class VolumeCell: UITableViewCell {
         name.font = UIFont.subHeader()
         name.backgroundColor = UIColor.clearColor()
         name.autoresizingMask = .FlexibleWidth | .FlexibleHeight
-        name.text = "Undefined"
         self.addSubview(name)
 
+        dial.addTarget(self, action: "changeVolume:", forControlEvents: .ValueChanged)
         dial.frame = CGRect(x: 0.0, y: CGRectGetHeight(self.bounds)-kDialHeight, width: CGRectGetWidth(self.bounds), height: kDialHeight)
         dial.autoresizingMask = .FlexibleTopMargin
         dial.maxValue = 100.0
@@ -59,10 +65,8 @@ class VolumeCell: UITableViewCell {
         super.init(coder: aDecoder)
     }
 
-    override func observeValueForKeyPath(keyPath: String!, ofObject object: AnyObject!, change: [NSObject : AnyObject]!, context: UnsafeMutablePointer<()>) {
-        if keyPath == "name" {
-            let speaker = object as SonosController
-            self.name.text = speaker.name
-        }
+    func changeVolume(dial: NBDial) {
+        self.controller?.setVolume(Int(dial.value))
     }
+
 }

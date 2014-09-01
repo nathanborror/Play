@@ -87,11 +87,16 @@ class SonosController: NSObject {
 
     func positionInfo(block: ([String: AnyObject]) -> Void) {
         let params = ["InstanceID": "0"]
-        request(SonosRequestType.AVTransport, action: "GetPositionInfo", params: params, completion: block)
+        request(.AVTransport, action: "GetPositionInfo", params: params, completion: block)
     }
 
     func volume(block: ([String: AnyObject]) -> Void) {
         let params = ["InstanceID": "0", "Channel": "Master"]
-        request(SonosRequestType.RenderingControl, action: "GetVolume", params: params, completion: block)
+        request(.RenderingControl, action: "GetVolume", params: params, completion: block)
+    }
+
+    func setVolume(value: Int) {
+        let params = ["InstanceID": "0", "Channel": "Master", "DesiredVolume": String(value)]
+        request(.RenderingControl, action: "SetVolume", params: params, completion: nil)
     }
 }
