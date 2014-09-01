@@ -34,23 +34,10 @@ class SonosController: NSObject {
 
     init(ip: String) {
         super.init()
-
         self.ip = ip
-        self.description { (response, error) in
-            let device = response["root"]["device"] as NSDictionary
-
-            self.name = device["roomName"]["text"] as String
-            self.uuid = device["UDN"]["text"] as String
-        }
     }
 
-//    required init(coder decoder: NSCoder!) {
-//        uuid = decoder.decodeObjectForKey("uuid") as String
-//        name =  decoder.decodeObjectForKey("name") as String
-//        ip = decoder.decodeObjectForKey("ip") as String
-//    }
-
-    func request(type: SonosRequestType, action: String, params: [String: String], completion: (NSDictionary!, NSError!) -> Void) {
+    func request(type: SonosRequestType, action: String, params: [String: String], completion: ([String: AnyObject]) -> Void) {
         let (url, schema) = self.getURLAndSchema(type)
 
         var requestParams = ""
@@ -59,63 +46,51 @@ class SonosController: NSObject {
         }
 
         var body: String = "<s:Envelope xmlns:s='http://schemas.xmlsoap.org/soap/envelope/' s:encodingStyle='http://schemas.xmlsoap.org/soap/encoding/'><s:Body><u:\(action) xmlns:u='\(schema)'>\(requestParams)</u:\(action)></s:Body></s:Envelope>"
+        var headers = ["Content-Type": "text/xml", "SOAPACTION": "\(schema)#\(action)"]
 
-        var request = NSMutableURLRequest(URL: url)
-        request.HTTPMethod = "POST"
-        request.addValue("text/xml", forHTTPHeaderField: "Content-Type")
-        request.addValue("\(schema)#\(action)", forHTTPHeaderField: "SOAPACTION")
-        request.HTTPBody = body.dataUsingEncoding(NSUTF8StringEncoding)
-
-        let session = NSURLSession.sharedSession()
-        session.dataTaskWithRequest(request, completionHandler: { (data:NSData!, response:NSURLResponse!, error:NSError!) -> Void in
-            if (response as NSHTTPURLResponse).statusCode != 200 {
-                return completion(nil, error)
+        Requests.Post(url, body: body, headers: headers) { (data: NSData!, response: NSURLResponse!, err: NSError!) -> Void in
+            let dict = XML.parseData(data)
+            if dict != nil {
+                completion(dict!)
             }
-
-            var err: NSError?
-            let dict = XMLReader.dictionaryForXMLData(data, options: XMLReaderOptions.ProcessNamespaces, error: &err) as NSDictionary
-
-            if err != nil {
-                completion(nil, err)
-            }
-
-            completion(dict, nil)
-        }).resume()
+        }
     }
 
-    private func getURLAndSchema(type: SonosRequestType) -> (url: NSURL, schema: String) {
+    private func getURLAndSchema(type: SonosRequestType) -> (url: String, schema: String) {
         let service = ["AVTransport", "ConnectionManager", "RenderingControl", "ContentDirectory", "Queue", "AlarmClock", "MusicServices", "AudioIn", "DeviceProperties", "SystemProperties", "ZoneGroupTopology"]
         let prefix = ["MediaRenderer/", "MediaServer/", "MediaRenderer/", "MediaServer/", "MediaRenderer/", "", "", "", "", "", ""]
         let i = type.toRaw()
 
         // Construct url and schema
-        let url = NSURL(string: "http://\(ip):1400/\(prefix[i])\(service[i])/Control")
+        let url = "http://\(ip):1400/\(prefix[i])\(service[i])/Control"
         let schema = "urn:schemas-upnp-org:service:\(service[i]):1"
         return (url, schema)
     }
 
-    func description(block: (NSDictionary!, NSError!) -> Void) {
-        Alamofire.request(.GET, "http://\(self.ip):1400/xml/device_description.xml").response { (request, response, data, error) in
-            var err: NSError?
-            var dict = XMLReader.dictionaryForXMLData(data as NSData, options: XMLReaderOptions.ProcessNamespaces, error: &err)
-            block(dict, err)
+    func description(block: (([String: AnyObject]) -> Void)?) {
+        Requests.Get("http://\(self.ip):1400/xml/device_description.xml") { (data: NSData!, response: NSURLResponse!, error: NSError!) -> Void in
+            let dict = XML.parseData(data)
+            if dict != nil && block != nil {
+                block!(dict!)
+            }
         }
     }
 
-    func support(block: (NSDictionary!, NSError!) -> Void) {
-        Alamofire.request(.GET, "http://\(self.ip):1400/support").response { (request, response, data, error) in
-            var err: NSError?
-            var dict = XMLReader.dictionaryForXMLData(data as NSData, options: XMLReaderOptions.ProcessNamespaces, error: &err)
-            block(dict, err)
+    func support(block: (([String: AnyObject]) -> Void)?) {
+        Requests.Get("http://\(self.ip):1400/support") { (data: NSData!, response: NSURLResponse!, error: NSError!) -> Void in
+            let dict = XML.parseData(data)
+            if dict != nil && block != nil {
+                block!(dict!)
+            }
         }
     }
 
-    func positionInfo(block: (NSDictionary!, NSError!) -> Void) {
+    func positionInfo(block: ([String: AnyObject]) -> Void) {
         let params = ["InstanceID": "0"]
         request(SonosRequestType.AVTransport, action: "GetPositionInfo", params: params, completion: block)
     }
 
-    func volume(block: (NSDictionary!, NSError!) -> Void) {
+    func volume(block: ([String: AnyObject]) -> Void) {
         let params = ["InstanceID": "0", "Channel": "Master"]
         request(SonosRequestType.RenderingControl, action: "GetVolume", params: params, completion: block)
     }

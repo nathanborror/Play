@@ -20,6 +20,17 @@ class VolumeCell: UITableViewCell {
         didSet{
             let options: NSKeyValueObservingOptions = .New | .Old | .Initial | .Prior
             self.controller!.addObserver(self, forKeyPath: "name", options: options, context: nil)
+
+            self.controller!.volume { (response) in
+                // TODO: This sucks and will eventually be replaced with sanity
+                let envelope = response["Envelope"] as NSDictionary
+                let body = envelope["Body"] as NSDictionary
+                let volumeResponse = body["GetVolumeResponse"] as NSDictionary
+                let currentVolume = volumeResponse["CurrentVolume"] as NSDictionary
+                let volume = currentVolume["text"] as NSString
+
+                self.dial.value =  CGFloat(volume.floatValue)
+            }
         }
     }
 
