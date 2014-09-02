@@ -3,3 +3,5 @@
 //
 
 #import "XMLReader.h"
+#import "GCDWebServer.h"
+#import "GCDWebServerDataResponse.h"
