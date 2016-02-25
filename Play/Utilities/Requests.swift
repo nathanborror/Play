@@ -23,8 +23,8 @@ enum RequestsMethod: String {
 class Requests {
 
     init(method: RequestsMethod, url: String, body: String?, headers: [String: String]?, completion: ((NSData!, NSURLResponse!, NSError!) -> Void)?) {
-        var request = NSMutableURLRequest(URL: NSURL(string: url))
-        request.HTTPMethod = method.toRaw()
+        var request = NSMutableURLRequest(URL: NSURL(string: url)!)
+        request.HTTPMethod = method.rawValue
 
         if body != nil {
             request.HTTPBody = body!.dataUsingEncoding(NSUTF8StringEncoding)
@@ -37,9 +37,10 @@ class Requests {
         }
 
         let session = NSURLSession.sharedSession()
+        
         session.dataTaskWithRequest(request, completionHandler: { (data: NSData!, response: NSURLResponse!, error: NSError!) -> Void in
             if error != nil {
-                println("NSURLSession: \(error.localizedDescription)")
+                print("NSURLSession: \(error.localizedDescription)")
                 return
             }
 

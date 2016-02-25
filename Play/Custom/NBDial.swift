@@ -44,7 +44,7 @@ class NBDial: UIControl {
         self.clipsToBounds = false
 
         max.frame = CGRect(x: 0.0, y: 0.0, width: CGRectGetWidth(self.frame), height: CGRectGetHeight(self.frame))
-        max.backgroundColor = UIColor(patternImage: UIImage(named: "DialBackground"))
+        max.backgroundColor = UIColor(patternImage: UIImage(named: "DialBackground")!)
         max.autoresizingMask = [.FlexibleWidth, .FlexibleHeight]
         self.addSubview(max)
 

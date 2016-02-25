@@ -45,8 +45,8 @@ class SonosController: NSObject {
             requestParams += "<\(key)>\(value)</\(key)>"
         }
         
-        var body: String = "<s:Envelope xmlns:s='http://schemas.xmlsoap.org/soap/envelope/' s:encodingStyle='http://schemas.xmlsoap.org/soap/encoding/'><s:Body><u:\(action) xmlns:u='\(schema)'>\(requestParams)</u:\(action)></s:Body></s:Envelope>"
-        var headers = ["Content-Type": "text/xml", "SOAPACTION": "\(schema)#\(action)"]
+        let body: String = "<s:Envelope xmlns:s='http://schemas.xmlsoap.org/soap/envelope/' s:encodingStyle='http://schemas.xmlsoap.org/soap/encoding/'><s:Body><u:\(action) xmlns:u='\(schema)'>\(requestParams)</u:\(action)></s:Body></s:Envelope>"
+        let headers = ["Content-Type": "text/xml", "SOAPACTION": "\(schema)#\(action)"]
         
         Requests.Post(url, body: body, headers: headers) { (data: NSData!, response: NSURLResponse!, err: NSError!) -> Void in
             let dict = XML.parseData(data)
@@ -59,7 +59,7 @@ class SonosController: NSObject {
     private func getURLAndSchema(type: SonosRequestType) -> (url: String, schema: String) {
         let service = ["AVTransport", "ConnectionManager", "RenderingControl", "ContentDirectory", "Queue", "AlarmClock", "MusicServices", "AudioIn", "DeviceProperties", "SystemProperties", "ZoneGroupTopology"]
         let prefix = ["MediaRenderer/", "MediaServer/", "MediaRenderer/", "MediaServer/", "MediaRenderer/", "", "", "", "", "", ""]
-        let i = type.toRaw()
+        let i = type.rawValue
         
         // Construct url and schema
         let url = "http://\(ip):1400/\(prefix[i])\(service[i])/Control"

@@ -18,8 +18,8 @@ class AddSpeakerViewController: UIViewController {
     let uuid = TextField(frame: CGRectZero)
 
     init() {
-        self.init(nibName: nil, bundle: nil)
-        
+        // New change by @rkalms - might not work
+        super.init(nibName: nil, bundle: nil)
         self.title = "Add Speaker"
         self.view.backgroundColor = UIColor.whiteColor()
     }
