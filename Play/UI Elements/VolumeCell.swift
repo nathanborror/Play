@@ -21,26 +21,26 @@ class VolumeCell: UITableViewCell {
             self.controller!.volume { (response) in
                 // TODO: This sucks and will eventually be replaced with sanity
                 let envelope = response["Envelope"] as! NSDictionary
-                let body = envelope["Body"] as NSDictionary
-                let volumeResponse = body["GetVolumeResponse"] as NSDictionary
-                let currentVolume = volumeResponse["CurrentVolume"] as NSDictionary
-                let volume = currentVolume["text"] as NSString
+                let body = envelope["Body"] as! NSDictionary
+                let volumeResponse = body["GetVolumeResponse"] as! NSDictionary
+                let currentVolume = volumeResponse["CurrentVolume"] as! NSDictionary
+                let volume = currentVolume["text"] as! NSString
 
                 self.dial.value =  CGFloat(volume.floatValue)
             }
 
             self.controller!.description { (response) in
                 // TODO: Ditto
-                var root = response["root"] as! NSDictionary
-                var device = root["device"] as NSDictionary
-                var deviceName = device["roomName"] as NSDictionary
+                let root = response["root"] as! NSDictionary
+                let device = root["device"] as! NSDictionary
+                let deviceName = device["roomName"] as! NSDictionary
 
-                self.name.text = deviceName["text"] as String
+                self.name.text = deviceName["text"] as? String
             }
         }
     }
 
-    override init(style: UITableViewCellStyle, reuseIdentifier: String) {
+    override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
 
         self.selectionStyle = .None
