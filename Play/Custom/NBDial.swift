@@ -45,7 +45,7 @@ class NBDial: UIControl {
 
         max.frame = CGRect(x: 0.0, y: 0.0, width: CGRectGetWidth(self.frame), height: CGRectGetHeight(self.frame))
         max.backgroundColor = UIColor(patternImage: UIImage(named: "DialBackground"))
-        max.autoresizingMask = .FlexibleWidth | .FlexibleHeight
+        max.autoresizingMask = [.FlexibleWidth, .FlexibleHeight]
         self.addSubview(max)
 
         min.frame = CGRect(x: 0.0, y: 0.0, width: 8.0, height: CGRectGetHeight(self.frame))
@@ -65,7 +65,7 @@ class NBDial: UIControl {
         minOrigin = 15.0
     }
 
-    required init(coder aDecoder: NSCoder) {
+    required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
 
@@ -100,7 +100,7 @@ class NBDial: UIControl {
 extension NBDial: UIGestureRecognizerDelegate {
 
     override func gestureRecognizerShouldBegin(gestureRecognizer: UIGestureRecognizer) -> Bool {
-        let velocity = (gestureRecognizer as UIPanGestureRecognizer).velocityInView(self)
+        let velocity = (gestureRecognizer as! UIPanGestureRecognizer).velocityInView(self)
         return fabs(velocity.y) < fabs(velocity.x)
     }
 

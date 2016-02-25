@@ -17,13 +17,14 @@ class AddSpeakerViewController: UIViewController {
     let name = TextField(frame: CGRectZero)
     let uuid = TextField(frame: CGRectZero)
 
-    override init() {
-        super.init(nibName: nil, bundle: nil)
+    init() {
+        self.init(nibName: nil, bundle: nil)
+        
         self.title = "Add Speaker"
         self.view.backgroundColor = UIColor.whiteColor()
     }
 
-    required init(coder aDecoder: NSCoder) {
+    required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
 
@@ -57,11 +58,11 @@ class AddSpeakerViewController: UIViewController {
     }
 
     func done(sender: UIBarButtonItem) {
-        self.navigationController.dismissViewControllerAnimated(true, completion: nil)
+        self.navigationController!.dismissViewControllerAnimated(true, completion: nil)
     }
 
     func cancel(sender: UIBarButtonItem) {
-        self.navigationController.dismissViewControllerAnimated(true, completion: nil)
+        self.navigationController!.dismissViewControllerAnimated(true, completion: nil)
     }
 
 }

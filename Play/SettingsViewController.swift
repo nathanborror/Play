@@ -15,12 +15,12 @@ class SettingsViewController: UIViewController {
     var tableView: UITableView?
     var tableData: [SonosController]?
 
-    override init() {
+    init() {
         super.init(nibName: nil, bundle: nil)
         self.title = "Settings"
     }
 
-    required init(coder aDecoder: NSCoder) {
+    required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
 
@@ -38,34 +38,34 @@ class SettingsViewController: UIViewController {
 
         tableData = SonosControllerStore.sharedStore.allControllers
         if tableData == nil {
-            println("No data")
+            print("No data")
         }
     }
 
-    func tabBarItem() -> UITabBarItem {
+    func tabBarItemSpeakers() -> UITabBarItem {
         return UITabBarItem(title: "More", image: UIImage(named: "MoreTab"), selectedImage: UIImage(named: "MoreTabSelected"))
     }
 
     func addSpeaker(sender: UIBarButtonItem) {
         let viewController = AddSpeakerViewController()
         let navController = UINavigationController(rootViewController: viewController)
-        self.navigationController.presentViewController(navController, animated: true, completion: nil)
+        self.navigationController?.presentViewController(navController, animated: true, completion: nil)
     }
 
 }
 
 extension SettingsViewController: UITableViewDataSource {
 
-    func tableView(tableView: UITableView!, numberOfRowsInSection section: Int) -> Int {
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if let count = tableData?.count {
             return count
         }
         return 0
     }
 
-    func tableView(tableView: UITableView!, cellForRowAtIndexPath indexPath: NSIndexPath!) -> UITableViewCell! {
-        let controller = tableData![indexPath.row]
-        let cell = tableView.dequeueReusableCellWithIdentifier(kCellIdentifier) as UITableViewCell
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        _ = tableData![indexPath.row]
+        let cell = tableView.dequeueReusableCellWithIdentifier(kCellIdentifier)! as UITableViewCell
         return cell as UITableViewCell
     }
 
@@ -73,7 +73,7 @@ extension SettingsViewController: UITableViewDataSource {
 
 extension SettingsViewController: UITableViewDelegate {
 
-    func tableView(tableView: UITableView!, didSelectRowAtIndexPath indexPath: NSIndexPath!) {
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         // Do something
     }
     

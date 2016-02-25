@@ -37,7 +37,7 @@ class SonosController: NSObject {
         self.ip = ip
     }
 
-    func request(type: SonosRequestType, action: String, params: [String: String], completion: (([String: AnyObject]) -> Void)?) {
+    func request(type: SonosRequestType, action: String, params: [String: String], completion: (([NSData: AnyObject]) -> Void)?) {
         let (url, schema) = self.getURLAndSchema(type)
 
         var requestParams = ""
@@ -45,21 +45,23 @@ class SonosController: NSObject {
             requestParams += "<\(key)>\(value)</\(key)>"
         }
 
-        var body: String = "<s:Envelope xmlns:s='http://schemas.xmlsoap.org/soap/envelope/' s:encodingStyle='http://schemas.xmlsoap.org/soap/encoding/'><s:Body><u:\(action) xmlns:u='\(schema)'>\(requestParams)</u:\(action)></s:Body></s:Envelope>"
-        var headers = ["Content-Type": "text/xml", "SOAPACTION": "\(schema)#\(action)"]
+        let body: String = "<s:Envelope xmlns:s='http://schemas.xmlsoap.org/soap/envelope/' s:encodingStyle='http://schemas.xmlsoap.org/soap/encoding/'><s:Body><u:\(action) xmlns:u='\(schema)'>\(requestParams)</u:\(action)></s:Body></s:Envelope>"
+        let headers = ["Content-Type": "text/xml", "SOAPACTION": "\(schema)#\(action)"]
 
         Requests.Post(url, body: body, headers: headers) { (data: NSData!, response: NSURLResponse!, err: NSError!) -> Void in
-            let dict = XML.parseData(data)
-            if dict != nil && completion != nil {
-                completion!(dict!)
-            }
+            let dict = NSXMLParser(data: data)
+            
+            
+            print(dict)
+            
+            //completion!(dict)
         }
     }
 
     private func getURLAndSchema(type: SonosRequestType) -> (url: String, schema: String) {
         let service = ["AVTransport", "ConnectionManager", "RenderingControl", "ContentDirectory", "Queue", "AlarmClock", "MusicServices", "AudioIn", "DeviceProperties", "SystemProperties", "ZoneGroupTopology"]
         let prefix = ["MediaRenderer/", "MediaServer/", "MediaRenderer/", "MediaServer/", "MediaRenderer/", "", "", "", "", "", ""]
-        let i = type.toRaw()
+        let i = type.rawValue
 
         // Construct url and schema
         let url = "http://\(ip):1400/\(prefix[i])\(service[i])/Control"
@@ -69,10 +71,13 @@ class SonosController: NSObject {
 
     func description(block: (([String: AnyObject]) -> Void)?) {
         Requests.Get("http://\(self.ip):1400/xml/device_description.xml") { (data: NSData!, response: NSURLResponse!, error: NSError!) -> Void in
-            let dict = XML.parseData(data)
-            if dict != nil && block != nil {
-                block!(dict!)
-            }
+            let dict = NSXMLParser(data: data)
+
+            dict.parse()
+            
+            print(dict)
+            
+            //block!(dict)
         }
     }
 
@@ -82,15 +87,21 @@ class SonosController: NSObject {
             if dict != nil && block != nil {
                 block!(dict!)
             }
+
+            let dict = NSXMLParser(data: data)
+            
+            dict.parse()
+            
+            print(dict)
         }
     }
 
-    func positionInfo(block: ([String: AnyObject]) -> Void) {
+    func positionInfo(block: ([NSData: AnyObject]) -> Void) {
         let params = ["InstanceID": "0"]
         request(.AVTransport, action: "GetPositionInfo", params: params, completion: block)
     }
 
-    func volume(block: ([String: AnyObject]) -> Void) {
+    func volume(block: ([NSData: AnyObject]) -> Void) {
         let params = ["InstanceID": "0", "Channel": "Master"]
         request(.RenderingControl, action: "GetVolume", params: params, completion: block)
     }

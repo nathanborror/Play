@@ -10,7 +10,7 @@ import Foundation
 
 class XML {
 
-    class func parseData(xml: NSData) -> [String: AnyObject]? {
+    class func parseData(xml: String) -> [String: AnyObject]? {
         var err: NSError?
         let obj = XMLReader.dictionaryForXMLData(xml, options: XMLReaderOptions.ProcessNamespaces, error: &err) as? [String: AnyObject]
         if err != nil {
