@@ -10,21 +10,15 @@ import Foundation
 
 class XML {
 
-    class func parseData(xml: String) -> [String: AnyObject]? {
-        var err: NSError?
-        let obj = XMLReader.dictionaryForXMLData(xml, options: XMLReaderOptions.ProcessNamespaces, error: &err) as? [String: AnyObject]
-        if err != nil {
-            return nil
-        }
+    class func parseData(xml: NSData) -> [String: AnyObject]? {
+        let obj = XMLReader.dictionaryForXMLData(xml, options: XMLReaderOptions.ProcessNamespaces) as? [String: AnyObject]
+
         return obj
     }
 
     class func parseString(xml: String) -> [String: AnyObject]? {
-        var err: NSError?
-        let obj = XMLReader.dictionaryForXMLString(xml, options: XMLReaderOptions.ProcessNamespaces, error: &err) as? [String: AnyObject]
-        if err != nil {
-            return nil
-        }
+        let obj = XMLReader.dictionaryForXMLString(xml, options: XMLReaderOptions.ProcessNamespaces) as? [String: AnyObject]
+
         return obj
     }
 }

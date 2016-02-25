@@ -24,88 +24,77 @@ enum SonosRequestType: Int {
 }
 
 class SonosController: NSObject {
-
+    
     dynamic var uuid = String()
     dynamic var name = String()
     var ip = String()
     var group = String()
     var slaves: [SonosController]?
     var coordinator = false
-
+    
     init(ip: String) {
         super.init()
         self.ip = ip
     }
-
-    func request(type: SonosRequestType, action: String, params: [String: String], completion: (([NSData: AnyObject]) -> Void)?) {
+    
+    func request(type: SonosRequestType, action: String, params: [String: String], completion: (([String: AnyObject]) -> Void)?) {
         let (url, schema) = self.getURLAndSchema(type)
-
+        
         var requestParams = ""
         for (key, value) in params {
             requestParams += "<\(key)>\(value)</\(key)>"
         }
-
-        let body: String = "<s:Envelope xmlns:s='http://schemas.xmlsoap.org/soap/envelope/' s:encodingStyle='http://schemas.xmlsoap.org/soap/encoding/'><s:Body><u:\(action) xmlns:u='\(schema)'>\(requestParams)</u:\(action)></s:Body></s:Envelope>"
-        let headers = ["Content-Type": "text/xml", "SOAPACTION": "\(schema)#\(action)"]
-
+        
+        var body: String = "<s:Envelope xmlns:s='http://schemas.xmlsoap.org/soap/envelope/' s:encodingStyle='http://schemas.xmlsoap.org/soap/encoding/'><s:Body><u:\(action) xmlns:u='\(schema)'>\(requestParams)</u:\(action)></s:Body></s:Envelope>"
+        var headers = ["Content-Type": "text/xml", "SOAPACTION": "\(schema)#\(action)"]
+        
         Requests.Post(url, body: body, headers: headers) { (data: NSData!, response: NSURLResponse!, err: NSError!) -> Void in
-            let dict = NSXMLParser(data: data)
-            
-            
-            print(dict)
-            
-            //completion!(dict)
+            let dict = XML.parseData(data)
+            if dict != nil && completion != nil {
+                completion!(dict!)
+            }
         }
     }
-
+    
     private func getURLAndSchema(type: SonosRequestType) -> (url: String, schema: String) {
         let service = ["AVTransport", "ConnectionManager", "RenderingControl", "ContentDirectory", "Queue", "AlarmClock", "MusicServices", "AudioIn", "DeviceProperties", "SystemProperties", "ZoneGroupTopology"]
         let prefix = ["MediaRenderer/", "MediaServer/", "MediaRenderer/", "MediaServer/", "MediaRenderer/", "", "", "", "", "", ""]
-        let i = type.rawValue
-
+        let i = type.toRaw()
+        
         // Construct url and schema
         let url = "http://\(ip):1400/\(prefix[i])\(service[i])/Control"
         let schema = "urn:schemas-upnp-org:service:\(service[i]):1"
         return (url, schema)
     }
-
+    
     func description(block: (([String: AnyObject]) -> Void)?) {
         Requests.Get("http://\(self.ip):1400/xml/device_description.xml") { (data: NSData!, response: NSURLResponse!, error: NSError!) -> Void in
-            let dict = NSXMLParser(data: data)
-
-            dict.parse()
-            
-            print(dict)
-            
-            //block!(dict)
+            let dict = XML.parseData(data)
+            if dict != nil && block != nil {
+                block!(dict!)
+            }
         }
     }
-
+    
     func support(block: (([String: AnyObject]) -> Void)?) {
         Requests.Get("http://\(self.ip):1400/support") { (data: NSData!, response: NSURLResponse!, error: NSError!) -> Void in
             let dict = XML.parseData(data)
             if dict != nil && block != nil {
                 block!(dict!)
             }
-
-            let dict = NSXMLParser(data: data)
-            
-            dict.parse()
-            
-            print(dict)
         }
     }
-
-    func positionInfo(block: ([NSData: AnyObject]) -> Void) {
+    
+    func positionInfo(block: ([String: AnyObject]) -> Void) {
         let params = ["InstanceID": "0"]
         request(.AVTransport, action: "GetPositionInfo", params: params, completion: block)
     }
-
-    func volume(block: ([NSData: AnyObject]) -> Void) {
+    
+    func volume(block: ([String: AnyObject]) -> Void) {
         let params = ["InstanceID": "0", "Channel": "Master"]
         request(.RenderingControl, action: "GetVolume", params: params, completion: block)
     }
-
+    
     func setVolume(value: Int) {
         let params = ["InstanceID": "0", "Channel": "Master", "DesiredVolume": String(value)]
         request(.RenderingControl, action: "SetVolume", params: params, completion: nil)
