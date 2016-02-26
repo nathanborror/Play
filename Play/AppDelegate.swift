@@ -3,7 +3,6 @@
 //  Play
 //
 //  Created by SHN on 25/02/16.
-//  Copyright © 2016 SHN. All rights reserved.
 //
 
 import UIKit
@@ -12,7 +11,6 @@ import UIKit
 class AppDelegate: UIResponder, UIApplicationDelegate {
     
     var window: UIWindow?
-    
     
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.

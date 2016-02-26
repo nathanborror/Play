@@ -16,9 +16,9 @@ class PlayingViewController: UIViewController {
     var controllerStore = SonosControllerStore.sharedStore
     var tableView: UITableView?
     var tableData: [AnyObject]? {
-    didSet{
-        self.tableView!.reloadData()
-    }
+        didSet {
+            self.tableView!.reloadData()
+        }
     }
 
     init() {
@@ -72,6 +72,7 @@ extension PlayingViewController: UITableViewDataSource {
         let controller = tableData![indexPath.item] as! SonosController
         let cell: VolumeCell! = tableView.dequeueReusableCellWithIdentifier(kCellIdentifier) as! VolumeCell
         cell.controller = controller
+        
         return cell as UITableViewCell
     }
 }

@@ -41,6 +41,7 @@ class Requests {
                 data, response, error in
                 if error != nil {
                     print("NSURLSession: \(error?.localizedDescription)")
+                    print("NSURLSession: \(url)")
                     return
                 }
                 

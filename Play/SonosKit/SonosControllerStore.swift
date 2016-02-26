@@ -44,10 +44,9 @@ class SonosControllerStore {
 
     func discover() {
         allControllers = [
-            SonosController(ip: "10.0.1.9"),
-            SonosController(ip: "10.0.1.8"),
-            SonosController(ip: "10.0.1.6"),
-            SonosController(ip: "10.0.1.10")
+            SonosController(ip: "192.168.0.18"),
+            SonosController(ip: "192.168.0.12"),
+            SonosController(ip: "192.168.0.13")
         ]
     }
 
