@@ -17,6 +17,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         self.window = UIWindow(frame: UIScreen.mainScreen().bounds)
         self.window!.tintColor = UIColor.tintColor()
         
+        print(UIScreen.mainScreen().bounds)
+        
         let playingController = PlayingViewController()
         let playingNav = UINavigationController(rootViewController: playingController)
         

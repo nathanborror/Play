@@ -8,21 +8,30 @@
 
 import Foundation
 
-enum RequestsMethod: String {
-    case CONNECT = "CONNECT"
-    case DELETE = "DELETE"
-    case GET = "GET"
-    case HEAD = "HEAD"
-    case OPTIONS = "OPTIONS"
-    case PATCH = "PATCH"
-    case POST = "POST"
-    case PUT = "PUT"
-    case TRACE = "TRACE"
+internal enum RequestsMethod : String {
+    
+    case CONNECT
+    
+    case DELETE
+    
+    case GET
+    
+    case HEAD
+    
+    case OPTIONS
+    
+    case PATCH
+    
+    case POST
+    
+    case PUT
+    
+    case TRACE
 }
 
-class Requests {
+internal class Requests {
 
-    init(method: RequestsMethod, url: String, body: String?, headers: [String: String]?, completion: ((NSData!, NSURLResponse!, NSError!) -> Void)?) {
+    internal init(method: RequestsMethod, url: String, body: String?, headers: [String: String]?, completion: ((NSData!, NSURLResponse!, NSError!) -> Void)?) {
         let request = NSMutableURLRequest(URL: NSURL(string: url)!)
         request.HTTPMethod = method.rawValue
 
@@ -57,20 +66,21 @@ class Requests {
         }
         session.resume()
     }
+
     
-    class func Get(url: String, completion: (NSData!, NSURLResponse!, NSError!) -> Void) {
+    internal class func Get(url: String, completion: (NSData!, NSURLResponse!, NSError!) -> Void) {
         Requests(method: .GET, url: url, body: nil, headers: nil, completion: completion)
     }
     
-    class func Post(url: String, body: String, headers: [String: String], completion: ((NSData!, NSURLResponse!, NSError!) -> Void)?) {
+    internal class func Post(url: String, body: String, headers: [String : String], completion: ((NSData!, NSURLResponse!, NSError!) -> Void)?) {
         Requests(method: .POST, url: url, body: body, headers: headers, completion: completion)
     }
     
-    class func Put(url: String, body: String, headers: [String: String], completion: ((NSData!, NSURLResponse!, NSError!) -> Void)?) {
+    internal class func Put(url: String, body: String, headers: [String : String], completion: ((NSData!, NSURLResponse!, NSError!) -> Void)?) {
         Requests(method: .PUT, url: url, body: body, headers: headers, completion: completion)
     }
     
-    class func Delete(url: String, body: String, headers: [String: String], completion: ((NSData!, NSURLResponse!, NSError!) -> Void)?) {
+    internal class func Delete(url: String, body: String, headers: [String : String], completion: ((NSData!, NSURLResponse!, NSError!) -> Void)?) {
         Requests(method: .DELETE, url: url, body: body, headers: headers, completion: completion)
     }
 }
