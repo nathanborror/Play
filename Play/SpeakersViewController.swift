@@ -10,12 +10,12 @@ import UIKit
 
 class SpeakersViewController: UIViewController {
 
-    override init() {
+    init() {
         super.init(nibName: nil, bundle: nil)
         self.title = "Speakers"
     }
 
-    required init(coder aDecoder: NSCoder) {
+    required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
 
@@ -23,7 +23,7 @@ class SpeakersViewController: UIViewController {
         super.viewDidLoad()
     }
 
-    func tabBarItem() -> UITabBarItem {
+    func tabBarItemSpeakers() -> UITabBarItem {
         return UITabBarItem(title: "Speakers", image: UIImage(named: "SpeakersTab"), selectedImage: UIImage(named: "SpeakersTabSelected"))
     }
 

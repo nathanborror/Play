@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C60E69F81C81436C00245AEF /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C60E69F71C81436C00245AEF /* Launch Screen.storyboard */; };
 		D824F342198430B8004DBE1B /* AddSpeakerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D824F341198430B8004DBE1B /* AddSpeakerViewController.swift */; };
 		D83666CD19986A02009409D0 /* XMLReader.m in Sources */ = {isa = PBXBuildFile; fileRef = D83666CC19986A02009409D0 /* XMLReader.m */; };
 		D83666D31998A9AF009409D0 /* UIFont.swift in Sources */ = {isa = PBXBuildFile; fileRef = D83666D21998A9AF009409D0 /* UIFont.swift */; };
@@ -53,6 +54,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		C60E69F71C81436C00245AEF /* Launch Screen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
 		D824F341198430B8004DBE1B /* AddSpeakerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddSpeakerViewController.swift; sourceTree = "<group>"; };
 		D83666CA199869EB009409D0 /* XMLReader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = XMLReader.h; path = Vendor/XMLReader.h; sourceTree = "<group>"; };
 		D83666CC19986A02009409D0 /* XMLReader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = XMLReader.m; path = Vendor/XMLReader.m; sourceTree = "<group>"; };
@@ -182,6 +184,7 @@
 				D824F341198430B8004DBE1B /* AddSpeakerViewController.swift */,
 				D8599159193D921C008BE0EA /* Images.xcassets */,
 				D8599155193D921C008BE0EA /* Supporting Files */,
+				C60E69F71C81436C00245AEF /* Launch Screen.storyboard */,
 			);
 			path = Play;
 			sourceTree = "<group>";
@@ -361,6 +364,7 @@
 		D859914A193D921C008BE0EA /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				LastSwiftMigration = 0720;
 				LastUpgradeCheck = 0600;
 				ORGANIZATIONNAME = "Nathan Borror";
 				TargetAttributes = {
@@ -396,6 +400,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C60E69F81C81436C00245AEF /* Launch Screen.storyboard in Resources */,
 				D859915A193D921C008BE0EA /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -500,7 +505,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				METAL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -537,7 +542,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				METAL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -549,7 +554,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_MODULES = YES;
 				INFOPLIST_FILE = Play/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -563,7 +567,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_MODULES = YES;
 				INFOPLIST_FILE = Play/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";

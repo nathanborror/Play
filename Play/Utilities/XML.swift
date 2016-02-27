@@ -9,22 +9,26 @@
 import Foundation
 
 class XML {
-
+    
     class func parseData(xml: NSData) -> [String: AnyObject]? {
-        var err: NSError?
-        let obj = XMLReader.dictionaryForXMLData(xml, options: XMLReaderOptions.ProcessNamespaces, error: &err) as? [String: AnyObject]
-        if err != nil {
-            return nil
+        do {
+            let obj = try XMLReader.dictionaryForXMLData(xml, options: XMLReaderOptions.ProcessNamespaces) as? [String: AnyObject]
+            
+            return obj
+        } catch let error as NSError {
+            print("Error: \(error.localizedDescription)")
+            abort()
         }
-        return obj
     }
-
+    
     class func parseString(xml: String) -> [String: AnyObject]? {
-        var err: NSError?
-        let obj = XMLReader.dictionaryForXMLString(xml, options: XMLReaderOptions.ProcessNamespaces, error: &err) as? [String: AnyObject]
-        if err != nil {
-            return nil
+        do {
+            let obj = try XMLReader.dictionaryForXMLString(xml, options: XMLReaderOptions.ProcessNamespaces) as? [String: AnyObject]
+            
+            return obj
+        } catch let error as NSError {
+            print("Error: \(error.localizedDescription)")
+            abort()
         }
-        return obj
     }
 }

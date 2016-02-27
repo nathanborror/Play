@@ -23,7 +23,7 @@ class VolumeHeader: UIButton {
         self.backgroundColor = UIColor.whiteColor()
 
         title.frame = CGRect(x: kMargin, y: 0, width: CGRectGetWidth(self.bounds), height: CGRectGetHeight(self.bounds))
-        title.autoresizingMask = .FlexibleWidth | .FlexibleHeight | .FlexibleTopMargin
+        title.autoresizingMask = [.FlexibleWidth, .FlexibleHeight, .FlexibleTopMargin]
         title.font = UIFont.header()
         title.textColor = UIColor.textColor()
         title.text = "Undefined"
@@ -38,7 +38,7 @@ class VolumeHeader: UIButton {
         self.addSubview(seperator)
     }
 
-    required init(coder aDecoder: NSCoder) {
+    required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
 

@@ -11,11 +11,11 @@ import UIKit
 extension UIFont {
 
     class func header() -> UIFont {
-        return UIFont(name: "HelveticaNeue", size: 18.0)
+        return UIFont(name: "HelveticaNeue", size: 18.0)!
     }
 
     class func subHeader() -> UIFont {
-        return UIFont(name: "HelveticaNeue-Thin", size: 14.0)
+        return UIFont(name: "HelveticaNeue-Thin", size: 14.0)!
     }
 
 }
